@@ -1,0 +1,52 @@
+#/usr/bin/env bash
+#
+# Copyright 2020 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+## Aliases
+alias ls="ls -h --color=auto"; ## always list human readable
+alias la='ls -A --color=auto'; ## List almost all
+alias ll='ls -lSscr'; ## list files sorted by size, human readable
+alias lla='ll -A'; ## List almost all in detail
+alias nload='nload -u K -U M -t 10000 -a 3600'; ## upload/ download units
+alias dnf='dnf --exclude=*-doc* --exclude=*-debuginfo*'; ## unnecessary debuginfo
+alias du='du -hc'; ## Always list human readable, total
+alias mount="mount -v";
+alias umount="umount -v";
+alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+alias sourceit="source ~/.bashrc";
+alias qstatf="while true; do date; ssh paranjpe@192.168.14.20 qstat -f; sleep 900; done;";
+alias qstat="while true; do date; ssh paranjpe@192.168.14.20 qstat ; sleep 900; done;";
+alias HPCconnect="ssh paranjpe@192.168.14.20";
+alias watch="watch -n 10";
+alias work_PC7="ssh -X prady@${PC7ip}";
+alias HPCconnect="ssh paranjpe@${HPC}"
+alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+alias psauxgrep="ps aux | grep -v 'grep' | grep -v 'ps' | grep -i";
+alias ping="ping -c 4 ";
+alias tcpz="tar -c --use-compress-program=pigz ";
+alias txpz="tar -x --use-compress-program=pigz "; ## Uses multiple threads
+alias python="python3"; ## python2.7 ends its life with 2019
+alias su=" su -"; ## become root with variables
+alias copy_to_HPC='function copyfn(){ scp $@ paranjpe@${HPC}:/home/paranjpe/prady_data/; };copyfn'
+alias nload="nload -u K -U M -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
+alias ex="vim"; ## always open vim in normal mode
+alias sl="sl -al"; ## steamlocomotive
+alias vim="nvim"; ## always use neo
+alias nethogs="\su - -c \"nethogs wlp7s0 -d 10\""; ## run nethogs as root on wifi
+alias activateGRN="source ${HOME}/Leish_Petri/bin/activate && cd /media/data/academic/GRN_PYGMO/Python/"; ## Python virtual environment with clpy and pygmo2
+

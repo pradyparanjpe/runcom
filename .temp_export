@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# Copyright 2020 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+# Contains temporary exports to be explicitly called
+# For LLVM CLANG locally installed in ${HOME}/.local
+# for clpy installation
+
+export C_INCLUDE_PATH="${C_INCLUDE_PATH}:/usr/include/CL";
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:/usr/include/CL";
+export LIBRARY_PATH="${LIBRARY_PATH}:/usr/lib64:/usr/lib";
+
+# export PATH="${PATH}:"; # LLVM Binaries are already in ${HOME}/.local/bin
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${HOME}/.local/include";
+export LIBRARY_PATH="${LIBRARY_PATH}:${HOME}/.local/lib:${HOME}/.local/lib64:${HOME}/.local/include/llvm/";
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/.local/lib:${HOME}/.local/lib64";

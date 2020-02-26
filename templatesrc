@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+#
+# Copyright 2020 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+# templates for new files
+
+read -r -d '' pytempl << EOM
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+if __name__ == "__main__":
+    pass
+
+EOM
+new_python() {
+	[[ -z "$1" ]] && echo "Please enter filename" && return 1
+	fname="$1.py"
+	[[ -f "$fname" ]] && echo "File exists, quitting" && return 1
+	touch "$fname"
+	echo -e "$pytempl" > "$fname"
+	chmod +x "$fname"
+	vim "$fname" || "Exitted with error code $?" || return 0
+}
+
+read -r -d '' textempl << EOM
+\\\\documentclass{article}
+\\usepackage[a4paper, margin=1in]{geometry}
+\\\\author{Pradyumna}
+\\\\title{Placeholder Title}
+
+\\\\begin{document}
+\\maketitle
+	\\section*{Placeholder Section}
+		Placeholder text
+\\\\end{document}
+EOM
+
+new_tex() {
+	[[ -z "$1" ]] && echo "Please enter filename" && return 1
+	[[ -z "$1.tex" ]] && echo "Please enter filename" && return 1
+	[[ -z "$1.pdf" ]] && echo "Please enter filename" && return 1
+	[[ -f "$1.tex" ]] && echo "File exists, quitting" && return 1
+	touch "$1.tex"
+	fname="$1.tex"
+	echo -e "$textempl" > "$fname"
+	vim $fname || "Exitted with error code $?" || return 0
+	pdfcompile "$fname"
+}
