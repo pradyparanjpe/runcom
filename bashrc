@@ -39,3 +39,5 @@ export PYOPENCL_COMPILER_OUTPUT=1;
 export dock="/media/data/academic/learn_opencl/multi_organsim_localgroup_float32/GRN+GA";
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export PYTHONPATH="${PYTHONPATH}:${HOME}/.local//lib64/python3.7/site-packages/";
+export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt"
+
