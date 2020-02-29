@@ -23,7 +23,6 @@
 shopt -s autocd # Allows to cd by only typing name
 set -o vi
 bind '"jk":vi-movement-mode'
-PYTHONPATH="/media/data/learn_opencl/multi_organsim_localgroup_float32/GRN+GA"
 export PS1="\[${GREEN}\]\u\[${NO_EFFECTS}\]@\[${BLUE}\]\h\[${WHITE}\]<\[${CYAN}\]\W\[${WHITE}\]>\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
 export PS2="\[${CYAN}\]cont...\[${WHITE}\]|\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
 export PS3="Selection: ";
@@ -37,6 +36,5 @@ export PATH="${PATH}:${HOME}/.local/bin";
 export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-export PYTHONPATH="${PYTHONPATH}:${HOME}/.local//lib64/python3.7/site-packages/";
 export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt"
-
+export OCL_ICD_VENDORS=/etc/OpenCL/vendors/amdocl64.icd
