@@ -36,5 +36,5 @@ export PATH="${PATH}:${HOME}/.local/bin";
 export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt"
-export OCL_ICD_VENDORS=/etc/OpenCL/vendors/amdocl64.icd
+export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt";
+export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
