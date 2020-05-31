@@ -37,3 +37,8 @@ pdfcompile() {
 	done
 	evince ${1/\.tex/\.pdf}
 }
+
+deactivate() {
+	# assume that python virtual environments are not active
+	true
+}

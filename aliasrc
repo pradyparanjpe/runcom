@@ -48,6 +48,9 @@ alias ex="vim"; ## always open vim in normal mode
 alias sl="sl -al"; ## steamlocomotive
 alias vim="nvim"; ## always use neo
 alias nethogs="\su - -c \"nethogs wlp7s0 -d 10\""; ## run nethogs as root on wifi
-alias activateGRN="source ${HOME}/Leish_Petri/bin/activate && cd /media/data/GRN_PYGMO/Python/"; ## Python virtual environment with clpy and pygmo2
+alias activateGRN="deactivate || true; source ${HOME}/Leish_Petri/bin/activate && cd /media/data/GRN_PYGMO/Python/multi_objective"; ## Python virtual environment with clpy and pygmo2
+alias activateVIS="deactivate || true; source ${HOME}/visualize/bin/activate && cd /media/data/GRN_PYGMO/Python/multi_objective"; ## Python virtual environment for matplotlib with newest numpy
+alias activateRNA="deactivate || true; source ${HOME}/RNASeq3.7/bin/activate && cd /media/experiments/RNASeq/"; ## Python virtual environment with clpy and pygmo2
+
 alias mledger="ledger -f ${EXPENDLOG}";
 
