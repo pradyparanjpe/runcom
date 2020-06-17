@@ -53,4 +53,4 @@ alias activateVIS="deactivate || true; source ${HOME}/visualize/bin/activate && 
 alias activateRNA="deactivate || true; source ${HOME}/RNASeq3.7/bin/activate && cd /media/experiments/RNASeq/"; ## Python virtual environment with clpy and pygmo2
 
 alias mledger="ledger -f ${EXPENDLOG}";
-
+alias docker="podman";  # Podman is drop-in replacement for docker
