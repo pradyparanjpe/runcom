@@ -54,3 +54,7 @@ alias activateRNA="deactivate || true; source ${HOME}/RNASeq3.7/bin/activate && 
 
 alias mledger="ledger -f ${EXPENDLOG}";
 alias docker="podman";  # Podman is drop-in replacement for docker
+if [[ -x `which pigz` ]]; then
+    alias gzip="pigz"; # Use pigz instead, it uses all cores
+    alias gunzip="unpigz"; # Use pigz instead, it uses all cores
+fi
