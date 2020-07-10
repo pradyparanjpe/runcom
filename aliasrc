@@ -18,7 +18,7 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Aliases
-alias ls="ls -h --color=auto"; ## always list human readable
+alias ls="ls -Fh --color=auto"; ## always list human readable
 alias la='ls -A --color=auto'; ## List almost all
 alias ll='ls -lSscr'; ## list files sorted by size, human readable
 alias lla='ll -A'; ## List almost all in detail
