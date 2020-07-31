@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# -*- coding:utf-8; mode:shell-script -*-
+
+# Constants
+KNOWN_APS=("RH76_1" "RH_76" "Prady")
+
+WIFI_SCAN="$(nmcli device wifi list --rescan yes| sed -e 's@ \+@^@g')"
+WIFI_SCAN=(${WIFI_SCAN})
+
+
+HEAD=1
+for SSID in ${WIFI_SCAN[@]}; do
+    [[ $HEAD ]] && HEAD= && continue
+    NAME=$(echo ${SSID} | cut -d "^" -f 3)
+    QUAL=$(echo ${SSID} |rev| cut -d "^" -f 4 |rev)
+    [[ ${KNOWN_APS[@]} =~ $NAME ]] && KNOWN=1 && break
+done
+
+if [[ $KNOWN ]]; then
+    nmcli device wifi connect ${NAME} \
+        && notify-send "Connected to ${NAME}" \
+        || notify-send "Couldn't connect to ${NAME}"
+else
+    notify-send "No known wifi available"
+fi

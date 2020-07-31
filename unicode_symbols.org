@@ -1,0 +1,262 @@
+#-*- mode: org; coding:utf-8 -*-
+
+
+| Hex    | Output | Meaning                     |
+|--------+--------+-----------------------------|
+| u+f200 |       | Pie chart                   |
+| u+f201 |       | Plot                        |
+| u+f202 |       |                             |
+| u+f203 |       |                             |
+| u+f204 |       | Switch OFF                  |
+| u+f205 |       | Switch ON                   |
+| u+f206 |       | Bycicle                     |
+| u+f207 |       | Bus                         |
+| u+f208 |       |                             |
+| u+f209 |       | Peace/ Victory              |
+| u+f20a |       |                             |
+| u+f20b |       |                             |
+| u+f20c |       | mp3                         |
+| u+f20d |       |                             |
+| u+f20e |       | Teserract                   |
+| u+f20f |       |                             |
+| u+f210 |       |                             |
+| u+f211 |       |                             |
+| u+f212 |       |                             |
+| u+f213 |       |                             |
+| u+f214 |       |                             |
+| u+f215 |       |                             |
+| u+f216 |       |                             |
+| u+f217 |       | Add to Cart                 |
+| u+f218 |       | Checkout Cart               |
+| u+f219 |       | Diamond                     |
+| u+f21a |       | Ship                        |
+| u+f21b |       |                             |
+| u+f21c |       | Moped                       |
+| u+f21d |       |                             |
+| u+f21e |       | ECG                         |
+| u+f21f |       |                             |
+| u+f220 |       |                             |
+| u+f221 |       | Female                      |
+| u+f222 |       | Male                        |
+| u+f223 |       |                             |
+| u+f224 |       | Male/Female                 |
+| u+f225 |       |                             |
+| u+f226 |       |                             |
+| u+f227 |       |                             |
+| u+f228 |       |                             |
+| u+f229 |       |                             |
+| u+f22a |       |                             |
+| u+f22b |       |                             |
+| u+f22c |       |                             |
+| u+f22d |       |                             |
+| u+f22e |       |                             |
+| u+f22f |       |                             |
+| u+f230 |       | Facebook                    |
+| u+f231 |       | Pinterest                   |
+| u+f232 |       | Whatsapp                    |
+| u+f233 |       | Racks                       |
+| u+f234 |       | Add Person                  |
+| u+f235 |       | Remove Person               |
+| u+f236 |       | Sick Person                 |
+| u+f237 |       |                             |
+| u+f238 |       | Monorail                    |
+| u+f239 |       | Tram                        |
+| u+f23a |       |                             |
+| u+f23b |       | Yandex                      |
+| u+f23c |       |                             |
+| u+f23d |       |                             |
+| u+f23e |       | Locked                      |
+| u+f23f |       |                             |
+| u+f240 |       | Charge: 100%                |
+| u+f241 |       | Charge: 75%                 |
+| u+f242 |       | Charge: 50%                 |
+| u+f243 |       | Charge: 25%                 |
+| u+f244 |       | Charge: 0%                  |
+| u+f245 |       | Cursor Pointer              |
+| u+f246 |       | Cursor Text                 |
+| u+f247 |       | Selection                   |
+| u+f248 |       | Move                        |
+| u+f249 |       | Paper                       |
+| u+f24a |       |                             |
+| u+f24b |       |                             |
+| u+f24c |       |                             |
+| u+f24d |       | Copy                        |
+| u+f24e |       | Libra                       |
+| u+f24f |       |                             |
+| u+f250 |       | Hourglass Empty             |
+| u+f251 |       | Hourglass 0%                |
+| u+f252 |       | Hourglass 50%               |
+| u+f253 |       | Hourglass 100%              |
+| u+f254 |       | Hourglass Filled            |
+| u+f255 |       | Cursor Hand Grab            |
+| u+f256 |       | Cursor Hand                 |
+| u+f257 |       | Two                         |
+| u+f258 |       | Lizard                      |
+| u+f259 |       | Spock                       |
+| u+f25a |       | Raise hand                  |
+| u+f25b |       | Peace Victory 2             |
+| u+f25c |       | Trademark                   |
+| u+f25d |       | Registration mark           |
+| u+f25e |       |                             |
+| u+f25f |       |                             |
+| u+f260 |       |                             |
+| u+f261 |       |                             |
+| u+f262 |       | Trip Advisor Owl            |
+| u+f263 |       |                             |
+| u+f264 |       |                             |
+| u+f265 |       |                             |
+| u+f266 |       | Wikipedia                   |
+| u+f267 |       | Browser Safari              |
+| u+f268 |       | Browser Chrome              |
+| u+f269 |       | Browser Firefox             |
+| u+f26a |       | Browser Opera               |
+| u+f26b |       | Browser IE                  |
+| u+f26c |       | Monitor Screen              |
+| u+f26d |       | Langugae C                  |
+| u+f26e |       |                             |
+| u+f26f |       |                             |
+| u+f270 |       | Amazon                      |
+| u+f271 |       | Lead Battery Charge         |
+| u+f272 |       | Lead Battery Discharge      |
+| u+f273 |       | Lead Battery Dead           |
+| u+f274 |       | Lead Battery Healthy        |
+| u+f275 |       |                             |
+| u+f276 |       | Magnifying lens             |
+| u+f277 |       | Directions Board            |
+| u+f278 |       | Maps                        |
+| u+f279 |       | Maps Filled                 |
+| u+f27a |       | Quote Filled                |
+| u+f27b |       | Quote                       |
+| u+f27c |       | Dropbox                     |
+| u+f27d |       |                             |
+| u+f27e |       | Tie                         |
+| u+f27f |       |                             |
+| u+f280 |       |                             |
+| u+f281 |       | Reddit                      |
+| u+f282 |       | Browser Edge                |
+| u+f283 |       |                             |
+| u+f284 |       |                             |
+| u+f285 |       |                             |
+| u+f286 |       | Fort                        |
+| u+f287 |       | USB                         |
+| u+f288 |       | Parking P                   |
+| u+f289 |       |                             |
+| u+f28a |       |                             |
+| u+f28b |       | Pause Filled                |
+| u+f28c |       | Pause                       |
+| u+f28d |       | Stop                        |
+| u+f28e |       | Stop filled                 |
+| u+f28f |       |                             |
+| u+f290 |       | Carry Case                  |
+| u+f291 |       | Basket                      |
+| u+f292 |       | HashTag                     |
+| u+f293 |       | Bluetooth filled            |
+| u+f294 |       | Bluetooth                   |
+| u+f295 |       | Percentage                  |
+| u+f296 |       |                             |
+| u+f297 |       |                             |
+| u+f298 |       |                             |
+| u+f299 |       |                             |
+| u+f29a |       | Accessibility               |
+| u+f29b |       | Wheelchair                  |
+| u+f29c |       | Help Question               |
+| u+f29d |       | Blind                       |
+| u+f29e |       |                             |
+| u+f29f |       |                             |
+| u+f2a0 |       | Phone Incomming             |
+| u+f2a1 |       | Braille                     |
+| u+f2a2 |       | Hearing Partially           |
+| u+f2a3 |       | Sign Language Gesture       |
+| u+f2a4 |       | Hearing impaired Completely |
+| u+f2a5 |       |                             |
+| u+f2a6 |       |                             |
+| u+f2a7 |       | Clap                        |
+| u+f2a8 |       | Visually hidden             |
+| u+f2a9 |       |                             |
+| u+f2aa |       |                             |
+| u+f2ab |       |                             |
+| u+f2ac |       |                             |
+| u+f2ad |       |                             |
+| u+f2ae |       |                             |
+| u+f2af |       |                             |
+| u+f2b0 |       |                             |
+| u+f2b1 |       |                             |
+| u+f2b2 |       |                             |
+| u+f2b3 |       | Google Plus                 |
+| u+f2b4 |       | Flag                        |
+| u+f2b5 |       |                             |
+| u+f2b6 |       |                             |
+| u+f2b7 |       |                             |
+| u+f2b8 |       |                             |
+| u+f2b9 |       |                             |
+| u+f2ba |       |                             |
+| u+f2bb |       |                             |
+| u+f2bc |       |                             |
+| u+f2bd |       |                             |
+| u+f2be |       |                             |
+| u+f2bf |       |                             |
+| u+f2c0 |       | Person Online               |
+| u+f2c1 |       | Identity tag                |
+| u+f2c2 |       | Name Identity Card filled   |
+| u+f2c3 |       | Name Identity Card          |
+| u+f2c4 |       | Quora                       |
+| u+f2c5 |       | Fireplace                   |
+| u+f2c6 |       | Telegram                    |
+| u+f2c7 |       | Themperature 100%           |
+| u+f2c8 |       | Temperature 75%             |
+| u+f2c9 |       | Temperature 50%             |
+| u+f2ca |       | Temperature 25%             |
+| u+f2cb |       | Temperature 0%              |
+| u+f2cc |       | Shower                      |
+| u+f2cd |       | BathTub                     |
+| u+f2ce |       |                             |
+| u+f2cf |       |                             |
+| u+f2d0 |       | Maximize span               |
+| u+f2d1 |       | Mimimize                    |
+| u+f2d2 |       | Restore                     |
+| u+f2d3 |       | Close Window Filled         |
+| u+f2d4 |       | Close Window                |
+| u+f2d5 |       |                             |
+| u+f2d6 |       |                             |
+| u+f2d7 |       |                             |
+| u+f2d8 |       | IMDB                        |
+| u+f2d9 |       |                             |
+| u+f2da |       |                             |
+| u+f2db |       | Integrated Circuid IC       |
+| u+f2dc |       | Snowflake                   |
+| u+f2dd |       |                             |
+| u+f2de |       | Telescope                   |
+| u+f2df |       |                             |
+| u+f2e0 |       |                             |
+| u+f2e1 |       |                             |
+| u+f2e2 |       |                             |
+| u+f2e3 |       |                             |
+| u+f2e4 |       |                             |
+| u+f2e5 |       |                             |
+| u+f2e6 |       |                             |
+| u+f2e7 |       |                             |
+| u+f2e8 |       |                             |
+| u+f2e9 |       |                             |
+| u+f2ea |       |                             |
+| u+f2eb |       |                             |
+| u+f2ec |       |                             |
+| u+f2ed |       |                             |
+| u+f2ee |       |                             |
+| u+f2ef |       |                             |
+| u+f2f0 |       |                             |
+| u+f2f1 |       |                             |
+| u+f2f2 |       |                             |
+| u+f2f3 |       |                             |
+| u+f2f4 |       |                             |
+| u+f2f5 |       |                             |
+| u+f2f6 |       |                             |
+| u+f2f7 |       |                             |
+| u+f2f8 |       |                             |
+| u+f2f9 |       |                             |
+| u+f2fa |       |                             |
+| u+f2fb |       |                             |
+| u+f2fc |       |                             |
+| u+f2fd |       |                             |
+| u+f2fe |       |                             |
+| u+f2ff |       |                             |
+|--------+--------+-----------------------------|

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# -*- coding:utf-8; mode: shell-script -*-
+
+# Date/Time
+date_formatted=$(date +'%Y-%m-%d %H:%M:%S')
+
+# Network
+ip_addr=`ip addr | grep "wlp" | grep "inet" | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1`;
+
+# CPU USAGE
+uptime_usage=$(uptime | rev | cut -d "," -f 3| cut -d " " -f 1 |rev)
+cpu_usage=$(echo "scale=2; ${uptime_usage} * 100 / 4" | bc)
+
+# Get the Linux version "FC**" part
+linux_version=$(uname -r | rev | cut -d "." -f 2 | rev)
+
+#Charge
+charge_full="$(cat /sys/class/power_supply/BAT0/charge_full)"
+charge_now="$(cat /sys/class/power_supply/BAT0/charge_now)"
+battery_status="$(cat /sys/class/power_supply/BAT0/status)"
+
+if [[ ! $battery_status =~ "harg" ]]; then
+    # Battery is full or completely empty
+    battery_chg=""
+else
+    battery_chg=$(echo "scale=2; ${charge_now}*100/${charge_full}"|bc)
+    (( $(echo "${battery_chg} > 99.95" | bc -l) )) && notify-send "Battery FULL"
+    (( $(echo "${battery_chg} < 20" | bc -l) )) && notify-send "Battery too LOW"
+    (( $(echo "${battery_chg} < 10" | bc -l) )) && notify-send "Automatically Suspended"
+    (( $(echo "${battery_chg} < 5" | bc -l) )) && systemctl suspend
+    battery_chg="${battery_chg}%🔋"
+fi
+
+# Emojis and characters for the status bar
+# 💎 💻 💡 🔌 ⚡ 📁 \|
+echo -e "${cpu_usage}%CPU | ${ip_addr}⇵ | ${linux_version}🐧 | ${battery_chg} | ${date_formatted}"
+
+# printf "$(date +'%Y-%m-%d') $(date +'%H:%M:%S')"
