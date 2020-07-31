@@ -134,7 +134,7 @@
 | u+f280 |       |                             |
 | u+f281 |       | Reddit                      |
 | u+f282 |       | Browser Edge                |
-| u+f283 |       |                             |
+| u+f283 |       | Credit Card                 |
 | u+f284 |       |                             |
 | u+f285 |       |                             |
 | u+f286 |       | Fort                        |

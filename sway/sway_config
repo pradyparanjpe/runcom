@@ -13,9 +13,9 @@ set $wifi ${HOME}/.runcom/sway/nmcli
 
 
 set $term alacritty
-set $menu rofi -show drun
+exec rofi
 # set $menu rofi -m $(expr $(swaymsg -t get_tree | jq '.nodes | map([recurse(.nodes[]?, .floating_nodes[]?) | .focused] | any) | index(true)') - 1) -show drun -run-command 'swaymsg exec -- {cmd}'
-# set $menu rofi -m $(swaymsg -t get_outputs | jq 'map(select(.active) | .focused) | index(true)') -show drun -run-command 'swaymsg exec -- {cmd}'
+set $menu rofi -m $(swaymsg -t get_outputs | jq 'map(select(.active) | .focused) | index(true)') -show drun -run-command 'swaymsg exec -- {cmd}'
 set $screenshot grim ${HOME}/Pictures/screenshots/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
 set $screenclip slurp | grim -g - ${HOME}/Pictures/screenshots/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
 set $background ${HOME}/Pictures/Tux.svg
@@ -65,9 +65,10 @@ default_floating_border normal
 hide_edge_borders smart
 
 smart_gaps on
-gaps inner 10
+gaps inner 0
 
 # Autostart
+exec_always --no-startup-id numlockx on
 exec --no-startup-id mako --anchor bottom-left
 # exec --no-startup-id libinput-gestures
 
@@ -81,7 +82,10 @@ input "2:8:AlpsPS/2_ALPS_GlidePoint" {
 
 
 # Output configuration
-output * bg $background center
+# output * bg $background center
+output LVDS-1 pos 0 0 bg $background center
+output VGA-1 pos 1366 0 bg $background center
+focus output LVDS-1
 
 bar {
     position top
@@ -98,11 +102,14 @@ bar {
 
 
 # Default workspaces for common programs
-assign [class="^firefox"] $ws1
+assign [app_id="firefox"] $ws1
+assign [app_id="idle3"] $ws4
 assign [class="^vlc"] $ws5
-assign [class="^idle"] $ws4
 # assign [class="^code-oss$"] $ws2
-
+workspace 6 output LVDS-1
+workspace 7 output LVDS-1
+workspace 8 output LVDS-1
+workspace 9 output LVDS-1
 
 # Shortcuts
 # Apps
@@ -144,11 +151,11 @@ bindsym --locked XF86MonBrightnessUp exec --no-startup-id light -A 10
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 10
 
 # Idle configuration
-exec swayidle \
-    timeout 300 'exec $lock' \
-    timeout 600 'swaymsg "output * dpms off"' \
-    after-resume 'swaymsg "output * dpms on"' \
-    before-sleep 'exec $lock'
+exec swayidle -w \
+    timeout 600  'swaymsg "output * dpms off"' \
+    resume       'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -i $333333' \
+    lock         'exec $lock'
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -213,6 +220,16 @@ bindsym $mod+Shift+F9   move container to workspace $wsF9
 bindsym $mod+Shift+F10  move container to workspace $wsF10
 bindsym $mod+Shift+F11  move container to workspace $wsF11
 bindsym $mod+Shift+F12  move container to workspace $wsF12
+
+# Move workspace to different outputs
+bindsym $mod+Control+Shift+Right move workspace to output right
+bindsym $mod+Control+Shift+$right move workspace to output right
+bindsym $mod+Control+Shift+Left move workspace to output left
+bindsym $mod+Control+Shift+$left move workspace to output left
+bindsym $mod+Control+Shift+Up move workspace to output up
+bindsym $mod+Control+Shift+$up move workspace to output up
+bindsym $mod+Control+Shift+Down move workspace to output down
+bindsym $mod+Control+Shift+$down move workspace to output down
 
 # Layout stuff:
 

@@ -1,4 +1,5 @@
 #/usr/bin/env bash
+#-*- coding: utf-8; mode:shell-script -*-
 #
 # Copyright 2020 Pradyumna Paranjape
 #
@@ -38,3 +39,8 @@ export PYOPENCL_COMPILER_OUTPUT=1;
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt";
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+
+# If running from tty1 start sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+	exec sway
+fi

@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8; mode: python -*-
+'''
+sway bar output
+'''
+
+from datetime import datetime
+from warnings import filterwarnings
+
+try:
+    from sys import exit as sysexit
+    from os import uname
+    from subprocess import Popen
+    from psutil import (virtual_memory, cpu_percent, sensors_battery,
+                        sensors_temperatures, net_if_addrs)
+except ModuleNotFoundError:
+    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    sysexit(5)
+
+
+EMOJIS = dict(
+    cpu=chr(0x1F9E0),
+    bat_100=chr(0xf240),
+    bat_75=chr(0xf241),
+    bat_50=chr(0xf242),
+    bat_25=chr(0xf243),
+    bat_0=chr(0xf244),
+    ram=chr(0xf233),
+    clock=chr(0x23f0),
+    tux=chr(0x1f427),
+    net=chr(0x21f5),
+    fire=chr(0x1F525),
+    temp_100=chr(0xf2c7),
+    temp_75=chr(0xf2c8),
+    temp_50=chr(0xf2c9),
+    temp_25=chr(0xf2ca),
+    temp_0=chr(0xf2cb),
+)
+
+
+def _battery() -> str:
+    '''Create Battery summary string'''
+    bat_str = ''
+    bat_probe = sensors_battery()
+    if not bat_probe:
+        return f"{ EMOJIS['bat_0']} "
+    bat_fill = bat_probe.percent
+    bat_conn = bat_probe.power_plugged
+
+    # Action
+    if bat_conn:
+        if bat_fill > 99:
+            Popen(['notify-send', 'Battery_charged'])
+    else:
+        if bat_fill < 20:
+            Popen(['notify-send', 'Battery Too Low'])
+        elif bat_fill < 10:
+            Popen(['notify-send', 'Battery Too Low Suspending Session...'])
+        elif bat_fill < 5:
+            Popen(['systemctl', 'suspend'])
+
+    # Indicator type
+    if bat_fill >= 100:
+        return f"{ EMOJIS['bat_100']} "
+    if bat_fill > 75:
+        bat_str = f"{EMOJIS['bat_75']}"
+    elif bat_fill > 50:
+        bat_str = f"{EMOJIS['bat_50']}"
+    elif bat_fill > 25:
+        bat_str = f"{EMOJIS['bat_25']}"
+    else:
+        bat_str = f"{EMOJIS['bat_0']}"
+    bat_str += f" {bat_fill:.2f} %"
+    return bat_str
+
+
+def _memory() -> str:
+    '''Create Memory summary string'''
+    mem_str = f"{EMOJIS['ram']}"
+    use_fraction_memory = int(virtual_memory().percent)
+    mem_str += f" {use_fraction_memory} %"
+    return mem_str
+
+
+def _time() -> str:
+    '''create Time summary string'''
+    time_str = f"{EMOJIS['clock']}"
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    time_str += f" {now_str}"
+    return time_str
+
+
+def _cpu() -> str:
+    '''Create CPU summary string'''
+    cpu_str = f"{EMOJIS['cpu']}"
+    cpu_usage = cpu_percent()
+    cpu_str += f" {cpu_usage:.2f}%"
+    return cpu_str
+
+
+def _heat() -> str:
+    '''Create Temperature summary string'''
+    heat_str = ''
+    heat = sensors_temperatures()['coretemp'][0].current
+    if heat > 80:
+        heat_str = f"{EMOJIS['fire']}"
+    elif heat > 70:
+        heat_str = f"{EMOJIS['temp_100']}"
+    elif heat > 60:
+        heat_str = f"{EMOJIS['temp_75']}"
+    elif heat > 50:
+        heat_str = f"{EMOJIS['temp_50']}"
+    elif heat > 40:
+        heat_str = f"{EMOJIS['temp_25']}"
+    else:
+        heat_str = f"{EMOJIS['temp_0']}"
+    heat_str += f" {heat:.0f}"
+    return heat_str
+
+
+def _ip_addr() -> str:
+    '''Create IP ADDRESS string'''
+    ip_key = ""
+    ip_addr = ""
+    ip_str = f"{EMOJIS['net']}"
+    for k in net_if_addrs().keys():
+        if "wl" in k:
+            ip_key = k
+            break
+    if not ip_key:
+        return f"{ip_str} UNKNOWN"
+    for sub_dev in list(net_if_addrs()[ip_key]):
+        if sub_dev.netmask and sub_dev.broadcast:
+            ip_addr = sub_dev.address
+            break
+    if not ip_addr:
+        return f"{ip_str} UNKNOWN"
+    ip_str += f" {ip_addr}"
+    return ip_str
+
+
+def _uname() -> str:
+    '''Create Linux release string'''
+    uname_str = f"{EMOJIS['tux']}"
+    uname_r = uname().release.split(".")[-2]
+    uname_str += f" {uname_r}"
+    return uname_str
+
+
+def main():
+    '''Main Routine'''
+    print(f"{_uname()} | {_ip_addr()} | {_cpu()} | {_memory()} | {_battery()} \
+| {_heat()} | {_time()}")
+    sysexit(0)
+
+
+if __name__ == "__main__":
+    filterwarnings('ignore')
+    main()
