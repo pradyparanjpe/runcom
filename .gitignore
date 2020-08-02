@@ -12,10 +12,7 @@
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-# Tests, backups
-*.new
-*.old
-*.bak# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -152,3 +149,11 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Tests, backups
+*.new
+*.old
+*.bak
+
+# Locals
+*locals.conf.d/
