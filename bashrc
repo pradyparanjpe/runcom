@@ -39,6 +39,8 @@ export PYOPENCL_COMPILER_OUTPUT=1;
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt";
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+export WLR_BACKENDS="headless";
+export WLR_LIBINPUT_NO_DEVICES=1
 
 # If running from tty1 start sway
 if [ "$(tty)" = "/dev/tty1" ]; then
