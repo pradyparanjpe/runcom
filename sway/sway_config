@@ -73,7 +73,7 @@ exec --no-startup-id mako --anchor bottom-left
 # exec --no-startup-id libinput-gestures
 
 # Input configuration
-input "2:8:AlpsPS/2_ALPS_GlidePoint" {
+input * {
     dwt enabled
     tap enabled
     natural_scroll enabled
@@ -88,10 +88,8 @@ input * {
  }
 
 # Output configuration
-# output * bg $background center
-output LVDS-1 pos 0 0 bg $background center #000000
-output VGA-1 pos 1366 0 bg $background center #000000
-focus output LVDS-1
+ 
+output * bg $background center #000000
 
 bar {
     position top
@@ -295,3 +293,4 @@ mode passthrough {
 }
 bindsym $mod+Escape mode passthrough
 include ${HOME}/.runcom/locals.conf.d/input.conf
+include ${HOME}/.runcom/locals.conf.d/output.conf
