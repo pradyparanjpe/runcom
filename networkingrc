@@ -79,8 +79,8 @@ else
 		if [[ $ccmb_server_ping =~ $loss || -z $ccmb_server_ping ]]; then
 			true;
 		else
-			if [[ -f ${HOME}/.runcom/send_proxy.py ]]; then
-				/usr/bin/python3 ${HOME}/.runcom/send_proxy.py;
+			if [[ -f ${HOME}/.runcom/proxy_send.py ]]; then
+				/usr/bin/python3 ${HOME}/.runcom/proxy_send.py;
 				if [[ $? -eq 0 ]]; then
 					echo -e "${YELLOW}PROXY AUTH SENT${NO_EFFECTS}";
 				fi

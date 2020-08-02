@@ -108,10 +108,10 @@ bar {
 
 
 # Default workspaces for common programs
-assign [app_id="^Emacs$"] $ws2
-assign [class="^Firefox$"] $ws1
-assign [title="^Python \d\.\d\.\d Shell$"] $ws4
-assign [class="^vlc$"] $ws5
+assign [app_id="firefox"] $ws1
+assign [app_id="idle3"] $ws4
+assign [class="^vlc"] $ws5
+# assign [class="^code-oss$"] $ws2
 workspace 6 output LVDS-1
 workspace 7 output LVDS-1
 workspace 8 output LVDS-1
@@ -275,7 +275,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
-
 mode "$mode_system" {
     bindsym l exec $lock, mode "default"
     bindsym e exit
