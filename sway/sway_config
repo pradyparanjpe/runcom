@@ -38,7 +38,7 @@ set $ws2   🦬
 set $ws3   🐧
 set $ws4   🐍
 set $ws5   📹
-set $ws6   6
+set $ws6   
 set $ws7   7
 set $ws8   8
 set $ws9   9
@@ -93,7 +93,8 @@ output * bg $background center #000000
 
 bar {
     position top
-
+    font FiraCode Semi-Bold,Condensed 12
+    pango_markup enabled
     # When the status_command prints a new line to stdout, swaybar updates.
     status_command $status_bar 1 -s 10
 
@@ -106,14 +107,15 @@ bar {
 
 
 # Default workspaces for common programs
-assign [app_id="^Emacs$"] $ws2
 assign [class="^Firefox$"] $ws1
+assign [class="^Emacs"] $ws2
 assign [title="^Python \d\.\d\.\d Shell$"] $ws4
 assign [class="^vlc$"] $ws5
-workspace 6 output LVDS-1
-workspace 7 output LVDS-1
-workspace 8 output LVDS-1
-workspace 9 output LVDS-1
+assign [class="Google-chrome"] $ws6
+workspace $wsF1 output LVDS-1
+workspace $wsF2 output LVDS-1
+workspace $wsF3 output LVDS-1
+workspace $wsF4 output LVDS-1
 
 # Shortcuts
 # Apps
