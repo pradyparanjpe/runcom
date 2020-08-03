@@ -36,6 +36,7 @@ export PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";
 export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
+export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/')/site-packages:${HOME}/lib64/$(python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/')site-packages";
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export EXPENDLOG="${HOME}/Ledger/money/expenditure.txt";
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";

@@ -153,7 +153,7 @@
 | u+f293 |       | Bluetooth filled            |
 | u+f294 |       | Bluetooth                   |
 | u+f295 |       | Percentage                  |
-| u+f296 |       |                             |
+| u+f296 |       | Gitlab                      |
 | u+f297 |       |                             |
 | u+f298 |       |                             |
 | u+f299 |       |                             |

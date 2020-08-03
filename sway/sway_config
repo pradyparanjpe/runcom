@@ -10,7 +10,7 @@ set $right l
 set $lock ${HOME}/.runcom/sway/lock
 set $wifi ${HOME}/.runcom/sway/nmcli
 
-set $status_bar ${HOME}/.runcom/sway/status_bar
+set $status_bar pspbar
 
 set $term alacritty
 exec rofi

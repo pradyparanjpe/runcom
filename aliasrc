@@ -37,7 +37,7 @@ alias watch="watch -n 10 --color";
 alias work_PC7="ssh -X prady@${PC7ip}";
 alias HPCconnect="ssh paranjpe@${HPC}"
 alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
-alias psauxgrep="ps aux | grep -v 'grep' | grep -v 'ps' | grep -i";
+alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'ps' | grep -i";
 alias ping="ping -c 4 ";
 alias tcpz="tar -c --use-compress-program=pigz ";
 alias txpz="tar -x --use-compress-program=pigz "; ## Uses multiple threads

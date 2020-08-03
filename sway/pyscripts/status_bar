@@ -5,22 +5,27 @@ sway bar output
 '''
 
 from datetime import datetime
-from warnings import filterwarnings
 from time import sleep
 from sys import exit as sysexit
-from os import uname
-from subprocess import Popen
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 
 try:
     from psutil import (virtual_memory, cpu_percent, sensors_battery,
                         sensors_temperatures, net_if_addrs, net_io_counters)
 except ModuleNotFoundError:
     while True:
-        print("Install pyutils; Falling back to basic:",
-              datetime.now().strftime("%Y-%m-%d %H:%M:%S"), flush=True)
+        print('<span foreground="#FF7755FF"> Install psutil',
+              'meanwhile, falling back to basic:\t',
+              datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+              '</span>', flush=True)
         sleep(1)
+    # This will never happen
     sysexit(5)
+
+
+from warnings import filterwarnings
+from os import uname
+from subprocess import Popen
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 
 
 def parse_cli() -> tuple:
@@ -67,12 +72,12 @@ class BarSeg():
     def update(self, method=None) -> None:
         '''
         method: function that updates the segment
-        kwargs: a dict object returned by method, that may contain:
+        kwargs: a dict object returned by METHOD, that may contain:
         symbol: to update
         magnitude: to update
         mem: to update
-        magnitude: to update
         ml_tag: pango tag to decorate
+        vis: (bool) visibility
 
         Update magnitude and symbol
         '''
@@ -99,9 +104,12 @@ class SBar():
 
     def add_segs(self, interval: int = 1, position: int = None, **kwargs):
         '''
-        interval: Interval of update: 0: Begin, 1: frequent, 2: intermittent
+        interval: Interval of update. Numerical code:
+        Beginning: 0,
+        frequently: 1,
+        intermittently: 2.
         position: Position of segment from edge
-        **kwargs: will be passed to BarSeg
+        kwargs: will be passed to BarSeg
 
         Add segment to bar
         '''
@@ -117,17 +125,17 @@ class SBar():
         return new_seg
 
     def _slow_tick(self) -> None:
-        '''fast updating segments'''
+        '''slow updating segments'''
         for seg in self.slow_segs:
             seg.update()
 
     def _quick_tick(self) -> None:
-        '''slow updating widgets'''
+        '''fast updating widgets'''
         for seg in self.quick_segs:
             seg.update()
 
     def _static_vals(self) -> None:
-        '''static widgets'''
+        '''static segments'''
         for seg in self.static_segs:
             seg.update()
 
@@ -169,22 +177,22 @@ class Definitions():
     def __init__(self) -> None:
         '''Object container for all defined bar segments'''
         self.emojis = {
-            "cpu":       chr(0x1f9e0),
-            "bat_100":   chr(0xf240),
-            "bat_75":    chr(0xf240),
-            "bat_50":    chr(0xf242),
-            "bat_25":    chr(0xf243),
-            "bat_0":     chr(0xf244),
-            "ram":       chr(0xf233),
-            "clock":     chr(0x23f0),
-            "tux":       chr(0x1f427),
-            "wifi":       chr(0x21f5),
-            "fire":      chr(0x1f525),
-            "temp_100":  chr(0xf2c7),
-            "temp_75":   chr(0xf2c8),
-            "temp_50":   chr(0xf2c9),
-            "temp_25":   chr(0xf2ca),
-            "temp_0":    chr(0xf2cb),
+            "bat_100":  '\uf240',
+            "bat_75":   '\uf240',
+            "bat_50":   '\uf242',
+            "bat_25":   '\uf243',
+            "bat_0":    '\uf244',
+            "ram":      '\uf233',
+            "clock":    '\u23f0',
+            "wifi":     '\u21f5',
+            "temp_100": '\uf2c7',
+            "temp_75":  '\uf2c8',
+            "temp_50":  '\uf2c9',
+            "temp_25":  '\uf2ca',
+            "temp_0":   '\uf2cb',
+            "fire":     chr(0x1f525),
+            "tux":      chr(0x1f427),
+            "cpu":      chr(0x1f9e0),
             "net":      chr(0x1f4f6),
         }
 
@@ -321,22 +329,25 @@ def main():
                     position=1, method=senses.battery, interval=2)
     topbar.add_segs(symbol=senses.emojis['cpu'], units="%",
                     position=2, method=senses.cpu, interval=1)
-    topbar.add_segs(symbol=senses.emojis['fire'], units=chr(0x2103),
+    topbar.add_segs(symbol=senses.emojis['fire'], units='\u2103',
                     position=3, method=senses.heat, interval=2)
     topbar.add_segs(symbol=senses.emojis['ram'], units="%",
                     position=4, method=senses.ram_use, interval=1)
     topbar.add_segs(symbol=senses.emojis['net'],
                     position=5, method=senses.ip_addr, interval=0)
-    topbar.add_segs(symbol=senses.emojis['tux'],
-                    position=7, method=senses.uname, interval=0)
-    topbar.add_segs(symbol=senses.emojis['wifi']+chr(0x25BC),
-                    units=chr(0x25B2) + "MB/s",
+    topbar.add_segs(symbol=senses.emojis['wifi']+'\u25BC',
+                    units='\u25B2' + "MB/s",
                     mem=[period * multi, 0, 0],
                     position=6, method=senses.netspeed, interval=2)
+    topbar.add_segs(symbol=senses.emojis['tux'],
+                    position=7, method=senses.uname, interval=0,
+                    ml_tag=['<span foreground="#77AAFFFF">', '</span>'])
     topbar.loop(period=period, multi=multi)
-    sysexit(0)
 
 
 if __name__ == "__main__":
     filterwarnings('ignore')
     main()
+
+    # This will never happen
+    sysexit(0)
