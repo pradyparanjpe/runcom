@@ -112,6 +112,7 @@ assign [class="^Emacs"] $ws2
 assign [title="^Python \d\.\d\.\d Shell$"] $ws4
 assign [class="^vlc$"] $ws5
 assign [class="Google-chrome"] $ws6
+assign [app_id="^waypipe.*"] $ws0
 workspace $wsF1 output LVDS-1
 workspace $wsF2 output LVDS-1
 workspace $wsF3 output LVDS-1
@@ -123,7 +124,9 @@ bindsym $mod+Shift+f exec firefox
 bindsym $mod+Mod1+i exec idle3
 bindsym $mod+Shift+g exec emacsclient -c -a=""
 bindsym $mod+Shift+v exec vlc
-bindsym $mod+Ctrl+Shift+g exec systemctl --user restart emacs
+bindsym $mod+Ctrl+Shift+g exec systemctl --user restart emacs && notify-send "Emacs (re)Loaded"
+bindsym $mod+Mod1+g exec waypipe ssh coder@192.168.0.109 emacsclient -c -a=""
+bindsym $mod+Mod1+Return exec waypipe ssh coder@192.168.0.109 tilix
 
 bindsym $mod+Return exec $term
 bindsym $mod+Print exec $screenshot
@@ -160,7 +163,7 @@ bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 10
 exec swayidle -w \
     timeout 600  'swaymsg "output * dpms off"' \
     resume       'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -i $333333' \
+    before-sleep 'swaylock -i #333333' \
     lock         'exec $lock'
 
 # Move your focus around
@@ -294,5 +297,7 @@ mode "passthrough" {
 	bindsym $mod+Escape mode default
 }
 bindsym $mod+Escape mode passthrough
-include ${HOME}/.runcom/locals.conf.d/input.conf
-include ${HOME}/.runcom/locals.conf.d/output.conf
+
+# inclusions
+include ${HOME}/.runcom/sway/locals.conf.d/input.conf
+include ${HOME}/.runcom/sway/locals.conf.d/output.conf

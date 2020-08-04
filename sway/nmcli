@@ -20,6 +20,7 @@ if [[ $KNOWN ]]; then
     nmcli device wifi connect ${NAME} \
         && notify-send "Connected to ${NAME}" \
         || notify-send "Couldn't connect to ${NAME}"
+    swaymsg reload
 else
     notify-send "No known wifi available"
 fi
