@@ -31,7 +31,7 @@ if [[ "$netcode" -gt 7 ]]; then
 else
     echo -e "${RED_BOLD}Internet (GOOGLE) Not reachable${NO_EFFECTS}"
     if [[ $(( netcode % 8 )) -gt 3 ]]; then  # Intranet is connected
-        echo -r "${RED}Internet Down${NO_EFFECTS}"
+        echo -e "${RED}Internet Down${NO_EFFECTS}"
         case $(( netcode % 4 )) in
             2) echo -e "Home network connected,"
                ;;
