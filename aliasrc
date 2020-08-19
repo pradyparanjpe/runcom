@@ -18,14 +18,56 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+
+deconvolute() {
+    if [[ ! -f "$1" ]]; then
+        echo "$1: no such file";
+    else
+        case "$1" in
+            *.tar.bz2)
+                tar -xjf "$1"
+                ;;
+            *.tbz2)
+                tar -xjf "$1"
+                ;;
+            *.tar.gz)
+                tar -x --use-compress-program=pigz -f "$1"
+                ;;
+            *.tgz)
+                tar -x --use-compress-program=pigz -f "$1"
+                ;;
+            *.gz)
+                pigz "$1"
+                ;;
+            *.rar)
+                unrar -x "$1"
+                ;;
+            *.tar)
+                tar -xf "$1"
+                ;;
+            *.zip)
+                unzip "$1"
+                ;;
+            *.tar.xz)
+                tar -xf "$1"
+                ;;
+            *)
+                echo "Cannot extract $1, provide explicit command"
+        esac
+    fi
+}
+
+
 ## Aliases
-alias ls="ls -Fh --color=auto"; ## always list human readable
-alias la='ls -A --color=auto'; ## List almost all
-alias ll='ls -lSscr'; ## list files sorted by size, human readable
-alias lla='ll -A'; ## List almost all in detail
+alias ls="exa -Fh --color=auto"; ## always list human readable
+alias la='exa -a --color=auto'; ## List almost all
+alias ll='exa -lr -s size'; ## list files sorted by size, human readable
+alias lla='exa -a'; ## List almost all in detail
+alias l.='exa -a --color=auto |grep "^\."'; # list hidden dot files
 alias nload='nload -u K -U M -t 10000 -a 3600'; ## upload/ download units
 alias dnf='dnf --exclude=*-doc* --exclude=*-debuginfo*'; ## unnecessary debuginfo
 alias du='du -hc'; ## Always list human readable, total
+alias df='df -h'; ## Always list human readable, total
 alias mount="mount -v";
 alias umount="umount -v";
 alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
