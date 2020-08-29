@@ -41,7 +41,7 @@ if [[ -z $ip_addr ]]; then
 fi
 
 
-ap_addr="$(ip neigh | grep "\.1 " |cut -d " " -f 1)";
+ap_addr="$(ip neigh | grep "\.1 " | head -1 |cut -d " " -f 1)";
 intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
 
 export ap_addr
