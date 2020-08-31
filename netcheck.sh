@@ -41,7 +41,11 @@ if [[ -z $ip_addr ]]; then
 fi
 
 
-ap_addr="$(ip neigh | grep "\.1 " | head -1 |cut -d " " -f 1)";
+ap_addr="$(ip neigh \
+                | grep -iv "failed" \
+                | grep "\.1 " \
+                | head -1 \
+                | cut -d " " -f 1)";
 intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
 
 export ap_addr
@@ -50,6 +54,7 @@ export ip_addr
 if [[ -n "$ip_addr" ]]; then
     $google_ping_cmd 2>&1 1>/dev/null && inter=1
     $intra_ping_cmd 2>&1 1>/dev/null && intra=1
+    [[ "${ap_addr}" =~ "192.168.1.1" ]] && home=1
     [[ "${ap_addr}" =~ "192.168.0.1" ]] && home=1
     [[ "$home" == "0" ]] && $ccmb_ping_cmd 2>&1 1>/dev/null && ccmb=1
 fi
