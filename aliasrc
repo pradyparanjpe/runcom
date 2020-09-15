@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 # -*- coding: utf-8; mode:shell-script -*-
 #
 # Copyright 2020 Pradyumna Paranjape
@@ -62,6 +62,13 @@ deconvolute() {
     fi
 }
 
+# ripgrep is better than grep
+for sc in "rg" "ag" "pt" "ack" "grep"; do
+    if hash "$sc"; then
+        alias grep="$sc";
+        break
+    fi
+done
 
 # List Contents
 alias ls="exa -Fh --color=auto"; ## always list human readable
@@ -77,7 +84,7 @@ alias df='df -h'; ## Always list human readable, total
 alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 
 # Network
-alias nload="nload -u K -U M -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
+alias nload="nload -u M -U G -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
 alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\""; ## run nethogs as root on wifi
 alias ping="ping -c 4 ";
 
@@ -93,12 +100,14 @@ alias activateRNA="deactivate || true; source ${HOME}/RNASeq3/bin/activate && cd
 alias qstatf="while true; do date; ssh paranjpe@192.168.14.20 qstat -f; sleep 900; done;";
 alias qstat="while true; do date; ssh paranjpe@192.168.14.20 qstat ; sleep 900; done;";
 alias watch="watch -n 10 --color";
-alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep'| grep -i";
+alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
 
 # Remote logins
 alias work_PC7="ssh -X prady@${PC7ip}";
 alias HPCconnect="ssh paranjpe@${HPC}"
-alias copy_to_HPC='function copyfn(){ scp $@ paranjpe@${HPC}:/home/paranjpe/prady_data/; };copyfn'
+function copy_to_HPC() {
+    scp "$@" "paranjpe@${HPC}:/home/paranjpe/prady_data/";
+}
 
 # Better program defaults
 alias ex="nvim"; ## always open vim in normal mode
