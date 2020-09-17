@@ -85,16 +85,16 @@ alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 
 # Network
 alias nload="nload -u M -U G -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
-alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\""; ## run nethogs as root on wifi
+alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\"";
 alias ping="ping -c 4 ";
 
 # Environment
 alias su=" su -"; ## become root with variables
 alias sourceit="source ~/.bashrc";
 alias to_venv="source .venv/bin/activate";
-alias activateGRN="deactivate || true; source ${HOME}/Leish_Petri/bin/activate && cd /media/data/GRN_PYGMO/Python/multi_objective";
-alias activateVIS="deactivate || true; source ${HOME}/visualize/bin/activate && cd /media/data/GRN_PYGMO/Python/multi_objective";
-alias activateRNA="deactivate || true; source ${HOME}/RNASeq3/bin/activate && cd /media/experiments/RNASeq/";
+alias activateGRN="deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate";
+alias activateVIS="deactivate || true; source ${HOME}/.virtualenvs/visualize/bin/activate";
+alias activateRNA="deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate";
 
 # Monitor Jobs
 alias qstatf="while true; do date; ssh paranjpe@192.168.14.20 qstat -f; sleep 900; done;";
@@ -113,3 +113,6 @@ function copy_to_HPC() {
 alias ex="nvim"; ## always open vim in normal mode
 alias vim="nvim"; ## always use neo
 alias docker="podman";  # Podman is drop-in replacement for docker
+
+# Lazy one-hand
+alias qqqq="exit";
