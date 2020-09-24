@@ -67,7 +67,7 @@ if [[ $(( netcode % 4 )) -eq 2 ]]; then
         for pathloc in ${clouddir[@]}; do
             mntpath="${srv_mnt_dir}${pathloc}"
             mkdir -p "$mntpath"
-            sshfs "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+            sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
         done
     fi
 fi

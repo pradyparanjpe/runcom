@@ -42,3 +42,53 @@ deactivate() {
 	# assume that python virtual environments are not active
 	true
 }
+
+org2export() {
+    # Usage: org2oth [-f] <infile> <othtype>
+    proceed=
+    while test $# -gt 1; do
+        case "$1" in
+            -f|--force)
+                proceed=true
+                shift 1
+                ;;
+            *)
+                infile="${1}"
+                shift 1
+                ;;
+        esac
+    done
+    if [[ "${1}" == "pdf" ]]; then
+        target="latex"
+    else
+        target="${1}"
+    fi
+    tarext="${1}"
+    if [[ "$infile" == *.org ]]; then
+        proceed=true
+    else
+        echo "Input file should be an org file"
+    fi
+    if [[ -n "$proceed" ]]; then
+        pandoc -f org -t "${target}" -o "${infile/.org/}.${tarext}" "$infile"
+    fi
+    proceed=
+    target=
+    infile=
+}
+
+org2doc () {
+    org2export "$@" "docx"
+}
+
+org2pdf () {
+    org2export "$@" "pdf"
+}
+
+doc2org() {
+    if [[ "$1" == *.docx ]]; then
+        pandoc -f docx -t org -o  "${1/%docx/org}" "$1"
+    else
+        echo "Input file must be a docx file"
+    fi
+}
