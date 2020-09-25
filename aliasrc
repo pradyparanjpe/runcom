@@ -113,6 +113,7 @@ function copy_to_HPC() {
 alias ex="nvim"; ## always open vim in normal mode
 alias vim="nvim"; ## always use neo
 alias docker="podman";  # Podman is drop-in replacement for docker
+alias pip="python -m pip"; # Invoke pip with python
 
 # Lazy one-hand
 alias qqqq="exit";
