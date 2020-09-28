@@ -94,6 +94,10 @@ function doc2org() {
 }
 
 function gui () {
-    nohup "$@" &>/dev/null 0<&- &
-    exit
+    if [[ -n "$@" ]]; then
+        if hash "${@%% *}"; then
+            exec nohup $@ &>/dev/null 0<&- &
+            exit 0
+        fi
+    fi
 }
