@@ -18,18 +18,18 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 
-dec2hex() {
+function dec2hex() {
 	echo "hex:"
 	echo "obase=16; $@"| bc
 	echo "dec:"
 	echo "ibase=16; $@"| bc
 }
 
-mathcalc() {
+function mathcalc() {
 	echo "scale=4; $@"| bc
 }
 
-pdfcompile() {
+function pdfcompile() {
 	pdflatex $1
 	for ext in toc log aux; do
 		delfile=${1/\.tex/\.$ext}
@@ -38,12 +38,12 @@ pdfcompile() {
 	evince ${1/\.tex/\.pdf}
 }
 
-deactivate() {
+function deactivate() {
 	# assume that python virtual environments are not active
 	true
 }
 
-org2export() {
+function org2export() {
     # Usage: org2oth [-f] <infile> <othtype>
     proceed=
     while test $# -gt 1; do
@@ -77,18 +77,23 @@ org2export() {
     infile=
 }
 
-org2doc () {
+function org2doc () {
     org2export "$@" "docx"
 }
 
-org2pdf () {
+function org2pdf () {
     org2export "$@" "pdf"
 }
 
-doc2org() {
+function doc2org() {
     if [[ "$1" == *.docx ]]; then
         pandoc -f docx -t org -o  "${1/%docx/org}" "$1"
     else
         echo "Input file must be a docx file"
     fi
+}
+
+function gui () {
+    nohup "$@" &>/dev/null 0<&- &
+    exit
 }
