@@ -37,14 +37,4 @@ export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
 # export WLR_BACKENDS="headless";
 # export WLR_LIBINPUT_NO_DEVICES=1;
 
-for term in foot termite tilix xterm gnome-terminal; do
-    if [[ -n "$(command -v $term)" ]]; then
-        export defterm="$term";
-        break;
-    fi;
-done
 
-# If running from tty1 start sway
-if [ "$(tty)" = "/dev/tty1" ]; then
-	exec sway
-fi
