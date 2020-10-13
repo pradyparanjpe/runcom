@@ -64,19 +64,21 @@ deconvolute() {
 
 # ripgrep is better than grep
 for sc in "rg" "ag" "pt" "ack" "grep"; do
-    if hash "$sc"; then
+    if command -v "$sc"; then
         alias grep="$sc";
         break
     fi
 done
 
 # List Contents
-alias ls="exa -Fh --color=auto"; ## always list human readable
-alias la='exa -a --color=auto'; ## List almost all
-alias ll='exa -lr -s size'; ## list files sorted by size, human readable
-alias lla='exa -a'; ## List almost all in detail
-alias l.='exa -a --color=auto |grep "^\."'; # list hidden dot files
-alias sl="sl -al"; ## steamlocomotive
+if command -v "exa"; then
+    alias ls="exa -Fh --color=auto"; ## always list human readable
+    alias la='exa -a --color=auto'; ## List almost all
+    alias ll='exa -lr -s size'; ## list files sorted by size, human readable
+    alias lla='exa -a'; ## List almost all in detail
+    alias l.='exa -a --color=auto |grep "^\."'; # list hidden dot files
+    alias sl="sl -al"; ## steamlocomotive
+fi
 
 # disk usage
 alias du='du -hc'; ## Always list human readable, total
@@ -110,9 +112,13 @@ function copy_to_HPC() {
 }
 
 # Better program defaults
-alias ex="nvim"; ## always open vim in normal mode
-alias vim="nvim"; ## always use neo
-alias docker="podman";  # Podman is drop-in replacement for docker
+if command -v nvim; then
+    alias ex="nvim"; ## always open vim in normal mode
+    alias vim="nvim"; ## always use neo
+fi
+if command -v podman; then
+    alias docker="podman";  # Podman is drop-in replacement for docker
+fi
 alias pip="python -m pip"; # Invoke pip with python
 
 # Lazy one-hand
