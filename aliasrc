@@ -64,14 +64,14 @@ deconvolute() {
 
 # ripgrep is better than grep
 for sc in "rg" "ag" "pt" "ack" "grep"; do
-    if command -v "$sc"; then
-        alias grep="$sc";
+    if command -v "$sc" >>/dev/null; then
+        alias grep="$sc --color=auto";
         break
     fi
 done
 
 # List Contents
-if command -v "exa"; then
+if command -v "exa" >>/dev/null; then
     alias ls="exa -Fh --color=auto"; ## always list human readable
     alias la='exa -a --color=auto'; ## List almost all
     alias ll='exa -lr -s size'; ## list files sorted by size, human readable
@@ -112,11 +112,11 @@ function copy_to_HPC() {
 }
 
 # Better program defaults
-if command -v nvim; then
+if command -v nvim >>/dev/null; then
     alias ex="nvim"; ## always open vim in normal mode
     alias vim="nvim"; ## always use neo
 fi
-if command -v podman; then
+if command -v podman >>/dev/null; then
     alias docker="podman";  # Podman is drop-in replacement for docker
 fi
 alias pip="python -m pip"; # Invoke pip with python
