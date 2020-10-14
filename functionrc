@@ -18,6 +18,12 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 
+# Mathematical
+function mathcalc() {
+	  echo "scale=4; $@"| bc
+}
+
+# Computational
 function dec2hex() {
 	echo "hex:"
 	echo "obase=16; $@"| bc
@@ -25,24 +31,21 @@ function dec2hex() {
 	echo "ibase=16; $@"| bc
 }
 
-function mathcalc() {
-	echo "scale=4; $@"| bc
-}
-
-function pdfcompile() {
-	pdflatex $1
-	for ext in toc log aux; do
-		delfile=${1/\.tex/\.$ext}
-		[[ -f "$delfile" ]] && rm "$delfile"
-	done
-	evince ${1/\.tex/\.pdf}
-}
-
+# Dummy placeholder
 function deactivate() {
 	# assume that python virtual environments are not active
 	true
 }
 
+# compilation
+function pdfcompile() {
+	  pdflatex $1
+	  for ext in toc log aux; do
+		    delfile=${1/\.tex/\.$ext}
+		    [[ -f "$delfile" ]] && rm "$delfile"
+	  done
+	  evince ${1/\.tex/\.pdf}
+}
 function org2export() {
     # Usage: org2oth [-f] <infile> <othtype>
     proceed=
@@ -93,11 +96,50 @@ function doc2org() {
     fi
 }
 
+# exec "aliases" as function
 function gui () {
     if [[ -n "$@" ]]; then
         if hash "${@%% *}"; then
             exec nohup $@ &>/dev/null 0<&- &
             exit 0
         fi
+    fi
+}
+
+deconvolute() {
+    if [[ ! -f "$1" ]]; then
+        echo "$1: no such file";
+    else
+        case "$1" in
+            *.tar.bz2)
+                tar -xjf "$1"
+                ;;
+            *.tbz2)
+                tar -xjf "$1"
+                ;;
+            *.tar.gz)
+                tar -x --use-compress-program=pigz -f "$1"
+                ;;
+            *.tgz)
+                tar -x --use-compress-program=pigz -f "$1"
+                ;;
+            *.gz)
+                pigz "$1"
+                ;;
+            *.rar)
+                unrar -x "$1"
+                ;;
+            *.tar)
+                tar -xf "$1"
+                ;;
+            *.zip)
+                unzip "$1"
+                ;;
+            *.tar.xz)
+                tar -xf "$1"
+                ;;
+            *)
+                echo "Cannot extract $1, provide explicit command"
+        esac
     fi
 }

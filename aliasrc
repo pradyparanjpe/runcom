@@ -24,44 +24,6 @@
 alias tcpz="tar -c --use-compress-program=pigz ";
 alias txpz="tar -x --use-compress-program=pigz ";
 
-deconvolute() {
-    if [[ ! -f "$1" ]]; then
-        echo "$1: no such file";
-    else
-        case "$1" in
-            *.tar.bz2)
-                tar -xjf "$1"
-                ;;
-            *.tbz2)
-                tar -xjf "$1"
-                ;;
-            *.tar.gz)
-                tar -x --use-compress-program=pigz -f "$1"
-                ;;
-            *.tgz)
-                tar -x --use-compress-program=pigz -f "$1"
-                ;;
-            *.gz)
-                pigz "$1"
-                ;;
-            *.rar)
-                unrar -x "$1"
-                ;;
-            *.tar)
-                tar -xf "$1"
-                ;;
-            *.zip)
-                unzip "$1"
-                ;;
-            *.tar.xz)
-                tar -xf "$1"
-                ;;
-            *)
-                echo "Cannot extract $1, provide explicit command"
-        esac
-    fi
-}
-
 # ripgrep is better than grep
 for sc in "rg" "ag" "pt" "ack" "grep"; do
     if command -v "$sc" >>/dev/null; then
@@ -101,7 +63,7 @@ alias activateRNA="deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/a
 # Monitor Jobs
 alias qstatf="while true; do date; ssh paranjpe@192.168.14.20 qstat -f; sleep 900; done;";
 alias qstat="while true; do date; ssh paranjpe@192.168.14.20 qstat ; sleep 900; done;";
-alias watch="watch -n 10 --color";
+# alias watch="watch -n 10 --color";
 alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
 
 # Remote logins
