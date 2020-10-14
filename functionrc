@@ -99,7 +99,7 @@ function doc2org() {
 # exec "aliases" as function
 function gui () {
     if [[ -n "$@" ]]; then
-        if hash "${@%% *}"; then
+        if command -v "${@%% *}" >> /dev/null; then
             exec nohup $@ &>/dev/null 0<&- &
             exit 0
         fi
