@@ -20,10 +20,10 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 RUNCOMDIR="${HOME}/.runcom"
-. $RUNCOMDIR/colorlibrc
-. $RUNCOMDIR/netcheck.sh >/dev/null
+. ${RUNCOMDIR}/colorlibrc
+. ${RUNCOMDIR}/netcheck.sh >/dev/null
 
-netcode="$($RUNCOMDIR/netcheck.sh |cut  -f3)"
+netcode="$(${RUNCOMDIR}/netcheck.sh |cut  -f3)"
 
 if [[ "$netcode" -gt 7 ]]; then
     echo -e "${BLUE_BOLD}Internet (GOOGLE) Connected${NO_EFFECTS}"
@@ -59,7 +59,7 @@ ssh-add -l > /dev/null || ssh-add
 
 # Home Cloud mounts
 if [[ $(( netcode % 4 )) -eq 2 ]]; then
-    clouddir=("/media/data" "/home/pradyumna")
+    clouddir=( "/media/data" "/home/pradyumna" )
     srv_mnt_dir="${HOME}/www.anubandha.d"
     if [[ $(mount | grep -c "${srv_mnt_dir}") \
               -lt "${#clouddir[@]}" ]]; then
