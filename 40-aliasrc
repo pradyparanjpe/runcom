@@ -57,7 +57,6 @@ alias su=" su -"; ## become root with variables
 alias sourceit="source ~/.bashrc";
 alias to_venv="source .venv/bin/activate";
 alias activateGRN="deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate";
-alias activateVIS="deactivate || true; source ${HOME}/.virtualenvs/visualize/bin/activate";
 alias activateRNA="deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate";
 
 # Monitor Jobs

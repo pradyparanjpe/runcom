@@ -19,18 +19,28 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 ## User-defined bashrc extensions
-##	proxy settings
-## PYTHONPATH
-shopt -s autocd # Allows to cd by only typing name
-set -o vi
-bind '"jk":vi-movement-mode'
-[[ -f "${HOME}/.runcom/psrc" ]] && . "${HOME}/.runcom/psrc"
+
+function python_ver() {
+	python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
+}
+
+# Identify self
+export RUNCOMDIR="${HOME}/.runcom"
+
 PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";
+
+# Python exports
+export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python_ver)/site-packages:${HOME}/lib64/$(python_ver)/site-packages";
+
+# C(++) exports
+export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+
+# GPU exports
 export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
-export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/')/site-packages:${HOME}/lib64/$(python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/')site-packages";
-export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+
+# WLROOTS (sway) Don't really remember why these were made
 # export WLR_BACKENDS="headless";
 # export WLR_LIBINPUT_NO_DEVICES=1;

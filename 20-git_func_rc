@@ -65,6 +65,6 @@ function git_ps() {
   if ! git status --ignore-submodules &>/dev/null; then
     return
   else
-      echo "[$(git_status)·$(git_hash)·$(git_branch)]"
+      echo "[$(git_branch)·$(git_hash)·$(git_status)]"
   fi
 }
