@@ -48,9 +48,6 @@ ap_addr="$(ip neigh \
                 | cut -d " " -f 1)";
 intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
 
-export ap_addr
-export ip_addr
-
 if [[ -n "$ip_addr" ]]; then
     $google_ping_cmd 2>&1 1>/dev/null && inter=1
     $intra_ping_cmd 2>&1 1>/dev/null && intra=1

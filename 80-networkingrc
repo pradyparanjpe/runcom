@@ -19,16 +19,19 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
-netcode="$(${RUNCOMDIR}/netcheck.sh |cut  -f3)"
+netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
 
-if [[ "$netcode" -gt 7 ]]; then
+export IP_ADDR="${netcodes[0]}"
+export AP_ADDR="${netcodes[1]}"
+
+if [[ "${netcodes[2]}" -gt 7 ]]; then
     echo -e "${BLUE_BOLD}Internet (GOOGLE) Connected${NO_EFFECTS}"
-    echo -e "${GREEN}$ip_addr ${NO_EFFECTS} is current wireless ip address"
+    echo -e "${GREEN}$IP_ADDR ${NO_EFFECTS} is current wireless ip address"
 else
     echo -e "${RED_BOLD}Internet (GOOGLE) Not reachable${NO_EFFECTS}"
-    if [[ $(( netcode % 8 )) -gt 3 ]]; then  # Intranet is connected
+    if [[ $(( netcodes[2] % 8 )) -gt 3 ]]; then  # Intranet is connected
         echo -e "${RED}Internet Down${NO_EFFECTS}"
-        case $(( netcode % 4 )) in
+        case $(( netcodes[2] % 4 )) in
             2) echo -e "Home network connected,"
                ;;
             1) echo -e "CCMB network connected,"
@@ -54,7 +57,7 @@ export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
 
 # Home Cloud mounts
-if [[ $(( netcode % 4 )) -eq 2 ]]; then
+if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
     clouddir=( "/media/data" "/home/pradyumna" )
     srv_mnt_dir="${HOME}/www.anubandha.d"
     if [[ $(mount | grep -c "${srv_mnt_dir}") \
