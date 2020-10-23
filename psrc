@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#-*- coding: utf-8; mode:shell-script -*-
+#
+# Copyright 2020 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+## User-defined bashrc extensions
+##	prompt script
+
+runcom="${HOME}/.runcom"
+if [[ -z "${NO_EFFECTS}" ]]; then
+    # colorlibrc hasn't been called
+    [[ -f "${runcom}/colorlibrc" ]] && . "${runcom}/colorlibrc"
+fi
+
+if ! command -v git_status 2>&1 1>/dev/null; then
+    # git functions haven't been loaded
+    [[ -f "${runcom}/git_ps_func" ]] && . "${runcom}/git_ps_func"
+fi
+
+
+if ! command -v git_status 2>&1 1>/dev/null; then
+    # git functions haven't (still) been loaded
+    export PS1="\[${GREEN}\]\u\[${NO_EFFECTS}\]@\[${BLUE}\]\h\[${WHITE}\]<\[${CYAN}\]\W\[${WHITE}\]>\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
+else
+    export PS1="\n\[${GREEN}\]\u\[${NO_EFFECTS}\]@\[${BLUE}\]\h\[${WHITE}\]\$(git_ps)<\[${CYAN}\]\W\[${WHITE}\]>\[${YELLOW}\]\t\[${NO_EFFECTS}\]\n» ";
+
+fi
+export PS2="\[${CYAN}\]cont...\[${WHITE}\]|\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
+export PS3="Selection: ";

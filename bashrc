@@ -24,9 +24,7 @@
 shopt -s autocd # Allows to cd by only typing name
 set -o vi
 bind '"jk":vi-movement-mode'
-export PS1="\[${GREEN}\]\u\[${NO_EFFECTS}\]@\[${BLUE}\]\h\[${WHITE}\]<\[${CYAN}\]\W\[${WHITE}\]>\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
-export PS2="\[${CYAN}\]cont...\[${WHITE}\]|\[${YELLOW}\]\t\[${NO_EFFECTS}\]» ";
-export PS3="Selection: ";
+[[ -f "${HOME}/.runcom/psrc" ]] && . "${HOME}/.runcom/psrc"
 PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";
 export PYOPENCL_CTX='0';
@@ -36,5 +34,3 @@ export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
 # export WLR_BACKENDS="headless";
 # export WLR_LIBINPUT_NO_DEVICES=1;
-
-
