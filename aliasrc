@@ -74,10 +74,10 @@ function copy_to_HPC() {
 }
 
 # Better program defaults
-# if command -v nvim >>/dev/null; then
-#     alias ex="nvim"; ## always open vim in normal mode
-#     alias vim="nvim"; ## always use neo
-# fi
+if command -v nvim >>/dev/null; then
+    alias ex="nvim"; ## always open vim in normal mode
+    alias vim="nvim"; ## always use neo
+fi
 
 if command -v podman >>/dev/null; then
     alias docker="podman";  # Podman is drop-in replacement for docker
