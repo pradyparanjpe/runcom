@@ -24,6 +24,10 @@ function python_ver() {
 	python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
 
+shopt -s autocd # Allows to cd by only typing name
+set -o vi
+bind '"jk":vi-movement-mode'
+
 # Identify self
 export RUNCOMDIR="${HOME}/.runcom"
 
