@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+#-*- coding:utf-8; mode:shell-script -*-
 #
 # Copyright 2020 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
+#
 # Prady_runcom is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#-*- coding:utf-8; mode:shell-script -*-
 #
 # Copyright 2020 Pradyumna Paranjape
 #
@@ -20,8 +21,8 @@
 # templates for new files
 
 read -r -d '' pytempl << EOM
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
+#!/usr/bin/env python3
+#-*- coding:utf-8; mode:python -*-
 
 if __name__ == "__main__":
     pass
