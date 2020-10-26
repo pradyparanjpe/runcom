@@ -20,6 +20,7 @@
 #
 
 * Table of Contents :toc:
+- [[#what-is-this][What is this?]]
 - [[#mode-line][Mode line]]
 - [[#copyrightlicense-header][Copyright/License header]]
 - [[#colors][Colors]]
@@ -75,6 +76,15 @@
 - [[#window-manager-settings][Window Manager settings]]
   - [[#terminal][Terminal]]
   - [[#sway][Sway]]
+
+* What is this?
+  Bash executes functions from ${HOME}/.bashrc whenever a new shell is called
+  Adding multiple lines to ${HOME}/.bashrc unnecessarily clutters it.
+  Further, dependencies (if any) need to be packaged with executions
+  Hence, a separate file may be maintained in ~/.runcom/bashrc,
+  and sourced from the ~/.bashrc file by adding to ~/.bashrc:
+
+  for rcfile in ~/.runcom/*rc; do . $rcfile; done
 
 * Mode line
   #+BEGIN_SRC sh
@@ -605,8 +615,7 @@ export PATH="${PATH}:${HOME}/.local/bin";
              for pathloc in ${clouddir[@]}; do
                  mntpath="${srv_mnt_dir}${pathloc}"
                  mkdir -p "$mntpath"
-                 sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" \
-                       "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+                 sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
              done
          fi
      fi
