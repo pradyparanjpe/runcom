@@ -185,7 +185,7 @@ bind '"jk":vi-movement-mode'
    #+END_SRC
 
 ** Identify Self
-   #+BEGIN_SRC
+   #+BEGIN_SRC sh
 export RUNCOMDIR="${HOME}/.runcom"
 PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";
