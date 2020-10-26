@@ -80,6 +80,7 @@ fi
 
 if command -v podman >>/dev/null; then
     alias docker="podman";  # Podman is drop-in replacement for docker
+    alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
 fi
 alias pip="python -m pip"; # Invoke pip with python
 
