@@ -74,6 +74,10 @@ if [[ "$TERM" = "linux" ]]; then
     clear #for background artifacting
 fi
 
+shopt -s autocd # Allows to cd by only typing name
+set -o vi
+bind '"jk":vi-movement-mode'
+
 export RUNCOMDIR="${HOME}/.runcom"
 PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";

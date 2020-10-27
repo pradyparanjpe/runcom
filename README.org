@@ -6,7 +6,6 @@
 #+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle bashrc
-
 * Copyright/License Header
   Copyright 2020 Pradyumna Paranjape
 
@@ -187,7 +186,7 @@
 
 * Extensions
 ** Bash Behaviour Options Extensions
-   #+BEGIN_SRC
+   #+BEGIN_SRC sh
 shopt -s autocd # Allows to cd by only typing name
 set -o vi
 bind '"jk":vi-movement-mode'
@@ -200,7 +199,6 @@ bind '"jk":vi-movement-mode'
      export PATH="${PATH}:${HOME}/.local/bin";
    #+END_SRC
 
-
 ** Python exports
    #+BEGIN_SRC sh
      function python_ver() {
@@ -208,8 +206,6 @@ bind '"jk":vi-movement-mode'
      }
      export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python_ver)/site-packages:${HOME}/lib64/$(python_ver)/site-packages";
    #+END_SRC
-
-
 
 ** C(++) exports
    #+BEGIN_SRC sh
