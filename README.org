@@ -1,28 +1,35 @@
 #-*- coding:utf-8; mode:org -*-
+#+TITLE: Prady_runcom
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+STARTUP: overview
 #+PROPERTY: header-args :tangle bashrc
-#
-# Copyright 2020 Pradyumna Paranjape
-#
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-#
+
+* Copyright/License Header
+  Copyright 2020 Pradyumna Paranjape
+
+  This file is part of Prady_runcom.
+
+  Prady_runcom is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Prady_runcom is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 * Table of Contents :toc:
+- [[#copyrightlicense-header][Copyright/License Header]]
 - [[#what-is-this][What is this?]]
 - [[#mode-line][Mode line]]
-- [[#copyrightlicense-header][Copyright/License header]]
+- [[#copyrightlicense-export][Copyright/License Export]]
 - [[#colors][Colors]]
   - [[#definitions][Definitions]]
   - [[#plain-tty-colors][Plain TTY colors]]
@@ -84,14 +91,16 @@
   Hence, a separate file may be maintained in ~/.runcom/bashrc,
   and sourced from the ~/.bashrc file by adding to ~/.bashrc:
 
+  #+BEGIN_EXAMPLE
   for rcfile in ~/.runcom/*rc; do . $rcfile; done
+  #+END_EXAMPLE
 
 * Mode line
   #+BEGIN_SRC sh
     #!/usr/bin/env bash
     # -*- coding:utf-8; mode:shell-script; -*-
   #+END_SRC
-* Copyright/License header
+* Copyright/License Export
   #+BEGIN_SRC sh
     #
     # Copyright 2020 Pradyumna Paranjape
@@ -186,9 +195,9 @@ bind '"jk":vi-movement-mode'
 
 ** Identify Self
    #+BEGIN_SRC sh
-export RUNCOMDIR="${HOME}/.runcom"
-PATH="${PATH}:${HOME}/bin";
-export PATH="${PATH}:${HOME}/.local/bin";
+     export RUNCOMDIR="${HOME}/.runcom"
+     PATH="${PATH}:${HOME}/bin";
+     export PATH="${PATH}:${HOME}/.local/bin";
    #+END_SRC
 
 

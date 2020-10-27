@@ -74,6 +74,10 @@ if [[ "$TERM" = "linux" ]]; then
     clear #for background artifacting
 fi
 
+export RUNCOMDIR="${HOME}/.runcom"
+PATH="${PATH}:${HOME}/bin";
+export PATH="${PATH}:${HOME}/.local/bin";
+
 function python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
