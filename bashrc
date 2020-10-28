@@ -82,6 +82,19 @@ export RUNCOMDIR="${HOME}/.runcom"
 PATH="${PATH}:${HOME}/bin";
 export PATH="${PATH}:${HOME}/.local/bin";
 
+avail_editors=( 'emacsclient -nw -c -a=""'
+                'nvim'
+                'vim'
+                'vi'
+                'nano' )
+for avail in "${avail_editors[@]}"; do
+    if command -v ${avail} -- >/dev/null; then
+        EDITOR="${avail}"
+        break
+    fi
+done
+export EDITOR
+
 function python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }

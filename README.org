@@ -35,6 +35,7 @@
 - [[#extensions][Extensions]]
   - [[#bash-behaviour-options-extensions][Bash Behaviour Options Extensions]]
   - [[#identify-self][Identify Self]]
+  - [[#editor-wars][Editor wars]]
   - [[#python-exports][Python exports]]
   - [[#c-exports][C(++) exports]]
   - [[#gpu-exports][GPU exports]]
@@ -187,9 +188,9 @@
 * Extensions
 ** Bash Behaviour Options Extensions
    #+BEGIN_SRC sh
-shopt -s autocd # Allows to cd by only typing name
-set -o vi
-bind '"jk":vi-movement-mode'
+     shopt -s autocd # Allows to cd by only typing name
+     set -o vi
+     bind '"jk":vi-movement-mode'
    #+END_SRC
 
 ** Identify Self
@@ -197,6 +198,22 @@ bind '"jk":vi-movement-mode'
      export RUNCOMDIR="${HOME}/.runcom"
      PATH="${PATH}:${HOME}/bin";
      export PATH="${PATH}:${HOME}/.local/bin";
+   #+END_SRC
+
+** Editor wars
+   #+BEGIN_SRC sh
+     avail_editors=( 'emacsclient -nw -c -a=""'
+                     'nvim'
+                     'vim'
+                     'vi'
+                     'nano' )
+     for avail in "${avail_editors[@]}"; do
+         if command -v ${avail} -- >/dev/null; then
+             EDITOR="${avail}"
+             break
+         fi
+     done
+     export EDITOR
    #+END_SRC
 
 ** Python exports
