@@ -72,13 +72,13 @@
       - [[#org-to-docx][Org to Docx]]
       - [[#org-to-pdf][Org to PDF]]
       - [[#docx-to-org][Docx to Org]]
+  - [[#mount-home-server][Mount Home Server]]
 - [[#alias-like-functions][Alias-like Functions]]
   - [[#launch-gui][Launch gui]]
   - [[#un-compress-by-context][Un-Compress by context]]
 - [[#networking][Networking]]
   - [[#state][State]]
   - [[#ssh-agent][SSH Agent]]
-  - [[#mount-home-server][Mount Home Server]]
 - [[#remote][Remote]]
 - [[#window-manager-settings][Window Manager settings]]
   - [[#terminal][Terminal]]
@@ -544,6 +544,26 @@
        }
      #+END_SRC
 
+** Mount Home Server
+   Home Cloud mounts
+   #+BEGIN_SRC sh
+     function mount_anubandha() {
+         netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
+         if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
+             clouddir=( "/media/data" "/home/pradyumna" )
+             srv_mnt_dir="${HOME}/www.anubandha.d"
+             if [[ $(mount | grep -c "${srv_mnt_dir}") \
+                       -lt "${#clouddir[@]}" ]]; then
+                 # not mounted
+                 for pathloc in ${clouddir[@]}; do
+                     mntpath="${srv_mnt_dir}${pathloc}"
+                     mkdir -p "$mntpath"
+                     sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+                 done
+             fi
+         fi
+     }
+   #+END_SRC
 * Alias-like Functions
 ** Launch gui
    Launch application and exit terminal window
@@ -625,23 +645,6 @@
      ssh-add -l > /dev/null || ssh-add
    #+END_SRC
 
-** Mount Home Server
-   Home Cloud mounts
-   #+BEGIN_SRC sh
-     if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
-         clouddir=( "/media/data" "/home/pradyumna" )
-         srv_mnt_dir="${HOME}/www.anubandha.d"
-         if [[ $(mount | grep -c "${srv_mnt_dir}") \
-                   -lt "${#clouddir[@]}" ]]; then
-             # not mounted
-             for pathloc in ${clouddir[@]}; do
-                 mntpath="${srv_mnt_dir}${pathloc}"
-                 mkdir -p "$mntpath"
-                 sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
-             done
-         fi
-     fi
-   #+END_SRC
 * Remote
   Wayland Display manager needs this for some reason...
   Don't remember why

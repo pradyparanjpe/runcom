@@ -319,6 +319,23 @@ function doc2org() {
     fi
 }
 
+function mount_anubandha() {
+    netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
+    if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
+        clouddir=( "/media/data" "/home/pradyumna" )
+        srv_mnt_dir="${HOME}/www.anubandha.d"
+        if [[ $(mount | grep -c "${srv_mnt_dir}") \
+                  -lt "${#clouddir[@]}" ]]; then
+            # not mounted
+            for pathloc in ${clouddir[@]}; do
+                mntpath="${srv_mnt_dir}${pathloc}"
+                mkdir -p "$mntpath"
+                sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+            done
+        fi
+    fi
+}
+
 function gui () {
     if [[ -n "$@" ]]; then
         if command -v "${@%% *}" >> /dev/null; then
@@ -380,20 +397,6 @@ if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
-
-if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
-    clouddir=( "/media/data" "/home/pradyumna" )
-    srv_mnt_dir="${HOME}/www.anubandha.d"
-    if [[ $(mount | grep -c "${srv_mnt_dir}") \
-              -lt "${#clouddir[@]}" ]]; then
-        # not mounted
-        for pathloc in ${clouddir[@]}; do
-            mntpath="${srv_mnt_dir}${pathloc}"
-            mkdir -p "$mntpath"
-            sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
-        done
-    fi
-fi
 
 export NO_AT_BRIDGE=1
 
