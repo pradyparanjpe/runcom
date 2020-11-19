@@ -177,7 +177,7 @@ function git_ps() {
 }
 
 PS1=""
-PS1="${PS1}\n"
+PS1="${PS1}┏━ "
 PS1="${PS1}\[${GREEN}\]\u\[${NO_EFFECTS}\]"
 PS1="${PS1}@"
 PS1="${PS1}\[${BLUE}\]\h\[${NO_EFFECTS}\]"
@@ -186,7 +186,7 @@ PS1="${PS1}\[${WHITE}\]<"
 PS1="${PS1}\[${CYAN}\]\W"
 PS1="${PS1}\[${WHITE}\]>"
 PS1="${PS1}\[${YELLOW}\]\t\[${NO_EFFECTS}\]"
-PS1="${PS1}\n» "
+PS1="${PS1}\n┗━ "
 export PS1
 
 PS2=""
