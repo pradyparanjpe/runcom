@@ -100,6 +100,7 @@
     #!/usr/bin/env bash
     # -*- coding:utf-8; mode:shell-script; -*-
   #+END_SRC
+
 * Copyright/License Export
   #+BEGIN_SRC sh
     #
@@ -373,7 +374,7 @@
    #+BEGIN_SRC sh
      alias du='du -hc';
      alias df='df -h';
-     alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+     alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
    #+END_SRC
 
 ** Network
@@ -564,6 +565,7 @@
          fi
      }
    #+END_SRC
+
 * Alias-like Functions
 ** Launch gui
    Launch application and exit terminal window
