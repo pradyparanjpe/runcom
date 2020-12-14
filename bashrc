@@ -101,6 +101,8 @@ function python_ver() {
 export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python_ver)/site-packages:${HOME}/lib64/$(python_ver)/site-packages";
 
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+export C_INCLUDE_PATH="${HOME}/.pspman/include/"
+export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
 
 export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
@@ -203,7 +205,7 @@ alias txpz="tar -x --use-compress-program=pigz ";
 
 alias du='du -hc';
 alias df='df -h';
-alias duall="du -hc |grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 
 alias nload="nload -u M -U G -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
 alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\"";

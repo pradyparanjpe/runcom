@@ -228,7 +228,9 @@
 ** C(++) exports
    #+BEGIN_SRC sh
      export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-   #+END_SRC
+     export C_INCLUDE_PATH="${HOME}/.pspman/include/"
+     export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
+#+END_SRC
 
 ** GPU exports
    #+BEGIN_SRC sh
@@ -397,6 +399,7 @@
      alias watch="watch -n 10 --color";
      alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
    #+END_SRC
+
 ** Lazy single-handed exit
    #+BEGIN_SRC sh
      alias qqqq="exit";
