@@ -166,7 +166,7 @@ function git_branch() {
         else
             echo -ne "${MAGENTA}"
         fi
-        echo -n "${branch}"
+        echo -ne "${branch}\ue725"
         echo -ne "${NO_EFFECTS}"
     fi
 }
@@ -179,7 +179,7 @@ function git_ps() {
     if ! git status --ignore-submodules &>/dev/null; then
         return
     else
-        echo -ne " $(git_branch)·$(git_hash)$(git_status) "
+        echo -ne " $(git_branch)$(git_hash)$(git_status) "
     fi
 }
 
