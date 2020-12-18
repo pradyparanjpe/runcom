@@ -128,42 +128,47 @@ function git_status() {
         fi
     done < <(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
 
+    stat_str=''
     if [ $modified -ne 0 ]; then
-        echo -ne "${RED}M"
+        stat_str="${stat_str}${RED}\ue728"
     fi
 
     if [ $cached -ne 0 ]; then
-        echo -ne "${GREEN}C"
+        stat_str="${stat_str}${GREEN}\ue729"
     fi
 
     if [ $untracked -ne 0 ]; then
-        echo -ne "${RED}?"
+        stat_str="${stat_str}${RED}\uf476"
     fi
 
     if [ -n "$(git stash list)" ]; then
-        echo -ne "${CYAN}S"
+        stat_str="${stat_str}${CYAN}\uf48e"
     fi
-    echo -e "${NO_EFFECTS}"
+    if [[ -n "${stat_str}" ]]; then
+        echo -en "${stat_str}${NO_EFFECTS}"
+    fi
 }
 
 function git_branch() {
     local branch
     branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
-    if [[ "${branch}" =~ ^bug- ]]; then
-        echo -ne "${GREEN}"
-    elif [[ "${branch}" =~ ^atc- ]]; then
-        echo -ne "${CYAN}"
-    elif [[ "${branch}" =~ ^tmp ]]; then
-        echo -ne "${MAGRNTA}"
-    elif [[ "${branch}" = "(detached from hde/master)" ]]; then
-        echo -ne "${YELLOW}"
-    elif [[ "${branch}" == "master" ]]; then
-        return
-    else
-        echo -ne "${MAGENTA}"
+    if [[ -n "$branch" ]]; then
+        if [[ "${branch}" =~ ^bug- ]]; then
+            echo -ne "${GREEN}"
+        elif [[ "${branch}" =~ ^atc- ]]; then
+            echo -ne "${CYAN}"
+        elif [[ "${branch}" =~ ^tmp ]]; then
+            echo -ne "${MAGRNTA}"
+        elif [[ "${branch}" = "(detached from hde/master)" ]]; then
+            echo -ne "${YELLOW}"
+        elif [[ "${branch}" == "master" ]]; then
+            return
+        else
+            echo -ne "${MAGENTA}"
+        fi
+        echo -n "${branch}"
+        echo -ne "${NO_EFFECTS}"
     fi
-    echo -n "${branch}"
-    echo -e "${NO_EFFECTS}"
 }
 
 function git_hash() {
@@ -174,7 +179,7 @@ function git_ps() {
     if ! git status --ignore-submodules &>/dev/null; then
         return
     else
-        echo " $(git_branch)·$(git_hash)·$(git_status) "
+        echo -ne " $(git_branch)·$(git_hash)$(git_status) "
     fi
 }
 
