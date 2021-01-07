@@ -153,8 +153,10 @@ function git_branch() {
     local branch
     branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
     if [[ -n "$branch" ]]; then
-        if [[ "${branch}" =~ ^bug- ]]; then
+        if [[ "${branch}" =~ ^feat- ]]; then
             echo -ne "${GREEN}"
+        elif [[ "${branch}" =~ ^bug- ]]; then
+            echo -ne "${RED}"
         elif [[ "${branch}" =~ ^atc- ]]; then
             echo -ne "${CYAN}"
         elif [[ "${branch}" =~ ^tmp ]]; then
@@ -417,6 +419,10 @@ done
 if [ "$(tty)" = "/dev/tty1" ]; then
     # export DISPLAY=":0.0"
     # export WAYLAND_DISPLAY=wayland-0
+    if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+        export XDG_RUNTIME_DIR="/run/user/$UID";
+    fi
+    export SWAYROOT="${HOME}/.wm/sway"
     export XDG_SESSION_TYPE=wayland
     export SDL_VIDEODRIVER=wayland
     export QT_QPA_PLATFORM=wayland-egl
@@ -425,10 +431,10 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     export ELM_ENGINE=wayland_egl
     export ELM_ACCEL=opengl
     export GDK_BACKEND=wayland
-    unset GDK_BACKEND
     export DBUS_SESSION_BUS_ADDRESS
     export DBUS_SESSION_BUS_PID
     export MOZ_ENABLE_WAYLAND=1
+    unset GDK_BACKEND
     # unset WAYLAND_DISPLAY
     exec sway
 fi
