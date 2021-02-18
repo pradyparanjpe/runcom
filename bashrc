@@ -108,6 +108,8 @@ export PYOPENCL_CTX='0';
 export PYOPENCL_COMPILER_OUTPUT=1;
 export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
 
+export BEMENU_OPTS='--fn firacode 14 '
+
 function git_status() {
     local modified=0
     local cached=0
@@ -438,3 +440,6 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     # unset WAYLAND_DISPLAY
     exec sway
 fi
+
+PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+source "${RUNCOMDIR}/complete.bash"

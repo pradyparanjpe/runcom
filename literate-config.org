@@ -40,6 +40,7 @@
   - [[#c-exports][C(++) exports]]
   - [[#gpu-exports][GPU exports]]
   - [[#sway-exports][Sway exports]]
+  - [[#bemenu-exports][Bemenu exports]]
 - [[#custom-defined-functions][Custom defined functions]]
   - [[#git][Git]]
     - [[#status][Status]]
@@ -48,6 +49,7 @@
     - [[#prompt-string-addition][Prompt string addition]]
 - [[#prompt-string][Prompt String]]
   - [[#ps1][PS1]]
+- [[#autocomplete-bash-commands][Autocomplete bash commands]]
 - [[#assumed-options][Assumed options]]
   - [[#compression][Compression]]
   - [[#disk-usage][Disk Usage]]
@@ -245,6 +247,11 @@
    export WLR_BACKENDS="headless";
    export WLR_LIBINPUT_NO_DEVICES=1;
 
+** Bemenu exports
+   #+BEGIN_SRC sh
+     export BEMENU_OPTS='--fn firacode 14 '
+   #+END_SRC
+
 * Custom defined functions
 ** Git
 *** Status
@@ -370,6 +377,13 @@
      PS3="Selection: ";
      export PS3
    #+END_SRC
+
+* Autocomplete bash commands
+  [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
+  #+begin_src bash
+    PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+    source "${RUNCOMDIR}/complete.bash"
+  #+end_src
 
 * Assumed options
 ** Compression
