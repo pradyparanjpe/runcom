@@ -62,6 +62,7 @@
   - [[#list-contents][List Contents]]
   - [[#neo-visual-editor-improved][neo visual editor improved]]
   - [[#container][Container]]
+- [[#bash-completions][Bash completions]]
 - [[#functions][Functions]]
   - [[#mathematical][Mathematical]]
     - [[#in-line-calculator][In-Line Calculator]]
@@ -465,6 +466,13 @@
      fi
      alias pip="python -m pip"; # Invoke pip with python
    #+END_SRC
+
+* Bash completions
+#+BEGIN_SRC sh
+  if [[ -f "${RUNCOMDIR}/complete.bash" ]]; then
+      . ${RUNCOMDIR}/complete.bash
+  fi
+#+END_SRC
 
 * Functions
 ** Mathematical

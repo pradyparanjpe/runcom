@@ -256,6 +256,10 @@ if command -v podman >>/dev/null; then
 fi
 alias pip="python -m pip"; # Invoke pip with python
 
+if [[ -f "${RUNCOMDIR}/complete.bash" ]]; then
+    . ${RUNCOMDIR}/complete.bash
+fi
+
 function mathcalc() {
     echo "scale=4; $@"| bc
 }

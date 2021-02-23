@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: shell-script; -*-
 
-if ! command -v register-python-argcomplete 2>&1 > /dev/null; then
-    python -m pip install -U argcomplete
+# Affirm argparse installation
+if ! command -v register-python-argcomplete 2>&1 >> /dev/null; then
+    python3 -m pip install -U argcomplete
+    activate-global-python-argcomplete --user
 fi
 
-_gui_complete() {
+
+pycomplete=( "pspbar" "ppsid" "ppsi" "pspman" "frac-time" );
+
+for pyscript in ${pycomplete[*]}; do
+    eval "$( register-python-argcomplete $pyscript )"
+done
+
+
+function _complete_gui() {
     COMPREPLY=()
     if [[ $3 == "gui" ]]; then
         COMPREPLY=( $( compgen -c "$2") )
@@ -14,11 +24,4 @@ _gui_complete() {
     fi
 }
 
-complete -F _gui_complete gui
-
-
-PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-
-for py_arg_parse in ${PY_ARG_COMPL_SCRIPTS[*]}; do
-    eval "$(register-python-argcomplete $py_arg_parse)"
-done
+complete -F _complete_gui gui
