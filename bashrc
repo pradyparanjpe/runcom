@@ -98,7 +98,6 @@ export EDITOR
 function python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
-export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python_ver)/site-packages:${HOME}/lib64/$(python_ver)/site-packages";
 
 export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 export C_INCLUDE_PATH="${HOME}/.pspman/include/"

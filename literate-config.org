@@ -225,7 +225,6 @@
      function python_ver() {
          python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
      }
-     export PYTHONPATH="${PYTHONPATH}:${HOME}/lib/$(python_ver)/site-packages:${HOME}/lib64/$(python_ver)/site-packages";
    #+END_SRC
 
 ** C(++) exports
