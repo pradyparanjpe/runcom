@@ -135,4 +135,6 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     # unset GDK_BACKEND
     # unset WAYLAND_DISPLAY
     exec sway
+else
+    exec bash
 fi
