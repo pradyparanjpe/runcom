@@ -5,7 +5,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle bashrc
+#+PROPERTY: header-args :tangle t
 * Copyright/License Header
   Copyright 2020 Pradyumna Paranjape
 
@@ -37,6 +37,9 @@
   - [[#identify-self][Identify Self]]
   - [[#editor-wars][Editor wars]]
   - [[#python-exports][Python exports]]
+    - [[#python-version][Python version]]
+    - [[#dummy-placeholder][Dummy placeholder]]
+    - [[#quickly-change-to-virtualenv][Quickly change to virtualenv]]
   - [[#c-exports][C(++) exports]]
   - [[#gpu-exports][GPU exports]]
   - [[#sway-exports][Sway exports]]
@@ -49,13 +52,14 @@
     - [[#prompt-string-addition][Prompt string addition]]
 - [[#prompt-string][Prompt String]]
   - [[#ps1][PS1]]
+  - [[#ps2][PS2]]
+  - [[#ps3][PS3]]
 - [[#autocomplete-bash-commands][Autocomplete bash commands]]
   - [[#python][Python]]
 - [[#assumed-options][Assumed options]]
   - [[#compression][Compression]]
   - [[#disk-usage][Disk Usage]]
   - [[#network][Network]]
-  - [[#environment][Environment]]
   - [[#monitor-job-queues][Monitor Job queues]]
   - [[#lazy-single-handed-exit][Lazy single-handed exit]]
 - [[#better-program-defaults][Better program defaults]]
@@ -63,12 +67,10 @@
   - [[#list-contents][List Contents]]
   - [[#neo-visual-editor-improved][neo visual editor improved]]
   - [[#container][Container]]
-- [[#bash-completions][Bash completions]]
 - [[#functions][Functions]]
   - [[#mathematical][Mathematical]]
     - [[#in-line-calculator][In-Line Calculator]]
     - [[#computational][Computational]]
-  - [[#dummy-placeholder][Dummy placeholder]]
   - [[#compilation][Compilation]]
     - [[#pdf-from-latex][PDF from Latex]]
     - [[#pandoc][Pandoc]]
@@ -83,7 +85,7 @@
 - [[#networking][Networking]]
   - [[#state][State]]
   - [[#ssh-agent][SSH Agent]]
-- [[#remote][Remote]]
+- [[#display][Display]]
 - [[#window-manager-settings][Window Manager settings]]
   - [[#terminal][Terminal]]
   - [[#sway][Sway]]
@@ -95,18 +97,34 @@
   Hence, a separate file may be maintained in ~/.runcom/bashrc,
   and sourced from the ~/.bashrc file by adding to ~/.bashrc:
 
-  #+BEGIN_EXAMPLE
-  for rcfile in ~/.runcom/*rc; do . $rcfile; done
-  #+END_EXAMPLE
+  #+BEGIN_SRC bash :tangle no
+    # shellcheck source=".runcom/bashrc"
+    if [[ -f "${HOME}/.runcom/bashrc" ]]; then
+        . "${HOME}/.runcom/bashrc"
+    fi
+  #+END_SRC
+
+  and to ~/.bash_profile:
+
+  #+BEGIN_SRC bash :tangle no
+    # shellcheck source=".runcom/bashrc"
+    if [[ -f "${HOME}/.runcom/bash_login" ]]; then
+        . "${HOME}/.runcom/bash_login"
+    fi
+  #+END_SRC
 
 * Mode line
-  #+BEGIN_src bash
+  #+BEGIN_src bash :tangle bash_login
+    #!/usr/bin/env bash
+    # -*- coding:utf-8; mode:shell-script; -*-
+  #+END_SRC
+  #+BEGIN_src bash :tangle bashrc
     #!/usr/bin/env bash
     # -*- coding:utf-8; mode:shell-script; -*-
   #+END_SRC
 
 * Copyright/License Export
-  #+BEGIN_src bash
+  #+BEGIN_src bash :tangle bash_login
     #
     # Copyright 2020 Pradyumna Paranjape
     #
@@ -130,7 +148,7 @@
 * Colors
 ** Definitions
    #+NAME: Color definitionss
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      export BLACK="\033[0;30m";
      export BLACK_BOLD="\033[1;30m";
      export RED="\033[0;31m";
@@ -168,7 +186,7 @@
 
 ** Plain TTY colors
    #+NAME: TTY colors
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      if [[ "$TERM" = "linux" ]]; then
          echo -en "\e]P0000000" #black
          echo -en "\e]P83f3f3f" #darkgrey
@@ -192,21 +210,32 @@
 
 * Extensions
 ** Bash Behaviour Options Extensions
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      shopt -s autocd # Allows to cd by only typing name
      set -o vi
      bind '"jk":vi-movement-mode'
    #+END_SRC
 
 ** Identify Self
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      export RUNCOMDIR="${HOME}/.runcom"
-     PATH="${PATH}:${HOME}/bin";
-     export PATH="${PATH}:${HOME}/.local/bin";
+     # shellcheck source="bin"
+     if [ -d "${HOME}/bin" ] ; then
+         if [[ ! "${PATH}" =~ ${HOME}/bin ]]; then
+             PATH="${HOME}/bin:${PATH}"
+         fi
+     fi
+     # shellcheck source=".local/bin"
+     if [ -d "${HOME}/.local/bin" ] ; then
+         if [[ ! "${PATH}" =~ ${HOME}/.local/bin ]]; then
+             PATH="${HOME}/.local/bin:${PATH}"
+         fi
+     fi
+     export PATH;
    #+END_SRC
 
 ** Editor wars
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      avail_editors=( 'emacsclient -nw -c -a=""'
                      'nvim'
                      'vim'
@@ -222,21 +251,37 @@
    #+END_SRC
 
 ** Python exports
-   #+BEGIN_src bash
-     function python_ver() {
-         python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
-     }
-   #+END_SRC
+*** Python version
+    to locate site-packages
+
+    #+BEGIN_src bash :tangle bashrc
+      function python_ver() {
+          python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
+      }
+    #+END_SRC
+
+*** Dummy placeholder
+    If not in an python virtual environment, "deactivate" shouldn't through errors
+    #+BEGIN_src bash :tangle bashrc
+      function deactivate() {
+          true
+      }
+    #+END_SRC
+
+*** Quickly change to virtualenv
+    #+BEGIN_src bash :tangle bashrc
+      alias to_venv="source .venv/bin/activate";
+    #+END_SRC
 
 ** C(++) exports
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
      export C_INCLUDE_PATH="${HOME}/.pspman/include/"
      export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
    #+END_SRC
 
 ** GPU exports
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      export PYOPENCL_CTX='0';
      export PYOPENCL_COMPILER_OUTPUT=1;
      export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
@@ -245,18 +290,19 @@
 ** Sway exports
    Don't really remember why these were made
    Not using currently. Preserved for future
+   tangle to bash_login
    export WLR_BACKENDS="headless";
    export WLR_LIBINPUT_NO_DEVICES=1;
 
 ** Bemenu exports
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      export BEMENU_OPTS='--fn firacode 14 '
    #+END_SRC
 
 * Custom defined functions
 ** Git
 *** Status
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function git_status() {
           local modified=0
           local cached=0
@@ -300,7 +346,7 @@
     #+END_SRC
 
 *** Branch
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function git_branch() {
           local branch
           branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
@@ -326,7 +372,7 @@
       }
     #+END_SRC
 *** Hash
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function git_hash() {
           git log --pretty=format:'%h' -n 1
       }
@@ -336,7 +382,7 @@
     Include git's branch, hash, status in PS1 if in git repository
     This function is called in PS1 section below
     #+NAME: Git PS
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function git_ps() {
           if ! git status --ignore-submodules &>/dev/null; then
               return
@@ -349,7 +395,7 @@
 * Prompt String
 ** PS1
    #+NAME: PS1
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      PS1=""
      PS1="${PS1}┏━ "
      PS1="${PS1}\[${GREEN}\]\u\[${NO_EFFECTS}\]"
@@ -364,8 +410,9 @@
      export PS1
    #+END_SRC
 
+** PS2
    #+NAME: PS2
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      PS2=""
      PS2="${PS2}\[${CYAN}\]cont..."
      PS2="${PS2}\[${NO_EFFECTS}\]"
@@ -373,65 +420,62 @@
      export PS2
    #+END_SRC
 
+** PS3
    #+NAME: PS3
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      PS3="Selection: ";
      export PS3
    #+END_SRC
 
 * Autocomplete bash commands
 ** Python
-  [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
-  #+BEGIN_SRC bash
-    export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-    # shellcheck source=complete.bash
-    source "${RUNCOMDIR}"/complete.bash
-  #+END_SRC
+   [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
+   #+BEGIN_SRC bash :tangle bashrc
+     export RUNCOMDIR="${HOME}/.runcom"
+     export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+     # shellcheck source=.local/share/pspman/src/runcom/complete.bash
+     if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
+         # shellcheck source=.local/share/pspman/src/runcom/complete.bash
+         source "${RUNCOMDIR}"/complete.bash
+     fi
+   #+END_SRC
 
 * Assumed options
 ** Compression
    Use multiple threads
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      alias tcpz="tar -c --use-compress-program=pigz ";
      alias txpz="tar -x --use-compress-program=pigz ";
    #+END_SRC
 
 ** Disk Usage
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      alias du='du -hc';
      alias df='df -h';
      alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
    #+END_SRC
 
 ** Network
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
      alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
      alias ping="ping -c 4 ";
    #+END_SRC
 
-** Environment
-   Change python3 environments
-   #+BEGIN_src bash
-          alias to_venv="source .venv/bin/activate";
-          alias activateGRN='deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate';
-          alias activateRNA='deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate';
-   #+END_SRC
-
 ** Monitor Job queues
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      alias watch="watch -n 10 --color";
      alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
    #+END_SRC
 
 ** Lazy single-handed exit
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      alias qqqq="exit";
    #+END_SRC
 
 * Better program defaults
 ** g/re/p
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      for sc in "rg" "ag" "pt" "ack" "grep"; do
          if command -v "${sc%% *}" &>/dev/null; then
              # shellcheck disable=SC2139
@@ -442,19 +486,19 @@
    #+END_SRC
 
 ** List Contents
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      if command -v "exa" >>/dev/null; then
          alias ls="exa -Fh --color=auto";
          alias la='exa -a --color=auto';
          alias ll='exa -lr -s size';
          alias lla='exa -a';
          alias l.='exa -a --color=auto |grep "^\."';
-         alias sl="sl -al";
+         alias sl="ls";
      fi
    #+END_SRC
 
 ** neo visual editor improved
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      if command -v nvim >>/dev/null; then
          alias ex="nvim"; ## always open vim in normal mode
          alias vim="nvim"; ## always use neo
@@ -462,35 +506,24 @@
    #+END_SRC
 
 ** Container
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      if command -v podman >>/dev/null; then
          alias docker="podman";  # Podman is drop-in replacement for docker
          alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
      fi
-     alias pip="python -m pip"; # Invoke pip with python
    #+END_SRC
-
-* Bash completions
-#+BEGIN_src bash
-
-  # shellcheck source=complete.bash
-  if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
-      # shellcheck source=complete.bash
-      . "${RUNCOMDIR}"/complete.bash
-  fi
-#+END_SRC
 
 * Functions
 ** Mathematical
 *** In-Line Calculator
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function mathcalc() {
           echo "scale=4; $*"| bc
       }
     #+END_SRC
 
 *** Computational
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function dec2hex() {
           echo "hex:"
           echo "obase=16; $*"| bc
@@ -499,18 +532,9 @@
       }
     #+END_SRC
 
-** Dummy placeholder
-   If not in an python virtual environment, "deactivate" shouldn't through errors
-
-   #+BEGIN_src bash
-     function deactivate() {
-         true
-     }
-   #+END_SRC
-
 ** Compilation
 *** PDF from Latex
-    #+BEGIN_src bash
+    #+BEGIN_src bash :tangle bashrc
       function pdfcompile() {
           pdflatex "$1"
           for ext in toc log aux; do
@@ -522,7 +546,7 @@
     #+END_SRC
 *** Pandoc
 **** Org to Something
-     #+BEGIN_src bash
+     #+BEGIN_src bash :tangle bashrc
        function org2export() {
            # Usage: org2oth [-f] <infile> <othtype>
            proceed=
@@ -559,21 +583,21 @@
      #+END_SRC
 
 **** Org to Docx
-     #+BEGIN_src bash
+     #+BEGIN_src bash :tangle bashrc
        function org2doc () {
            org2export "$@" "docx"
        }
      #+END_SRC
 
 **** Org to PDF
-     #+BEGIN_src bash
+     #+BEGIN_src bash :tangle bashrc
        function org2pdf () {
            org2export "$@" "pdf"
        }
      #+END_SRC
 
 **** Docx to Org
-     #+BEGIN_src bash
+     #+BEGIN_src bash :tangle bashrc
        function doc2org() {
            if [[ "$1" == *.docx ]]; then
                pandoc -f docx -t org -o  "${1/%docx/org}" "$1"
@@ -585,24 +609,29 @@
 
 ** Mount Home Server
    Home Cloud mounts
-   #+BEGIN_src bash
-      function mount_anubandha() {
-          # netcheck source=./netcheck.sh
-          IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
-          if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
-              clouddir=( "/media/data" "/home/pradyumna" )
-              srv_mnt_dir="${HOME}/www.anubandha.d"
-              if [[ $(mount | grep -c "${srv_mnt_dir}") \
-                        -lt "${#clouddir[@]}" ]]; then
-                  # not mounted
-                  for pathloc in "${clouddir[@]}"; do
-                      mntpath="${srv_mnt_dir}${pathloc}"
-                      mkdir -p "$mntpath"
-                      sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
-                  done
-              fi
-          fi
-      }
+   #+BEGIN_src bash :tangle bashrc
+     function mount_home_cloud() {
+         # shellcheck disable=SC2154
+         if [[ -z "${home_cloud}" || -z "${cloud_user}" ]]; then
+             echo "variables \$home_cloud OR \$cloud_user haven't been defined"
+             return
+         fi
+         # netcheck source=./netcheck.sh
+         IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+         if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
+             clouddir=( "/media/data" "/home/${cloud_user}" )
+             srv_mnt_dir="${HOME}/${home_cloud}"
+             if [[ $(mount | grep -c "${srv_mnt_dir}") \
+                       -lt "${#clouddir[@]}" ]]; then
+                 # not mounted
+                 for pathloc in "${clouddir[@]}"; do
+                     mntpath="${srv_mnt_dir}${pathloc}"
+                     mkdir -p "$mntpath"
+                     sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "${cloud_user}@${home_cloud}:${pathloc}" "$mntpath"
+                 done
+             fi
+         fi
+     }
    #+END_SRC
 
 * Alias-like Functions
@@ -610,7 +639,7 @@
    Launch application and exit terminal window
    Acts like a launcher
    Uninteractive terminal commands may also be called
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      function gui () {
          if [[ -n "$*" ]]; then
              if command -v "${@%% *}" >> /dev/null; then
@@ -622,7 +651,7 @@
    #+END_SRC
 
 ** Un-Compress by context
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      deconvolute() {
          if [[ ! -f "$1" ]]; then
              echo "$1: no such file";
@@ -646,7 +675,7 @@
 * Networking
 ** State
    Display state of network connection at the beginning
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bashrc
      # shellcheck source=./netcheck.sh
      IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
      export IP_ADDR="${netcodes[0]}"
@@ -680,7 +709,7 @@
 
 ** SSH Agent
    Reuse ssh agent for all logins
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
          eval "$(ssh-agent)"
          ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
@@ -689,16 +718,15 @@
      ssh-add -l > /dev/null || ssh-add
    #+END_SRC
 
-* Remote
-  Wayland Display manager needs this for some reason...
-  Don't remember why
-  #+BEGIN_src bash
+* Display
+  Silence Debugging output for gtk+
+  #+BEGIN_src bash :tangle bash_login
     export NO_AT_BRIDGE=1
   #+END_SRC
 
 * Window Manager settings
 ** Terminal
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      for term in foot termite tilix xterm gnome-terminal; do
          if [[ -n "$(command -v $term)" ]]; then
              export defterm="$term";
@@ -709,26 +737,34 @@
 
 ** Sway
    If running from tty1 setup sway environment and start sway
-   #+BEGIN_src bash
+   #+BEGIN_src bash :tangle bash_login
      if [ "$(tty)" = "/dev/tty1" ]; then
-         # export DISPLAY=":0.0"
-         # export WAYLAND_DISPLAY=wayland-0
          if [[ -z "$XDG_RUNTIME_DIR" ]]; then
              export XDG_RUNTIME_DIR="/run/user/$UID";
          fi
-         export SWAYROOT="${HOME}/.wm/sway"
+         # export DISPLAY=":0"
+         # export WAYLAND_DISPLAY=wayland-0
+         # export GDK_BACKEND=wayland,x11
+         export XDG_CONFIG_HOME="${HOME}/.config"
+         export XDG_DATA_HOME="${HOME}/.local/share"
          export XDG_SESSION_TYPE=wayland
          export SDL_VIDEODRIVER=wayland
-         export QT_QPA_PLATFORM=wayland-egl
-         export ELM_DISPLAY=wl
          export ECORE_EVAS_ENGINE=wayland_egl
+         export ELM_DISPLAY=wl
          export ELM_ENGINE=wayland_egl
          export ELM_ACCEL=opengl
-         export GDK_BACKEND=wayland
+         export QT_QPA_PLATFORM=wayland-egl
+         export QT_WAYLAND_FORCE_DPI=100
+         export QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+         export QT_AUTO_SCREEN_SCALE_FACTOR=0
+         export QT_QPA_PLATFORMTHEME=gtk3
+         export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
          export DBUS_SESSION_BUS_ADDRESS
          export DBUS_SESSION_BUS_PID
          export MOZ_ENABLE_WAYLAND=1
-         unset GDK_BACKEND
+         export _JAVA_AWT_WM_NONREPARENTING=1
+         export SWAYROOT="${HOME}/.wm/sway"
+         # unset GDK_BACKEND
          # unset WAYLAND_DISPLAY
          exec sway
      fi

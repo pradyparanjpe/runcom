@@ -1,59 +1,6 @@
 #!/usr/bin/env bash
 # -*- coding:utf-8; mode:shell-script; -*-
 
-#
-# Copyright 2020 Pradyumna Paranjape
-#
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-#
-
-export BLACK="\033[0;30m";
-export BLACK_BOLD="\033[1;30m";
-export RED="\033[0;31m";
-export RED_BOLD="\033[1;31m";
-export GREEN="\033[0;32m";
-export GREEN_BOLD="\033[1;32m";
-export YELLOW="\033[0;33m";
-export YELLOW_BOLD="\033[1;33m";
-export BLUE="\033[0;34m";
-export BLUE_BOLD="\033[1;34m";
-export MAGENTA="\033[0;35m";
-export MAGENTA_BOLD="\033[1;35m";
-export CYAN="\033[0;36m";
-export CYAN_BOLD="\033[1;36m";
-export WHITE="\033[0;37m";
-export WHITE_BOLD="\033[1;37m";
-export BG_BLACK="\033[0;40m";
-export BG_BLACK_BOLD="\033[1;40m";
-export BG_RED="\033[0;41m";
-export BG_RED_BOLD="\033[1;41m";
-export BG_GREEN="\033[0;42m";
-export BG_GREEN_BOLD="\033[1;42m";
-export BG_YELLOW="\033[0;43m";
-export BG_YELLOW_BOLD="\033[1;43m";
-export BG_BLUE="\033[0;44m";
-export BG_BLUE_BOLD="\033[1;44m";
-export BG_MAGENTA="\033[0;45m";
-export BG_MAGENTA_BOLD="\033[1;45m";
-export BG_CYAN="\033[0;46m";
-export BG_CYAN_BOLD="\033[1;46m";
-export BG_WHITE="\033[0;47m";
-export BG_WHITE_BOLD="\033[1;47m";
-export NO_EFFECTS="\033[m";
-
 if [[ "$TERM" = "linux" ]]; then
     echo -en "\e]P0000000" #black
     echo -en "\e]P83f3f3f" #darkgrey
@@ -78,34 +25,15 @@ shopt -s autocd # Allows to cd by only typing name
 set -o vi
 bind '"jk":vi-movement-mode'
 
-export RUNCOMDIR="${HOME}/.runcom"
-PATH="${PATH}:${HOME}/bin";
-export PATH="${PATH}:${HOME}/.local/bin";
-
-avail_editors=( 'emacsclient -nw -c -a=""'
-                'nvim'
-                'vim'
-                'vi'
-                'nano' )
-for avail in "${avail_editors[@]}"; do
-    if command -v "${avail%% *}" -- &>/dev/null; then
-        EDITOR="${avail}"
-        break
-    fi
-done
-export EDITOR
-
 function python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
 
-export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-export C_INCLUDE_PATH="${HOME}/.pspman/include/"
-export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
+function deactivate() {
+    true
+}
 
-export PYOPENCL_CTX='0';
-export PYOPENCL_COMPILER_OUTPUT=1;
-export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+alias to_venv="source .venv/bin/activate";
 
 export BEMENU_OPTS='--fn firacode 14 '
 
@@ -208,9 +136,13 @@ export PS2
 PS3="Selection: ";
 export PS3
 
+export RUNCOMDIR="${HOME}/.runcom"
 export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-# shellcheck source=complete.bash
-source "${RUNCOMDIR}"/complete.bash
+# shellcheck source=.local/share/pspman/src/runcom/complete.bash
+if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
+    # shellcheck source=.local/share/pspman/src/runcom/complete.bash
+    source "${RUNCOMDIR}"/complete.bash
+fi
 
 alias tcpz="tar -c --use-compress-program=pigz ";
 alias txpz="tar -x --use-compress-program=pigz ";
@@ -222,10 +154,6 @@ alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
 alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
 alias ping="ping -c 4 ";
-
-alias to_venv="source .venv/bin/activate";
-alias activateGRN='deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate';
-alias activateRNA='deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate';
 
 alias watch="watch -n 10 --color";
 alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
@@ -246,7 +174,7 @@ if command -v "exa" >>/dev/null; then
     alias ll='exa -lr -s size';
     alias lla='exa -a';
     alias l.='exa -a --color=auto |grep "^\."';
-    alias sl="sl -al";
+    alias sl="ls";
 fi
 
 if command -v nvim >>/dev/null; then
@@ -258,13 +186,6 @@ if command -v podman >>/dev/null; then
     alias docker="podman";  # Podman is drop-in replacement for docker
     alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
 fi
-alias pip="python -m pip"; # Invoke pip with python
-
-# shellcheck source=complete.bash
-if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
-    # shellcheck source=complete.bash
-    . "${RUNCOMDIR}"/complete.bash
-fi
 
 function mathcalc() {
     echo "scale=4; $*"| bc
@@ -275,10 +196,6 @@ function dec2hex() {
     echo "obase=16; $*"| bc
     echo "dec:"
     echo "ibase=16; $*"| bc
-}
-
-function deactivate() {
-    true
 }
 
 function pdfcompile() {
@@ -340,19 +257,24 @@ function doc2org() {
     fi
 }
 
-function mount_anubandha() {
+function mount_home_cloud() {
+    # shellcheck disable=SC2154
+    if [[ -z "${home_cloud}" || -z "${cloud_user}" ]]; then
+        echo "variables \$home_cloud OR \$cloud_user haven't been defined"
+        return
+    fi
     # netcheck source=./netcheck.sh
     IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
     if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
-        clouddir=( "/media/data" "/home/pradyumna" )
-        srv_mnt_dir="${HOME}/www.anubandha.d"
+        clouddir=( "/media/data" "/home/${cloud_user}" )
+        srv_mnt_dir="${HOME}/${home_cloud}"
         if [[ $(mount | grep -c "${srv_mnt_dir}") \
                   -lt "${#clouddir[@]}" ]]; then
             # not mounted
             for pathloc in "${clouddir[@]}"; do
                 mntpath="${srv_mnt_dir}${pathloc}"
                 mkdir -p "$mntpath"
-                sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+                sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "${cloud_user}@${home_cloud}:${pathloc}" "$mntpath"
             done
         fi
     fi
@@ -414,43 +336,4 @@ else
     else
         echo -e "${YELLOW_BOLD}Network connection Disconnected${NO_EFFECTS}"
     fi
-fi
-
-if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
-    eval "$(ssh-agent)"
-    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-ssh-add -l > /dev/null || ssh-add
-
-export NO_AT_BRIDGE=1
-
-for term in foot termite tilix xterm gnome-terminal; do
-    if [[ -n "$(command -v $term)" ]]; then
-        export defterm="$term";
-        break;
-    fi;
-done
-
-if [ "$(tty)" = "/dev/tty1" ]; then
-    # export DISPLAY=":0.0"
-    # export WAYLAND_DISPLAY=wayland-0
-    if [[ -z "$XDG_RUNTIME_DIR" ]]; then
-        export XDG_RUNTIME_DIR="/run/user/$UID";
-    fi
-    export SWAYROOT="${HOME}/.wm/sway"
-    export XDG_SESSION_TYPE=wayland
-    export SDL_VIDEODRIVER=wayland
-    export QT_QPA_PLATFORM=wayland-egl
-    export ELM_DISPLAY=wl
-    export ECORE_EVAS_ENGINE=wayland_egl
-    export ELM_ENGINE=wayland_egl
-    export ELM_ACCEL=opengl
-    export GDK_BACKEND=wayland
-    export DBUS_SESSION_BUS_ADDRESS
-    export DBUS_SESSION_BUS_PID
-    export MOZ_ENABLE_WAYLAND=1
-    unset GDK_BACKEND
-    # unset WAYLAND_DISPLAY
-    exec sway
 fi

@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# -*- coding:utf-8; mode:shell-script; -*-
+
+#
+# Copyright 2020 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+export BLACK="\033[0;30m";
+export BLACK_BOLD="\033[1;30m";
+export RED="\033[0;31m";
+export RED_BOLD="\033[1;31m";
+export GREEN="\033[0;32m";
+export GREEN_BOLD="\033[1;32m";
+export YELLOW="\033[0;33m";
+export YELLOW_BOLD="\033[1;33m";
+export BLUE="\033[0;34m";
+export BLUE_BOLD="\033[1;34m";
+export MAGENTA="\033[0;35m";
+export MAGENTA_BOLD="\033[1;35m";
+export CYAN="\033[0;36m";
+export CYAN_BOLD="\033[1;36m";
+export WHITE="\033[0;37m";
+export WHITE_BOLD="\033[1;37m";
+export BG_BLACK="\033[0;40m";
+export BG_BLACK_BOLD="\033[1;40m";
+export BG_RED="\033[0;41m";
+export BG_RED_BOLD="\033[1;41m";
+export BG_GREEN="\033[0;42m";
+export BG_GREEN_BOLD="\033[1;42m";
+export BG_YELLOW="\033[0;43m";
+export BG_YELLOW_BOLD="\033[1;43m";
+export BG_BLUE="\033[0;44m";
+export BG_BLUE_BOLD="\033[1;44m";
+export BG_MAGENTA="\033[0;45m";
+export BG_MAGENTA_BOLD="\033[1;45m";
+export BG_CYAN="\033[0;46m";
+export BG_CYAN_BOLD="\033[1;46m";
+export BG_WHITE="\033[0;47m";
+export BG_WHITE_BOLD="\033[1;47m";
+export NO_EFFECTS="\033[m";
+
+export RUNCOMDIR="${HOME}/.runcom"
+# shellcheck source="bin"
+if [ -d "${HOME}/bin" ] ; then
+    if [[ ! "${PATH}" =~ ${HOME}/bin ]]; then
+        PATH="${HOME}/bin:${PATH}"
+    fi
+fi
+# shellcheck source=".local/bin"
+if [ -d "${HOME}/.local/bin" ] ; then
+    if [[ ! "${PATH}" =~ ${HOME}/.local/bin ]]; then
+        PATH="${HOME}/.local/bin:${PATH}"
+    fi
+fi
+export PATH;
+
+avail_editors=( 'emacsclient -nw -c -a=""'
+                'nvim'
+                'vim'
+                'vi'
+                'nano' )
+for avail in "${avail_editors[@]}"; do
+    if command -v "${avail%% *}" -- &>/dev/null; then
+        EDITOR="${avail}"
+        break
+    fi
+done
+export EDITOR
+
+export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+export C_INCLUDE_PATH="${HOME}/.pspman/include/"
+export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
+
+export PYOPENCL_CTX='0';
+export PYOPENCL_COMPILER_OUTPUT=1;
+export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+
+if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
+    eval "$(ssh-agent)"
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
+
+export NO_AT_BRIDGE=1
+
+for term in foot termite tilix xterm gnome-terminal; do
+    if [[ -n "$(command -v $term)" ]]; then
+        export defterm="$term";
+        break;
+    fi;
+done
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+    if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+        export XDG_RUNTIME_DIR="/run/user/$UID";
+    fi
+    # export DISPLAY=":0"
+    # export WAYLAND_DISPLAY=wayland-0
+    # export GDK_BACKEND=wayland,x11
+    export XDG_CONFIG_HOME="${HOME}/.config"
+    export XDG_DATA_HOME="${HOME}/.local/share"
+    export XDG_SESSION_TYPE=wayland
+    export SDL_VIDEODRIVER=wayland
+    export ECORE_EVAS_ENGINE=wayland_egl
+    export ELM_DISPLAY=wl
+    export ELM_ENGINE=wayland_egl
+    export ELM_ACCEL=opengl
+    export QT_QPA_PLATFORM=wayland-egl
+    export QT_WAYLAND_FORCE_DPI=100
+    export QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+    export QT_AUTO_SCREEN_SCALE_FACTOR=0
+    export QT_QPA_PLATFORMTHEME=gtk3
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+    export DBUS_SESSION_BUS_ADDRESS
+    export DBUS_SESSION_BUS_PID
+    export MOZ_ENABLE_WAYLAND=1
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export SWAYROOT="${HOME}/.wm/sway"
+    # unset GDK_BACKEND
+    # unset WAYLAND_DISPLAY
+    exec sway
+fi
