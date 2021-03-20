@@ -767,5 +767,7 @@
          # unset GDK_BACKEND
          # unset WAYLAND_DISPLAY
          exec sway
+     else
+         exec bash
      fi
    #+END_SRC
