@@ -32,12 +32,12 @@ ap_addr=
 
 
 # IP->AP addresses
-ip_addr=`ip addr | grep "wlp" | grep "inet" | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1`;
+ip_addr="$(ip addr | grep 'wlp' | grep 'inet' | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1)";
 if [[ -z $ip_addr ]]; then
-	ip_addr=`ip addr | grep "en" | grep "inet" | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1`;
+	ip_addr="$(ip addr | grep "en" | grep "inet" | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1)";
 fi
 if [[ -z $ip_addr ]]; then
-	ip_addr=`hostname -I`;
+	ip_addr="$(hostname -I$)";
 fi
 
 
@@ -49,11 +49,11 @@ ap_addr="$(ip neigh \
 intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
 
 if [[ -n "$ip_addr" ]]; then
-    $google_ping_cmd 2>&1 1>/dev/null && inter=1
-    $intra_ping_cmd 2>&1 1>/dev/null && intra=1
-    [[ "${ap_addr}" =~ "192.168.1.1" ]] && home=1
-    [[ "${ap_addr}" =~ "192.168.0.1" ]] && home=1
-    [[ "$home" == "0" ]] && $ccmb_ping_cmd 2>&1 1>/dev/null && ccmb=1
+    $google_ping_cmd &>/dev/null && inter=1
+    $intra_ping_cmd &>/dev/null && intra=1
+    [[ "${ap_addr}" =~ 192.168.1.1 ]] && home=1
+    [[ "${ap_addr}" =~ 192.168.0.1 ]] && home=1
+    [[ "$home" == "0" ]] && $ccmb_ping_cmd &>/dev/null && ccmb=1
 fi
 
-echo -e "${ip_addr}\t${ap_addr}\t$(( 8 * $inter + 4 * $intra + 2 * $home + $ccmb ))"
+echo -e "${ip_addr}\t${ap_addr}\t$(( 8 * inter + 4 * intra + 2 * home + ccmb ))"

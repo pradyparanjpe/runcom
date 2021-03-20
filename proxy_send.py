@@ -37,8 +37,9 @@ and does not demand proxy auth again.
 '''
 
 # imports
-from sys import exit as sysexit
-from os import environ
+import os
+import sys
+import typing
 from urllib.parse import quote
 from requests import get
 
@@ -57,9 +58,9 @@ class Proxy():
 
         initiate an empty proxy
         '''
-        self.p_type: str = None
-        self.auth = {'uname': None, 'pass': None}
-        self.target = {'address': None, 'port': None}
+        self.p_type: typing.Optional[str] = None
+        self.auth: typing.Dict[str, typing.Optional[str]] = {'uname': None, 'pass': None}
+        self.target: typing.Dict[str, typing.Optional[str]] = {'address': None, 'port': None}
         for key, val in kwargs.items():
             if key in self.auth:
                 self.auth[key] = val
@@ -68,7 +69,7 @@ class Proxy():
             else:
                 raise KeyError(f"Bad keyword argument {key}")
 
-    def __str__(self) -> None:
+    def __str__(self) -> str:
         '''
         string of the form
         "p_type://[username[:passwordurl]@]address[:port]/"
@@ -111,25 +112,25 @@ def build():
     '''
     build proxy dictionary from cli
     '''
-    if 'http_proxy' in environ:
-        return environ['http_proxy']
+    if 'http_proxy' in os.environ:
+        return os.environ['http_proxy']
     # Definitions
     proxy = Proxy()
-    if 'proxy_type' in environ:
-        proxy.p_type = environ['proxy_type']
+    if 'proxy_type' in os.environ:
+        proxy.p_type = os.environ['proxy_type']
     else:
         print("proxy type not supplied")
         return ''
-    if 'passwordplain' in environ:
-        proxy.add_password(environ['passwordplain'])
-    elif 'passwordhtml' in environ:
-        proxy.add_password(environ['passwordhtml'], encoded=True)
-    if 'username' in environ:
-        proxy.add_uname(environ['username'])
-    if 'proxy_addr' in environ:
-        proxy.target['address'] = environ['proxy_addr']
-    if 'proxy_port' in environ:
-        proxy.target['port'] = int(environ['proxy_port'])
+    if 'passwordplain' in os.environ:
+        proxy.add_password(os.environ['passwordplain'])
+    elif 'passwordhtml' in os.environ:
+        proxy.add_password(os.environ['passwordhtml'], encoded=True)
+    if 'username' in os.environ:
+        proxy.add_uname(os.environ['username'])
+    if 'proxy_addr' in os.environ:
+        proxy.target['address'] = os.environ['proxy_addr']
+    if 'proxy_port' in os.environ:
+        proxy.target['port'] = os.environ['proxy_port']
     return {proxy.p_type: str(proxy)}
 
 
@@ -141,15 +142,15 @@ def main():
     try:
         get("https://www.duckduckgo.com/", proxies=proxies)
     except ConnectionRefusedError:
-        sysexit(127)
+        return 127
     except OSError as err:
         if 'No route to host' in str(err):
-            sysexit(0)
+            return 0
         else:
             print(err)
-            sysexit(1)
-    sysexit(0)
+            return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

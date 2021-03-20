@@ -88,7 +88,7 @@ avail_editors=( 'emacsclient -nw -c -a=""'
                 'vi'
                 'nano' )
 for avail in "${avail_editors[@]}"; do
-    if command -v ${avail} -- >/dev/null; then
+    if command -v "${avail%% *}" -- &>/dev/null; then
         EDITOR="${avail}"
         break
     fi
@@ -161,7 +161,7 @@ function git_branch() {
         elif [[ "${branch}" =~ ^atc- ]]; then
             echo -ne "${CYAN}"
         elif [[ "${branch}" =~ ^tmp ]]; then
-            echo -ne "${MAGRNTA}"
+            echo -ne "${MAGENTA}"
         elif [[ "${branch}" = "(detached from hde/master)" ]]; then
             echo -ne "${YELLOW}"
         elif [[ "${branch}" == "master" ]]; then
@@ -208,6 +208,10 @@ export PS2
 PS3="Selection: ";
 export PS3
 
+export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+# shellcheck source=complete.bash
+source "${RUNCOMDIR}"/complete.bash
+
 alias tcpz="tar -c --use-compress-program=pigz ";
 alias txpz="tar -x --use-compress-program=pigz ";
 
@@ -215,13 +219,13 @@ alias du='du -hc';
 alias df='df -h';
 alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 
-alias nload="nload -u M -U G -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
-alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\"";
+alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
+alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
 alias ping="ping -c 4 ";
 
 alias to_venv="source .venv/bin/activate";
-alias activateGRN="deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate";
-alias activateRNA="deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate";
+alias activateGRN='deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate';
+alias activateRNA='deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate';
 
 alias watch="watch -n 10 --color";
 alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
@@ -229,8 +233,9 @@ alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep
 alias qqqq="exit";
 
 for sc in "rg" "ag" "pt" "ack" "grep"; do
-    if command -v "$sc" >>/dev/null; then
-        alias grep="$sc --color=auto";
+    if command -v "${sc%% *}" &>/dev/null; then
+        # shellcheck disable=SC2139
+        alias grep="${sc} --color=auto";
         break
     fi
 done
@@ -255,19 +260,21 @@ if command -v podman >>/dev/null; then
 fi
 alias pip="python -m pip"; # Invoke pip with python
 
-if [[ -f "${RUNCOMDIR}/complete.bash" ]]; then
-    . ${RUNCOMDIR}/complete.bash
+# shellcheck source=complete.bash
+if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
+    # shellcheck source=complete.bash
+    . "${RUNCOMDIR}"/complete.bash
 fi
 
 function mathcalc() {
-    echo "scale=4; $@"| bc
+    echo "scale=4; $*"| bc
 }
 
 function dec2hex() {
     echo "hex:"
-    echo "obase=16; $@"| bc
+    echo "obase=16; $*"| bc
     echo "dec:"
-    echo "ibase=16; $@"| bc
+    echo "ibase=16; $*"| bc
 }
 
 function deactivate() {
@@ -275,12 +282,12 @@ function deactivate() {
 }
 
 function pdfcompile() {
-    pdflatex $1
+    pdflatex "$1"
     for ext in toc log aux; do
-        delfile=${1/\.tex/\.$ext}
+        delfile="${1/\.tex/\.$ext}"
         [[ -f "$delfile" ]] && rm "$delfile"
     done
-    evince ${1/\.tex/\.pdf}
+    evince "${1/\.tex/\.pdf}"
 }
 
 function org2export() {
@@ -334,14 +341,15 @@ function doc2org() {
 }
 
 function mount_anubandha() {
-    netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
+    # netcheck source=./netcheck.sh
+    IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
     if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
         clouddir=( "/media/data" "/home/pradyumna" )
         srv_mnt_dir="${HOME}/www.anubandha.d"
         if [[ $(mount | grep -c "${srv_mnt_dir}") \
                   -lt "${#clouddir[@]}" ]]; then
             # not mounted
-            for pathloc in ${clouddir[@]}; do
+            for pathloc in "${clouddir[@]}"; do
                 mntpath="${srv_mnt_dir}${pathloc}"
                 mkdir -p "$mntpath"
                 sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
@@ -351,7 +359,7 @@ function mount_anubandha() {
 }
 
 function gui () {
-    if [[ -n "$@" ]]; then
+    if [[ -n "$*" ]]; then
         if command -v "${@%% *}" >> /dev/null; then
             exec nohup "$@" &>/dev/null 0<&- &
             exit 0
@@ -378,7 +386,8 @@ deconvolute() {
     fi
 }
 
-netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
+# shellcheck source=./netcheck.sh
+IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
 export IP_ADDR="${netcodes[0]}"
 export AP_ADDR="${netcodes[1]}"
 if [[ "${netcodes[2]}" -gt 7 ]]; then
@@ -392,8 +401,10 @@ else
             2) echo -e "Home network connected,"
                ;;
             1) echo -e "CCMB network connected,"
+               # shellcheck source=./proxy_send.py
                if [[ -f "${RUNCOMDIR}/proxy_send.py" ]]; then
-                   ${RUNCOMDIR}/proxy_send.py \
+                   # shellcheck source=./proxy_send.py
+                   "${RUNCOMDIR}/proxy_send.py" \
                        && echo -e "${YELLOW}PROXY AUTH SENT${NO_EFFECTS}";
                fi
                ;;
@@ -406,7 +417,7 @@ else
 fi
 
 if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
-    eval `ssh-agent`
+    eval "$(ssh-agent)"
     ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
@@ -443,6 +454,3 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     # unset WAYLAND_DISPLAY
     exec sway
 fi
-
-PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-source "${RUNCOMDIR}/complete.bash"

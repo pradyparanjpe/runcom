@@ -50,6 +50,7 @@
 - [[#prompt-string][Prompt String]]
   - [[#ps1][PS1]]
 - [[#autocomplete-bash-commands][Autocomplete bash commands]]
+  - [[#python][Python]]
 - [[#assumed-options][Assumed options]]
   - [[#compression][Compression]]
   - [[#disk-usage][Disk Usage]]
@@ -99,13 +100,13 @@
   #+END_EXAMPLE
 
 * Mode line
-  #+BEGIN_SRC sh
+  #+BEGIN_src bash
     #!/usr/bin/env bash
     # -*- coding:utf-8; mode:shell-script; -*-
   #+END_SRC
 
 * Copyright/License Export
-  #+BEGIN_SRC sh
+  #+BEGIN_src bash
     #
     # Copyright 2020 Pradyumna Paranjape
     #
@@ -129,7 +130,7 @@
 * Colors
 ** Definitions
    #+NAME: Color definitionss
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      export BLACK="\033[0;30m";
      export BLACK_BOLD="\033[1;30m";
      export RED="\033[0;31m";
@@ -167,7 +168,7 @@
 
 ** Plain TTY colors
    #+NAME: TTY colors
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if [[ "$TERM" = "linux" ]]; then
          echo -en "\e]P0000000" #black
          echo -en "\e]P83f3f3f" #darkgrey
@@ -191,28 +192,28 @@
 
 * Extensions
 ** Bash Behaviour Options Extensions
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      shopt -s autocd # Allows to cd by only typing name
      set -o vi
      bind '"jk":vi-movement-mode'
    #+END_SRC
 
 ** Identify Self
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      export RUNCOMDIR="${HOME}/.runcom"
      PATH="${PATH}:${HOME}/bin";
      export PATH="${PATH}:${HOME}/.local/bin";
    #+END_SRC
 
 ** Editor wars
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      avail_editors=( 'emacsclient -nw -c -a=""'
                      'nvim'
                      'vim'
                      'vi'
                      'nano' )
      for avail in "${avail_editors[@]}"; do
-         if command -v ${avail} -- >/dev/null; then
+         if command -v "${avail%% *}" -- &>/dev/null; then
              EDITOR="${avail}"
              break
          fi
@@ -221,21 +222,21 @@
    #+END_SRC
 
 ** Python exports
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      function python_ver() {
          python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
      }
    #+END_SRC
 
 ** C(++) exports
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
      export C_INCLUDE_PATH="${HOME}/.pspman/include/"
      export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
    #+END_SRC
 
 ** GPU exports
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      export PYOPENCL_CTX='0';
      export PYOPENCL_COMPILER_OUTPUT=1;
      export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
@@ -248,14 +249,14 @@
    export WLR_LIBINPUT_NO_DEVICES=1;
 
 ** Bemenu exports
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      export BEMENU_OPTS='--fn firacode 14 '
    #+END_SRC
 
 * Custom defined functions
 ** Git
 *** Status
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function git_status() {
           local modified=0
           local cached=0
@@ -299,7 +300,7 @@
     #+END_SRC
 
 *** Branch
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function git_branch() {
           local branch
           branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
@@ -311,7 +312,7 @@
               elif [[ "${branch}" =~ ^atc- ]]; then
                   echo -ne "${CYAN}"
               elif [[ "${branch}" =~ ^tmp ]]; then
-                  echo -ne "${MAGRNTA}"
+                  echo -ne "${MAGENTA}"
               elif [[ "${branch}" = "(detached from hde/master)" ]]; then
                   echo -ne "${YELLOW}"
               elif [[ "${branch}" == "master" ]]; then
@@ -325,7 +326,7 @@
       }
     #+END_SRC
 *** Hash
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function git_hash() {
           git log --pretty=format:'%h' -n 1
       }
@@ -335,7 +336,7 @@
     Include git's branch, hash, status in PS1 if in git repository
     This function is called in PS1 section below
     #+NAME: Git PS
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function git_ps() {
           if ! git status --ignore-submodules &>/dev/null; then
               return
@@ -348,7 +349,7 @@
 * Prompt String
 ** PS1
    #+NAME: PS1
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      PS1=""
      PS1="${PS1}┏━ "
      PS1="${PS1}\[${GREEN}\]\u\[${NO_EFFECTS}\]"
@@ -364,7 +365,7 @@
    #+END_SRC
 
    #+NAME: PS2
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      PS2=""
      PS2="${PS2}\[${CYAN}\]cont..."
      PS2="${PS2}\[${NO_EFFECTS}\]"
@@ -373,72 +374,75 @@
    #+END_SRC
 
    #+NAME: PS3
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      PS3="Selection: ";
      export PS3
    #+END_SRC
 
 * Autocomplete bash commands
+** Python
   [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
-  #+begin_src bash
-    PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-    source "${RUNCOMDIR}/complete.bash"
-  #+end_src
+  #+BEGIN_SRC bash
+    export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+    # shellcheck source=complete.bash
+    source "${RUNCOMDIR}"/complete.bash
+  #+END_SRC
 
 * Assumed options
 ** Compression
    Use multiple threads
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      alias tcpz="tar -c --use-compress-program=pigz ";
      alias txpz="tar -x --use-compress-program=pigz ";
    #+END_SRC
 
 ** Disk Usage
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      alias du='du -hc';
      alias df='df -h';
      alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
    #+END_SRC
 
 ** Network
-   #+BEGIN_SRC sh
-     alias nload="nload -u M -U G -t 10000 -a 3600 "$(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)""
-     alias nethogs="\su - -c \"nethogs $(ip a |grep  'state UP' | cut -d ' ' -f 2 | cut -d ':' -f 1) -d 10\"";
+   #+BEGIN_src bash
+     alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
+     alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
      alias ping="ping -c 4 ";
    #+END_SRC
 
 ** Environment
    Change python3 environments
-   #+BEGIN_SRC sh
-     alias to_venv="source .venv/bin/activate";
-     alias activateGRN="deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate";
-     alias activateRNA="deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate";
+   #+BEGIN_src bash
+          alias to_venv="source .venv/bin/activate";
+          alias activateGRN='deactivate || true; source ${HOME}/.virtualenvs/Leish_Petri/bin/activate';
+          alias activateRNA='deactivate || true; source ${HOME}/.virtualenvs/RNASeq3/bin/activate';
    #+END_SRC
 
 ** Monitor Job queues
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      alias watch="watch -n 10 --color";
      alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
    #+END_SRC
 
 ** Lazy single-handed exit
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      alias qqqq="exit";
    #+END_SRC
 
 * Better program defaults
 ** g/re/p
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      for sc in "rg" "ag" "pt" "ack" "grep"; do
-         if command -v "$sc" >>/dev/null; then
-             alias grep="$sc --color=auto";
+         if command -v "${sc%% *}" &>/dev/null; then
+             # shellcheck disable=SC2139
+             alias grep="${sc} --color=auto";
              break
          fi
      done
    #+END_SRC
 
 ** List Contents
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if command -v "exa" >>/dev/null; then
          alias ls="exa -Fh --color=auto";
          alias la='exa -a --color=auto';
@@ -450,7 +454,7 @@
    #+END_SRC
 
 ** neo visual editor improved
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if command -v nvim >>/dev/null; then
          alias ex="nvim"; ## always open vim in normal mode
          alias vim="nvim"; ## always use neo
@@ -458,7 +462,7 @@
    #+END_SRC
 
 ** Container
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if command -v podman >>/dev/null; then
          alias docker="podman";  # Podman is drop-in replacement for docker
          alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
@@ -467,35 +471,38 @@
    #+END_SRC
 
 * Bash completions
-#+BEGIN_SRC sh
-  if [[ -f "${RUNCOMDIR}/complete.bash" ]]; then
-      . ${RUNCOMDIR}/complete.bash
+#+BEGIN_src bash
+
+  # shellcheck source=complete.bash
+  if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
+      # shellcheck source=complete.bash
+      . "${RUNCOMDIR}"/complete.bash
   fi
 #+END_SRC
 
 * Functions
 ** Mathematical
 *** In-Line Calculator
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function mathcalc() {
-          echo "scale=4; $@"| bc
+          echo "scale=4; $*"| bc
       }
     #+END_SRC
 
 *** Computational
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function dec2hex() {
           echo "hex:"
-          echo "obase=16; $@"| bc
+          echo "obase=16; $*"| bc
           echo "dec:"
-          echo "ibase=16; $@"| bc
+          echo "ibase=16; $*"| bc
       }
     #+END_SRC
 
 ** Dummy placeholder
    If not in an python virtual environment, "deactivate" shouldn't through errors
 
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      function deactivate() {
          true
      }
@@ -503,19 +510,19 @@
 
 ** Compilation
 *** PDF from Latex
-    #+BEGIN_SRC sh
+    #+BEGIN_src bash
       function pdfcompile() {
-          pdflatex $1
+          pdflatex "$1"
           for ext in toc log aux; do
-              delfile=${1/\.tex/\.$ext}
+              delfile="${1/\.tex/\.$ext}"
               [[ -f "$delfile" ]] && rm "$delfile"
           done
-          evince ${1/\.tex/\.pdf}
+          evince "${1/\.tex/\.pdf}"
       }
     #+END_SRC
 *** Pandoc
 **** Org to Something
-     #+BEGIN_SRC sh
+     #+BEGIN_src bash
        function org2export() {
            # Usage: org2oth [-f] <infile> <othtype>
            proceed=
@@ -552,21 +559,21 @@
      #+END_SRC
 
 **** Org to Docx
-     #+BEGIN_SRC sh
+     #+BEGIN_src bash
        function org2doc () {
            org2export "$@" "docx"
        }
      #+END_SRC
 
 **** Org to PDF
-     #+BEGIN_SRC sh
+     #+BEGIN_src bash
        function org2pdf () {
            org2export "$@" "pdf"
        }
      #+END_SRC
 
 **** Docx to Org
-     #+BEGIN_SRC sh
+     #+BEGIN_src bash
        function doc2org() {
            if [[ "$1" == *.docx ]]; then
                pandoc -f docx -t org -o  "${1/%docx/org}" "$1"
@@ -578,23 +585,24 @@
 
 ** Mount Home Server
    Home Cloud mounts
-   #+BEGIN_SRC sh
-     function mount_anubandha() {
-         netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
-         if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
-             clouddir=( "/media/data" "/home/pradyumna" )
-             srv_mnt_dir="${HOME}/www.anubandha.d"
-             if [[ $(mount | grep -c "${srv_mnt_dir}") \
-                       -lt "${#clouddir[@]}" ]]; then
-                 # not mounted
-                 for pathloc in ${clouddir[@]}; do
-                     mntpath="${srv_mnt_dir}${pathloc}"
-                     mkdir -p "$mntpath"
-                     sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
-                 done
-             fi
-         fi
-     }
+   #+BEGIN_src bash
+      function mount_anubandha() {
+          # netcheck source=./netcheck.sh
+          IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+          if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
+              clouddir=( "/media/data" "/home/pradyumna" )
+              srv_mnt_dir="${HOME}/www.anubandha.d"
+              if [[ $(mount | grep -c "${srv_mnt_dir}") \
+                        -lt "${#clouddir[@]}" ]]; then
+                  # not mounted
+                  for pathloc in "${clouddir[@]}"; do
+                      mntpath="${srv_mnt_dir}${pathloc}"
+                      mkdir -p "$mntpath"
+                      sshfs -o "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" "pradyumna@www.anubandha.home:${pathloc}" "$mntpath"
+                  done
+              fi
+          fi
+      }
    #+END_SRC
 
 * Alias-like Functions
@@ -602,9 +610,9 @@
    Launch application and exit terminal window
    Acts like a launcher
    Uninteractive terminal commands may also be called
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      function gui () {
-         if [[ -n "$@" ]]; then
+         if [[ -n "$*" ]]; then
              if command -v "${@%% *}" >> /dev/null; then
                  exec nohup "$@" &>/dev/null 0<&- &
                  exit 0
@@ -614,7 +622,7 @@
    #+END_SRC
 
 ** Un-Compress by context
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      deconvolute() {
          if [[ ! -f "$1" ]]; then
              echo "$1: no such file";
@@ -638,8 +646,9 @@
 * Networking
 ** State
    Display state of network connection at the beginning
-   #+BEGIN_SRC sh
-     netcodes=( $(${RUNCOMDIR}/netcheck.sh) )
+   #+BEGIN_src bash
+     # shellcheck source=./netcheck.sh
+     IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
      export IP_ADDR="${netcodes[0]}"
      export AP_ADDR="${netcodes[1]}"
      if [[ "${netcodes[2]}" -gt 7 ]]; then
@@ -653,8 +662,10 @@
                  2) echo -e "Home network connected,"
                     ;;
                  1) echo -e "CCMB network connected,"
+                    # shellcheck source=./proxy_send.py
                     if [[ -f "${RUNCOMDIR}/proxy_send.py" ]]; then
-                        ${RUNCOMDIR}/proxy_send.py \
+                        # shellcheck source=./proxy_send.py
+                        "${RUNCOMDIR}/proxy_send.py" \
                             && echo -e "${YELLOW}PROXY AUTH SENT${NO_EFFECTS}";
                     fi
                     ;;
@@ -669,9 +680,9 @@
 
 ** SSH Agent
    Reuse ssh agent for all logins
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
-         eval `ssh-agent`
+         eval "$(ssh-agent)"
          ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
      fi
      export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
@@ -681,13 +692,13 @@
 * Remote
   Wayland Display manager needs this for some reason...
   Don't remember why
-  #+BEGIN_SRC sh
+  #+BEGIN_src bash
     export NO_AT_BRIDGE=1
   #+END_SRC
 
 * Window Manager settings
 ** Terminal
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      for term in foot termite tilix xterm gnome-terminal; do
          if [[ -n "$(command -v $term)" ]]; then
              export defterm="$term";
@@ -698,7 +709,7 @@
 
 ** Sway
    If running from tty1 setup sway environment and start sway
-   #+BEGIN_SRC sh
+   #+BEGIN_src bash
      if [ "$(tty)" = "/dev/tty1" ]; then
          # export DISPLAY=":0.0"
          # export WAYLAND_DISPLAY=wayland-0
