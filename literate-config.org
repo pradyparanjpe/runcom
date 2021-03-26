@@ -30,7 +30,6 @@
 - [[#mode-line][Mode line]]
 - [[#copyrightlicense-export][Copyright/License Export]]
 - [[#colors][Colors]]
-  - [[#definitions][Definitions]]
   - [[#plain-tty-colors][Plain TTY colors]]
 - [[#extensions][Extensions]]
   - [[#bash-behaviour-options-extensions][Bash Behaviour Options Extensions]]
@@ -146,44 +145,6 @@
   #+END_SRC
 
 * Colors
-** Definitions
-   #+NAME: Color definitionss
-   #+BEGIN_src bash :tangle bash_login
-     export BLACK="\033[0;30m";
-     export BLACK_BOLD="\033[1;30m";
-     export RED="\033[0;31m";
-     export RED_BOLD="\033[1;31m";
-     export GREEN="\033[0;32m";
-     export GREEN_BOLD="\033[1;32m";
-     export YELLOW="\033[0;33m";
-     export YELLOW_BOLD="\033[1;33m";
-     export BLUE="\033[0;34m";
-     export BLUE_BOLD="\033[1;34m";
-     export MAGENTA="\033[0;35m";
-     export MAGENTA_BOLD="\033[1;35m";
-     export CYAN="\033[0;36m";
-     export CYAN_BOLD="\033[1;36m";
-     export WHITE="\033[0;37m";
-     export WHITE_BOLD="\033[1;37m";
-     export BG_BLACK="\033[0;40m";
-     export BG_BLACK_BOLD="\033[1;40m";
-     export BG_RED="\033[0;41m";
-     export BG_RED_BOLD="\033[1;41m";
-     export BG_GREEN="\033[0;42m";
-     export BG_GREEN_BOLD="\033[1;42m";
-     export BG_YELLOW="\033[0;43m";
-     export BG_YELLOW_BOLD="\033[1;43m";
-     export BG_BLUE="\033[0;44m";
-     export BG_BLUE_BOLD="\033[1;44m";
-     export BG_MAGENTA="\033[0;45m";
-     export BG_MAGENTA_BOLD="\033[1;45m";
-     export BG_CYAN="\033[0;46m";
-     export BG_CYAN_BOLD="\033[1;46m";
-     export BG_WHITE="\033[0;47m";
-     export BG_WHITE_BOLD="\033[1;47m";
-     export NO_EFFECTS="\033[m";
-   #+END_SRC
-
 ** Plain TTY colors
    #+NAME: TTY colors
    #+BEGIN_src bash :tangle bashrc
@@ -325,22 +286,22 @@
 
           stat_str=''
           if [ $modified -ne 0 ]; then
-              stat_str="${stat_str}${RED}\ue728"
+              stat_str="${stat_str}\033[0;31m\ue728"
           fi
 
           if [ $cached -ne 0 ]; then
-              stat_str="${stat_str}${GREEN}\ue729"
+              stat_str="${stat_str}\033[0;32m\ue729"
           fi
 
           if [ $untracked -ne 0 ]; then
-              stat_str="${stat_str}${RED}\uf476"
+              stat_str="${stat_str}\033[0;31m\uf476"
           fi
 
           if [ -n "$(git stash list)" ]; then
-              stat_str="${stat_str}${CYAN}\uf48e"
+              stat_str="${stat_str}\e[0;36m\uf48e"
           fi
           if [[ -n "${stat_str}" ]]; then
-              echo -en "${stat_str}${NO_EFFECTS}"
+              echo -en "${stat_str}\e[m"
           fi
       }
     #+END_SRC
@@ -352,22 +313,22 @@
           branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
           if [[ -n "$branch" ]]; then
               if [[ "${branch}" =~ ^feat- ]]; then
-                  echo -ne "${GREEN}"
+                  echo -ne "\033[0;32m"
               elif [[ "${branch}" =~ ^bug- ]]; then
-                  echo -ne "${RED}"
+                  echo -ne "\033[0;31m"
               elif [[ "${branch}" =~ ^atc- ]]; then
-                  echo -ne "${CYAN}"
+                  echo -ne "\e[0;36m"
               elif [[ "${branch}" =~ ^tmp ]]; then
-                  echo -ne "${MAGENTA}"
+                  echo -ne "\e[0;35m"
               elif [[ "${branch}" = "(detached from hde/master)" ]]; then
-                  echo -ne "${YELLOW}"
+                  echo -ne "\e[0;33m"
               elif [[ "${branch}" == "master" ]]; then
                   return
               else
-                  echo -ne "${MAGENTA}"
+                  echo -ne "\e[0;35m"
               fi
               echo -ne "${branch}\ue725"
-              echo -ne "${NO_EFFECTS}"
+              echo -ne "\e[m"
           fi
       }
     #+END_SRC
@@ -396,26 +357,59 @@
 ** PS1
    #+NAME: PS1
    #+BEGIN_src bash :tangle bashrc
-     PS1=""
-     PS1="${PS1}┏━ "
-     PS1="${PS1}\[${GREEN}\]\u\[${NO_EFFECTS}\]"
-     PS1="${PS1}@"
-     PS1="${PS1}\[${BLUE}\]\h\[${NO_EFFECTS}\]"
-     PS1="${PS1}\$(git_ps)"
-     PS1="${PS1}\[${WHITE}\]<"
-     PS1="${PS1}\[${CYAN}\]\W"
-     PS1="${PS1}\[${WHITE}\]>"
-     PS1="${PS1}\[${YELLOW}\]\t\[${NO_EFFECTS}\]"
-     PS1="${PS1}\n┗━ "
-     export PS1
+     last_exit_color () {
+         err="$1"
+         if test "$err" == "0"; then
+             # no error
+             printf "\e[0;32m"
+         elif test "$err" == "1"; then
+             # general error
+             printf "\e[0;33m"
+         elif test "$err" == "2"; then
+             # misuse of shell builtins
+             printf "\e[0;31m"
+         elif [ "$err" -gt 63 ]  && [ "$err" -lt 84 ]; then
+             # syserror.h
+             printf "\e[0;91m"
+         elif test "$err" == "126"; then
+             # cannot execute
+             printf "\e[0;37m"
+         elif test "$err" == "127"; then
+             # command not found
+             printf "\e[0;30m"
+         elif [ "$err" -gt 127 ] && [ "$err" -lt 191 ]; then
+             # Fatal error
+             printf "\e[0;41m"
+         elif test "$err" == "255"; then
+             # exit status limit
+             printf "\e[0;31m"
+         else
+             printf "\e[0;31m"
+         fi
+     }
+     export PROMPT_COMMAND=__prompt_command
+     __prompt_command () {
+         exit_stat="$?"
+         PS1=""
+         PS1="${PS1}\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
+         PS1="${PS1}\[\e[0;32m\]\u\[\e[m\]"
+         PS1="${PS1}@"
+         PS1="${PS1}\[\e[0;34m\]\h\[\e[m\]"
+         PS1="${PS1}\$(git_ps)"
+         PS1="${PS1}\[\e[0;37m\]<"
+         PS1="${PS1}\[\e[0;36m\]\W"
+         PS1="${PS1}\[\e[0;37m\]>"
+         PS1="${PS1}\[\e[0;33m\]\t\[\e[m\]"
+         PS1="${PS1}\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
+     }
    #+END_SRC
 
 ** PS2
    #+NAME: PS2
    #+BEGIN_src bash :tangle bashrc
      PS2=""
-     PS2="${PS2}\[${CYAN}\]cont..."
-     PS2="${PS2}\[${NO_EFFECTS}\]"
+     PS2="${PS2}\[\e[0;36m\]cont..."
+     PS2="${PS2}\[\e[m\]"
      PS2="${PS2}» ";
      export PS2
    #+END_SRC
@@ -681,12 +675,12 @@
      export IP_ADDR="${netcodes[0]}"
      export AP_ADDR="${netcodes[1]}"
      if [[ "${netcodes[2]}" -gt 7 ]]; then
-         echo -e "${BLUE_BOLD}Internet (GOOGLE) Connected${NO_EFFECTS}"
-         echo -e "${GREEN}$IP_ADDR ${NO_EFFECTS} is current wireless ip address"
+         echo -e "\e[1;34mInternet (GOOGLE) Connected\e[m"
+         echo -e "\033[0;32m$IP_ADDR \e[m is current wireless ip address"
      else
-         echo -e "${RED_BOLD}Internet (GOOGLE) Not reachable${NO_EFFECTS}"
+         echo -e "\e[1;31mInternet (GOOGLE) Not reachable\e[m"
          if [[ $(( netcodes[2] % 8 )) -gt 3 ]]; then  # Intranet is connected
-             echo -e "${RED}Internet Down${NO_EFFECTS}"
+             echo -e "\033[0;31mInternet Down\e[m"
              case $(( netcodes[2] % 4 )) in
                  2) echo -e "Home network connected,"
                     ;;
@@ -695,14 +689,14 @@
                     if [[ -f "${RUNCOMDIR}/proxy_send.py" ]]; then
                         # shellcheck source=./proxy_send.py
                         "${RUNCOMDIR}/proxy_send.py" \
-                            && echo -e "${YELLOW}PROXY AUTH SENT${NO_EFFECTS}";
+                            && echo -e "\e[0;33mPROXY AUTH SENT\e[m";
                     fi
                     ;;
                  ,*) echo -e "HOTSPOT connected"
                     ;;
              esac
          else
-             echo -e "${YELLOW_BOLD}Network connection Disconnected${NO_EFFECTS}"
+             echo -e "\e[1;33mNetwork connection Disconnected\e[m"
          fi
      fi
    #+END_SRC

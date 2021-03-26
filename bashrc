@@ -59,22 +59,22 @@ function git_status() {
 
     stat_str=''
     if [ $modified -ne 0 ]; then
-        stat_str="${stat_str}${RED}\ue728"
+        stat_str="${stat_str}\033[0;31m\ue728"
     fi
 
     if [ $cached -ne 0 ]; then
-        stat_str="${stat_str}${GREEN}\ue729"
+        stat_str="${stat_str}\033[0;32m\ue729"
     fi
 
     if [ $untracked -ne 0 ]; then
-        stat_str="${stat_str}${RED}\uf476"
+        stat_str="${stat_str}\033[0;31m\uf476"
     fi
 
     if [ -n "$(git stash list)" ]; then
-        stat_str="${stat_str}${CYAN}\uf48e"
+        stat_str="${stat_str}\e[0;36m\uf48e"
     fi
     if [[ -n "${stat_str}" ]]; then
-        echo -en "${stat_str}${NO_EFFECTS}"
+        echo -en "${stat_str}\e[m"
     fi
 }
 
@@ -83,22 +83,22 @@ function git_branch() {
     branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
     if [[ -n "$branch" ]]; then
         if [[ "${branch}" =~ ^feat- ]]; then
-            echo -ne "${GREEN}"
+            echo -ne "\033[0;32m"
         elif [[ "${branch}" =~ ^bug- ]]; then
-            echo -ne "${RED}"
+            echo -ne "\033[0;31m"
         elif [[ "${branch}" =~ ^atc- ]]; then
-            echo -ne "${CYAN}"
+            echo -ne "\e[0;36m"
         elif [[ "${branch}" =~ ^tmp ]]; then
-            echo -ne "${MAGENTA}"
+            echo -ne "\e[0;35m"
         elif [[ "${branch}" = "(detached from hde/master)" ]]; then
-            echo -ne "${YELLOW}"
+            echo -ne "\e[0;33m"
         elif [[ "${branch}" == "master" ]]; then
             return
         else
-            echo -ne "${MAGENTA}"
+            echo -ne "\e[0;35m"
         fi
         echo -ne "${branch}\ue725"
-        echo -ne "${NO_EFFECTS}"
+        echo -ne "\e[m"
     fi
 }
 
@@ -114,22 +114,55 @@ function git_ps() {
     fi
 }
 
-PS1=""
-PS1="${PS1}┏━ "
-PS1="${PS1}\[${GREEN}\]\u\[${NO_EFFECTS}\]"
-PS1="${PS1}@"
-PS1="${PS1}\[${BLUE}\]\h\[${NO_EFFECTS}\]"
-PS1="${PS1}\$(git_ps)"
-PS1="${PS1}\[${WHITE}\]<"
-PS1="${PS1}\[${CYAN}\]\W"
-PS1="${PS1}\[${WHITE}\]>"
-PS1="${PS1}\[${YELLOW}\]\t\[${NO_EFFECTS}\]"
-PS1="${PS1}\n┗━ "
-export PS1
+last_exit_color () {
+    err="$1"
+    if test "$err" == "0"; then
+        # no error
+        printf "\e[0;32m"
+    elif test "$err" == "1"; then
+        # general error
+        printf "\e[0;33m"
+    elif test "$err" == "2"; then
+        # misuse of shell builtins
+        printf "\e[0;31m"
+    elif [ "$err" -gt 63 ]  && [ "$err" -lt 84 ]; then
+        # syserror.h
+        printf "\e[0;91m"
+    elif test "$err" == "126"; then
+        # cannot execute
+        printf "\e[0;37m"
+    elif test "$err" == "127"; then
+        # command not found
+        printf "\e[0;30m"
+    elif [ "$err" -gt 127 ] && [ "$err" -lt 191 ]; then
+        # Fatal error
+        printf "\e[0;41m"
+    elif test "$err" == "255"; then
+        # exit status limit
+        printf "\e[0;31m"
+    else
+        printf "\e[0;31m"
+    fi
+}
+export PROMPT_COMMAND=__prompt_command
+__prompt_command () {
+    exit_stat="$?"
+    PS1=""
+    PS1="${PS1}\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
+    PS1="${PS1}\[\e[0;32m\]\u\[\e[m\]"
+    PS1="${PS1}@"
+    PS1="${PS1}\[\e[0;34m\]\h\[\e[m\]"
+    PS1="${PS1}\$(git_ps)"
+    PS1="${PS1}\[\e[0;37m\]<"
+    PS1="${PS1}\[\e[0;36m\]\W"
+    PS1="${PS1}\[\e[0;37m\]>"
+    PS1="${PS1}\[\e[0;33m\]\t\[\e[m\]"
+    PS1="${PS1}\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
+}
 
 PS2=""
-PS2="${PS2}\[${CYAN}\]cont..."
-PS2="${PS2}\[${NO_EFFECTS}\]"
+PS2="${PS2}\[\e[0;36m\]cont..."
+PS2="${PS2}\[\e[m\]"
 PS2="${PS2}» ";
 export PS2
 
@@ -313,12 +346,12 @@ IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
 export IP_ADDR="${netcodes[0]}"
 export AP_ADDR="${netcodes[1]}"
 if [[ "${netcodes[2]}" -gt 7 ]]; then
-    echo -e "${BLUE_BOLD}Internet (GOOGLE) Connected${NO_EFFECTS}"
-    echo -e "${GREEN}$IP_ADDR ${NO_EFFECTS} is current wireless ip address"
+    echo -e "\e[1;34mInternet (GOOGLE) Connected\e[m"
+    echo -e "\033[0;32m$IP_ADDR \e[m is current wireless ip address"
 else
-    echo -e "${RED_BOLD}Internet (GOOGLE) Not reachable${NO_EFFECTS}"
+    echo -e "\e[1;31mInternet (GOOGLE) Not reachable\e[m"
     if [[ $(( netcodes[2] % 8 )) -gt 3 ]]; then  # Intranet is connected
-        echo -e "${RED}Internet Down${NO_EFFECTS}"
+        echo -e "\033[0;31mInternet Down\e[m"
         case $(( netcodes[2] % 4 )) in
             2) echo -e "Home network connected,"
                ;;
@@ -327,13 +360,13 @@ else
                if [[ -f "${RUNCOMDIR}/proxy_send.py" ]]; then
                    # shellcheck source=./proxy_send.py
                    "${RUNCOMDIR}/proxy_send.py" \
-                       && echo -e "${YELLOW}PROXY AUTH SENT${NO_EFFECTS}";
+                       && echo -e "\e[0;33mPROXY AUTH SENT\e[m";
                fi
                ;;
             *) echo -e "HOTSPOT connected"
                ;;
         esac
     else
-        echo -e "${YELLOW_BOLD}Network connection Disconnected${NO_EFFECTS}"
+        echo -e "\e[1;33mNetwork connection Disconnected\e[m"
     fi
 fi
