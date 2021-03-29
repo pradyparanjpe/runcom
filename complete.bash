@@ -3,7 +3,7 @@
 
 # Affirm argparse installation
 if ! command -v register-python-argcomplete &>/dev/null; then
-    python3 -m pip install -U argcomplete
+    pip install -U argcomplete
     activate-global-python-argcomplete --user
 fi
 

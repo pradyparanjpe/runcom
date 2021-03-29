@@ -1,11 +1,11 @@
-#-*- coding:utf-8; mode:org -*-
+#-*- coding:utf-8; mode:org; -*-
 #+TITLE: Prady_runcom
 #+AUTHOR: Pradyumna Paranjape
 #+EMAIL: pradyparanjpe@rediffmail.com
 #+LANGUAGE: en
 #+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle t
+#+PROPERTY: header-args :tangle
 * Copyright/License Header
   Copyright 2020 Pradyumna Paranjape
 
@@ -24,106 +24,206 @@
   You should have received a copy of the GNU General Public License
   along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
-* Table of Contents :toc:
-- [[#copyrightlicense-header][Copyright/License Header]]
-- [[#what-is-this][What is this?]]
-- [[#mode-line][Mode line]]
-- [[#copyrightlicense-export][Copyright/License Export]]
-- [[#colors][Colors]]
-  - [[#plain-tty-colors][Plain TTY colors]]
-- [[#extensions][Extensions]]
-  - [[#bash-behaviour-options-extensions][Bash Behaviour Options Extensions]]
-  - [[#identify-self][Identify Self]]
-  - [[#editor-wars][Editor wars]]
-  - [[#python-exports][Python exports]]
-    - [[#python-version][Python version]]
-    - [[#dummy-placeholder][Dummy placeholder]]
-    - [[#quickly-change-to-virtualenv][Quickly change to virtualenv]]
-  - [[#c-exports][C(++) exports]]
-  - [[#gpu-exports][GPU exports]]
-  - [[#sway-exports][Sway exports]]
-  - [[#bemenu-exports][Bemenu exports]]
-- [[#custom-defined-functions][Custom defined functions]]
-  - [[#git][Git]]
-    - [[#status][Status]]
-    - [[#branch][Branch]]
-    - [[#hash][Hash]]
-    - [[#prompt-string-addition][Prompt string addition]]
-- [[#prompt-string][Prompt String]]
-  - [[#ps1][PS1]]
-  - [[#ps2][PS2]]
-  - [[#ps3][PS3]]
-- [[#autocomplete-bash-commands][Autocomplete bash commands]]
-  - [[#python][Python]]
-- [[#assumed-options][Assumed options]]
-  - [[#compression][Compression]]
-  - [[#disk-usage][Disk Usage]]
-  - [[#network][Network]]
-  - [[#monitor-job-queues][Monitor Job queues]]
-  - [[#lazy-single-handed-exit][Lazy single-handed exit]]
-- [[#better-program-defaults][Better program defaults]]
-  - [[#grep][g/re/p]]
-  - [[#list-contents][List Contents]]
-  - [[#neo-visual-editor-improved][neo visual editor improved]]
-  - [[#container][Container]]
-- [[#functions][Functions]]
-  - [[#mathematical][Mathematical]]
-    - [[#in-line-calculator][In-Line Calculator]]
-    - [[#computational][Computational]]
-  - [[#compilation][Compilation]]
-    - [[#pdf-from-latex][PDF from Latex]]
-    - [[#pandoc][Pandoc]]
-      - [[#org-to-something][Org to Something]]
-      - [[#org-to-docx][Org to Docx]]
-      - [[#org-to-pdf][Org to PDF]]
-      - [[#docx-to-org][Docx to Org]]
-  - [[#mount-home-server][Mount Home Server]]
-- [[#alias-like-functions][Alias-like Functions]]
-  - [[#launch-gui][Launch gui]]
-  - [[#un-compress-by-context][Un-Compress by context]]
-- [[#networking][Networking]]
-  - [[#state][State]]
-  - [[#ssh-agent][SSH Agent]]
-- [[#display][Display]]
-- [[#window-manager-settings][Window Manager settings]]
-  - [[#terminal][Terminal]]
-  - [[#sway][Sway]]
-
 * What is this?
-  Bash executes functions from ${HOME}/.bashrc whenever a new shell is called
-  Adding multiple lines to ${HOME}/.bashrc unnecessarily clutters it.
-  Further, dependencies (if any) need to be packaged with executions
-  Hence, a separate file may be maintained in ~/.runcom/bashrc,
-  and sourced from the ~/.bashrc file by adding to ~/.bashrc:
+  Following configuration files are available. This literate configuration tangles their contents.
+  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
+  | Configuration File Path          | POSIX | Remote | Remote | CLI  | CLI | GUI  | GUI | SH   | SH  |
+  |                                  |       | bash   | zsh    | bash | zsh | bash | zsh | bash | zsh |
+  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
+  | /etc/profile                     | yes   |        |        |      |     |      |     |      |     |
+  | /etc/bashrc                      | yes   |        |        |      |     |      |     |      |     |
+  | /etc/zshrc                       | yes   |        |        |      |     |      |     |      |     |
+  | /etc/profile.d/*                 | yes   |        |        |      |     |      |     |      |     |
+  | ${HOME}/.bashrc                  | No    |        |        |      |     |      |     |      |     |
+  | ${HOME}/.zshrc                   | No    |        |        |      |     |      |     |      |     |
+  | ${HOME}/.bash_profile            | No    |        |        |      |     |      |     |      |     |
+  | ${HOME}/.bash_login              | No    |        |        |      |     |      |     |      |     |
+  | ${HOME}/.profile                 | Yes   |        |        |      |     |      |     |      |     |
+  | ${HOME}/.zprofile                | No    |        |        |      |     |      |     |      |     |
+  | ${HOME}/.bash_completion.d/*     | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/bashrc              | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/zshrc               | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/shrc                | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/profile             | Yes   |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/bash_login          | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/zlogin              | No    |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/ui                  | Yes   |        |        |      |     |      |     |      |     |
+  | ${RUNCOMDIR}/complete.bash       | No    |        |        |      |     |      |     |      |     |
+  | ${XDG_COONFIG_HOME}/varrc        | yes   |        |        |      |     |      |     |      |     |
+  | ${XDG_CONFIG_HOME}/pspman/bashrc | Yes   |        |        |      |     |      |     |      |     |
+  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
 
-  #+BEGIN_SRC bash :tangle no
-    # shellcheck source=".runcom/bashrc"
-    if [[ -f "${HOME}/.runcom/bashrc" ]]; then
-        . "${HOME}/.runcom/bashrc"
-    fi
-  #+END_SRC
+** Bash
+*** /etc/profile
+**** /etc/bashrc
+***** /etc/profile.d/*
 
-  and to ~/.bash_profile:
+*** ${HOME}/.bash_profile
+**** ${HOME}/.profile
+***** ${XDG_CONFIG_HOME}/varrc
+***** ${RUNCOMDIR}/profile
+***** ${XDG_CONFIG_HOME}/pspman/profile
+**** ${HOME}/.bashrc
+***** ${RUNCOMDIR}/bashrc
+****** ${RUNCOMDIR}/shrc
+**** ${HOME}/.bash_login
+***** ${RUNCOMDIR}/bash_login
+****** ${RUNCOMDIR}/ui
 
-  #+BEGIN_SRC bash :tangle no
-    # shellcheck source=".runcom/bashrc"
-    if [[ -f "${HOME}/.runcom/bash_login" ]]; then
-        . "${HOME}/.runcom/bash_login"
-    fi
-  #+END_SRC
+** Zsh
+*** /etc/profile
+**** /etc/zshrc
+***** /etc/profile.d/*
 
-* Mode line
-  #+BEGIN_src bash :tangle bash_login
-    #!/usr/bin/env bash
+*** ${HOME}/.zshenv
+*** ${HOME}/.zprofile
+**** ${HOME}/.profile
+***** ${XDG_CONFIG_HOME}/varrc
+***** ${RUNCOMDIR}/profile
+***** ${XDG_CONFIG_HOME}/pspman/profile
+*** ${HOME}/.zshrc
+**** ${RUNCOMDIR}/zshrc
+***** ${RUNCOMDIR}/shrc
+*** ${HOME}/.zlogin
+**** ${RUNCOMDIR}/zlogin
+***** ${RUNCOMDIR}/ui
+
+* Headers
+  #+BEGIN_SRC bash :tangle shrc
+    # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
   #+END_SRC
-  #+BEGIN_src bash :tangle bashrc
-    #!/usr/bin/env bash
+  #+BEGIN_SRC bash :tangle bashrc
+    # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
   #+END_SRC
-
-* Copyright/License Export
-  #+BEGIN_src bash :tangle bash_login
+  #+BEGIN_SRC bash :tangle zshrc
+    # shellcheck shell=bash
+    # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
+  #+END_SRC
+  #+BEGIN_SRC bash :tangle bash_login
+    # shellcheck shell=bash
+    # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
+  #+END_SRC
+  #+BEGIN_SRC bash :tangle zlogin
+    # shellcheck shell=bash
+    # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
+  #+END_SRC
+  #+BEGIN_SRC sh :tangle profile
+    # shellcheck shell=bash
+    # -*- coding:utf-8; mode:shell-script; -*-
+    #
+    # Copyright 2020 Pradyumna Paranjape
+    #
+    # This file is part of Prady_runcom.
+    #
+    # Prady_runcom is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+    #
+    # Prady_runcom is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+    #
+  #+END_SRC
+  #+BEGIN_SRC sh :tangle ui
+    # shellcheck shell=bash
+    # -*- coding:utf-8; mode:shell-script; -*-
     #
     # Copyright 2020 Pradyumna Paranjape
     #
@@ -144,51 +244,125 @@
     #
   #+END_SRC
 
-* Colors
-** Plain TTY colors
-   #+NAME: TTY colors
-   #+BEGIN_src bash :tangle bashrc
-     if [[ "$TERM" = "linux" ]]; then
-         echo -en "\e]P0000000" #black
-         echo -en "\e]P83f3f3f" #darkgrey
-         echo -en "\e]P19f3f3f" #darkred
-         echo -en "\e]P9ff9f9f" #red
-         echo -en "\e]P23f9f3f" #darkgreen
-         echo -en "\e]PAbfefbf" #green
-         echo -en "\e]P3bf9f3f" #brown
-         echo -en "\e]PB9fff9f" #yellow
-         echo -en "\e]P45f5f9f" #darkblue
-         echo -en "\e]PC9f9fff" #blue
-         echo -en "\e]P59f3f9f" #darkmagenta
-         echo -en "\e]PDff9fff" #magenta
-         echo -en "\e]P63f9f9f" #darkcyan
-         echo -en "\e]PE9fffff" #cyan
-         echo -en "\e]P7afafaf" #lightgrey
-         echo -en "\e]PFffffff" #white
-         clear #for background artifacting
-     fi
-   #+END_SRC
-
-* Extensions
-** Bash Behaviour Options Extensions
-   #+BEGIN_src bash :tangle bashrc
-     shopt -s autocd # Allows to cd by only typing name
+* Init
+** bash
+   Settings
+   #+BEGIN_SRC bash :tangle bashrc
+     shopt -s autocd
      set -o vi
      bind '"jk":vi-movement-mode'
    #+END_SRC
 
-** Identify Self
-   #+BEGIN_src bash :tangle bash_login
-     export RUNCOMDIR="${HOME}/.runcom"
+** zsh
+   Settings
+   Unset options:
+   - setopt SHARE_HISTORY             # Share history between all sessions.
+   - setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+   - HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate
+     #+BEGIN_SRC bash :tangle zshrc
+       HISTFILE="${HOME}/.zhistory"
+       HISTSIZE=10000
+       SAVEHIST=10000
+
+       setopt appendhistory extendedglob notify
+       setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+       setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+       setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+       setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+       setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+       setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+       setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+       setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+       setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+       setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+       setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+       unsetopt beep
+       autoload colors && colors
+       autoload bashcompinit
+       bashcompinit
+
+       # vim keybindings
+       bindkey -v
+       export KEYTIMEOUT=40
+
+       # Change cursor shape for different vi modes.
+       zle-keymap-select () {
+           if [[ ${KEYMAP} == vicmd ]] ||
+                  [[ $1 = 'block' ]]; then
+               echo -ne '\e[2 q'
+
+           elif [[ ${KEYMAP} == main ]] ||
+                    [[ ${KEYMAP} == viins ]] ||
+                    [[ ${KEYMAP} = '' ]] ||
+                    [[ $1 = 'beam' ]]; then
+               echo -ne '\e[6 q'
+           fi
+       }
+       # Use vim keys in tab complete menu:
+       zmodload zsh/complist
+       bindkey -M menuselect 'h' vi-backward-char
+       bindkey -M menuselect 'k' vi-up-line-or-history
+       bindkey -M menuselect 'l' vi-forward-char
+       bindkey -M menuselect 'j' vi-down-line-or-history
+       bindkey -v '^?' backward-delete-char
+
+       zle -N zle-keymap-select
+
+       # Use beam shape cursor for each new prompt.
+       _fix_cursor () {
+           echo -ne '\e[6 q'
+       }
+       precmd_functions+=(_fix_cursor)
+
+       bindkey -M viins 'jk' vi-cmd-mode
+       bindkey '^r' history-incremental-search-backward
+
+     #+END_SRC
+
+* Inherit
+** bash
+   #+BEGIN_SRC bash :tangle bashrc
+     # shellcheck source=".runcom/shrc"
+     if [ -f "${RUNCOMDIR}"/shrc ]; then
+         . "${RUNCOMDIR}"/shrc
+     fi
+   #+END_SRC
+
+** zsh
+   #+BEGIN_SRC bash :tangle zshrc
+     # shellcheck source=".runcom/shrc"
+     if [ -f "${RUNCOMDIR}"/shrc ]; then
+         . "${RUNCOMDIR}"/shrc
+     fi
+   #+END_SRC
+
+** shrc
+*** Python
+    [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
+    #+BEGIN_SRC bash :tangle shrc
+      # shellcheck source=.local/share/pspman/src/runcom/complete.bash
+      if [ -f "${RUNCOMDIR}"/complete.bash ]; then
+          # shellcheck source=.local/share/pspman/src/runcom/complete.bash
+          . "${RUNCOMDIR}"/complete.bash
+      fi
+
+      export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
+    #+END_SRC
+
+* Variables
+** PATH
+   #+BEGIN_SRC sh :tangle profile
+     RUNCOMDIR="${HOME}/.runcom"
+     export RUNCOMDIR
      # shellcheck source="bin"
      if [ -d "${HOME}/bin" ] ; then
-         if [[ ! "${PATH}" =~ ${HOME}/bin ]]; then
+         if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
              PATH="${HOME}/bin:${PATH}"
          fi
      fi
      # shellcheck source=".local/bin"
      if [ -d "${HOME}/.local/bin" ] ; then
-         if [[ ! "${PATH}" =~ ${HOME}/.local/bin ]]; then
+         if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then
              PATH="${HOME}/.local/bin:${PATH}"
          fi
      fi
@@ -196,7 +370,7 @@
    #+END_SRC
 
 ** Editor wars
-   #+BEGIN_src bash :tangle bash_login
+   #+BEGIN_SRC bash :tangle bash_login
      avail_editors=( 'emacsclient -nw -c -a=""'
                      'nvim'
                      'vim'
@@ -209,13 +383,63 @@
          fi
      done
      export EDITOR
+
    #+END_SRC
 
-** Python exports
+   #+BEGIN_SRC bash :tangle zlogin
+     avail_editors=( 'emacsclient -nw -c -a=""'
+                     'nvim'
+                     'vim'
+                     'vi'
+                     'nano' )
+     for avail in "${avail_editors[@]}"; do
+         if command -v "${avail%% *}" -- &>/dev/null; then
+             EDITOR="${avail}"
+             break
+         fi
+     done
+     export EDITOR
+
+   #+END_SRC
+
+** C(++) exports
+   #+BEGIN_SRC sh :tangle profile
+     LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+     C_INCLUDE_PATH="${HOME}/.pspman/include/"
+     CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
+     export LD_LIBRARY_PATH
+     export C_INCLUDE_PATH
+     export CPLUS_INCLUDE_PATH
+   #+END_SRC
+
+** GPU exports
+   #+BEGIN_SRC sh :tangle profile
+     PYOPENCL_CTX='0';
+     PYOPENCL_COMPILER_OUTPUT=1;
+     OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+     export PYOPENCL_CTX
+     export PYOPENCL_COMPILER_OUTPUT
+     export OCL_ICD_VENDORS
+   #+END_SRC
+
+** Bemenu exports
+   #+BEGIN_SRC bash :tangle shrc
+     export BEMENU_OPTS='--fn firacode 14 '
+   #+END_SRC
+
+** GTK+ debugging output
+   Silence debugging output for gtk+
+   #+BEGIN_SRC sh :tangle profile
+     NO_AT_BRIDGE=1
+     export NO_AT_BRIDGE
+   #+END_SRC
+
+* Functions
+** Python
 *** Python version
     to locate site-packages
 
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function python_ver() {
           python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
       }
@@ -223,47 +447,34 @@
 
 *** Dummy placeholder
     If not in an python virtual environment, "deactivate" shouldn't through errors
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function deactivate() {
           true
       }
     #+END_SRC
 
 *** Quickly change to virtualenv
-    #+BEGIN_src bash :tangle bashrc
-      alias to_venv="source .venv/bin/activate";
+    Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
+    This may require shell-identification for ksh, csh, fish since they have a different activate
+    #+BEGIN_SRC bash :tangle shrc
+      # shellcheck shell=sh
+      function to_venv () {
+          cwd="$(realpath $PWD)"
+          testdir="${cwd}"
+          until mountpoint "${testdir}"; do
+              if [ -d "${testdir}"/.venv ] || [ -L "${testdir}"/.venv ]; then
+                  # .venv found
+                  . "${testdir}/.venv/bin/activate"
+                  return
+              fi
+              testdir="$(dirname "${testdir}")"
+          done
+      }
     #+END_SRC
 
-** C(++) exports
-   #+BEGIN_src bash :tangle bash_login
-     export LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-     export C_INCLUDE_PATH="${HOME}/.pspman/include/"
-     export CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
-   #+END_SRC
-
-** GPU exports
-   #+BEGIN_src bash :tangle bash_login
-     export PYOPENCL_CTX='0';
-     export PYOPENCL_COMPILER_OUTPUT=1;
-     export OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
-   #+END_SRC
-
-** Sway exports
-   Don't really remember why these were made
-   Not using currently. Preserved for future
-   tangle to bash_login
-   export WLR_BACKENDS="headless";
-   export WLR_LIBINPUT_NO_DEVICES=1;
-
-** Bemenu exports
-   #+BEGIN_src bash :tangle bashrc
-     export BEMENU_OPTS='--fn firacode 14 '
-   #+END_SRC
-
-* Custom defined functions
 ** Git
 *** Status
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function git_status() {
           local modified=0
           local cached=0
@@ -307,7 +518,7 @@
     #+END_SRC
 
 *** Branch
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function git_branch() {
           local branch
           branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
@@ -333,17 +544,17 @@
       }
     #+END_SRC
 *** Hash
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function git_hash() {
           git log --pretty=format:'%h' -n 1
       }
     #+END_SRC
 
-*** Prompt string addition
+*** Prompt string
     Include git's branch, hash, status in PS1 if in git repository
     This function is called in PS1 section below
     #+NAME: Git PS
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function git_ps() {
           if ! git status --ignore-submodules &>/dev/null; then
               return
@@ -353,171 +564,105 @@
       }
     #+END_SRC
 
-* Prompt String
-** PS1
-   #+NAME: PS1
-   #+BEGIN_src bash :tangle bashrc
-     last_exit_color () {
-         err="$1"
-         if test "$err" == "0"; then
-             # no error
-             printf "\e[0;32m"
-         elif test "$err" == "1"; then
-             # general error
-             printf "\e[0;33m"
-         elif test "$err" == "2"; then
-             # misuse of shell builtins
-             printf "\e[0;31m"
-         elif [ "$err" -gt 63 ]  && [ "$err" -lt 84 ]; then
-             # syserror.h
-             printf "\e[0;91m"
-         elif test "$err" == "126"; then
-             # cannot execute
-             printf "\e[0;37m"
-         elif test "$err" == "127"; then
-             # command not found
-             printf "\e[0;30m"
-         elif [ "$err" -gt 127 ] && [ "$err" -lt 191 ]; then
-             # Fatal error
-             printf "\e[0;41m"
-         elif test "$err" == "255"; then
-             # exit status limit
-             printf "\e[0;31m"
-         else
-             printf "\e[0;31m"
-         fi
-     }
-     export PROMPT_COMMAND=__prompt_command
-     __prompt_command () {
-         exit_stat="$?"
-         PS1=""
-         PS1="${PS1}\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
-         PS1="${PS1}\[\e[0;32m\]\u\[\e[m\]"
-         PS1="${PS1}@"
-         PS1="${PS1}\[\e[0;34m\]\h\[\e[m\]"
-         PS1="${PS1}\$(git_ps)"
-         PS1="${PS1}\[\e[0;37m\]<"
-         PS1="${PS1}\[\e[0;36m\]\W"
-         PS1="${PS1}\[\e[0;37m\]>"
-         PS1="${PS1}\[\e[0;33m\]\t\[\e[m\]"
-         PS1="${PS1}\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
-     }
-   #+END_SRC
+** Prompt String
+*** Exit_color
+    #+BEGIN_SRC bash :tangle shrc
+      last_exit_color () {
+          err="$1"
+          if [ "$err"  = "0" ]; then
+              # no error
+              printf "\e[0;32m"
+          elif [ "$err"  = "1" ]; then
+              # general error
+              printf "\e[0;33m"
+          elif [ "$err"  = "2" ]; then
+              # misuse of shell builtins
+              printf "\e[0;31m"
+          elif [ "$err" -gt "63" ] && [ "$err" -lt "84" ]; then
+              # syserror.h
+              printf "\e[0;91m"
+          elif [ "$err"  = "126" ]; then
+              # cannot execute
+              printf "\e[0;37m"
+          elif [ "$err"  = "127" ]; then
+              # command not found
+              printf "\e[0;30m"
+          elif [ "$err" -gt "127" ] && [ "$err" -lt "191" ]; then
+              # Fatal error
+              printf "\e[0;41m"
+          elif [ "$err"  = "255" ]; then
+              # exit status limit
+              printf "\e[0;31m"
+          else
+              printf "\e[0;31m"
+          fi
+      }
+    #+END_SRC
 
-** PS2
-   #+NAME: PS2
-   #+BEGIN_src bash :tangle bashrc
-     PS2=""
-     PS2="${PS2}\[\e[0;36m\]cont..."
-     PS2="${PS2}\[\e[m\]"
-     PS2="${PS2}» ";
-     export PS2
-   #+END_SRC
+*** PROMPT_COMMAND
+**** bash
+     #+BEGIN_SRC bash :tangle bashrc
+       export PROMPT_COMMAND=__prompt_command
+       __prompt_command () {
+           exit_stat="$?"
+           PS1=""
+           PS1+="\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
+           PS1+="\[\e[0;32m\]\u\[\e[m\]"
+           PS1+="@"
+           PS1+="\[\e[0;34m\]\h\[\e[m\]"
+           PS1+="\$(git_ps)"
+           PS1+="\[\e[0;37m\]<"
+           PS1+="\[\e[0;36m\]\W"
+           PS1+="\[\e[0;37m\]>"
+           PS1+="\[\e[0;33m\]\t\[\e[m\]"
+           PS1+="\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
 
-** PS3
-   #+NAME: PS3
-   #+BEGIN_src bash :tangle bashrc
-     PS3="Selection: ";
-     export PS3
-   #+END_SRC
+           PS2=""
+           PS2+="\[\e[0;36m\]cont..."
+           PS2+="\[\e[m\]"
+           PS2+="» ";
 
-* Autocomplete bash commands
-** Python
-   [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
-   #+BEGIN_SRC bash :tangle bashrc
-     export RUNCOMDIR="${HOME}/.runcom"
-     export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
-     # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-     if [[ -f "${RUNCOMDIR}"/complete.bash ]]; then
-         # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-         source "${RUNCOMDIR}"/complete.bash
-     fi
-   #+END_SRC
+           PS3='Selection: ';
+       }
+     #+END_SRC
 
-* Assumed options
-** Compression
-   Use multiple threads
-   #+BEGIN_src bash :tangle bashrc
-     alias tcpz="tar -c --use-compress-program=pigz ";
-     alias txpz="tar -x --use-compress-program=pigz ";
-   #+END_SRC
+**** zsh
+     #+BEGIN_SRC sh :tangle zshrc
+       precmd () {
+           exit_stat="$?"
+           PS1=$''
+           PS1+="%{$(last_exit_color ${exit_stat})%}"
+           PS1+=$'┏━ \e[m'
+           PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+           PS1+=$'@'
+           PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
+           PS1+="$(git_ps)"
+           PS1+=$'%{\e[0;37m%}<'
+           PS1+=$'%{\e[0;36m%}%1~'
+           PS1+=$'%{\e[0;37m%}>'
+           PS1+=$'%{\e[0;33m%}%T%{\e[m%}\n'
+           PS1+="%{$(last_exit_color ${exit_stat})%}"
+           PS1+=$'┗━ %{\e[m%}'
 
-** Disk Usage
-   #+BEGIN_src bash :tangle bashrc
-     alias du='du -hc';
-     alias df='df -h';
-     alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
-   #+END_SRC
+           PS2=$''
+           PS2+=$'%{\e[0;36m%}cont...'
+           PS2+=$'%{\e[m%}'
+           PS2+=$'» ';
 
-** Network
-   #+BEGIN_src bash :tangle bashrc
-     alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
-     alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
-     alias ping="ping -c 4 ";
-   #+END_SRC
+           PS3='Selection: ';
+       }
+     #+END_SRC
 
-** Monitor Job queues
-   #+BEGIN_src bash :tangle bashrc
-     alias watch="watch -n 10 --color";
-     alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
-   #+END_SRC
-
-** Lazy single-handed exit
-   #+BEGIN_src bash :tangle bashrc
-     alias qqqq="exit";
-   #+END_SRC
-
-* Better program defaults
-** g/re/p
-   #+BEGIN_src bash :tangle bashrc
-     for sc in "rg" "ag" "pt" "ack" "grep"; do
-         if command -v "${sc%% *}" &>/dev/null; then
-             # shellcheck disable=SC2139
-             alias grep="${sc} --color=auto";
-             break
-         fi
-     done
-   #+END_SRC
-
-** List Contents
-   #+BEGIN_src bash :tangle bashrc
-     if command -v "exa" >>/dev/null; then
-         alias ls="exa -Fh --color=auto";
-         alias la='exa -a --color=auto';
-         alias ll='exa -lr -s size';
-         alias lla='exa -a';
-         alias l.='exa -a --color=auto |grep "^\."';
-         alias sl="ls";
-     fi
-   #+END_SRC
-
-** neo visual editor improved
-   #+BEGIN_src bash :tangle bashrc
-     if command -v nvim >>/dev/null; then
-         alias ex="nvim"; ## always open vim in normal mode
-         alias vim="nvim"; ## always use neo
-     fi
-   #+END_SRC
-
-** Container
-   #+BEGIN_src bash :tangle bashrc
-     if command -v podman >>/dev/null; then
-         alias docker="podman";  # Podman is drop-in replacement for docker
-         alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-     fi
-   #+END_SRC
-
-* Functions
 ** Mathematical
 *** In-Line Calculator
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function mathcalc() {
           echo "scale=4; $*"| bc
       }
     #+END_SRC
 
 *** Computational
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function dec2hex() {
           echo "hex:"
           echo "obase=16; $*"| bc
@@ -528,7 +673,7 @@
 
 ** Compilation
 *** PDF from Latex
-    #+BEGIN_src bash :tangle bashrc
+    #+BEGIN_SRC bash :tangle shrc
       function pdfcompile() {
           pdflatex "$1"
           for ext in toc log aux; do
@@ -540,7 +685,7 @@
     #+END_SRC
 *** Pandoc
 **** Org to Something
-     #+BEGIN_src bash :tangle bashrc
+     #+BEGIN_SRC bash :tangle shrc
        function org2export() {
            # Usage: org2oth [-f] <infile> <othtype>
            proceed=
@@ -556,18 +701,18 @@
                        ;;
                esac
            done
-           if [[ "${1}" == "pdf" ]]; then
+           if [ "${1}" = "pdf" ]; then
                target="latex"
            else
                target="${1}"
            fi
            tarext="${1}"
-           if [[ "$infile" == *.org ]]; then
+           if [ "$infile" = *.org ]; then
                proceed=true
            else
                echo "Input file should be an org file"
            fi
-           if [[ -n "$proceed" ]]; then
+           if [ -n "$proceed" ]; then
                pandoc -f org -t "${target}" -o "${infile/.org/}.${tarext}" "$infile"
            fi
            proceed=
@@ -577,23 +722,23 @@
      #+END_SRC
 
 **** Org to Docx
-     #+BEGIN_src bash :tangle bashrc
+     #+BEGIN_SRC bash :tangle shrc
        function org2doc () {
            org2export "$@" "docx"
        }
      #+END_SRC
 
 **** Org to PDF
-     #+BEGIN_src bash :tangle bashrc
+     #+BEGIN_SRC bash :tangle shrc
        function org2pdf () {
            org2export "$@" "pdf"
        }
      #+END_SRC
 
 **** Docx to Org
-     #+BEGIN_src bash :tangle bashrc
+     #+BEGIN_SRC bash :tangle shrc
        function doc2org() {
-           if [[ "$1" == *.docx ]]; then
+           if [ "$1" == *.docx ]; then
                pandoc -f docx -t org -o  "${1/%docx/org}" "$1"
            else
                echo "Input file must be a docx file"
@@ -603,20 +748,21 @@
 
 ** Mount Home Server
    Home Cloud mounts
-   #+BEGIN_src bash :tangle bashrc
+   #+BEGIN_SRC bash :tangle shrc
      function mount_home_cloud() {
          # shellcheck disable=SC2154
-         if [[ -z "${home_cloud}" || -z "${cloud_user}" ]]; then
+         if [ -z "${home_cloud}" ] || [ -z "${cloud_user}" ]; then
              echo "variables \$home_cloud OR \$cloud_user haven't been defined"
              return
          fi
          # netcheck source=./netcheck.sh
-         IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
-         if [[ $(( netcodes[2] % 4 )) -eq 2 ]]; then
+         IFS=$'\t' read -r IP_ADDR AP_ADDR netstate <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+         # IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+         if [ $(( netstate % 4 )) -eq 2 ]; then
              clouddir=( "/media/data" "/home/${cloud_user}" )
              srv_mnt_dir="${HOME}/${home_cloud}"
-             if [[ $(mount | grep -c "${srv_mnt_dir}") \
-                       -lt "${#clouddir[@]}" ]]; then
+             if [ $(mount | grep -c "${srv_mnt_dir}") \
+                      -lt "${#clouddir[@]}" ]; then
                  # not mounted
                  for pathloc in "${clouddir[@]}"; do
                      mntpath="${srv_mnt_dir}${pathloc}"
@@ -628,26 +774,75 @@
      }
    #+END_SRC
 
-* Alias-like Functions
 ** Launch gui
    Launch application and exit terminal window
    Acts like a launcher
    Uninteractive terminal commands may also be called
-   #+BEGIN_src bash :tangle bashrc
-     function gui () {
-         if [[ -n "$*" ]]; then
-             if command -v "${@%% *}" >> /dev/null; then
-                 exec nohup "$@" &>/dev/null 0<&- &
-                 exit 0
+   #+BEGIN_SRC bash :tangle shrc
+     gui () {
+         usage="usage: $0 [-h|--help] CMD\n"
+         cmd_help="Launch CMD, switch to it, and exit the parent terminal\n\n"
+         cmd_help="${cmd_help}Optional arguments:\n"
+         cmd_help="${cmd_help}-h|--help\tdisplay this help and exit\n"
+         command=
+         call=
+
+         while [ $# -gt 0 ]; do
+             case "$1" in
+                 --help|-h)
+                     printf "%s""${usage}"
+                     printf "%s""${cmd_help}"
+                     shift 1
+                     unset command
+                     unset cmd_help
+                     unset usage
+                     unset call
+                     return 0
+                     ;;
+                 --)
+                     # end of gui arguments
+                     command="${command} $*"
+                     break
+                     ;;
+                 ,*)
+                     command="${1}"
+                     shift 1
+                     ;;
+             esac
+         done
+
+         call="$(echo "${command}" | cut -d " " -f 1)"
+         if [ -n "${call}" ]; then
+             if command -v "${call}" > /dev/null 2>&1; then
+                 unset cmd_help
+                 unset usage
+                 unset call
+                 nohup ${command} >/dev/null 0<&- 2>&1 & exit 0
+             else
+                 echo "${call} not found..."
+                 unset command
+                 unset cmd_help
+                 unset usage
+                 unset call
+                 return 127
              fi
+         else
+             printf "%s""${usage}"
+             unset command
+             unset cmd_help
+             unset usage
+             unset call
+             return 1
          fi
+
      }
+
    #+END_SRC
 
 ** Un-Compress by context
-   #+BEGIN_src bash :tangle bashrc
+   #+BEGIN_SRC bash :tangle shrc
      deconvolute() {
-         if [[ ! -f "$1" ]]; then
+         if [ ! -f "$1" ]; then
              echo "$1: no such file";
          else
              case "$1" in
@@ -666,102 +861,215 @@
      }
    #+END_SRC
 
+* Aliases
+** Disk Usage
+   #+BEGIN_SRC bash :tangle shrc
+     alias du='du -hc';
+     alias df='df -h';
+     alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+   #+END_SRC
+
+** Network
+   #+BEGIN_SRC bash :tangle shrc
+     alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
+     alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+     alias ping="ping -c 4 ";
+   #+END_SRC
+
+** Monitor Job queues
+   #+BEGIN_SRC bash :tangle shrc
+     alias watch="watch -n 10 --color";
+     alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
+   #+END_SRC
+
+** Lazy single-handed exit
+   #+BEGIN_SRC bash :tangle shrc
+     alias qqqq="exit";
+   #+END_SRC
+
+* Better alternatives
+** g/re/p
+   #+BEGIN_SRC bash :tangle shrc
+     for sc in "rg" "ag" "pt" "ack" "grep"; do
+         if command -v "${sc%% *}" &>/dev/null; then
+             # shellcheck disable=SC2139
+             alias grep="${sc} --color=auto";
+             break
+         fi
+     done
+   #+END_SRC
+
+** List Contents
+   #+BEGIN_SRC bash :tangle shrc
+     if command -v "exa" >>/dev/null; then
+         alias ls="exa -Fh --color=auto";
+         alias la='exa -a --color=auto';
+         alias ll='exa -lr -s size';
+         alias lla='exa -a';
+         alias l.='exa -a --color=auto |grep "^\."';
+         alias sl="ls";
+     fi
+   #+END_SRC
+
+** neo visual editor improved
+   #+BEGIN_SRC bash :tangle shrc
+     if command -v nvim >>/dev/null; then
+         alias ex="nvim"; ## always open vim in normal mode
+         alias vim="nvim"; ## always use neo
+     fi
+   #+END_SRC
+
+** Container
+   #+BEGIN_SRC bash :tangle shrc
+     if command -v podman >>/dev/null; then
+         alias docker="podman";  # Podman is drop-in replacement for docker
+         alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
+     fi
+   #+END_SRC
+
 * Networking
 ** State
    Display state of network connection at the beginning
-   #+BEGIN_src bash :tangle bashrc
+   #+BEGIN_SRC bash :tangle shrc
      # shellcheck source=./netcheck.sh
-     IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
-     export IP_ADDR="${netcodes[0]}"
-     export AP_ADDR="${netcodes[1]}"
-     if [[ "${netcodes[2]}" -gt 7 ]]; then
-         echo -e "\e[1;34mInternet (GOOGLE) Connected\e[m"
-         echo -e "\033[0;32m$IP_ADDR \e[m is current wireless ip address"
+     IFS=$'\t' read -r IP_ADDR AP_ADDR netstate <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+     # IFS=$'\t' read -r -a netcodes <<< "$("${RUNCOMDIR}"/netcheck.sh)"
+     export IP_ADDR
+     export AP_ADDR
+     if [ "${netstate}" -gt 7 ]; then
+         printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
+         printf "\033[0;32m$IP_ADDR \e[m is current wireless ip address\n"
      else
-         echo -e "\e[1;31mInternet (GOOGLE) Not reachable\e[m"
-         if [[ $(( netcodes[2] % 8 )) -gt 3 ]]; then  # Intranet is connected
-             echo -e "\033[0;31mInternet Down\e[m"
-             case $(( netcodes[2] % 4 )) in
-                 2) echo -e "Home network connected,"
+         printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
+         if [ $(( netstate % 8 )) -gt 3 ]; then  # Intranet is connected
+             printf "\033[0;31mInternet Down\e[m\n"
+             case $(( netstate % 4 )) in
+                 2) printf "Home network connected,\n"
                     ;;
-                 1) echo -e "CCMB network connected,"
+                 1) printf "CCMB network connected,\n"
                     # shellcheck source=./proxy_send.py
-                    if [[ -f "${RUNCOMDIR}/proxy_send.py" ]]; then
+                    if [ -f "${RUNCOMDIR}/proxy_send.py" ]; then
                         # shellcheck source=./proxy_send.py
                         "${RUNCOMDIR}/proxy_send.py" \
-                            && echo -e "\e[0;33mPROXY AUTH SENT\e[m";
+                            && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
                     fi
                     ;;
-                 ,*) echo -e "HOTSPOT connected"
+                 ,*) printf "HOTSPOT connected\n"
                     ;;
              esac
          else
-             echo -e "\e[1;33mNetwork connection Disconnected\e[m"
+             printf "\e[1;33mNetwork connection Disconnected\e[m\n"
          fi
      fi
    #+END_SRC
 
 ** SSH Agent
    Reuse ssh agent for all logins
-   #+BEGIN_src bash :tangle bash_login
-     if [[ ! -S ~/.ssh/ssh_auth_sock ]]; then
+   #+BEGIN_SRC sh :tangle ui
+     if [ ! -S ~/.ssh/ssh_auth_sock ]; then
          eval "$(ssh-agent)"
          ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
      fi
-     export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+     SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+     export SSH_AUTH_SOCK
      ssh-add -l > /dev/null || ssh-add
    #+END_SRC
 
-* Display
-  Silence Debugging output for gtk+
-  #+BEGIN_src bash :tangle bash_login
-    export NO_AT_BRIDGE=1
-  #+END_SRC
-
 * Window Manager settings
 ** Terminal
-   #+BEGIN_src bash :tangle bash_login
+   #+BEGIN_SRC sh :tangle ui
      for term in foot termite tilix xterm gnome-terminal; do
-         if [[ -n "$(command -v $term)" ]]; then
-             export defterm="$term";
+         if [ -n "$(command -v $term)" ]; then
+             defterm="$term";
+             export defterm
              break;
          fi;
      done
    #+END_SRC
 
-** Sway
-   If running from tty1 setup sway environment and start sway
-   #+BEGIN_src bash :tangle bash_login
+** Sway exports
+   Don't really remember why these were made
+   Not using currently. Preserved for future
+   tangle to bash_login
+   export WLR_BACKENDS="headless";
+   export WLR_LIBINPUT_NO_DEVICES=1;
+
+** User Interface (GUI/CLI)
+   If running from tty1 setup sway environment and start ui
+   #+BEGIN_SRC sh :tangle ui
      if [ "$(tty)" = "/dev/tty1" ]; then
-         if [[ -z "$XDG_RUNTIME_DIR" ]]; then
-             export XDG_RUNTIME_DIR="/run/user/$UID";
-         fi
          # export DISPLAY=":0"
          # export WAYLAND_DISPLAY=wayland-0
          # export GDK_BACKEND=wayland,x11
-         export XDG_CONFIG_HOME="${HOME}/.config"
-         export XDG_DATA_HOME="${HOME}/.local/share"
-         export XDG_SESSION_TYPE=wayland
-         export SDL_VIDEODRIVER=wayland
-         export ECORE_EVAS_ENGINE=wayland_egl
-         export ELM_DISPLAY=wl
-         export ELM_ENGINE=wayland_egl
-         export ELM_ACCEL=opengl
-         export QT_QPA_PLATFORM=wayland-egl
-         export QT_WAYLAND_FORCE_DPI=100
-         export QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
-         export QT_AUTO_SCREEN_SCALE_FACTOR=0
-         export QT_QPA_PLATFORMTHEME=gtk3
-         export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+         if [ -z "$XDG_RUNTIME_DIR" ]; then
+             XDG_RUNTIME_DIR="/run/user/${UID}"
+         fi
+         XDG_SESSION_TYPE=wayland
+         SDL_VIDEODRIVER=wayland
+         ECORE_EVAS_ENGINE=wayland_egl
+         ELM_DISPLAY=wl
+         ELM_ENGINE=wayland_egl
+         ELM_ACCEL=opengl
+         QT_QPA_PLATFORM=wayland-egl
+         QT_WAYLAND_FORCE_DPI=100
+         QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+         QT_AUTO_SCREEN_SCALE_FACTOR=0
+         QT_QPA_PLATFORMTHEME=gtk3
+         QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+         MOZ_ENABLE_WAYLAND=1
+         _JAVA_AWT_WM_NONREPARENTING=1
+         SWAYROOT="${HOME}/.wm/sway"
+         export XDG_SESSION_TYPE
+         export SDL_VIDEODRIVER
+         export ECORE_EVAS_ENGINE
+         export ELM_DISPLAY
+         export ELM_ENGINE
+         export ELM_ACCEL
+         export QT_QPA_PLATFORM
+         export QT_WAYLAND_FORCE_DPI
+         export QT_PLUGIN_PATH
+         export QT_AUTO_SCREEN_SCALE_FACTOR
+         export QT_QPA_PLATFORMTHEME
+         export QT_WAYLAND_DISABLE_WINDOWDECORATION
          export DBUS_SESSION_BUS_ADDRESS
          export DBUS_SESSION_BUS_PID
-         export MOZ_ENABLE_WAYLAND=1
-         export _JAVA_AWT_WM_NONREPARENTING=1
-         export SWAYROOT="${HOME}/.wm/sway"
-         # unset GDK_BACKEND
-         # unset WAYLAND_DISPLAY
+         export MOZ_ENABLE_WAYLAND
+         export _JAVA_AWT_WM_NONREPARENTING
+         export SWAYROOT
          exec sway
-     else
-         exec bash
+     fi
+     if [ "$TERM" = "linux" ]; then
+         printf "\e]P0000000" #black
+         printf "\e]P83f3f3f" #darkgrey
+         printf "\e]P19f3f3f" #darkred
+         printf "\e]P9ff9f9f" #red
+         printf "\e]P23f9f3f" #darkgreen
+         printf "\e]PAbfefbf" #green
+         printf "\e]P3bf9f3f" #brown
+         printf "\e]PB9fff9f" #yellow
+         printf "\e]P45f5f9f" #darkblue
+         printf "\e]PC9f9fff" #blue
+         printf "\e]P59f3f9f" #darkmagenta
+         printf "\e]PDff9fff" #magenta
+         printf "\e]P63f9f9f" #darkcyan
+         printf "\e]PE9fffff" #cyan
+         printf "\e]P7afafaf" #lightgrey
+         printf "\e]PFffffff" #white
+         clear #for background artifacting
+     fi
+   #+END_SRC
+
+* Calls
+** bash
+   #+BEGIN_SRC bash :tangle bash_login
+     if [ -f "${RUNCOMDIR}"/ui ]; then
+         . "${RUNCOMDIR}"/ui
+     fi
+   #+END_SRC
+
+** zsh
+   #+BEGIN_SRC bash :tangle zlogin
+     if [ -f "${RUNCOMDIR}"/ui ]; then
+         . "${RUNCOMDIR}"/ui
      fi
    #+END_SRC
