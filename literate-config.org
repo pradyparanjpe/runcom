@@ -264,6 +264,8 @@
        HISTSIZE=10000
        SAVEHIST=10000
 
+       setopt autocd
+       setopt interactive_comments
        setopt appendhistory extendedglob notify
        setopt BANG_HIST                 # Treat the '!' character specially during expansion.
        setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
@@ -283,6 +285,10 @@
 
        # vim keybindings
        bindkey -v
+       bindkey -s '^o' 'lfcd\n'
+       bindkey -s '^f' 'fzfcd\n'
+       bindkey '^[[P' delete-char
+
        export KEYTIMEOUT=40
 
        # Change cursor shape for different vi modes.
@@ -402,6 +408,13 @@
 
    #+END_SRC
 
+** manuals
+   #+BEGIN_SRC bash :tangle shrc
+     if command -v nvim >/dev/null 2>/dev/null; then
+         MANPAGER="nvim -c 'set ft=man' -"
+     fi
+     export MANPAGER
+   #+END_SRC
 ** C(++) exports
    #+BEGIN_SRC sh :tangle profile
      LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
@@ -640,7 +653,7 @@
            PS1+=$'%{\e[0;37m%}<'
            PS1+=$'%{\e[0;36m%}%1~'
            PS1+=$'%{\e[0;37m%}>'
-           PS1+=$'%{\e[0;33m%}%T%{\e[m%}\n'
+           PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
            PS1+="%{$(last_exit_color ${exit_stat})%}"
            PS1+=$'┗━ %{\e[m%}'
 
@@ -657,7 +670,7 @@
 *** In-Line Calculator
     #+BEGIN_SRC bash :tangle shrc
       function mathcalc() {
-          echo "scale=4; $*"| bc
+          echo "$*"| bc -lq
       }
     #+END_SRC
 
@@ -861,6 +874,25 @@
      }
    #+END_SRC
 
+** Navigate
+   #+BEGIN_SRC bash :tangle shrc
+     # Inspired by lukesmith.xyz
+     lfcd () {
+         if ! command -v 'lf' > /dev/null 2>/dev/null; then
+             return
+         fi
+         tmp="$(mktemp)"
+         lf -last-dir-path="$tmp" "$@"
+         if [ -f "$tmp" ]; then
+             dir="$(cat "$tmp")"
+             rm -f "$tmp" >/dev/null
+             [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+         fi
+     }
+     fzfcd () {
+         cd "$(dirname "$(fzf)")"
+     }
+   #+END_SRC
 * Aliases
 ** Disk Usage
    #+BEGIN_SRC bash :tangle shrc
@@ -888,13 +920,19 @@
    #+END_SRC
 
 * Better alternatives
+** cat
+   #+BEGIN_SRC bash :tangle shrc
+     if command -v 'bat' >/dev/null 2>/dev/null; then
+         alias cat="bat --color=auto";
+     fi
+   #+END_SRC
+
 ** g/re/p
    #+BEGIN_SRC bash :tangle shrc
-     for sc in "rg" "ag" "pt" "ack" "grep"; do
+     for sc in "ack" "pt" "ag" "rg"; do
          if command -v "${sc%% *}" &>/dev/null; then
              # shellcheck disable=SC2139
              alias grep="${sc} --color=auto";
-             break
          fi
      done
    #+END_SRC
@@ -916,6 +954,7 @@
      if command -v nvim >>/dev/null; then
          alias ex="nvim"; ## always open vim in normal mode
          alias vim="nvim"; ## always use neo
+         export MANPAGER="nvim -c 'set ft=man' -"
      fi
    #+END_SRC
 

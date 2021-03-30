@@ -27,6 +27,11 @@ fi
 
 export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
 
+if command -v nvim >/dev/null 2>/dev/null; then
+    MANPAGER="nvim -c 'set ft=man' -"
+fi
+export MANPAGER
+
 export BEMENU_OPTS='--fn firacode 14 '
 
 function python_ver() {
@@ -160,7 +165,7 @@ last_exit_color () {
 }
 
 function mathcalc() {
-    echo "scale=4; $*"| bc
+    echo "$*"| bc -lq
 }
 
 function dec2hex() {
@@ -330,6 +335,23 @@ deconvolute() {
     fi
 }
 
+# Inspired by lukesmith.xyz
+lfcd () {
+    if ! command -v 'lf' > /dev/null 2>/dev/null; then
+        return
+    fi
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp" >/dev/null
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+fzfcd () {
+    cd "$(dirname "$(fzf)")"
+}
+
 alias du='du -hc';
 alias df='df -h';
 alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
@@ -343,11 +365,14 @@ alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep
 
 alias qqqq="exit";
 
-for sc in "rg" "ag" "pt" "ack" "grep"; do
+if command -v 'bat' >/dev/null 2>/dev/null; then
+    alias cat="bat --color=auto";
+fi
+
+for sc in "ack" "pt" "ag" "rg"; do
     if command -v "${sc%% *}" &>/dev/null; then
         # shellcheck disable=SC2139
         alias grep="${sc} --color=auto";
-        break
     fi
 done
 
@@ -363,6 +388,7 @@ fi
 if command -v nvim >>/dev/null; then
     alias ex="nvim"; ## always open vim in normal mode
     alias vim="nvim"; ## always use neo
+    export MANPAGER="nvim -c 'set ft=man' -"
 fi
 
 if command -v podman >>/dev/null; then

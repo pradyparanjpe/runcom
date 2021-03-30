@@ -23,6 +23,8 @@ HISTFILE="${HOME}/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 
+setopt autocd
+setopt interactive_comments
 setopt appendhistory extendedglob notify
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
@@ -42,6 +44,10 @@ bashcompinit
 
 # vim keybindings
 bindkey -v
+bindkey -s '^o' 'lfcd\n'
+bindkey -s '^f' 'fzfcd\n'
+bindkey '^[[P' delete-char
+
 export KEYTIMEOUT=40
 
 # Change cursor shape for different vi modes.
@@ -93,7 +99,7 @@ precmd () {
     PS1+=$'%{\e[0;37m%}<'
     PS1+=$'%{\e[0;36m%}%1~'
     PS1+=$'%{\e[0;37m%}>'
-    PS1+=$'%{\e[0;33m%}%T%{\e[m%}\n'
+    PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
     PS1+="%{$(last_exit_color ${exit_stat})%}"
     PS1+=$'┗━ %{\e[m%}'
 
