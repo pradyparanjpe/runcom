@@ -19,19 +19,7 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-avail_editors=( 'emacsclient -nw -c -a=""'
-                'nvim'
-                'vim'
-                'vi'
-                'nano' )
-for avail in "${avail_editors[@]}"; do
-    if command -v "${avail%% *}" -- &>/dev/null; then
-        EDITOR="${avail}"
-        break
-    fi
-done
-export EDITOR
-
+# netcheck source=.local/share/pspman/src/runcom/ui
 if [ -f "${RUNCOMDIR}"/ui ]; then
     . "${RUNCOMDIR}"/ui
 fi

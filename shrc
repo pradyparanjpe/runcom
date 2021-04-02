@@ -27,11 +27,6 @@ fi
 
 export PY_ARG_COMPL_SCRIPTS=( "frac-time" "ppsid" "ppsi pspbar")
 
-if command -v nvim >/dev/null 2>/dev/null; then
-    MANPAGER="nvim -c 'set ft=man' -"
-fi
-export MANPAGER
-
 export BEMENU_OPTS='--fn firacode 14 '
 
 function python_ver() {
@@ -46,14 +41,16 @@ function deactivate() {
 function to_venv () {
     cwd="$(realpath $PWD)"
     testdir="${cwd}"
-    until mountpoint "${testdir}"; do
+    until mountpoint "${testdir}" >/dev/null 2>/dev/null; do
         if [ -d "${testdir}"/.venv ] || [ -L "${testdir}"/.venv ]; then
             # .venv found
             . "${testdir}/.venv/bin/activate"
+            printf "Found .venv at %s, switching...\n" "${testdir}"
             return
         fi
         testdir="$(dirname "${testdir}")"
     done
+    printf "Couldn't find .venv upto mountpoint %s\n" "${testdir}"
 }
 
 function git_status() {
@@ -388,7 +385,6 @@ fi
 if command -v nvim >>/dev/null; then
     alias ex="nvim"; ## always open vim in normal mode
     alias vim="nvim"; ## always use neo
-    export MANPAGER="nvim -c 'set ft=man' -"
 fi
 
 if command -v podman >>/dev/null; then

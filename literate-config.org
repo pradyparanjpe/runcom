@@ -376,45 +376,33 @@
    #+END_SRC
 
 ** Editor wars
-   #+BEGIN_SRC bash :tangle bash_login
-     avail_editors=( 'emacsclient -nw -c -a=""'
-                     'nvim'
-                     'vim'
-                     'vi'
-                     'nano' )
-     for avail in "${avail_editors[@]}"; do
-         if command -v "${avail%% *}" -- &>/dev/null; then
+   #+BEGIN_SRC sh :tangle profile
+     while read -r avail; do
+         if command -v "${avail}" > /dev/null 2>&1; then
              EDITOR="${avail}"
-             break
          fi
-     done
+     done << EOF
+     nano
+     vi
+     vim
+     nvim
+     EOF
      export EDITOR
 
-   #+END_SRC
-
-   #+BEGIN_SRC bash :tangle zlogin
-     avail_editors=( 'emacsclient -nw -c -a=""'
-                     'nvim'
-                     'vim'
-                     'vi'
-                     'nano' )
-     for avail in "${avail_editors[@]}"; do
-         if command -v "${avail%% *}" -- &>/dev/null; then
-             EDITOR="${avail}"
-             break
-         fi
-     done
-     export EDITOR
-
-   #+END_SRC
-
-** manuals
-   #+BEGIN_SRC bash :tangle shrc
-     if command -v nvim >/dev/null 2>/dev/null; then
-         MANPAGER="nvim -c 'set ft=man' -"
-     fi
+     case "$EDITOR" in
+         vim)
+             export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+             ;;
+         nvim)
+             export MANPAGER="nvim -c 'set ft=man' -"
+             ;;
+         ,*)
+             export MANPAGER='bat -l man -p'
+             ;;
+     esac
      export MANPAGER
    #+END_SRC
+
 ** C(++) exports
    #+BEGIN_SRC sh :tangle profile
      LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
@@ -474,14 +462,16 @@
       function to_venv () {
           cwd="$(realpath $PWD)"
           testdir="${cwd}"
-          until mountpoint "${testdir}"; do
+          until mountpoint "${testdir}" >/dev/null 2>/dev/null; do
               if [ -d "${testdir}"/.venv ] || [ -L "${testdir}"/.venv ]; then
                   # .venv found
                   . "${testdir}/.venv/bin/activate"
+                  printf "Found .venv at %s, switching...\n" "${testdir}"
                   return
               fi
               testdir="$(dirname "${testdir}")"
           done
+          printf "Couldn't find .venv upto mountpoint %s\n" "${testdir}"
       }
     #+END_SRC
 
@@ -954,7 +944,6 @@
      if command -v nvim >>/dev/null; then
          alias ex="nvim"; ## always open vim in normal mode
          alias vim="nvim"; ## always use neo
-         export MANPAGER="nvim -c 'set ft=man' -"
      fi
    #+END_SRC
 
@@ -1101,6 +1090,7 @@
 * Calls
 ** bash
    #+BEGIN_SRC bash :tangle bash_login
+     # netcheck source=.local/share/pspman/src/runcom/ui
      if [ -f "${RUNCOMDIR}"/ui ]; then
          . "${RUNCOMDIR}"/ui
      fi
@@ -1108,6 +1098,7 @@
 
 ** zsh
    #+BEGIN_SRC bash :tangle zlogin
+     # netcheck source=.local/share/pspman/src/runcom/ui
      if [ -f "${RUNCOMDIR}"/ui ]; then
          . "${RUNCOMDIR}"/ui
      fi

@@ -35,6 +35,31 @@ if [ -d "${HOME}/.local/bin" ] ; then
 fi
 export PATH;
 
+while read -r avail; do
+    if command -v "${avail}" > /dev/null 2>&1; then
+        EDITOR="${avail}"
+    fi
+done << EOF
+nano
+vi
+vim
+nvim
+EOF
+export EDITOR
+
+case "$EDITOR" in
+    vim)
+        export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+        ;;
+    nvim)
+        export MANPAGER="nvim -c 'set ft=man' -"
+        ;;
+    *)
+        export MANPAGER='bat -l man -p'
+        ;;
+esac
+export MANPAGER
+
 LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
 C_INCLUDE_PATH="${HOME}/.pspman/include/"
 CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
