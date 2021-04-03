@@ -81,6 +81,24 @@ precmd_functions+=(_fix_cursor)
 
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^r' history-incremental-search-backward
+while read -r share_dir; do
+    highlight_dir="${share_dir}/zsh-syntax-highlighting"
+    if [ -d "${highlight_dir}" ]; then
+        # shellcheck disable=SC1090
+        . "${highlight_dir}/zsh-syntax-highlighting.zsh"
+        break
+    fi
+done << EOF
+/usr/local/share
+/usr/share
+${XDG_DATA_HOME:-${HOME}/.local/share}
+${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
+${HOME}/local/share
+${HOME}/share
+EOF
+
+unset share_dir
+unset highlight_file
 
 # shellcheck source=".runcom/shrc"
 if [ -f "${RUNCOMDIR}"/shrc ]; then
