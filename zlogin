@@ -18,6 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 #
+#===================================================================
+#  ___             _      ___                     _
+# | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+# |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+# |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+#                    |__/                      |__/|_|
+#===================================================================
 
 # netcheck source=.local/share/pspman/src/runcom/ui
 if [ -f "${RUNCOMDIR}"/ui ]; then
