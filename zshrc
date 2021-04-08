@@ -47,14 +47,20 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 unsetopt beep
 autoload colors && colors
 autoload bashcompinit
+autoload add-zsh-hook
 bashcompinit
-
+source "${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
 # vim keybindings
 bindkey -v
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^f' 'fzfcd\n'
 bindkey '^[[P' delete-char
-
+bindkey '^[[1;5D' vi-backward-word
+bindkey '^[[1;5C' vi-forward-word
+bindkey '^[[3~' vi-delete-char
+bindkey '^[[F' vi-end-of-line
+bindkey '^[[H' vi-beginning-of-line
+bindkey "^[[27;2;13~" vi-open-line-below
 export KEYTIMEOUT=40
 
 # Change cursor shape for different vi modes.
@@ -77,21 +83,47 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey '^r' history-incremental-search-backward
 
 zle -N zle-keymap-select
+
+# shellcheck source=".runcom/shrc"
+if [ -f "${RUNCOMDIR}"/shrc ]; then
+    . "${RUNCOMDIR}"/shrc
+fi
+
+_pspps () {
+    exit_stat="$?"
+    PS1=$''
+    PS1+="%{$(last_exit_color ${exit_stat})%}"
+    PS1+=$'┏━ \e[m'
+    PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+    PS1+=$'@'
+    PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
+    PS1+="$(git_ps)"
+    PS1+=$'%{\e[0;37m%}<'
+    PS1+=$'%{\e[0;36m%}%1~'
+    PS1+=$'%{\e[0;37m%}>'
+    PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
+    PS1+="%{$(last_exit_color ${exit_stat})%}"
+    PS1+=$'┗━ %{\e[m%}'
+
+    PS2=$''
+    PS2+=$'%{\e[0;36m%}cont...'
+    PS2+=$'%{\e[m%}'
+    PS2+=$'» ';
+
+    PS3='Selection: ';
+}
 
 # Use beam shape cursor for each new prompt.
 _fix_cursor () {
     echo -ne '\e[6 q'
 }
-precmd_functions+=(_fix_cursor)
 
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey '^r' history-incremental-search-backward
-
-#!/usr/bin/env sh
-# -*- coding: utf-8; mode: shell-script; -*-
-
+add-zsh-hook precmd _pspps
+add-zsh-hook precmd _fix_cursor
 
 while read -r addition; do
     while read -r share_dir; do
@@ -117,32 +149,3 @@ addlist
 unset addition
 unset share_dir
 unset add_dir
-
-# shellcheck source=".runcom/shrc"
-if [ -f "${RUNCOMDIR}"/shrc ]; then
-    . "${RUNCOMDIR}"/shrc
-fi
-
-precmd () {
-    exit_stat="$?"
-    PS1=$''
-    PS1+="%{$(last_exit_color ${exit_stat})%}"
-    PS1+=$'┏━ \e[m'
-    PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
-    PS1+=$'@'
-    PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
-    PS1+="$(git_ps)"
-    PS1+=$'%{\e[0;37m%}<'
-    PS1+=$'%{\e[0;36m%}%1~'
-    PS1+=$'%{\e[0;37m%}>'
-    PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
-    PS1+="%{$(last_exit_color ${exit_stat})%}"
-    PS1+=$'┗━ %{\e[m%}'
-
-    PS2=$''
-    PS2+=$'%{\e[0;36m%}cont...'
-    PS2+=$'%{\e[m%}'
-    PS2+=$'» ';
-
-    PS3='Selection: ';
-}
