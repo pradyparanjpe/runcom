@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 #-*- coding:utf-8; mode:shell-script -*-
 #
 # Copyright 2020 Pradyumna Paranjape
@@ -21,39 +21,58 @@
 
 
 # Variables
-google_ping_cmd="ping 8.8.8.8 -c 1 -q -w 2"
-ccmb_ping_cmd="ping 192.168.1.101 -c 1 4 -q -w 2"
-inter=0
-intra=0
-ccmb=0
-home=0
-ip_addr=
-ap_addr=
-
-
 # IP->AP addresses
-ip_addr="$(ip addr | grep 'wlp' | grep 'inet' | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1)";
-if [[ -z $ip_addr ]]; then
-	ip_addr="$(ip addr | grep "en" | grep "inet" | cut -d "t" -f 2 | cut -d " " -f 2 | cut -d "/" -f 1)";
-fi
-if [[ -z $ip_addr ]]; then
-	ip_addr="$(hostname -I$)";
-fi
 
+setvar() {
+    ip_addr="$(hostname -I | awk '{print $1}')"
+    ap_addr="$(ip route show default \
+            | grep -o "\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}")"
+    google_ping_cmd="ping 8.8.8.8 -c 1 -q -w 2"
+    office_ping_cmd="ping 192.168.1.101 -c 1 4 -q -w 2"
+    intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
+    inter=0
+    intra=0
+    home=0
+    [ ! "${ap_addr#*'192.168.1.1'}" = "${ap_addr}"  ] && home=1
+    [ ! "${ap_addr#*'192.168.0.1'}" = "${ap_addr}" ] && home=1
+    office=0
+}
 
-ap_addr="$(ip neigh \
-                | grep -iv "failed" \
-                | grep "\.1 " \
-                | head -1 \
-                | cut -d " " -f 1)";
-intra_ping_cmd="ping ${ap_addr} -c 1 -q -w 2"
+unset_var() {
+    unset ip_addr
+    unset ap_addr
+    unset google_ping_cmd
+    unset office_ping_cmd
+    unset intra_ping_cmd
+    unset inter
+    unset intra
+    unset office
+    unset home
+}
 
-if [[ -n "$ip_addr" ]]; then
-    $google_ping_cmd &>/dev/null && inter=1
-    $intra_ping_cmd &>/dev/null && intra=1
-    [[ "${ap_addr}" =~ 192.168.1.1 ]] && home=1
-    [[ "${ap_addr}" =~ 192.168.0.1 ]] && home=1
-    [[ "$home" == "0" ]] && $ccmb_ping_cmd &>/dev/null && ccmb=1
-fi
+clean_exit() {
+    unset_var
+    if [ -n "${1}" ]; then
+        exit "${1}"
+    fi
+    exit 0
+}
 
-echo -e "${ip_addr}\t${ap_addr}\t$(( 8 * inter + 4 * intra + 2 * home + ccmb ))"
+check_ping() {
+    if [ -z "$ip_addr" ]; then
+        clean_exit 1
+    fi
+    $google_ping_cmd >/dev/null 2>&1 && inter=1
+    $intra_ping_cmd >/dev/null 2>&1 && intra=1
+    [ "${home}" -eq 0 ] && $office_ping_cmd >/dev/null 2>&1 && office=1
+}
+
+main() {
+    setvar
+    check_ping
+    printf "%s\t%s\t%s\n" "${ip_addr}" "${ap_addr}" \
+           "$(( 8 * inter + 4 * intra + 2 * home + office ))"
+    clean_exit
+}
+
+main
