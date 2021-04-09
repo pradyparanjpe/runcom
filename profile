@@ -43,7 +43,7 @@ fi
 export PATH;
 
 while read -r avail; do
-    if command -v "${avail}" > /dev/null 2>&1; then
+    if command -v "${avail}" >/dev/null 2>&1; then
         EDITOR="${avail}"
     fi
 done << EOF

@@ -54,26 +54,34 @@ source "${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
 bindkey -v
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^f' 'fzfcd\n'
-bindkey '^[[P' delete-char
-bindkey '^[[1;5D' vi-backward-word
-bindkey '^[[1;5C' vi-forward-word
-bindkey '^[[3~' vi-delete-char
-bindkey '^[[F' vi-end-of-line
-bindkey '^[[H' vi-beginning-of-line
-bindkey "^[[27;2;13~" vi-open-line-below
+bindkey '^[[P' delete-char  # backspace key
+bindkey '^[[1;5D' vi-backward-word  # ctrl <-
+bindkey '^[[1;5C' vi-forward-word  # ctrl ->
+bindkey '^[[3~' vi-delete-char  # delete key
+bindkey '^[[F' vi-end-of-line  # end key
+bindkey '^[[H' vi-beginning-of-line  # home key
+bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
 export KEYTIMEOUT=40
+
+# Use beam shape cursor for each new prompt.
+_fix_cursor () {
+    echo -ne '\e[6 q'
+}
+add-zsh-hook precmd _fix_cursor
 
 # Change cursor shape for different vi modes.
 zle-keymap-select () {
-    if [[ ${KEYMAP} == vicmd ]] ||
-           [[ $1 = 'block' ]]; then
-        echo -ne '\e[2 q'
+    if [ "${KEYMAP}" = "vicmd" ] ||
+           [ "${1}" = 'block' ]; then
+        printf '\e[2 q'
 
-    elif [[ ${KEYMAP} == main ]] ||
-             [[ ${KEYMAP} == viins ]] ||
-             [[ ${KEYMAP} = '' ]] ||
-             [[ $1 = 'beam' ]]; then
-        echo -ne '\e[6 q'
+    elif [ "${KEYMAP}" = "main" ] ||
+             [ "${KEYMAP}" = "viins" ] ||
+             [ "${KEYMAP}" = '' ] ||
+             [ "${1}" = 'beam' ]; then
+        printf '\e[6 q'
+    elif [ "${KEYMAP}" = "visual" ]; then
+        printf '\e[4 q'
     fi
 }
 # Use vim keys in tab complete menu:
@@ -92,6 +100,30 @@ zle -N zle-keymap-select
 if [ -f "${RUNCOMDIR}"/shrc ]; then
     . "${RUNCOMDIR}"/shrc
 fi
+while read -r addition; do
+    while read -r share_dir; do
+        add_dir="${share_dir}/zsh-${addition}"
+        if [ -d "${add_dir}" ]; then
+            # shellcheck disable=SC1090
+            . "${add_dir}/zsh-${addition}.zsh"
+            break
+        fi
+    done << data_dir
+/usr/local/share
+/usr/share
+${XDG_DATA_HOME:-${HOME}/.local/share}
+${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
+${HOME}/local/share
+${HOME}/share
+data_dir
+done << addlist
+syntax-highlighting
+autosuggestions
+addlist
+
+unset addition
+unset share_dir
+unset add_dir
 
 _pspps () {
     exit_stat="$?"
@@ -117,35 +149,4 @@ _pspps () {
     PS3='Selection: ';
 }
 
-# Use beam shape cursor for each new prompt.
-_fix_cursor () {
-    echo -ne '\e[6 q'
-}
-
 add-zsh-hook precmd _pspps
-add-zsh-hook precmd _fix_cursor
-
-while read -r addition; do
-    while read -r share_dir; do
-        add_dir="${share_dir}/zsh-${addition}"
-        if [ -d "${add_dir}" ]; then
-            # shellcheck disable=SC1090
-            . "${add_dir}/zsh-${addition}.zsh"
-            break
-        fi
-    done << data_dir
-/usr/local/share
-/usr/share
-${XDG_DATA_HOME:-${HOME}/.local/share}
-${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
-${HOME}/local/share
-${HOME}/share
-data_dir
-done << addlist
-syntax-highlighting
-autosuggestions
-addlist
-
-unset addition
-unset share_dir
-unset add_dir
