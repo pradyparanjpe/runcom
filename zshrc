@@ -29,7 +29,7 @@
 HISTFILE="${HOME}/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
-
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
 setopt autocd
 setopt interactive_comments
 setopt appendhistory extendedglob notify
