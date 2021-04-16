@@ -32,9 +32,6 @@ if [ -f "${RUNCOMDIR}"/complete.bash ]; then
     . "${RUNCOMDIR}"/complete.bash
 fi
 
-PY_ARG_COMPL_SCRIPTS="frac-time ppsid ppsi pspbar"
-export PY_ARG_COMPL_SCRIPTS
-
 export BEMENU_OPTS='--fn firacode 14 '
 
 python_ver() {

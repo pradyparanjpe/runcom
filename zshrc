@@ -30,6 +30,7 @@ HISTFILE="${HOME}/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
+ZSH_AUTOSUGGEST_STRATEGY=("history" "completion")
 setopt autocd
 setopt interactive_comments
 setopt appendhistory extendedglob notify
@@ -49,7 +50,10 @@ autoload colors && colors
 autoload bashcompinit
 autoload add-zsh-hook
 bashcompinit
-source "${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+if [ -f "${term_key_source}" ]; then
+    source "${term_key_source}"
+fi
 # vim keybindings
 bindkey -v
 bindkey -s '^o' 'lfcd\n'

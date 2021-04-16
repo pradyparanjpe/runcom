@@ -26,46 +26,52 @@
 
 * What is this?
   Following configuration files are available. This literate configuration tangles their contents.
-  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
-  | Configuration File Path          | POSIX | Remote | Remote | CLI  | CLI | GUI  | GUI | SH   | SH  |
-  |                                  |       | bash   | zsh    | bash | zsh | bash | zsh | bash | zsh |
-  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
-  | /etc/profile                     | yes   |        |        |      |     |      |     |      |     |
-  | /etc/bashrc                      | yes   |        |        |      |     |      |     |      |     |
-  | /etc/zshrc                       | yes   |        |        |      |     |      |     |      |     |
-  | /etc/profile.d/*                 | yes   |        |        |      |     |      |     |      |     |
-  | ${HOME}/.bashrc                  | No    |        |        |      |     |      |     |      |     |
-  | ${HOME}/.zshrc                   | No    |        |        |      |     |      |     |      |     |
-  | ${HOME}/.bash_profile            | No    |        |        |      |     |      |     |      |     |
-  | ${HOME}/.bash_login              | No    |        |        |      |     |      |     |      |     |
-  | ${HOME}/.profile                 | Yes   |        |        |      |     |      |     |      |     |
-  | ${HOME}/.zprofile                | No    |        |        |      |     |      |     |      |     |
-  | ${HOME}/.bash_completion.d/*     | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/bashrc              | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/zshrc               | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/shrc                | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/profile             | Yes   |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/bash_login          | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/zlogin              | No    |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/ui                  | Yes   |        |        |      |     |      |     |      |     |
-  | ${RUNCOMDIR}/complete.bash       | No    |        |        |      |     |      |     |      |     |
-  | ${XDG_COONFIG_HOME}/varrc        | yes   |        |        |      |     |      |     |      |     |
-  | ${XDG_CONFIG_HOME}/pspman/bashrc | Yes   |        |        |      |     |      |     |      |     |
-  |----------------------------------+-------+--------+--------+------+-----+------+-----+------+-----|
+  |-----------------------------------+-------|
+  | Configuration File Path           | POSIX |
+  |                                   |       |
+  |-----------------------------------+-------|
+  | /etc/profile       (system)       | yes   |
+  | /etc/bashrc        (system)       | yes   |
+  | /etc/zshrc         (system)       | yes   |
+  | /etc/profile.d/*   (system)       | yes   |
+  | ${HOME}/.bashrc                   | no    |
+  | ${HOME}/.zshrc                    | no    |
+  | ${HOME}/.bash_profile             | yes   |
+  | ${HOME}/.bash_login               | yes   |
+  | ${HOME}/.profile                  | yes   |
+  | ${HOME}/.zprofile                 | yes   |
+  | ${HOME}/.zlogin                   | yes   |
+  | ${HOME}/.bash_completion.d/*      | no    |
+  | ${RUNCOMDIR}/bashrc               | no    |
+  | ${RUNCOMDIR}/zshrc                | no    |
+  | ${RUNCOMDIR}/shrc                 | yes   |
+  | ${RUNCOMDIR}/profile              | yes   |
+  | ${RUNCOMDIR}/bash_login           | yes   |
+  | ${RUNCOMDIR}/zlogin               | yes   |
+  | ${RUNCOMDIR}/ui                   | yes   |
+  | ${RUNCOMDIR}/complete.bash        | yes   |
+  | ${XDG_COONFIG_HOME}/varrc         | yes   |
+  | ${XDG_CONFIG_HOME}/pspman/profile | yes   |
+  |-----------------------------------+-------|
+  They are loaded in following order.
 
 ** Bash
 *** /etc/profile
 **** /etc/bashrc
 ***** /etc/profile.d/*
 
+
 *** ${HOME}/.bash_profile
+
 **** ${HOME}/.profile
 ***** ${XDG_CONFIG_HOME}/varrc
 ***** ${RUNCOMDIR}/profile
 ***** ${XDG_CONFIG_HOME}/pspman/profile
+
 **** ${HOME}/.bashrc
 ***** ${RUNCOMDIR}/bashrc
 ****** ${RUNCOMDIR}/shrc
+
 **** ${HOME}/.bash_login
 ***** ${RUNCOMDIR}/bash_login
 ****** ${RUNCOMDIR}/ui
@@ -76,14 +82,17 @@
 ***** /etc/profile.d/*
 
 *** ${HOME}/.zshenv
+
 *** ${HOME}/.zprofile
 **** ${HOME}/.profile
 ***** ${XDG_CONFIG_HOME}/varrc
 ***** ${RUNCOMDIR}/profile
 ***** ${XDG_CONFIG_HOME}/pspman/profile
+
 *** ${HOME}/.zshrc
 **** ${RUNCOMDIR}/zshrc
 ***** ${RUNCOMDIR}/shrc
+
 *** ${HOME}/.zlogin
 **** ${RUNCOMDIR}/zlogin
 ***** ${RUNCOMDIR}/ui
@@ -320,6 +329,7 @@
        HISTSIZE=10000
        SAVEHIST=10000
        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
+       ZSH_AUTOSUGGEST_STRATEGY=("history" "completion")
        setopt autocd
        setopt interactive_comments
        setopt appendhistory extendedglob notify
@@ -339,7 +349,10 @@
        autoload bashcompinit
        autoload add-zsh-hook
        bashcompinit
-       source "${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+       term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+       if [ -f "${term_key_source}" ]; then
+           source "${term_key_source}"
+       fi
        # vim keybindings
        bindkey -v
        bindkey -s '^o' 'lfcd\n'
@@ -441,8 +454,6 @@
           . "${RUNCOMDIR}"/complete.bash
       fi
 
-      PY_ARG_COMPL_SCRIPTS="frac-time ppsid ppsi pspbar"
-      export PY_ARG_COMPL_SCRIPTS
     #+END_SRC
 
 * Variables
