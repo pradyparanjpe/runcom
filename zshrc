@@ -47,9 +47,7 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 unsetopt beep
 autoload colors && colors
-autoload bashcompinit
 autoload add-zsh-hook
-bashcompinit
 term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
 if [ -f "${term_key_source}" ]; then
     source "${term_key_source}"

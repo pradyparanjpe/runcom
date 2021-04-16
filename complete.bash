@@ -2,19 +2,27 @@
 # -*- coding: utf-8; mode: shell-script; -*-
 
 
-[ "${0}" != 'zsh' ] && [ "${0}" != "bash" ] && return
+[ -z "${ZSH_VERSION}" ] && [ -z "${BASH_VERSION}" ] && return
 # Affirm argparse installation
 if ! command -v register-python-argcomplete &>/dev/null; then
     pip install -U argcomplete
     activate-global-python-argcomplete --user
 fi
 
-pycomplete=( "pspbar" "ppsid" "ppsi" "pspman" "frac-time" );
-for pyscript in ${pycomplete[*]}; do
-    eval "$( register-python-argcomplete "$pyscript" )"
+# zsh-specific initiation
+if [ -n "${ZSH_VERSION}" ]; then
+    autoload -U bashcompinit
+    bashcompinit
+    setopt sh_word_split
+fi
+
+for pyscript in ${PY_ARG_COMPL_SCRIPTS}; do
+    eval "$(register-python-argcomplete "$pyscript")"
 done
 
-function _complete_gui() {
+[ -n "${ZSH_VERSION}" ] && unsetopt sh_word_split
+
+_complete_gui() {
     COMPREPLY=()
     if [[ "${3}" == "gui" ]]; then
         mapfile -t COMPREPLY < <(compgen -c "${2}")
