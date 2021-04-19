@@ -397,7 +397,6 @@ alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cu
 alias ping="ping -c 4 ";
 
 alias watch="watch -n 10 --color";
-alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
 
 alias qqqq="exit";
 

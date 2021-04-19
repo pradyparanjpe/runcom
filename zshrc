@@ -26,7 +26,7 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
-HISTFILE="${HOME}/.zhistory"
+HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
@@ -63,7 +63,7 @@ bindkey '^[[3~' vi-delete-char  # delete key
 bindkey '^[[F' vi-end-of-line  # end key
 bindkey '^[[H' vi-beginning-of-line  # home key
 bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
-export KEYTIMEOUT=40
+export KEYTIMEOUT=10
 
 # Use beam shape cursor for each new prompt.
 _fix_cursor () {

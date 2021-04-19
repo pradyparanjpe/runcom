@@ -63,7 +63,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     QT_WAYLAND_DISABLE_WINDOWDECORATION=1
     MOZ_ENABLE_WAYLAND=1
     _JAVA_AWT_WM_NONREPARENTING=1
-    SWAYROOT="${HOME}/.wm/sway"
+    SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
     export XDG_SESSION_TYPE
     export SDL_VIDEODRIVER
     export ECORE_EVAS_ENGINE

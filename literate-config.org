@@ -50,7 +50,7 @@
   | ${RUNCOMDIR}/zlogin               | yes   |
   | ${RUNCOMDIR}/ui                   | yes   |
   | ${RUNCOMDIR}/complete.bash        | yes   |
-  | ${XDG_COONFIG_HOME}/varrc         | yes   |
+  | ${XDG_CONFIG_HOME}/varrc          | yes   |
   | ${XDG_CONFIG_HOME}/pspman/profile | yes   |
   |-----------------------------------+-------|
   They are loaded in following order.
@@ -325,7 +325,7 @@
    - setopt HIST_BEEP                 # Beep when accessing nonexistent history.
    - HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate
      #+BEGIN_SRC bash :tangle zshrc
-       HISTFILE="${HOME}/.zhistory"
+       HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
        HISTSIZE=10000
        SAVEHIST=10000
        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
@@ -362,7 +362,7 @@
        bindkey '^[[F' vi-end-of-line  # end key
        bindkey '^[[H' vi-beginning-of-line  # home key
        bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
-       export KEYTIMEOUT=40
+       export KEYTIMEOUT=10
 
        # Use beam shape cursor for each new prompt.
        _fix_cursor () {
@@ -1040,7 +1040,6 @@
 ** Monitor Job queues
    #+BEGIN_SRC sh :tangle shrc
      alias watch="watch -n 10 --color";
-     alias psauxgrep="ps aux |head -1 && ps aux | grep -v 'grep' | grep -v 'rg'| grep -i";
    #+END_SRC
 
 ** Lazy single-handed exit
@@ -1186,7 +1185,7 @@
          QT_WAYLAND_DISABLE_WINDOWDECORATION=1
          MOZ_ENABLE_WAYLAND=1
          _JAVA_AWT_WM_NONREPARENTING=1
-         SWAYROOT="${HOME}/.wm/sway"
+         SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
          export XDG_SESSION_TYPE
          export SDL_VIDEODRIVER
          export ECORE_EVAS_ENGINE
