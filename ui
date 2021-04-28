@@ -47,7 +47,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     # export WAYLAND_DISPLAY=wayland-0
     # export GDK_BACKEND=wayland,x11
     if [ -z "$XDG_RUNTIME_DIR" ]; then
-        XDG_RUNTIME_DIR="/run/user/${UID}"
+        XDG_RUNTIME_DIR="/run/user/$(id -u)"
     fi
     XDG_SESSION_TYPE=wayland
     SDL_VIDEODRIVER=wayland
