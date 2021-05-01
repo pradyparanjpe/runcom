@@ -38,25 +38,51 @@ python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
 
-deactivate() {
-    true
+to_venv () {
+    test_d="$(realpath "${PWD}")"
+    parents=16  # path too long to waste time
+    until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
+        if [ $parents -le 0 ]; then
+            printf "Too many branch-nodes searched" >&2
+            unset parents
+            unset test_d
+            unset env_d
+            return 126
+        fi
+        for env_d in ".venv" "venv"; do
+            if [ -d "${test_d}/${env_d}" ] \
+                   || [ -L "${test_d}/${env_d}" ]; then
+                # shellcheck disable=SC1090
+                . "${test_d}/${env_d}/bin/activate"
+                printf "Found %s, switching...\n" "${test_d}/${env_d}"
+                unset parents
+                unset test_d
+                unset env_d
+                return 0
+            fi
+        done
+        test_d="$(dirname "${test_d}")"
+        parents=$((parents - 1))
+    done
+    printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
+    unset parents
+    unset test_d
+    unset env_d
+    return 126
 }
 
-# shellcheck shell=sh
-to_venv () {
-    testdir="$(realpath "$PWD")"
-    until mountpoint "${testdir}" >/dev/null 2>/dev/null; do
-        if [ -d "${testdir}"/.venv ] || [ -L "${testdir}"/.venv ]; then
-            # .venv found
-            . "${testdir}/.venv/bin/activate"
-            printf "Found .venv at %s, switching...\n" "${testdir}"
-            unset testdir
-            return
+_show_venv () {
+    # if a virtualenv is active, print it's name
+    if [ -n "${VIRTUAL_ENV}" ]; then
+        base="$(basename "${VIRTUAL_ENV}")"
+        if [ "${base}" = ".venv" ] || [ "${base}" = "venv"  ]; then
+            printf "/%s" "$(basename "$(dirname "${VIRTUAL_ENV}")")"
+            unset base
+        else
+            printf "/%s" "${base}"
+            unset base
         fi
-        testdir="$(dirname "${testdir}")"
-    done
-    printf "Couldn't find .venv upto mountpoint %s\n" "${testdir}"
-    unset testdir
+    fi
 }
 
 git_status() {
@@ -367,7 +393,23 @@ deconvolute() {
     fi
 }
 
-# Inspired by lukesmith.xyz
+cd () {
+    builtin cd "$1"
+    if [ -z "${VIRTUAL_ENV}" ]; then
+        to_venv 2>/dev/null
+    fi
+}
+
+force_global_venv () {
+    if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+        unset VIRTUAL_ENV
+        to_venv 2>/dev/null
+    else
+        deactivate
+        VIRTUAL_ENV="Global_Env"
+    fi
+}
+
 lfcd () {
     if ! command -v 'lf' >/dev/null 2>/dev/null; then
         return
@@ -421,8 +463,8 @@ if command -v "exa" >/dev/null 2>&1; then
 fi
 
 if command -v nvim >/dev/null 2>&1; then
-    alias ex="nvim"; ## always open vim in normal mode
-    alias vim="nvim"; ## always use neo
+    alias ex="nvim"; # always open vim in normal mode
+    alias vim="nvim"; # always use neo
 fi
 
 if command -v podman >/dev/null 2>&1; then

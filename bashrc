@@ -41,6 +41,7 @@ __prompt_command () {
     PS1=""
     PS1+="\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
     PS1+="\[\e[0;32m\]\u\[\e[m\]"
+    PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
     PS1+="@"
     PS1+="\[\e[0;34m\]\h\[\e[m\]"
     PS1+="\$(git_ps)"

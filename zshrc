@@ -133,6 +133,9 @@ _pspps () {
     PS1+="%{$(last_exit_color ${exit_stat})%}"
     PS1+=$'┏━ \e[m'
     PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+    PS1+=$'%{\e[3;35m%}'
+    PS1+="$(_show_venv)"
+    PS1+=$'%{\e[m%}'
     PS1+=$'@'
     PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
     PS1+="$(git_ps)"

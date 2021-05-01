@@ -545,36 +545,60 @@
       }
     #+END_SRC
 
-*** Dummy placeholder
-    If not in an python virtual environment, "deactivate" shouldn't through errors
-    #+BEGIN_SRC sh :tangle shrc
-      deactivate() {
-          true
-      }
-    #+END_SRC
-
 *** Quickly change to virtualenv
     Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
     This may require shell-identification for ksh, csh, fish since they have a different activate
     #+BEGIN_SRC sh :tangle shrc
-      # shellcheck shell=sh
       to_venv () {
-          testdir="$(realpath "$PWD")"
-          until mountpoint "${testdir}" >/dev/null 2>/dev/null; do
-              if [ -d "${testdir}"/.venv ] || [ -L "${testdir}"/.venv ]; then
-                  # .venv found
-                  . "${testdir}/.venv/bin/activate"
-                  printf "Found .venv at %s, switching...\n" "${testdir}"
-                  unset testdir
-                  return
+          test_d="$(realpath "${PWD}")"
+          parents=16  # path too long to waste time
+          until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
+              if [ $parents -le 0 ]; then
+                  printf "Too many branch-nodes searched" >&2
+                  unset parents
+                  unset test_d
+                  unset env_d
+                  return 126
               fi
-              testdir="$(dirname "${testdir}")"
+              for env_d in ".venv" "venv"; do
+                  if [ -d "${test_d}/${env_d}" ] \
+                         || [ -L "${test_d}/${env_d}" ]; then
+                      # shellcheck disable=SC1090
+                      . "${test_d}/${env_d}/bin/activate"
+                      printf "Found %s, switching...\n" "${test_d}/${env_d}"
+                      unset parents
+                      unset test_d
+                      unset env_d
+                      return 0
+                  fi
+              done
+              test_d="$(dirname "${test_d}")"
+              parents=$((parents - 1))
           done
-          printf "Couldn't find .venv upto mountpoint %s\n" "${testdir}"
-          unset testdir
+          printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
+          unset parents
+          unset test_d
+          unset env_d
+          return 126
       }
     #+END_SRC
 
+*** Virtualenv in prompt string
+    #+BEGIN_SRC sh :tangle shrc
+      _show_venv () {
+          # if a virtualenv is active, print it's name
+          if [ -n "${VIRTUAL_ENV}" ]; then
+              base="$(basename "${VIRTUAL_ENV}")"
+              if [ "${base}" = ".venv" ] || [ "${base}" = "venv"  ]; then
+                  printf "/%s" "$(basename "$(dirname "${VIRTUAL_ENV}")")"
+                  unset base
+              else
+                  printf "/%s" "${base}"
+                  unset base
+              fi
+          fi
+      }
+    #+END_SRC
 ** Git
 *** Status
     #+BEGIN_SRC sh :tangle shrc
@@ -733,6 +757,7 @@
            PS1=""
            PS1+="\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
            PS1+="\[\e[0;32m\]\u\[\e[m\]"
+           PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
            PS1+="@"
            PS1+="\[\e[0;34m\]\h\[\e[m\]"
            PS1+="\$(git_ps)"
@@ -759,6 +784,9 @@
            PS1+="%{$(last_exit_color ${exit_stat})%}"
            PS1+=$'┏━ \e[m'
            PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+           PS1+=$'%{\e[3;35m%}'
+           PS1+="$(_show_venv)"
+           PS1+=$'%{\e[m%}'
            PS1+=$'@'
            PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
            PS1+="$(git_ps)"
@@ -999,8 +1027,31 @@
    #+END_SRC
 
 ** Navigate
+   - When no virtualenv is active, but one is available, switch to it
    #+BEGIN_SRC sh :tangle shrc
-     # Inspired by lukesmith.xyz
+     cd () {
+         builtin cd "$1"
+         if [ -z "${VIRTUAL_ENV}" ]; then
+             to_venv 2>/dev/null
+         fi
+     }
+   #+END_SRC
+
+   - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
+     - Calling the function again reverts
+   #+BEGIN_SRC sh :tangle shrc
+     force_global_venv () {
+         if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+             unset VIRTUAL_ENV
+             to_venv 2>/dev/null
+         else
+             deactivate
+             VIRTUAL_ENV="Global_Env"
+         fi
+     }
+   #+END_SRC
+   - Inspired by lukesmith.xyz
+   #+BEGIN_SRC sh :tangle shrc
      lfcd () {
          if ! command -v 'lf' >/dev/null 2>/dev/null; then
              return
@@ -1080,8 +1131,8 @@
 ** neo visual editor improved
    #+BEGIN_SRC sh :tangle shrc
      if command -v nvim >/dev/null 2>&1; then
-         alias ex="nvim"; ## always open vim in normal mode
-         alias vim="nvim"; ## always use neo
+         alias ex="nvim"; # always open vim in normal mode
+         alias vim="nvim"; # always use neo
      fi
    #+END_SRC
 
