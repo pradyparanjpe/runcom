@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8; mode:python -*-
 #
-# Copyright 2020 Pradyumna Paranjape
+# Copyright 2020, 2021 Pradyumna Paranjape
 #
 # Check for network connectivity at the beginning
 # This file is part of Prady_runcom.
@@ -22,7 +22,7 @@
 An (unsynced) secrets file should export secrets:
 
 proxy_type,
-username,
+USERNAME,
 password_plain/password_html,
 proxy_addr,
 proxy_port
@@ -41,6 +41,7 @@ import os
 import sys
 import typing
 from urllib.parse import quote
+
 from requests import get
 
 
@@ -59,8 +60,14 @@ class Proxy():
         initiate an empty proxy
         '''
         self.p_type: typing.Optional[str] = None
-        self.auth: typing.Dict[str, typing.Optional[str]] = {'uname': None, 'pass': None}
-        self.target: typing.Dict[str, typing.Optional[str]] = {'address': None, 'port': None}
+        self.auth: typing.Dict[str, typing.Optional[str]] = {
+            'uname': None,
+            'pass': None
+        }
+        self.target: typing.Dict[str, typing.Optional[str]] = {
+            'address': None,
+            'port': None
+        }
         for key, val in kwargs.items():
             if key in self.auth:
                 self.auth[key] = val
@@ -72,7 +79,7 @@ class Proxy():
     def __str__(self) -> str:
         '''
         string of the form
-        "p_type://[username[:passwordurl]@]address[:port]/"
+        "p_type://[USERNAME[:passwordurl]@]address[:port]/"
         '''
         if self.p_type is None:
             return ''
@@ -94,7 +101,7 @@ class Proxy():
     def add_uname(self, uname: str, encoded: bool = False) -> None:
         '''
         uname: user name
-        encoded: username is encoded?
+        encoded: USERNAME is encoded?
         '''
         self.auth['uname'] = uname if encoded else quote(uname)
 
@@ -125,8 +132,8 @@ def build():
         proxy.add_password(os.environ['passwordplain'])
     elif 'passwordhtml' in os.environ:
         proxy.add_password(os.environ['passwordhtml'], encoded=True)
-    if 'username' in os.environ:
-        proxy.add_uname(os.environ['username'])
+    if 'USERNAME' in os.environ:
+        proxy.add_uname(os.environ['USERNAME'])
     if 'proxy_addr' in os.environ:
         proxy.target['address'] = os.environ['proxy_addr']
     if 'proxy_port' in os.environ:

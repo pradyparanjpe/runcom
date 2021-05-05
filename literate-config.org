@@ -7,7 +7,7 @@
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle
 * Copyright/License Header
-  Copyright 2020 Pradyumna Paranjape
+  Copyright 2020, 2021 Pradyumna Paranjape
 
   This file is part of Prady_runcom.
 
@@ -102,7 +102,7 @@
     # shellcheck shell=sh
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -132,7 +132,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -162,7 +162,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -192,7 +192,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -222,7 +222,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -252,7 +252,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -282,7 +282,7 @@
     # shellcheck shell=bash
     # -*- coding:utf-8; mode:shell-script; -*-
     #
-    # Copyright 2020 Pradyumna Paranjape
+    # Copyright 2020, 2021 Pradyumna Paranjape
     #
     # This file is part of Prady_runcom.
     #
@@ -1030,7 +1030,11 @@
    - When no virtualenv is active, but one is available, switch to it
    #+BEGIN_SRC sh :tangle shrc
      cd () {
-         builtin cd "$1"
+         if [ -z "${1}" ]; then
+             builtin cd "${HOME}"
+         else
+             builtin cd "${1}"
+         fi
          if [ -z "${VIRTUAL_ENV}" ]; then
              to_venv 2>/dev/null
          fi

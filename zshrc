@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 # -*- coding:utf-8; mode:shell-script; -*-
 #
-# Copyright 2020 Pradyumna Paranjape
+# Copyright 2020, 2021 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #

@@ -1,7 +1,7 @@
 # shellcheck shell=sh
 # -*- coding:utf-8; mode:shell-script; -*-
 #
-# Copyright 2020 Pradyumna Paranjape
+# Copyright 2020, 2021 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #
@@ -394,7 +394,11 @@ deconvolute() {
 }
 
 cd () {
-    builtin cd "$1"
+    if [ -z "${1}" ]; then
+        builtin cd "${HOME}"
+    else
+        builtin cd "${1}"
+    fi
     if [ -z "${VIRTUAL_ENV}" ]; then
         to_venv 2>/dev/null
     fi
