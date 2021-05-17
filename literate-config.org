@@ -1220,47 +1220,50 @@
    If running from tty1 setup sway environment and start ui
    #+BEGIN_SRC sh :tangle ui
      if [ "$(tty)" = "/dev/tty1" ]; then
-         # export DISPLAY=":0"
-         # export WAYLAND_DISPLAY=wayland-0
-         # export GDK_BACKEND=wayland,x11
-         if [ -z "$XDG_RUNTIME_DIR" ]; then
-             XDG_RUNTIME_DIR="/run/user/$(id -u)"
+         if sway --validate; then
+             # export DISPLAY=":0"
+             # export WAYLAND_DISPLAY=wayland-0
+             # export GDK_BACKEND=wayland,x11
+             if [ -z "$XDG_RUNTIME_DIR" ]; then
+                 XDG_RUNTIME_DIR="/run/user/$(id -u)"
+             fi
+             XDG_SESSION_TYPE=wayland
+             SDL_VIDEODRIVER=wayland
+             ECORE_EVAS_ENGINE=wayland_egl
+             ELM_DISPLAY=wl
+             ELM_ENGINE=wayland_egl
+             ELM_ACCEL=opengl
+             QT_QPA_PLATFORM=wayland-egl
+             QT_WAYLAND_FORCE_DPI=100
+             QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+             QT_AUTO_SCREEN_SCALE_FACTOR=0
+             QT_QPA_PLATFORMTHEME=gtk3
+             QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+             MOZ_ENABLE_WAYLAND=1
+             _JAVA_AWT_WM_NONREPARENTING=1
+             SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
+             export XDG_SESSION_TYPE
+             export SDL_VIDEODRIVER
+             export ECORE_EVAS_ENGINE
+             export ELM_DISPLAY
+             export ELM_ENGINE
+             export ELM_ACCEL
+             export QT_QPA_PLATFORM
+             export QT_WAYLAND_FORCE_DPI
+             export QT_PLUGIN_PATH
+             export QT_AUTO_SCREEN_SCALE_FACTOR
+             export QT_QPA_PLATFORMTHEME
+             export QT_WAYLAND_DISABLE_WINDOWDECORATION
+             export DBUS_SESSION_BUS_ADDRESS
+             export DBUS_SESSION_BUS_PID
+             export MOZ_ENABLE_WAYLAND
+             export _JAVA_AWT_WM_NONREPARENTING
+             export SWAYROOT
+             exec sway
+         else
+             echo "Error while validating sway configuration"
          fi
-         XDG_SESSION_TYPE=wayland
-         SDL_VIDEODRIVER=wayland
-         ECORE_EVAS_ENGINE=wayland_egl
-         ELM_DISPLAY=wl
-         ELM_ENGINE=wayland_egl
-         ELM_ACCEL=opengl
-         QT_QPA_PLATFORM=wayland-egl
-         QT_WAYLAND_FORCE_DPI=100
-         QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
-         QT_AUTO_SCREEN_SCALE_FACTOR=0
-         QT_QPA_PLATFORMTHEME=gtk3
-         QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-         MOZ_ENABLE_WAYLAND=1
-         _JAVA_AWT_WM_NONREPARENTING=1
-         SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
-         export XDG_SESSION_TYPE
-         export SDL_VIDEODRIVER
-         export ECORE_EVAS_ENGINE
-         export ELM_DISPLAY
-         export ELM_ENGINE
-         export ELM_ACCEL
-         export QT_QPA_PLATFORM
-         export QT_WAYLAND_FORCE_DPI
-         export QT_PLUGIN_PATH
-         export QT_AUTO_SCREEN_SCALE_FACTOR
-         export QT_QPA_PLATFORMTHEME
-         export QT_WAYLAND_DISABLE_WINDOWDECORATION
-         export DBUS_SESSION_BUS_ADDRESS
-         export DBUS_SESSION_BUS_PID
-         export MOZ_ENABLE_WAYLAND
-         export _JAVA_AWT_WM_NONREPARENTING
-         export SWAYROOT
-         exec sway
-     fi
-     if [ "$TERM" = "linux" ]; then
+     elif [ "$TERM" = "linux" ]; then
          printf "\e]P0000000" #black
          printf "\e]P83f3f3f" #darkgrey
          printf "\e]P19f3f3f" #darkred
