@@ -26,6 +26,14 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
+# shellcheck disable=SC1090
+if [ -d "${RUNCOMDIR}"/local.d ]; then
+    for local_src in "${RUNCOMDIR}"/local.d/*; do
+        . "${local_src}"
+    done
+fi
+unset local_src
+
 # shellcheck source=.local/share/pspman/src/runcom/complete.bash
 if [ -f "${RUNCOMDIR}"/complete.bash ]; then
     # shellcheck source=.local/share/pspman/src/runcom/complete.bash
@@ -395,9 +403,9 @@ deconvolute() {
 
 cd () {
     if [ -z "${1}" ]; then
-        builtin cd "${HOME}"
+        builtin cd "${HOME}" || true
     else
-        builtin cd "${1}"
+        builtin cd "${1}"  || true
     fi
     if [ -z "${VIRTUAL_ENV}" ]; then
         to_venv 2>/dev/null
