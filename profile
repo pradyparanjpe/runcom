@@ -68,8 +68,8 @@ esac
 export MANPAGER
 
 LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-C_INCLUDE_PATH="${HOME}/.pspman/include/"
-CPLUS_INCLUDE_PATH="${HOME}/.pspman/include/"
+C_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
+CPLUS_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
 export LD_LIBRARY_PATH
 export C_INCLUDE_PATH
 export CPLUS_INCLUDE_PATH
