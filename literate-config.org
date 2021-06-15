@@ -492,7 +492,7 @@
 ** Editor wars
    #+BEGIN_SRC sh :tangle profile
      while read -r avail; do
-         if command -v "${avail}" >/dev/null 2>&1; then
+         if builtin command -v "${avail}" >/dev/null 2>&1; then
              EDITOR="${avail}"
          fi
      done << EOF
@@ -964,7 +964,7 @@
          cmd_help="Launch CMD, switch to it, and exit the parent terminal\n\n"
          cmd_help="${cmd_help}Optional arguments:\n"
          cmd_help="${cmd_help}-h|--help\tdisplay this help and exit\n"
-         command=
+         cmd=
          call=
 
          while [ $# -gt 0 ]; do
@@ -973,7 +973,7 @@
                      printf "%s""${usage}"
                      printf "%s""${cmd_help}"
                      shift 1
-                     unset command
+                     unset cmd
                      unset cmd_help
                      unset usage
                      unset call
@@ -981,26 +981,26 @@
                      ;;
                  --)
                      # end of gui arguments
-                     command="${command} $*"
+                     cmd="${cmd} $*"
                      break
                      ;;
                  ,*)
-                     command="${1}"
+                     cmd="${1}"
                      shift 1
                      ;;
              esac
          done
 
-         call="$(echo "${command}" | cut -d " " -f 1)"
+         call="$(echo "${cmd}" | cut -d " " -f 1)"
          if [ -n "${call}" ]; then
-             if command -v "${call}" >/dev/null 2>&1; then
+             if builtin command -v "${call}" >/dev/null 2>&1; then
                  unset cmd_help
                  unset usage
                  unset call
-                 nohup "${command}" >/dev/null 0<&- 2>&1 & exit 0
+                 nohup "${cmd}" >/dev/null 0<&- 2>&1 & exit 0
              else
                  echo "${call} not found..."
-                 unset command
+                 unset cmd
                  unset cmd_help
                  unset usage
                  unset call
@@ -1008,7 +1008,7 @@
              fi
          else
              printf "%s""${usage}"
-             unset command
+             unset cmd
              unset cmd_help
              unset usage
              unset call
@@ -1030,7 +1030,7 @@
                  ,*.tbz2) tar -xjf "$1" ;;
                  ,*.tar.gz) tar -x --use-compress-program=pigz -f "$1" ;;
                  ,*.tgz) tar -x --use-compress-program=pigz -f "$1" ;;
-                 ,*.gz) pigz "$1" ;;
+                 ,*.gz) unpigz "$1" ;;
                  ,*.rar) unrar -x "$1" ;;
                  ,*.tar) tar -xf "$1" ;;
                  ,*.zip) unzip "$1" ;;
@@ -1092,6 +1092,27 @@
      }
    #+END_SRC
 
+** manual pages
+   #+BEGIN_SRC sh :tangle shrc
+     man_help () {
+         if man "$@"; then
+             return 0
+         elif tldr "$@"; then
+             return 0
+         elif builtin command -v "$1" >/dev/null 2>/dev/null; then
+             if builtin command -v 'bat' > /dev/null 2>/dev/null; then
+                 display_tool=bat
+             else
+                 display_tool=less
+             fi
+             printf "trying to display %s --help output\n" "${1}"
+             $1 --help | ${display_tool}
+             return 0
+         else
+             return 16
+         fi
+     }
+   #+END_SRC
 * Aliases
 ** Disk Usage
    #+BEGIN_SRC sh :tangle shrc
@@ -1100,6 +1121,10 @@
      alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
    #+END_SRC
 
+** manual page help
+   #+BEGIN_SRC sh :tangle shrc
+     alias man="man_help";
+   #+END_SRC
 ** Network
    #+BEGIN_SRC sh :tangle shrc
      alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
@@ -1120,7 +1145,7 @@
 * Better alternatives
 ** cat
    #+BEGIN_SRC sh :tangle shrc
-     if command -v 'bat' >/dev/null 2>&1; then
+     if builtin command -v 'bat' >/dev/null 2>&1; then
          alias cat="bat --color=auto";
      fi
    #+END_SRC
@@ -1128,7 +1153,7 @@
 ** g/re/p
    #+BEGIN_SRC sh :tangle shrc
      for sc in "ack" "pt" "ag" "rg"; do
-         if command -v "${sc%% *}" >/dev/null 2>&1; then
+         if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
              # shellcheck disable=SC2139
              alias grep="${sc} --color=auto";
          fi
@@ -1137,7 +1162,7 @@
 
 ** List Contents
    #+BEGIN_SRC sh :tangle shrc
-     if command -v "exa" >/dev/null 2>&1; then
+     if builtin command -v "exa" >/dev/null 2>&1; then
          alias ls="exa -Fh --color=auto";
          alias la='exa -a --color=auto';
          alias ll='exa -lr -s size';
@@ -1149,7 +1174,7 @@
 
 ** neo visual editor improved
    #+BEGIN_SRC sh :tangle shrc
-     if command -v nvim >/dev/null 2>&1; then
+     if builtin command -v nvim >/dev/null 2>&1; then
          alias ex="nvim"; # always open vim in normal mode
          alias vim="nvim"; # always use neo
      fi
@@ -1157,7 +1182,7 @@
 
 ** Container
    #+BEGIN_SRC sh :tangle shrc
-     if command -v podman >/dev/null 2>&1; then
+     if builtin command -v podman >/dev/null 2>&1; then
          alias docker="podman";  # Podman is drop-in replacement for docker
          alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
      fi
@@ -1216,7 +1241,7 @@
 ** Terminal
    #+BEGIN_SRC sh :tangle ui
      for term in foot termite tilix xterm gnome-terminal; do
-         if [ -n "$(command -v $term)" ]; then
+         if [ -n "$(builtin command -v $term)" ]; then
              defterm="$term";
              export defterm
              break;
