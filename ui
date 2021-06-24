@@ -82,7 +82,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
         export MOZ_ENABLE_WAYLAND
         export _JAVA_AWT_WM_NONREPARENTING
         export SWAYROOT
-        exec sway
+        exec dbus-launch --sh-syntax --exit-with-session sway
     else
         echo "Error while validating sway configuration"
     fi
