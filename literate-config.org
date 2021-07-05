@@ -1055,6 +1055,31 @@
          fi
      }
    #+END_SRC
+** zwc
+   #+begin_src sh :tangle shrc
+     pwc="$(which wc)"
+     wc () {
+         args="$*"
+         fname="${args##* }"
+         args="${args% ${fname}}"
+         args="${args%${fname}}"
+
+         if gzip -t "${fname}" > /dev/null 2>&1; then
+             if [ -z "${args}" ]; then
+                 zcat -f "${fname}" | "${pwc}"
+             else
+                 # shellcheck disable=SC2086
+                 zcat -f "${fname}" | "${pwc}" $args
+             fi
+             return
+         else
+             "${pwc}" "$@"
+             return
+         fi
+
+     }
+   #+end_src
+
 
    - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
      - Calling the function again reverts
@@ -1091,6 +1116,7 @@
          cd "$(dirname "$(fzf)")" || true
      }
    #+END_SRC
+
 
 ** manual pages
    #+BEGIN_SRC sh :tangle shrc

@@ -412,6 +412,28 @@ cd () {
     fi
 }
 
+pwc="$(which wc)"
+wc () {
+    args="$*"
+    fname="${args##* }"
+    args="${args% ${fname}}"
+    args="${args%${fname}}"
+
+    if gzip -t "${fname}" > /dev/null 2>&1; then
+        if [ -z "${args}" ]; then
+            zcat -f "${fname}" | "${pwc}"
+        else
+            # shellcheck disable=SC2086
+            zcat -f "${fname}" | "${pwc}" $args
+        fi
+        return
+    else
+        "${pwc}" "$@"
+        return
+    fi
+
+}
+
 force_global_venv () {
     if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
         unset VIRTUAL_ENV
