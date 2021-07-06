@@ -469,6 +469,52 @@
       fi
     #+END_SRC
 
+* Better alternatives
+** cat
+   #+BEGIN_SRC sh :tangle shrc
+     if builtin command -v 'bat' >/dev/null 2>&1; then
+         alias cat="bat --color=auto";
+     fi
+   #+END_SRC
+
+** g/re/p
+   #+BEGIN_SRC sh :tangle shrc
+     for sc in "ack" "pt" "ag" "rg"; do
+         if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
+             # shellcheck disable=SC2139
+             alias grep="${sc} --color=auto";
+         fi
+     done
+   #+END_SRC
+
+** List Contents
+   #+BEGIN_SRC sh :tangle shrc
+     if builtin command -v "exa" >/dev/null 2>&1; then
+         alias ls="exa -Fh --color=auto";
+         alias la='exa -a --color=auto';
+         alias ll='exa -lr -s size';
+         alias lla='exa -a';
+         alias l.='exa -a --color=auto |grep "^\."';
+         alias sl="ls";
+     fi
+   #+END_SRC
+
+** neo visual editor improved
+   #+BEGIN_SRC sh :tangle shrc
+     if builtin command -v nvim >/dev/null 2>&1; then
+         alias ex="nvim"; # always open vim in normal mode
+         alias vim="nvim"; # always use neo
+     fi
+   #+END_SRC
+
+** Container
+   #+BEGIN_SRC sh :tangle shrc
+     if builtin command -v podman >/dev/null 2>&1; then
+         alias docker="podman";  # Podman is drop-in replacement for docker
+         alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
+     fi
+   #+END_SRC
+
 * Variables
 ** PATH
    #+BEGIN_SRC sh :tangle profile
@@ -1022,20 +1068,20 @@
 ** Un-Compress by context
    #+BEGIN_SRC sh :tangle shrc
      deconvolute() {
-         if [ ! -f "$1" ]; then
-             echo "$1: no such file";
+         if [ ! -f "${1}" ]; then
+             echo "${1}: no such file";
          else
-             case "$1" in
-                 ,*.tar.bz2) tar -xjf "$1" ;;
-                 ,*.tbz2) tar -xjf "$1" ;;
-                 ,*.tar.gz) tar -x --use-compress-program=pigz -f "$1" ;;
-                 ,*.tgz) tar -x --use-compress-program=pigz -f "$1" ;;
-                 ,*.gz) unpigz "$1" ;;
-                 ,*.rar) unrar -x "$1" ;;
-                 ,*.tar) tar -xf "$1" ;;
-                 ,*.zip) unzip "$1" ;;
-                 ,*.tar.xz) tar -xf "$1" ;;
-                 ,*) echo "Cannot extract $1, provide explicit command";;
+             case "${1}" in
+                 ,*.tar.bz2) tar -xjf "${1}" ;;
+                 ,*.tbz2) tar -xjf "${1}" ;;
+                 ,*.tar.gz) tar -x --use-compress-program=pigz -f "${1}" ;;
+                 ,*.tgz) tar -x --use-compress-program=pigz -f "${1}" ;;
+                 ,*.gz) unpigz "${1}" ;;
+                 ,*.rar) unrar -x "${1}" ;;
+                 ,*.tar) tar -xf "${1}" ;;
+                 ,*.zip) unzip "${1}" ;;
+                 ,*.tar.xz) tar -xf "${1}" ;;
+                 ,*) echo "Cannot extract ${1}, provide explicit command";;
              esac
          fi
      }
@@ -1055,45 +1101,7 @@
          fi
      }
    #+END_SRC
-** zwc
-   #+begin_src sh :tangle shrc
-     pwc="$(which wc)"
-     wc () {
-         args="$*"
-         fname="${args##* }"
-         args="${args% ${fname}}"
-         args="${args%${fname}}"
 
-         if gzip -t "${fname}" > /dev/null 2>&1; then
-             if [ -z "${args}" ]; then
-                 zcat -f "${fname}" | "${pwc}"
-             else
-                 # shellcheck disable=SC2086
-                 zcat -f "${fname}" | "${pwc}" $args
-             fi
-             return
-         else
-             "${pwc}" "$@"
-             return
-         fi
-
-     }
-   #+end_src
-
-
-   - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
-     - Calling the function again reverts
-   #+BEGIN_SRC sh :tangle shrc
-     force_global_venv () {
-         if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
-             unset VIRTUAL_ENV
-             to_venv 2>/dev/null
-         else
-             deactivate
-             VIRTUAL_ENV="Global_Env"
-         fi
-     }
-   #+END_SRC
    - Inspired by lukesmith.xyz
    #+BEGIN_SRC sh :tangle shrc
      lfcd () {
@@ -1117,6 +1125,89 @@
      }
    #+END_SRC
 
+** zwc
+   - Guess whether target is zipped;
+     if zipped, unzip and count else classical wc
+   #+begin_src sh :tangle shrc
+     zwc () {
+         args="$*"
+         fname="${args##* }"
+         args="${args% ${fname}}"
+         args="${args%${fname}}"
+
+         if gzip -t "${fname}" > /dev/null 2>&1; then
+             if [ -z "${args}" ]; then
+                 zcat -f "${fname}" | wc
+             else
+                 # shellcheck disable=SC2086
+                 zcat -f "${fname}" | wc $args
+             fi
+             return
+         else
+             wc "$@"
+             return
+         fi
+
+     }
+   #+end_src
+
+** disable autovenv
+   - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
+     - Calling the function again reverts
+   #+BEGIN_SRC sh :tangle shrc
+     force_global_venv () {
+         if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+             unset VIRTUAL_ENV
+             to_venv 2>/dev/null
+         else
+             deactivate
+             VIRTUAL_ENV="Global_Env"
+         fi
+     }
+   #+END_SRC
+
+** lszcat
+   #+begin_src sh :tangle shrc
+     lszcat () {
+         args="$*"
+         fname="${args##* }"
+         args="${args%% ${fname}}"
+         args="${args%%${fname}}"
+
+         if builtin command -v bat >/dev/null 2>&1; then
+             betcat="$(which bat)"
+         else
+             betcat="$(which cat)"
+         fi
+
+         if builtin command -v exa >/dev/null 2>&1; then
+             betls="$(which exa)"
+         else
+             betls="$(which ls)"
+         fi
+
+         if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
+             if [ -z "${args}" ]; then
+                 args="${fname}"
+             else
+                 args="${args} ${fname}"
+             fi
+             fname="$(readlink -f ".")"
+             echo "${fname}"
+         fi
+
+         if [ -d "${fname}" ]; then
+             # shellcheck disable=SC2086
+             "${betls}" ${args} "${fname}"
+         elif gzip -t "${fname}" >/dev/null 2>&1; then
+             # shellcheck disable=SC2086
+             zcat -f ${args} "${fname}" | "${betcat}"
+         else
+             # shellcheck disable=SC2086
+             "${betcat}" ${args} "${fname}"
+         fi
+     }
+   #+end_src
 
 ** manual pages
    #+BEGIN_SRC sh :tangle shrc
@@ -1168,51 +1259,11 @@
      alias qqqq="exit";
    #+END_SRC
 
-* Better alternatives
-** cat
-   #+BEGIN_SRC sh :tangle shrc
-     if builtin command -v 'bat' >/dev/null 2>&1; then
-         alias cat="bat --color=auto";
-     fi
-   #+END_SRC
+** [z]wc
+   #+begin_src sh :tangle shrc
+     alias wc="zwc";
+   #+end_src
 
-** g/re/p
-   #+BEGIN_SRC sh :tangle shrc
-     for sc in "ack" "pt" "ag" "rg"; do
-         if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
-             # shellcheck disable=SC2139
-             alias grep="${sc} --color=auto";
-         fi
-     done
-   #+END_SRC
-
-** List Contents
-   #+BEGIN_SRC sh :tangle shrc
-     if builtin command -v "exa" >/dev/null 2>&1; then
-         alias ls="exa -Fh --color=auto";
-         alias la='exa -a --color=auto';
-         alias ll='exa -lr -s size';
-         alias lla='exa -a';
-         alias l.='exa -a --color=auto |grep "^\."';
-         alias sl="ls";
-     fi
-   #+END_SRC
-
-** neo visual editor improved
-   #+BEGIN_SRC sh :tangle shrc
-     if builtin command -v nvim >/dev/null 2>&1; then
-         alias ex="nvim"; # always open vim in normal mode
-         alias vim="nvim"; # always use neo
-     fi
-   #+END_SRC
-
-** Container
-   #+BEGIN_SRC sh :tangle shrc
-     if builtin command -v podman >/dev/null 2>&1; then
-         alias docker="podman";  # Podman is drop-in replacement for docker
-         alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-     fi
-   #+END_SRC
 
 * Networking
 ** State

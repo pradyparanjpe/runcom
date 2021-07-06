@@ -40,6 +40,36 @@ if [ -f "${RUNCOMDIR}"/complete.bash ]; then
     . "${RUNCOMDIR}"/complete.bash
 fi
 
+if builtin command -v 'bat' >/dev/null 2>&1; then
+    alias cat="bat --color=auto";
+fi
+
+for sc in "ack" "pt" "ag" "rg"; do
+    if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
+        # shellcheck disable=SC2139
+        alias grep="${sc} --color=auto";
+    fi
+done
+
+if builtin command -v "exa" >/dev/null 2>&1; then
+    alias ls="exa -Fh --color=auto";
+    alias la='exa -a --color=auto';
+    alias ll='exa -lr -s size';
+    alias lla='exa -a';
+    alias l.='exa -a --color=auto |grep "^\."';
+    alias sl="ls";
+fi
+
+if builtin command -v nvim >/dev/null 2>&1; then
+    alias ex="nvim"; # always open vim in normal mode
+    alias vim="nvim"; # always use neo
+fi
+
+if builtin command -v podman >/dev/null 2>&1; then
+    alias docker="podman";  # Podman is drop-in replacement for docker
+    alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
+fi
+
 export BEMENU_OPTS='--fn firacode 14 '
 
 python_ver() {
@@ -383,20 +413,20 @@ gui () {
 }
 
 deconvolute() {
-    if [ ! -f "$1" ]; then
-        echo "$1: no such file";
+    if [ ! -f "${1}" ]; then
+        echo "${1}: no such file";
     else
-        case "$1" in
-            *.tar.bz2) tar -xjf "$1" ;;
-            *.tbz2) tar -xjf "$1" ;;
-            *.tar.gz) tar -x --use-compress-program=pigz -f "$1" ;;
-            *.tgz) tar -x --use-compress-program=pigz -f "$1" ;;
-            *.gz) unpigz "$1" ;;
-            *.rar) unrar -x "$1" ;;
-            *.tar) tar -xf "$1" ;;
-            *.zip) unzip "$1" ;;
-            *.tar.xz) tar -xf "$1" ;;
-            *) echo "Cannot extract $1, provide explicit command";;
+        case "${1}" in
+            *.tar.bz2) tar -xjf "${1}" ;;
+            *.tbz2) tar -xjf "${1}" ;;
+            *.tar.gz) tar -x --use-compress-program=pigz -f "${1}" ;;
+            *.tgz) tar -x --use-compress-program=pigz -f "${1}" ;;
+            *.gz) unpigz "${1}" ;;
+            *.rar) unrar -x "${1}" ;;
+            *.tar) tar -xf "${1}" ;;
+            *.zip) unzip "${1}" ;;
+            *.tar.xz) tar -xf "${1}" ;;
+            *) echo "Cannot extract ${1}, provide explicit command";;
         esac
     fi
 }
@@ -409,38 +439,6 @@ cd () {
     fi
     if [ -z "${VIRTUAL_ENV}" ]; then
         to_venv 2>/dev/null
-    fi
-}
-
-pwc="$(which wc)"
-wc () {
-    args="$*"
-    fname="${args##* }"
-    args="${args% ${fname}}"
-    args="${args%${fname}}"
-
-    if gzip -t "${fname}" > /dev/null 2>&1; then
-        if [ -z "${args}" ]; then
-            zcat -f "${fname}" | "${pwc}"
-        else
-            # shellcheck disable=SC2086
-            zcat -f "${fname}" | "${pwc}" $args
-        fi
-        return
-    else
-        "${pwc}" "$@"
-        return
-    fi
-
-}
-
-force_global_venv () {
-    if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
-        unset VIRTUAL_ENV
-        to_venv 2>/dev/null
-    else
-        deactivate
-        VIRTUAL_ENV="Global_Env"
     fi
 }
 
@@ -462,6 +460,77 @@ lfcd () {
 }
 fzfcd () {
     cd "$(dirname "$(fzf)")" || true
+}
+
+zwc () {
+    args="$*"
+    fname="${args##* }"
+    args="${args% ${fname}}"
+    args="${args%${fname}}"
+
+    if gzip -t "${fname}" > /dev/null 2>&1; then
+        if [ -z "${args}" ]; then
+            zcat -f "${fname}" | wc
+        else
+            # shellcheck disable=SC2086
+            zcat -f "${fname}" | wc $args
+        fi
+        return
+    else
+        wc "$@"
+        return
+    fi
+
+}
+
+force_global_venv () {
+    if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+        unset VIRTUAL_ENV
+        to_venv 2>/dev/null
+    else
+        deactivate
+        VIRTUAL_ENV="Global_Env"
+    fi
+}
+
+lszcat () {
+    args="$*"
+    fname="${args##* }"
+    args="${args%% ${fname}}"
+    args="${args%%${fname}}"
+
+    if builtin command -v bat >/dev/null 2>&1; then
+        betcat="$(which bat)"
+    else
+        betcat="$(which cat)"
+    fi
+
+    if builtin command -v exa >/dev/null 2>&1; then
+        betls="$(which exa)"
+    else
+        betls="$(which ls)"
+    fi
+
+    if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
+        if [ -z "${args}" ]; then
+            args="${fname}"
+        else
+            args="${args} ${fname}"
+        fi
+        fname="$(readlink -f ".")"
+        echo "${fname}"
+    fi
+
+    if [ -d "${fname}" ]; then
+        # shellcheck disable=SC2086
+        "${betls}" ${args} "${fname}"
+    elif gzip -t "${fname}" >/dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        zcat -f ${args} "${fname}" | "${betcat}"
+    else
+        # shellcheck disable=SC2086
+        "${betcat}" ${args} "${fname}"
+    fi
 }
 
 man_help () {
@@ -497,35 +566,7 @@ alias watch="watch -n 10 --color";
 
 alias qqqq="exit";
 
-if builtin command -v 'bat' >/dev/null 2>&1; then
-    alias cat="bat --color=auto";
-fi
-
-for sc in "ack" "pt" "ag" "rg"; do
-    if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
-        # shellcheck disable=SC2139
-        alias grep="${sc} --color=auto";
-    fi
-done
-
-if builtin command -v "exa" >/dev/null 2>&1; then
-    alias ls="exa -Fh --color=auto";
-    alias la='exa -a --color=auto';
-    alias ll='exa -lr -s size';
-    alias lla='exa -a';
-    alias l.='exa -a --color=auto |grep "^\."';
-    alias sl="ls";
-fi
-
-if builtin command -v nvim >/dev/null 2>&1; then
-    alias ex="nvim"; # always open vim in normal mode
-    alias vim="nvim"; # always use neo
-fi
-
-if builtin command -v podman >/dev/null 2>&1; then
-    alias docker="podman";  # Podman is drop-in replacement for docker
-    alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-fi
+alias wc="zwc";
 
 # shellcheck source=./netcheck.sh
 IFS="$(printf '\t')" read -r IP_ADDR AP_ADDR netstate << netcheck
