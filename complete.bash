@@ -31,3 +31,16 @@ _complete_gui() {
     fi
 }
 complete -F _complete_gui gui
+
+_complete_sync_gitlab_issues() {
+    if [ "${3}" = '-b' ] || [ "${3}" = '--block' ]; then
+        COMPREPLY=('default')
+    else
+        [ -n "${ZSH_VERSION}" ] && COMPREPLY+=($(compgen -o nospace -f --))
+        [ -n "${BASH_VERSION}" ] && mapfile -t COMPREPLY < <(compgen -o nospace -f -- "${3}")
+        COMPREPLY+=('-b=default' '-f ' '-h ' '-v ' '-V ' '--block=default'
+                    '--pull ' '--help' '--verbose' '--very-verbose')
+    fi
+    }
+
+complete -o nospace -F _complete_sync_gitlab_issues sync_all_gitlab_issues.sh

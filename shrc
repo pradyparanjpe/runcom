@@ -539,13 +539,12 @@ man_help () {
     elif tldr "$@"; then
         return 0
     elif builtin command -v "$1" >/dev/null 2>/dev/null; then
-        if builtin command -v 'bat' > /dev/null 2>/dev/null; then
-            display_tool=bat
-        else
-            display_tool=less
-        fi
         printf "trying to display %s --help output\n" "${1}"
-        $1 --help | ${display_tool}
+        if builtin command -v 'bat' >/dev/null 2>/dev/null; then
+            $1 --help 2>&1 | bat
+        else
+            $1 --help 2>&1 | less -RF
+        fi
         return 0
     else
         return 16

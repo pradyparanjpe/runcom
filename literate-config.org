@@ -1,11 +1,45 @@
-#-*- coding:utf-8; mode:org; -*-
+# -*- mode:org; coding: utf-8; -*-
 #+TITLE: Prady_runcom
 #+AUTHOR: Pradyumna Paranjape
 #+EMAIL: pradyparanjpe@rediffmail.com
 #+LANGUAGE: en
-#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+HTML_HEAD: <style> @media only screen and (max-width: 960px) {#content{background-color: #e7f0f7; color: 101018; max-width: 100%; overflow-x: scroll;}} </style>
+#+HTML_HEAD: <style> body{background-color: #e7f0f7; color: 101018; font-size: 18px;} </style>
+#+HTML_HEAD: <style> #content{background-color: #e7f0f7; color: 101018;} </style>
+#+HTML_HEAD: <style> #left-panel-button{display: none;}</style>
+#+HTML_HEAD: <style> #minitoc{display: none;}</style>
+#+HTML_HEAD: <style> #tabs{background-color: #e5e7ea; font-size: 18px;} </style>
+#+HTML_HEAD: <style> #tabs li a{background-color: #e5e7ea; font-size: 18px;} </style>
+#+HTML_HEAD: <style> .buttons{background-color: #f2f3f4;} </style>
+#+HTML_HEAD: <style> #table-of-contents header{background-color: #e7f0f7; color: 101018;}</style>
+#+HTML_HEAD: <style> table, th, td {border: none; border-left: none; border-right: none;} </style>
+#+HTML_HEAD: <style> b{background-color: #e7f0f7; color: #000000;} </style>
+#+HTML_HEAD: <style> i{background-color: #e7f0f7; color: 101018;} </style>
+#+HTML_HEAD: <style> a, a:link, a:visited, a:hover{color: #0087bf; text-decoration: none}</style>
+#+HTML_HEAD: <style> h1{color: #e00030; background: #f6fafe; font-size: 2em;} </style>
+#+HTML_HEAD: <style> h2{color: #0040c0; font-size: 1.75em; border-bottom: 1px solid #585c60;} </style>
+#+HTML_HEAD: <style> h3{color: #00c060; font-size: 1.5em; border-bottom: 1px dotted #585c60;} </style>
+#+HTML_HEAD: <style> h4{color: #7f8f00; font-size: 1.25em; border-bottom: none;} </style>
+#+HTML_HEAD: <style> code{color: #4f0000; background: #ffffff; font-weight: bold} </style>
+#+HTML_HEAD: <style> table thead th{background-color: #ffffff;}</style>
+#+HTML_HEAD: <style> table tr:nth-child(2n-1) td{background-color: #e7e7ef;}</style>
+#+HTML_HEAD: <style> table tr:nth-child(2n) td{background-color: #f7f7ff;}</style>
+#+LATEX_CMD: xelatex
+#+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \usepackage[a4paper, margin=1in]{geometry}
+#+LATEX_HEADER: \usepackage[perpage]{footmisc}
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \usepackage{polyglossia}
+#+LATEX_HEADER: \newfontfamily \devanagarifont[Script=Devanagari]{Lohit Devanagari}
+#+LATEX_HEADER: \setmainlanguage{sanskrit}
+#+LATEX_HEADER: \setotherlanguages{english}
+#+LATEX: \today
+
+
 
 * Copyright/License Header
   Copyright 2020, 2021 Pradyumna Paranjape
@@ -391,6 +425,7 @@
        }
        # Use vim keys in tab complete menu:
        zmodload zsh/complist
+       zmodload zsh/mapfile
        bindkey -M menuselect 'h' vi-backward-char
        bindkey -M menuselect 'k' vi-up-line-or-history
        bindkey -M menuselect 'l' vi-forward-char
@@ -1217,19 +1252,19 @@
          elif tldr "$@"; then
              return 0
          elif builtin command -v "$1" >/dev/null 2>/dev/null; then
-             if builtin command -v 'bat' > /dev/null 2>/dev/null; then
-                 display_tool=bat
-             else
-                 display_tool=less
-             fi
              printf "trying to display %s --help output\n" "${1}"
-             $1 --help | ${display_tool}
+             if builtin command -v 'bat' >/dev/null 2>/dev/null; then
+                 $1 --help 2>&1 | bat
+             else
+                 $1 --help 2>&1 | less -RF
+             fi
              return 0
          else
              return 16
          fi
      }
    #+END_SRC
+
 * Aliases
 ** Disk Usage
    #+BEGIN_SRC sh :tangle shrc

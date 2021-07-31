@@ -88,6 +88,7 @@ zle-keymap-select () {
 }
 # Use vim keys in tab complete menu:
 zmodload zsh/complist
+zmodload zsh/mapfile
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
