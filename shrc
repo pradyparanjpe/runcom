@@ -488,7 +488,7 @@ force_global_venv () {
         unset VIRTUAL_ENV
         to_venv 2>/dev/null
     else
-        deactivate
+        deactivate 2>/dev/null
         VIRTUAL_ENV="Global_Env"
     fi
 }

@@ -52,10 +52,12 @@ term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
 if [ -f "${term_key_source}" ]; then
     source "${term_key_source}"
 fi
-# vim keybindings
+# keybindings
 bindkey -v
 bindkey -s '^o' 'lfcd\n'
 bindkey -s '^f' 'fzfcd\n'
+bindkey -s '^E' 'deactivate 2>/dev/null || true\n'
+bindkey -s '^N' 'force_global_venv\n'
 bindkey '^[[P' delete-char  # backspace key
 bindkey '^[[1;5D' vi-backward-word  # ctrl <-
 bindkey '^[[1;5C' vi-forward-word  # ctrl ->
