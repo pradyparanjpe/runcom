@@ -1381,40 +1381,68 @@
              fi
              XDG_SESSION_TYPE=wayland
              SDL_VIDEODRIVER=wayland
+             QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+             QT_AUTO_SCREEN_SCALE_FACTOR=0
+             QT_QPA_PLATFORMTHEME=qt5ct
+             _JAVA_AWT_WM_NONREPARENTING=1
+             SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
              ECORE_EVAS_ENGINE=wayland_egl
              ELM_DISPLAY=wl
              ELM_ENGINE=wayland_egl
              ELM_ACCEL=opengl
              QT_QPA_PLATFORM="wayland-egl;xcb"
              QT_WAYLAND_FORCE_DPI=100
-             QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
-             QT_AUTO_SCREEN_SCALE_FACTOR=0
-             QT_QPA_PLATFORMTHEME=qt5ct
              QT_WAYLAND_DISABLE_WINDOWDECORATION=1
              MOZ_ENABLE_WAYLAND=1
-             _JAVA_AWT_WM_NONREPARENTING=1
-             SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
              export XDG_SESSION_TYPE
              export SDL_VIDEODRIVER
+             export QT_PLUGIN_PATH
+             export QT_AUTO_SCREEN_SCALE_FACTOR
+             export QT_QPA_PLATFORMTHEME
+             export _JAVA_AWT_WM_NONREPARENTING
+             export SWAYROOT
              export ECORE_EVAS_ENGINE
              export ELM_DISPLAY
              export ELM_ENGINE
              export ELM_ACCEL
              export QT_QPA_PLATFORM
              export QT_WAYLAND_FORCE_DPI
-             export QT_PLUGIN_PATH
-             export QT_AUTO_SCREEN_SCALE_FACTOR
-             export QT_QPA_PLATFORMTHEME
              export QT_WAYLAND_DISABLE_WINDOWDECORATION
-             export DBUS_SESSION_BUS_ADDRESS
-             export DBUS_SESSION_BUS_PID
              export MOZ_ENABLE_WAYLAND
-             export _JAVA_AWT_WM_NONREPARENTING
-             export SWAYROOT
              exec dbus-launch --sh-syntax --exit-with-session sway
          else
              echo "Error while validating sway configuration"
          fi
+     elif [ "$(tty)" = "/dev/tty2" ]; then
+         if [ -z "$XDG_RUNTIME_DIR" ]; then
+             XDG_RUNTIME_DIR="/run/user/$(id -u)"
+         fi
+         XDG_SESSION_TYPE=x11
+         SDL_VIDEODRIVER=x11
+         QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+         QT_AUTO_SCREEN_SCALE_FACTOR=0
+         QT_QPA_PLATFORMTHEME=qt5ct
+         _JAVA_AWT_WM_NONREPARENTING=1
+         I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/i3
+         export XDG_SESSION_TYPE
+         export SDL_VIDEODRIVER
+         export QT_PLUGIN_PATH
+         export QT_AUTO_SCREEN_SCALE_FACTOR
+         export QT_QPA_PLATFORMTHEME
+         export _JAVA_AWT_WM_NONREPARENTING
+         export I3ROOT
+         unset ECORE_EVAS_ENGINE
+         unset ELM_DISPLAY
+         unset ELM_ENGINE
+         unset ELM_ACCEL
+         unset QT_QPA_PLATFORM
+         unset QT_WAYLAND_FORCE_DPI
+         unset QT_WAYLAND_DISABLE_WINDOWDECORATION
+         unset MOZ_ENABLE_WAYLAND
+         echo "Window managers:"
+         ls "/usr/share/xsessions"
+         read x11wm && echo "${x11wm}" > ~/.xinitrc && unset x11wm
+         exec startx
      elif [ "$TERM" = "linux" ]; then
          printf "\e]P0000000" #black
          printf "\e]P83f3f3f" #darkgrey
@@ -1434,6 +1462,7 @@
          printf "\e]PFffffff" #white
          clear #for background artifacting
      fi
+
    #+END_SRC
 
 * Calls
