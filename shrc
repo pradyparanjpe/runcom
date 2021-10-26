@@ -124,49 +124,50 @@ _show_venv () {
 }
 
 git_status() {
-    modified=0
-    cached=0
-    untracked=0
+    _modified=0
+    _cached=0
+    _untracked=0
 
-    while read -r line; do
-        case "${line}" in
+    while read -r _line; do
+        case "${_line}" in
             _*_\ _)
-                cached=1
+                _cached=1
                 ;;
             _\ _*_)
-                modified=1
+                _modified=1
                 ;;
             _?_?_)
-                untracked=1
+                _untracked=1
                 ;;
         esac
     done << endstat
 $(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
 endstat
 
-    stat_str=''
-    if [ $modified -ne 0 ]; then
-        stat_str="${stat_str}\033[0;31m\ue728"
+    _stat_str=''
+    if [ "$_modified" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\ue728"
     fi
 
-    if [ $cached -ne 0 ]; then
-        stat_str="${stat_str}\033[0;32m\ue729"
+    if [ "$_cached" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;32m\ue729"
     fi
 
-    if [ $untracked -ne 0 ]; then
-        stat_str="${stat_str}\033[0;31m\uf476"
+    if [ "$_untracked" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\uf476"
     fi
 
     if [ -n "$(git stash list)" ]; then
-        stat_str="${stat_str}\e[0;36m\uf48e"
+        _stat_str="${_stat_str}\e[0;36m\uf48e"
     fi
-    if [ -n "${stat_str}" ]; then
+    if [ -n "${_stat_str}" ]; then
         # shellcheck disable=SC2059  # I do want escape characters
-        printf "${stat_str}\e[m"
+        printf "${_stat_str}\e[m"
     fi
-    unset modified
-    unset cached
-    unset untracked
+    unset _modified
+    unset _cached
+    unset _untracked
+    unset _stat_str
 }
 
 #!/usr/bin/env sh
@@ -193,7 +194,7 @@ git_branch() {
             *HEAD\ detached*)
                 branch_str="${branch_str}\e[0;33m"
                 ;;
-            master)
+            main|master)
                 unset branch
                 unset branch_str
                 return
