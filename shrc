@@ -191,7 +191,7 @@ git_branch() {
             tmp-*)
                 branch_str="${branch_str}\e[0;36m"
                 ;;
-            *HEAD\ detached*)
+            *HEAD\ detached*|,*rebasing*)
                 branch_str="${branch_str}\e[0;33m"
                 ;;
             main|master)

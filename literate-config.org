@@ -28,6 +28,7 @@
 #+HTML_HEAD: <style> table thead th{background-color: #ffffff;}</style>
 #+HTML_HEAD: <style> table tr:nth-child(2n-1) td{background-color: #e7e7ef;}</style>
 #+HTML_HEAD: <style> table tr:nth-child(2n) td{background-color: #f7f7ff;}</style>
+#+EXPORT_FILE_NAME: index.html
 #+LATEX_CMD: xelatex
 #+LATEX_COMPILER: xelatex
 #+LATEX_HEADER: \usepackage[a4paper, margin=1in]{geometry}
