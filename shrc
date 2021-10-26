@@ -27,17 +27,17 @@
 #===================================================================
 
 # shellcheck disable=SC1090
-if [ -d "${RUNCOMDIR}"/local.d ]; then
-    for local_src in "${RUNCOMDIR}"/local.d/*; do
+if [ -d "${RUNCOMDIR}/local.d" ]; then
+    for local_src in "${RUNCOMDIR}/local.d"/*; do
         . "${local_src}"
     done
 fi
 unset local_src
 
 # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-if [ -f "${RUNCOMDIR}"/complete.bash ]; then
+if [ -f "${RUNCOMDIR}/complete.bash" ]; then
     # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-    . "${RUNCOMDIR}"/complete.bash
+    . "${RUNCOMDIR}/complete.bash"
 fi
 
 if builtin command -v 'bat' >/dev/null 2>&1; then
@@ -124,49 +124,50 @@ _show_venv () {
 }
 
 git_status() {
-    modified=0
-    cached=0
-    untracked=0
+    _modified=0
+    _cached=0
+    _untracked=0
 
-    while read -r line; do
-        case "${line}" in
+    while read -r _line; do
+        case "${_line}" in
             _*_\ _)
-                cached=1
+                _cached=1
                 ;;
             _\ _*_)
-                modified=1
+                _modified=1
                 ;;
             _?_?_)
-                untracked=1
+                _untracked=1
                 ;;
         esac
     done << endstat
 $(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
 endstat
 
-    stat_str=''
-    if [ $modified -ne 0 ]; then
-        stat_str="${stat_str}\033[0;31m\ue728"
+    _stat_str=''
+    if [ "$_modified" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\ue728"
     fi
 
-    if [ $cached -ne 0 ]; then
-        stat_str="${stat_str}\033[0;32m\ue729"
+    if [ "$_cached" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;32m\ue729"
     fi
 
-    if [ $untracked -ne 0 ]; then
-        stat_str="${stat_str}\033[0;31m\uf476"
+    if [ "$_untracked" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\uf476"
     fi
 
     if [ -n "$(git stash list)" ]; then
-        stat_str="${stat_str}\e[0;36m\uf48e"
+        _stat_str="${_stat_str}\e[0;36m\uf48e"
     fi
-    if [ -n "${stat_str}" ]; then
+    if [ -n "${_stat_str}" ]; then
         # shellcheck disable=SC2059  # I do want escape characters
-        printf "${stat_str}\e[m"
+        printf "${_stat_str}\e[m"
     fi
-    unset modified
-    unset cached
-    unset untracked
+    unset _modified
+    unset _cached
+    unset _untracked
+    unset _stat_str
 }
 
 #!/usr/bin/env sh
@@ -190,10 +191,10 @@ git_branch() {
             tmp-*)
                 branch_str="${branch_str}\e[0;36m"
                 ;;
-            *HEAD\ detached*)
+            *HEAD\ detached*|,*rebasing*)
                 branch_str="${branch_str}\e[0;33m"
                 ;;
-            master)
+            main|master)
                 unset branch
                 unset branch_str
                 return
@@ -221,35 +222,83 @@ git_ps() {
 }
 
 last_exit_color () {
-    err="$1"
-    if [ "$err"  = "0" ]; then
-        # no error
-        printf "\e[0;32m"
-    elif [ "$err"  = "1" ]; then
-        # general error
-        printf "\e[0;33m"
-    elif [ "$err"  = "2" ]; then
-        # misuse of shell builtins
-        printf "\e[0;31m"
-    elif [ "$err" -gt "63" ] && [ "$err" -lt "84" ]; then
-        # syserror.h
-        printf "\e[0;91m"
-    elif [ "$err"  = "126" ]; then
-        # cannot execute
-        printf "\e[0;37m"
-    elif [ "$err"  = "127" ]; then
-        # command not found
-        printf "\e[0;30m"
-    elif [ "$err" -gt "127" ] && [ "$err" -lt "191" ]; then
-        # Fatal error
-        printf "\e[0;41m"
-    elif [ "$err"  = "255" ]; then
-        # exit status limit
-        printf "\e[0;31m"
-    else
-        printf "\e[0;31m"
+    case "$1" in
+        0)
+            # success
+            printf "\e[0;32m"
+            ;;
+        1)
+            # general error
+            printf "\e[0;33m"
+            ;;
+        2)
+            # misuse of shell builtins
+            printf "\e[0;31m"
+            ;;
+        126)
+            # cannot execute
+            printf "\e[0;37m"
+            ;;
+        127)
+            # command not found
+            printf "\e[0;30m"
+            ;;
+        255)
+            # exit status limit
+            printf "\e[0;31m"
+            ;;
+        *)
+            if [ "$1" -gt "63" ] && [ "$1" -lt "84" ]; then
+                # syserror.h
+                printf "\e[0;91m"
+
+            elif [ "$1" -gt "127" ] && [ "$1" -lt "191" ]; then
+                # Fatal error
+                printf "\e[0;41m"
+            else
+                printf "\e[0;31m"
+            fi
+            unset _err
+            ;;
+    esac
+}
+
+_elapsed_time() {
+    # $1 is start time $2 is end time
+    _cmd_start="$1"
+    _cmd_end="$2"
+    if [ -z "$_cmd_end" ] || [ -z "$_cmd_start" ]; then
+        return
     fi
-    unset err
+    _sec=$(( _cmd_end - _cmd_start ))
+    unset _cmd_start
+    unset _cmd_end
+    if [ "$_sec" -le 0 ]; then
+        return
+    fi
+    if [ "$_sec" -le 60 ]; then
+        printf "%s" "${_sec}"
+        unset _sec
+        return
+    fi
+    _min=$(( _sec/60 ))
+    unset _sec
+    if [ "$_min" -le 60 ]; then
+        printf "%sm" "${_min}"
+        unset _min
+        return
+    fi
+    _hr=$(( _min/60 ))
+    unset _min
+    if [ "$_hr" -le 24 ]; then
+        printf "%sh" "${_hr}"
+        unset _hr
+        return
+    fi
+    _day=$(( _hr/24 ))
+    unset _min
+    printf "%sd" "${_day}"
+    unset _day
 }
 
 mathcalc() {

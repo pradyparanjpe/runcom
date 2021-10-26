@@ -1,0 +1,2482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-10-26 Tue 15:18 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prady_runcom</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Pradyumna Paranjape" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<style> @media only screen and (max-width: 960px) {#content{background-color: #e7f0f7; color: 101018; max-width: 100%; overflow-x: scroll;}} </style>
+<style> body{background-color: #e7f0f7; color: 101018; font-size: 18px;} </style>
+<style> #content{background-color: #e7f0f7; color: 101018;} </style>
+<style> #left-panel-button{display: none;}</style>
+<style> #minitoc{display: none;}</style>
+<style> #tabs{background-color: #e5e7ea; font-size: 18px;} </style>
+<style> #tabs li a{background-color: #e5e7ea; font-size: 18px;} </style>
+<style> .buttons{background-color: #f2f3f4;} </style>
+<style> #table-of-contents header{background-color: #e7f0f7; color: 101018;}</style>
+<style> table, th, td {border: none; border-left: none; border-right: none;} </style>
+<style> b{background-color: #e7f0f7; color: #000000;} </style>
+<style> i{background-color: #e7f0f7; color: 101018;} </style>
+<style> a, a:link, a:visited, a:hover{color: #0087bf; text-decoration: none}</style>
+<style> h1{color: #e00030; background: #f6fafe; font-size: 2em;} </style>
+<style> h2{color: #0040c0; font-size: 1.75em; border-bottom: 1px solid #585c60;} </style>
+<style> h3{color: #00c060; font-size: 1.5em; border-bottom: 1px dotted #585c60;} </style>
+<style> h4{color: #7f8f00; font-size: 1.25em; border-bottom: none;} </style>
+<style> code{color: #4f0000; background: #ffffff; font-weight: bold} </style>
+<style> table thead th{background-color: #ffffff;}</style>
+<style> table tr:nth-child(2n-1) td{background-color: #e7e7ef;}</style>
+<style> table tr:nth-child(2n) td{background-color: #f7f7ff;}</style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Prady_runcom</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4845671">Copyright/License Header</a></li>
+<li><a href="#orgde7bece">What is this?</a>
+<ul>
+<li><a href="#orgb7d2fc8">Bash</a></li>
+<li><a href="#orge8c54e4">Zsh</a></li>
+</ul>
+</li>
+<li><a href="#orgfcbea13">Headers</a></li>
+<li><a href="#org73d4a4b">Init</a>
+<ul>
+<li><a href="#org9d0aa7e">bash</a></li>
+<li><a href="#orga31d00b">zsh</a></li>
+</ul>
+</li>
+<li><a href="#org49cc5c6">Inherit</a>
+<ul>
+<li><a href="#org840e412">bash</a></li>
+<li><a href="#org67ea9af">zsh</a></li>
+<li><a href="#org368996d">shrc</a></li>
+</ul>
+</li>
+<li><a href="#org6da8599">Better alternatives</a>
+<ul>
+<li><a href="#orge76de5b">cat</a></li>
+<li><a href="#org0cedea3">g/re/p</a></li>
+<li><a href="#orgb904626">List Contents</a></li>
+<li><a href="#org4c3b800">neo visual editor improved</a></li>
+<li><a href="#org6148946">Container</a></li>
+</ul>
+</li>
+<li><a href="#orgde38d09">Variables</a>
+<ul>
+<li><a href="#orgfcef98f">PATH</a></li>
+<li><a href="#orga9dbd2f">Editor wars</a></li>
+<li><a href="#orgbfdfe8e">C(++) exports</a></li>
+<li><a href="#org184958d">GPU exports</a></li>
+<li><a href="#org541bb1a">Bemenu exports</a></li>
+<li><a href="#org9449c0f">GTK+ debugging output</a></li>
+</ul>
+</li>
+<li><a href="#org29dcafd">Functions</a>
+<ul>
+<li><a href="#org31c05c1">Python</a></li>
+<li><a href="#org672114e">Git</a></li>
+<li><a href="#org5c13f91">Prompt String</a></li>
+<li><a href="#org33de3b3">Mathematical</a></li>
+<li><a href="#org8307adc">Compilation</a></li>
+<li><a href="#orgc9b18af">Mount Home Server</a></li>
+<li><a href="#org6a3874f">Launch gui</a></li>
+<li><a href="#org073b6b9">Un-Compress by context</a></li>
+<li><a href="#org1a1329d">Navigate</a></li>
+<li><a href="#org0e47712">zwc</a></li>
+<li><a href="#org3f58dae">disable autovenv</a></li>
+<li><a href="#orgaaf5348">lszcat</a></li>
+<li><a href="#org9ed8a8c">manual pages</a></li>
+</ul>
+</li>
+<li><a href="#org12168a1">Aliases</a>
+<ul>
+<li><a href="#orgb3adae4">Disk Usage</a></li>
+<li><a href="#org3a351c1">manual page help</a></li>
+<li><a href="#orgc336b50">Network</a></li>
+<li><a href="#orgd669cec">Monitor Job queues</a></li>
+<li><a href="#orgfa6a3ec">Lazy single-handed exit</a></li>
+<li><a href="#org3ff2ec7">[z]wc</a></li>
+</ul>
+</li>
+<li><a href="#org5f79e66">Networking</a>
+<ul>
+<li><a href="#org03ce012">State</a></li>
+<li><a href="#orgf18842b">SSH Agent</a></li>
+</ul>
+</li>
+<li><a href="#orgb5546e3">Window Manager settings</a>
+<ul>
+<li><a href="#orgcab857d">Terminal</a></li>
+<li><a href="#org857c646">Sway exports</a></li>
+<li><a href="#org0a776af">User Interface (GUI/CLI)</a></li>
+</ul>
+</li>
+<li><a href="#orgdf6781b">Calls</a>
+<ul>
+<li><a href="#org59b43b9">bash</a></li>
+<li><a href="#org7160c03">zsh</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org4845671" class="outline-2">
+<h2 id="org4845671">Copyright/License Header</h2>
+<div class="outline-text-2" id="text-org4845671">
+<p>
+Copyright 2020, 2021 Pradyumna Paranjape
+</p>
+
+<p>
+This file is part of Prady_runcom.
+</p>
+
+<p>
+Prady_runcom is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+</p>
+
+<p>
+Prady_runcom is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+</p>
+
+<p>
+You should have received a copy of the GNU General Public License
+along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgde7bece" class="outline-2">
+<h2 id="orgde7bece">What is this?</h2>
+<div class="outline-text-2" id="text-orgde7bece">
+<p>
+Following configuration files are available. This literate configuration tangles their contents.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Configuration File Path</th>
+<th scope="col" class="org-left">POSIX</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">/etc/profile       (system)</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">/etc/bashrc        (system)</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">/etc/zshrc         (system)</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">/etc/profile.d/*   (system)</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.bashrc</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.zshrc</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.bash_profile</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.bash_login</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.profile</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.zprofile</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.zlogin</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${HOME}/.bash_completion.d/*</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/bashrc</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/local.d/*</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/zshrc</td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/shrc</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/profile</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/bash_login</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/zlogin</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/ui</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${RUNCOMDIR}/complete.bash</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${XDG_CONFIG_HOME}/varrc</td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left">${XDG_CONFIG_HOME}/pspman/profile</td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+</table>
+<p>
+They are loaded in following order.
+</p>
+</div>
+
+<div id="outline-container-orgb7d2fc8" class="outline-3">
+<h3 id="orgb7d2fc8">Bash</h3>
+<div class="outline-text-3" id="text-orgb7d2fc8">
+</div>
+<div id="outline-container-org5640ba6" class="outline-4">
+<h4 id="org5640ba6">/etc/profile</h4>
+<div class="outline-text-4" id="text-org5640ba6">
+</div>
+<ul class="org-ul">
+<li><a id="org521980d"></a>/etc/bashrc<br />
+<ul class="org-ul">
+<li><a id="org45ea4c2"></a>/etc/profile.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<div id="outline-container-org0c787c5" class="outline-4">
+<h4 id="org0c787c5">${HOME}/.bash_profile</h4>
+<div class="outline-text-4" id="text-org0c787c5">
+</div>
+<ul class="org-ul">
+<li><a id="orgb924fc5"></a>${HOME}/.profile<br />
+<ul class="org-ul">
+<li><a id="orgdac68da"></a>${XDG_CONFIG_HOME}/varrc<br /></li>
+<li><a id="org4a19023"></a>${RUNCOMDIR}/profile<br /></li>
+<li><a id="org38cec91"></a>${XDG_CONFIG_HOME}/pspman/profile<br /></li>
+</ul>
+</li>
+
+<li><a id="org5202e89"></a>${HOME}/.bashrc<br />
+<ul class="org-ul">
+<li><a id="orgb6ddfe9"></a>${RUNCOMDIR}/bashrc<br />
+<ul class="org-ul">
+<li><a id="org8a160d4"></a>${RUNCOMDIR}/shrc<br />
+<ul class="org-ul">
+<li><a id="orgad3d71c"></a>${RUNCOMDIR}/local.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><a id="org3e9e699"></a>${HOME}/.bash_login<br />
+<ul class="org-ul">
+<li><a id="org914fceb"></a>${RUNCOMDIR}/bash_login<br />
+<ul class="org-ul">
+<li><a id="org13e93ac"></a>${RUNCOMDIR}/ui<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge8c54e4" class="outline-3">
+<h3 id="orge8c54e4">Zsh</h3>
+<div class="outline-text-3" id="text-orge8c54e4">
+</div>
+<div id="outline-container-org11bfc99" class="outline-4">
+<h4 id="org11bfc99">/etc/profile</h4>
+<div class="outline-text-4" id="text-org11bfc99">
+</div>
+<ul class="org-ul">
+<li><a id="org9454cfb"></a>/etc/zshrc<br />
+<ul class="org-ul">
+<li><a id="orga9a4f06"></a>/etc/profile.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-orgd116385" class="outline-4">
+<h4 id="orgd116385">${HOME}/.zshenv</h4>
+</div>
+
+<div id="outline-container-orgb090218" class="outline-4">
+<h4 id="orgb090218">${HOME}/.zprofile</h4>
+<div class="outline-text-4" id="text-orgb090218">
+</div>
+<ul class="org-ul">
+<li><a id="org6e5f1f1"></a>${HOME}/.profile<br />
+<ul class="org-ul">
+<li><a id="orgbc13595"></a>${XDG_CONFIG_HOME}/varrc<br /></li>
+<li><a id="org3bda6f1"></a>${RUNCOMDIR}/profile<br /></li>
+<li><a id="org0a2a0e0"></a>${XDG_CONFIG_HOME}/pspman/profile<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org489dd56" class="outline-4">
+<h4 id="org489dd56">${HOME}/.zshrc</h4>
+<div class="outline-text-4" id="text-org489dd56">
+</div>
+<ul class="org-ul">
+<li><a id="org9ffa10b"></a>${RUNCOMDIR}/zshrc<br />
+<ul class="org-ul">
+<li><a id="orgd4e2aa1"></a>${RUNCOMDIR}/shrc<br />
+<ul class="org-ul">
+<li><a id="orgeca56d8"></a>${RUNCOMDIR}/local.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org245a092" class="outline-4">
+<h4 id="org245a092">${HOME}/.zlogin</h4>
+<div class="outline-text-4" id="text-org245a092">
+</div>
+<ul class="org-ul">
+<li><a id="orgb2389fb"></a>${RUNCOMDIR}/zlogin<br />
+<ul class="org-ul">
+<li><a id="org3a79363"></a>${RUNCOMDIR}/ui<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfcbea13" class="outline-2">
+<h2 id="orgfcbea13">Headers</h2>
+<div class="outline-text-2" id="text-orgfcbea13">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=sh</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck shell=bash</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding:utf-8; mode:shell-script; -*-</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Copyright 2020, 2021 Pradyumna Paranjape</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">This file is part of Prady_runcom.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is free software: you can redistribute it and/or modify</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">it under the terms of the GNU General Public License as published by</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">the Free Software Foundation, either version 3 of the License, or</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">(at your option) any later version.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Prady_runcom is distributed in the hope that it will be useful,</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">GNU General Public License for more details.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">You should have received a copy of the GNU General Public License</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#  </span><span style="color: #3f4f5f; background-color: #0f0f0f;">___             _      ___                     _</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">| _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#                    </span><span style="color: #3f4f5f; background-color: #0f0f0f;">|__/                      |__/|_|</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">===================================================================</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org73d4a4b" class="outline-2">
+<h2 id="org73d4a4b">Init</h2>
+<div class="outline-text-2" id="text-org73d4a4b">
+</div>
+<div id="outline-container-org9d0aa7e" class="outline-3">
+<h3 id="org9d0aa7e">bash</h3>
+<div class="outline-text-3" id="text-org9d0aa7e">
+<p>
+Settings
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">shopt -s autocd
+<span style="color: #d76f10;">set</span> -o vi
+bind <span style="color: #98be65;">'"jk":vi-movement-mode'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga31d00b" class="outline-3">
+<h3 id="orga31d00b">zsh</h3>
+<div class="outline-text-3" id="text-orga31d00b">
+<p>
+Settings
+Unset options:
+</p>
+<ul class="org-ul">
+<li>setopt SHARE_HISTORY             # Share history between all sessions.</li>
+<li>setopt HIST_BEEP                 # Beep when accessing nonexistent history.</li>
+<li><p>
+HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #ffffaf;">HISTFILE</span>=<span style="color: #98be65;">"${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"</span>
+<span style="color: #ffffaf;">HISTSIZE</span>=<span style="color: #da8548; font-weight: bold;">10000</span>
+<span style="color: #ffffaf;">SAVEHIST</span>=<span style="color: #da8548; font-weight: bold;">10000</span>
+<span style="color: #ffffaf;">ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE</span>=<span style="color: #98be65;">"fg=</span><span style="color: #ffffff; background-color: #5f6f7f;">#5f6f7f</span><span style="color: #98be65;">,bg=</span><span style="color: #ffffff; background-color: #172737;">#172737</span><span style="color: #98be65;">"</span>
+<span style="color: #ffffaf;">ZSH_AUTOSUGGEST_STRATEGY</span>=<span style="color: #51afef;">(</span><span style="color: #98be65;">"history"</span> <span style="color: #98be65;">"completion"</span><span style="color: #51afef;">)</span>
+<span style="color: #d76f10;">setopt</span> autocd
+<span style="color: #d76f10;">setopt</span> interactive_comments
+<span style="color: #d76f10;">setopt</span> appendhistory extendedglob notify
+<span style="color: #d76f10;">setopt</span> BANG_HIST                 <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Treat the '!' character specially during expansion.</span>
+<span style="color: #d76f10;">setopt</span> EXTENDED_HISTORY          <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Write the history file in the ":start:elapsed;command" format.</span>
+<span style="color: #d76f10;">setopt</span> INC_APPEND_HISTORY        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Write to the history file immediately, not when the shell exits.</span>
+<span style="color: #d76f10;">setopt</span> HIST_EXPIRE_DUPS_FIRST    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Expire duplicate entries first when trimming history.</span>
+<span style="color: #d76f10;">setopt</span> HIST_IGNORE_DUPS          <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Don't record an entry that was just recorded again.</span>
+<span style="color: #d76f10;">setopt</span> HIST_IGNORE_ALL_DUPS      <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Delete old recorded entry if new entry is a duplicate.</span>
+<span style="color: #d76f10;">setopt</span> HIST_FIND_NO_DUPS         <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Do not display a line previously found.</span>
+<span style="color: #d76f10;">setopt</span> HIST_SAVE_NO_DUPS         <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Don't write duplicate entries in the history file.</span>
+<span style="color: #d76f10;">setopt</span> HIST_IGNORE_SPACE         <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Don't record an entry starting with a space.</span>
+<span style="color: #d76f10;">setopt</span> HIST_REDUCE_BLANKS        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Remove superfluous blanks before recording entry.</span>
+<span style="color: #d76f10;">setopt</span> HIST_VERIFY               <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Don't execute immediately upon history expansion.</span>
+<span style="color: #d76f10;">unsetopt</span> beep
+<span style="color: #d76f10;">autoload</span> colors &amp;&amp; colors
+<span style="color: #d76f10;">autoload</span> add-zsh-hook
+<span style="color: #ffffaf;">term_key_source</span>=<span style="color: #98be65;">"${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${term_key_source}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">source</span> <span style="color: #98be65;">"${term_key_source}"</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">keybindings</span>
+<span style="color: #d76f10;">bindkey</span> -v
+<span style="color: #d76f10;">bindkey</span> -s <span style="color: #98be65;">'^o'</span> <span style="color: #98be65;">'lfcd\n'</span>
+<span style="color: #d76f10;">bindkey</span> -s <span style="color: #98be65;">'^f'</span> <span style="color: #98be65;">'fzfcd\n'</span>
+<span style="color: #d76f10;">bindkey</span> -s <span style="color: #98be65;">'^E'</span> <span style="color: #98be65;">'deactivate 2&gt;/dev/null || true\n'</span>
+<span style="color: #d76f10;">bindkey</span> -s <span style="color: #98be65;">'^N'</span> <span style="color: #98be65;">'force_global_venv\n'</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[P'</span> delete-char  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">backspace key</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[1;5D'</span> vi-backward-word  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">ctrl &lt;-</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[1;5C'</span> vi-forward-word  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">ctrl -&gt;</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[3~'</span> vi-delete-char  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">delete key</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[F'</span> vi-end-of-line  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">end key</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^[[H'</span> vi-beginning-of-line  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">home key</span>
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">"^[[27;2;13~"</span> vi-open-line-below  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shift Return</span>
+<span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">KEYTIMEOUT</span>=<span style="color: #da8548; font-weight: bold;">10</span>
+
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Use beam shape cursor for each new prompt.</span>
+<span style="color: #9f5f9f; font-weight: bold;">_fix_cursor</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #d76f10;">echo</span> -ne <span style="color: #98be65;">'\e[6 q'</span>
+<span style="color: #51afef;">}</span>
+add-zsh-hook precmd _fix_cursor
+
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Change cursor shape for different vi modes.</span>
+<span style="color: #9f5f9f; font-weight: bold;">zle-keymap-select</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${KEYMAP}"</span> = <span style="color: #98be65;">"vicmd"</span> <span style="color: #c678dd;">]</span> ||
+           <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> = <span style="color: #98be65;">'block'</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">'\e[2 q'</span>
+
+    <span style="color: #51afef;">elif</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${KEYMAP}"</span> = <span style="color: #98be65;">"main"</span> <span style="color: #c678dd;">]</span> ||
+             <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${KEYMAP}"</span> = <span style="color: #98be65;">"viins"</span> <span style="color: #c678dd;">]</span> ||
+             <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${KEYMAP}"</span> = <span style="color: #98be65;">''</span> <span style="color: #c678dd;">]</span> ||
+             <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> = <span style="color: #98be65;">'beam'</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">'\e[6 q'</span>
+    <span style="color: #51afef;">elif</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${KEYMAP}"</span> = <span style="color: #98be65;">"visual"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">'\e[4 q'</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Use vim keys in tab complete menu:</span>
+zmodload zsh/complist
+zmodload zsh/mapfile
+<span style="color: #d76f10;">bindkey</span> -M menuselect <span style="color: #98be65;">'h'</span> vi-backward-char
+<span style="color: #d76f10;">bindkey</span> -M menuselect <span style="color: #98be65;">'k'</span> vi-up-line-or-history
+<span style="color: #d76f10;">bindkey</span> -M menuselect <span style="color: #98be65;">'l'</span> vi-forward-char
+<span style="color: #d76f10;">bindkey</span> -M menuselect <span style="color: #98be65;">'j'</span> vi-down-line-or-history
+<span style="color: #d76f10;">bindkey</span> -v <span style="color: #98be65;">'^?'</span> backward-delete-char
+<span style="color: #d76f10;">bindkey</span> -M viins <span style="color: #98be65;">'jk'</span> vi-cmd-mode
+<span style="color: #d76f10;">bindkey</span> <span style="color: #98be65;">'^r'</span> history-incremental-search-backward
+
+zle -N zle-keymap-select
+
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org49cc5c6" class="outline-2">
+<h2 id="org49cc5c6">Inherit</h2>
+<div class="outline-text-2" id="text-org49cc5c6">
+</div>
+<div id="outline-container-org840e412" class="outline-3">
+<h3 id="org840e412">bash</h3>
+<div class="outline-text-3" id="text-org840e412">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/shrc"</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}/shrc"</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}/bash-preexec/bash-preexec.sh"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}/bash-preexec/bash-preexec.sh"</span>
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org67ea9af" class="outline-3">
+<h3 id="org67ea9af">zsh</h3>
+<div class="outline-text-3" id="text-org67ea9af">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/shrc"</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}/shrc"</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">while </span><span style="color: #d76f10;">read</span> -r addition; <span style="color: #51afef;">do</span>
+    <span style="color: #51afef;">while </span><span style="color: #d76f10;">read</span> -r share_dir; <span style="color: #51afef;">do</span>
+        <span style="color: #ffffaf;">add_dir</span>=<span style="color: #98be65;">"${share_dir}/zsh-${addition}"</span>
+        <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${add_dir}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1090</span>
+            . <span style="color: #98be65;">"${add_dir}/zsh-${addition}.zsh"</span>
+            <span style="color: #51afef;">break</span>
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">done</span> &lt;&lt; data_dir
+<span style="color: #98be65;">/usr/local/share</span>
+<span style="color: #98be65;">/usr/share</span>
+<span style="color: #98be65;">${XDG_DATA_HOME:-${HOME}/.local/share}</span>
+<span style="color: #98be65;">${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share</span>
+<span style="color: #98be65;">${HOME}/local/share</span>
+<span style="color: #98be65;">${HOME}/share</span>
+<span style="color: #98be65;">data_dir</span>
+<span style="color: #51afef;">done</span> &lt;&lt; addlist
+<span style="color: #98be65;">syntax-highlighting</span>
+<span style="color: #98be65;">autosuggestions</span>
+<span style="color: #98be65;">addlist</span>
+
+<span style="color: #d76f10;">unset</span> addition
+<span style="color: #d76f10;">unset</span> share_dir
+<span style="color: #d76f10;">unset</span> add_dir
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org368996d" class="outline-3">
+<h3 id="org368996d">shrc</h3>
+<div class="outline-text-3" id="text-org368996d">
+</div>
+<div id="outline-container-org542e360" class="outline-4">
+<h4 id="org542e360">Local unsynced changes</h4>
+<div class="outline-text-4" id="text-org542e360">
+<p>
+All files in ${RUNCOMDIR}/local.d will be sourced
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1090</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${RUNCOMDIR}/local.d"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">for</span> local_src<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${RUNCOMDIR}/local.d"</span>/*; <span style="color: #51afef;">do</span>
+        . <span style="color: #98be65;">"${local_src}"</span>
+    <span style="color: #51afef;">done</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #d76f10;">unset</span> local_src
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4a82ae" class="outline-4">
+<h4 id="orgb4a82ae">Python</h4>
+<div class="outline-text-4" id="text-orgb4a82ae">
+<p>
+<a href="https://github.com/kislyuk/argcomplete">Argcomplete</a> to complete python commands
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=.local/share/pspman/src/runcom/complete.bash</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}/complete.bash"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=.local/share/pspman/src/runcom/complete.bash</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}/complete.bash"</span>
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6da8599" class="outline-2">
+<h2 id="org6da8599">Better alternatives</h2>
+<div class="outline-text-2" id="text-org6da8599">
+</div>
+<div id="outline-container-orge76de5b" class="outline-3">
+<h3 id="orge76de5b">cat</h3>
+<div class="outline-text-3" id="text-orge76de5b">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">'bat'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">cat</span>=<span style="color: #98be65;">"bat --color=auto"</span>;
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cedea3" class="outline-3">
+<h3 id="org0cedea3">g/re/p</h3>
+<div class="outline-text-3" id="text-org0cedea3">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">for</span> sc<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"ack"</span> <span style="color: #98be65;">"pt"</span> <span style="color: #98be65;">"ag"</span> <span style="color: #98be65;">"rg"</span>; <span style="color: #51afef;">do</span>
+    <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${sc%% *}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2139</span>
+        <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">grep</span>=<span style="color: #98be65;">"${sc} --color=auto"</span>;
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">done</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb904626" class="outline-3">
+<h3 id="orgb904626">List Contents</h3>
+<div class="outline-text-3" id="text-orgb904626">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"exa"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ls</span>=<span style="color: #98be65;">"exa -Fh --color=auto"</span>;
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">la</span>=<span style="color: #98be65;">'exa -a --color=auto'</span>;
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ll</span>=<span style="color: #98be65;">'exa -lr -s size'</span>;
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">lla</span>=<span style="color: #98be65;">'exa -a'</span>;
+    <span style="color: #d76f10;">alias</span> l.=<span style="color: #98be65;">'exa -a --color=auto |grep "^\."'</span>;
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">sl</span>=<span style="color: #98be65;">"ls"</span>;
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c3b800" class="outline-3">
+<h3 id="org4c3b800">neo visual editor improved</h3>
+<div class="outline-text-3" id="text-org4c3b800">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v nvim &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ex</span>=<span style="color: #98be65;">"nvim"</span>; <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">always open vim in normal mode</span>
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">vim</span>=<span style="color: #98be65;">"nvim"</span>; <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">always use neo</span>
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6148946" class="outline-3">
+<h3 id="org6148946">Container</h3>
+<div class="outline-text-3" id="text-org6148946">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v podman &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">docker</span>=<span style="color: #98be65;">"podman"</span>;  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Podman is drop-in replacement for docker</span>
+    <span style="color: #d76f10;">alias</span> docker-compose=<span style="color: #98be65;">"podman-compose"</span>;  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Podman is drop-in replacement for docker</span>
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde38d09" class="outline-2">
+<h2 id="orgde38d09">Variables</h2>
+<div class="outline-text-2" id="text-orgde38d09">
+</div>
+<div id="outline-container-orgfcef98f" class="outline-3">
+<h3 id="orgfcef98f">PATH</h3>
+<div class="outline-text-3" id="text-orgfcef98f">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">RUNCOMDIR</span>=<span style="color: #98be65;">"${HOME}/.runcom"</span>
+<span style="color: #d76f10;">export</span> RUNCOMDIR
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source="bin"</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${HOME}/bin"</span> <span style="color: #51afef;">]</span> ; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"${PATH#*${HOME}/bin}"</span> = <span style="color: #98be65;">"${PATH}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">PATH</span>=<span style="color: #98be65;">"${HOME}/bin:${PATH}"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".local/bin"</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${HOME}/.local/bin"</span> <span style="color: #51afef;">]</span> ; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"${PATH#*${HOME}/.local/bin}"</span> = <span style="color: #98be65;">"${PATH}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">PATH</span>=<span style="color: #98be65;">"${HOME}/.local/bin:${PATH}"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">fi</span>
+<span style="color: #d76f10;">export</span> PATH;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga9dbd2f" class="outline-3">
+<h3 id="orga9dbd2f">Editor wars</h3>
+<div class="outline-text-3" id="text-orga9dbd2f">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">while </span><span style="color: #d76f10;">read</span> -r avail; <span style="color: #51afef;">do</span>
+    <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${avail}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">EDITOR</span>=<span style="color: #98be65;">"${avail}"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">done</span> &lt;&lt; EOF
+<span style="color: #98be65;">nano</span>
+<span style="color: #98be65;">vi</span>
+<span style="color: #98be65;">vim</span>
+<span style="color: #98be65;">nvim</span>
+<span style="color: #98be65;">EOF</span>
+<span style="color: #d76f10;">export</span> EDITOR
+
+<span style="color: #51afef;">case</span> <span style="color: #98be65;">"$EDITOR"</span><span style="color: #51afef;"> in</span>
+    vim)
+        <span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">MANPAGER</span>=<span style="color: #98be65;">'/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa&lt;CR&gt;\"&lt;/dev/tty &lt;(col -b)"'</span>
+        ;;
+    nvim)
+        <span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">MANPAGER</span>=<span style="color: #98be65;">"nvim -c ':Man!' -"</span>
+        ;;
+    *)
+        <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v bat; <span style="color: #51afef;">then</span>
+            <span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">MANPAGER</span>=<span style="color: #98be65;">'bat -l man -p'</span>
+        <span style="color: #51afef;">fi</span>
+        ;;
+<span style="color: #51afef;">esac</span>
+<span style="color: #d76f10;">export</span> MANPAGER
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbfdfe8e" class="outline-3">
+<h3 id="orgbfdfe8e">C(++) exports</h3>
+<div class="outline-text-3" id="text-orgbfdfe8e">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">LD_LIBRARY_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/lib:${HOME}/.local/lib64"</span>;
+<span style="color: #ffffaf;">C_INCLUDE_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/share/pspman/include/"</span>
+<span style="color: #ffffaf;">CPLUS_INCLUDE_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/share/pspman/include/"</span>
+<span style="color: #d76f10;">export</span> LD_LIBRARY_PATH
+<span style="color: #d76f10;">export</span> C_INCLUDE_PATH
+<span style="color: #d76f10;">export</span> CPLUS_INCLUDE_PATH
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org184958d" class="outline-3">
+<h3 id="org184958d">GPU exports</h3>
+<div class="outline-text-3" id="text-org184958d">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">PYOPENCL_CTX</span>=<span style="color: #98be65;">'0'</span>;
+<span style="color: #ffffaf;">PYOPENCL_COMPILER_OUTPUT</span>=<span style="color: #da8548; font-weight: bold;">1</span>;
+<span style="color: #ffffaf;">OCL_ICD_VENDORS</span>=<span style="color: #98be65;">"/etc/OpenCL/vendors/"</span>;
+<span style="color: #d76f10;">export</span> PYOPENCL_CTX
+<span style="color: #d76f10;">export</span> PYOPENCL_COMPILER_OUTPUT
+<span style="color: #d76f10;">export</span> OCL_ICD_VENDORS
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org541bb1a" class="outline-3">
+<h3 id="org541bb1a">Bemenu exports</h3>
+<div class="outline-text-3" id="text-org541bb1a">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">BEMENU_OPTS</span>=<span style="color: #98be65;">'--fn firacode 14 '</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9449c0f" class="outline-3">
+<h3 id="org9449c0f">GTK+ debugging output</h3>
+<div class="outline-text-3" id="text-org9449c0f">
+<p>
+Silence debugging output for gtk+
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">NO_AT_BRIDGE</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+<span style="color: #d76f10;">export</span> NO_AT_BRIDGE
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org29dcafd" class="outline-2">
+<h2 id="org29dcafd">Functions</h2>
+<div class="outline-text-2" id="text-org29dcafd">
+</div>
+<div id="outline-container-org31c05c1" class="outline-3">
+<h3 id="org31c05c1">Python</h3>
+<div class="outline-text-3" id="text-org31c05c1">
+</div>
+<div id="outline-container-orga0091d1" class="outline-4">
+<h4 id="orga0091d1">Python version</h4>
+<div class="outline-text-4" id="text-orga0091d1">
+<p>
+to locate site-packages
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">python_ver</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    python --version |cut -d <span style="color: #98be65;">"."</span> -f1,2 |sed <span style="color: #98be65;">'s/ //'</span> |sed <span style="color: #98be65;">'s/P/p/'</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdc397a1" class="outline-4">
+<h4 id="orgdc397a1">Quickly change to virtualenv</h4>
+<div class="outline-text-4" id="text-orgdc397a1">
+<p>
+Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
+This may require shell-identification for ksh, csh, fish since they have a different activate
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">to_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">test_d</span>=<span style="color: #98be65;">"$(realpath "${PWD}")"</span>
+    <span style="color: #ffffaf;">parents</span>=<span style="color: #da8548; font-weight: bold;">16</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">path too long to waste time</span>
+    <span style="color: #51afef;">until</span> mountpoint <span style="color: #98be65;">"${test_d}"</span> &gt; /dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt; /dev/null; <span style="color: #51afef;">do</span>
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">parents</span> -le <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            printf <span style="color: #98be65;">"Too many branch-nodes searched"</span> &gt;&amp;<span style="color: #da8548; font-weight: bold;">2</span>
+            <span style="color: #d76f10;">unset</span> parents
+            <span style="color: #d76f10;">unset</span> test_d
+            <span style="color: #d76f10;">unset</span> env_d
+            <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">126</span>
+        <span style="color: #51afef;">fi</span>
+        <span style="color: #51afef;">for</span> env_d<span style="color: #51afef;"> in</span> <span style="color: #98be65;">".venv"</span> <span style="color: #98be65;">"venv"</span>; <span style="color: #51afef;">do</span>
+            <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -d <span style="color: #98be65;">"${test_d}/${env_d}"</span> <span style="color: #c678dd;">]</span> <span style="color: #98be65;">\</span>
+                   || <span style="color: #c678dd;">[</span> -L <span style="color: #98be65;">"${test_d}/${env_d}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1090</span>
+                . <span style="color: #98be65;">"${test_d}/${env_d}/bin/activate"</span>
+                printf <span style="color: #98be65;">"Found %s, switching...\n"</span> <span style="color: #98be65;">"${test_d}/${env_d}"</span>
+                <span style="color: #d76f10;">unset</span> parents
+                <span style="color: #d76f10;">unset</span> test_d
+                <span style="color: #d76f10;">unset</span> env_d
+                <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
+            <span style="color: #51afef;">fi</span>
+        <span style="color: #51afef;">done</span>
+        <span style="color: #ffffaf;">test_d</span>=<span style="color: #98be65;">"$(dirname "${test_d}")"</span>
+        <span style="color: #ffffaf;">parents</span>=$<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span>parents - <span style="color: #da8548; font-weight: bold;">1</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+    <span style="color: #51afef;">done</span>
+    printf <span style="color: #98be65;">"Couldn't find .venv upto mountpoint %s\n"</span> <span style="color: #98be65;">"${test_d}"</span> &gt;&amp;<span style="color: #da8548; font-weight: bold;">2</span>
+    <span style="color: #d76f10;">unset</span> parents
+    <span style="color: #d76f10;">unset</span> test_d
+    <span style="color: #d76f10;">unset</span> env_d
+    <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">126</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org952e470" class="outline-4">
+<h4 id="org952e470">Virtualenv in prompt string</h4>
+<div class="outline-text-4" id="text-org952e470">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_show_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">if a virtualenv is active, print it's name</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${VIRTUAL_ENV}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">base</span>=<span style="color: #98be65;">"$(basename "${VIRTUAL_ENV}")"</span>
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${base}"</span> = <span style="color: #98be65;">".venv"</span> <span style="color: #c678dd;">]</span> || <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${base}"</span> = <span style="color: #98be65;">"venv"</span>  <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            printf <span style="color: #98be65;">"/%s"</span> <span style="color: #98be65;">"$(basename "$(dirname "${VIRTUAL_ENV}")")"</span>
+            <span style="color: #d76f10;">unset</span> base
+        <span style="color: #51afef;">else</span>
+            printf <span style="color: #98be65;">"/%s"</span> <span style="color: #98be65;">"${base}"</span>
+            <span style="color: #d76f10;">unset</span> base
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org672114e" class="outline-3">
+<h3 id="org672114e">Git</h3>
+<div class="outline-text-3" id="text-org672114e">
+</div>
+<div id="outline-container-orgc81c39e" class="outline-4">
+<h4 id="orgc81c39e">Status</h4>
+<div class="outline-text-4" id="text-orgc81c39e">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">git_status</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">_modified</span>=<span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #ffffaf;">_cached</span>=<span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #ffffaf;">_untracked</span>=<span style="color: #da8548; font-weight: bold;">0</span>
+
+    <span style="color: #51afef;">while </span><span style="color: #d76f10;">read</span> -r _line; <span style="color: #51afef;">do</span>
+        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${_line}"</span><span style="color: #51afef;"> in</span>
+            _*_<span style="color: #98be65;">\ </span>_)
+                <span style="color: #ffffaf;">_cached</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+            _<span style="color: #98be65;">\ </span>_*_)
+                <span style="color: #ffffaf;">_modified</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+            _?_?_)
+                <span style="color: #ffffaf;">_untracked</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">done</span> &lt;&lt; endstat
+<span style="color: #98be65;">$(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')</span>
+<span style="color: #98be65;">endstat</span>
+
+    <span style="color: #ffffaf;">_stat_str</span>=<span style="color: #98be65;">''</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_modified"</span> -ne <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">_stat_str</span>=<span style="color: #98be65;">"${_stat_str}</span><span style="color: #ffffff; background-color: #A93F43;">\033[0;31m</span><span style="color: #98be65;">\ue728"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_cached"</span> -ne <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">_stat_str</span>=<span style="color: #98be65;">"${_stat_str}</span><span style="color: #000000; background-color: #59963A;">\033[0;32m</span><span style="color: #98be65;">\ue729"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_untracked"</span> -ne <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">_stat_str</span>=<span style="color: #98be65;">"${_stat_str}</span><span style="color: #ffffff; background-color: #A93F43;">\033[0;31m</span><span style="color: #98be65;">\uf476"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"$(git stash list)"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">_stat_str</span>=<span style="color: #98be65;">"${_stat_str}</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">\uf48e"</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_stat_str}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059  # I do want escape characters</span>
+        printf <span style="color: #98be65;">"${_stat_str}\e[m"</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #d76f10;">unset</span> _modified
+    <span style="color: #d76f10;">unset</span> _cached
+    <span style="color: #d76f10;">unset</span> _untracked
+    <span style="color: #d76f10;">unset</span> _stat_str
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org091274d" class="outline-4">
+<h4 id="org091274d">Branch</h4>
+<div class="outline-text-4" id="text-org091274d">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">!/usr/bin/</span><span style="color: #51afef;">env</span><span style="color: #3f4f5f; background-color: #0f0f0f;"> sh</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">-*- coding: utf-8; mode: shell-script; -*-</span>
+
+
+<span style="color: #9f5f9f; font-weight: bold;">git_branch</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">''</span>
+    <span style="color: #ffffaf;">branch</span>=<span style="color: #98be65;">"$(git branch 2&gt;/dev/null | grep '^\*' | sed -e 's/^* //')"</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${branch}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${branch}"</span><span style="color: #51afef;"> in</span>
+            feat-*)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #000000; background-color: #59963A;">\033[0;32m</span><span style="color: #98be65;">"</span>
+                ;;
+            bug-*)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #ffffff; background-color: #A93F43;">\033[0;31m</span><span style="color: #98be65;">"</span>
+                ;;
+            act-*)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">"</span>
+                ;;
+            tmp-*)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">"</span>
+                ;;
+            *HEAD<span style="color: #98be65;">\ </span>detached*|,*rebasing*)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #000000; background-color: #BE8A2D;">\e[0;33m</span><span style="color: #98be65;">"</span>
+                ;;
+            main|master)
+                <span style="color: #d76f10;">unset</span> branch
+                <span style="color: #d76f10;">unset</span> branch_str
+                <span style="color: #51afef;">return</span>
+                ;;
+            *)
+                <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">"${branch_str}</span><span style="color: #ffffff; background-color: #7F60A7;">\e[0;35m</span><span style="color: #98be65;">"</span>
+                ;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">fi</span>
+    printf <span style="color: #98be65;">"${branch_str}%s\ue725\e[m"</span> <span style="color: #98be65;">"${branch}"</span>
+    <span style="color: #d76f10;">unset</span> branch_str
+    <span style="color: #d76f10;">unset</span> branch
+<span style="color: #51afef;">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org49b00e4" class="outline-4">
+<h4 id="org49b00e4">Hash</h4>
+<div class="outline-text-4" id="text-org49b00e4">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">git_hash</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    git log --pretty=format:<span style="color: #98be65;">'%h'</span> -n <span style="color: #da8548; font-weight: bold;">1</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgded114b" class="outline-4">
+<h4 id="orgded114b">Prompt string</h4>
+<div class="outline-text-4" id="text-orgded114b">
+<p>
+Include git's branch, hash, status in PS1 if in git repository
+This function is called in PS1 section below
+</p>
+<div class="org-src-container">
+<pre class="src src-sh" id="org9c44562"><span style="color: #9f5f9f; font-weight: bold;">git_ps</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> git status --ignore-submodules &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">else</span>
+        printf <span style="color: #98be65;">" %s%s%s "</span> <span style="color: #98be65;">"$(git_branch)"</span> <span style="color: #98be65;">"$(git_hash)"</span> <span style="color: #98be65;">"$(git_status)"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5c13f91" class="outline-3">
+<h3 id="org5c13f91">Prompt String</h3>
+<div class="outline-text-3" id="text-org5c13f91">
+</div>
+<div id="outline-container-org4de3fa0" class="outline-4">
+<h4 id="org4de3fa0">Exit_color</h4>
+<div class="outline-text-4" id="text-org4de3fa0">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">last_exit_color</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$1"</span><span style="color: #51afef;"> in</span>
+        <span style="color: #da8548; font-weight: bold;">0</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">success</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #59963A;">\e[0;32m</span><span style="color: #98be65;">"</span>
+            ;;
+        <span style="color: #da8548; font-weight: bold;">1</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">general error</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #BE8A2D;">\e[0;33m</span><span style="color: #98be65;">"</span>
+            ;;
+        <span style="color: #da8548; font-weight: bold;">2</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">misuse of shell builtins</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #A93F43;">\e[0;31m</span><span style="color: #98be65;">"</span>
+            ;;
+        <span style="color: #da8548; font-weight: bold;">126</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">cannot execute</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #7E8A90;">\e[0;37m</span><span style="color: #98be65;">"</span>
+            ;;
+        <span style="color: #da8548; font-weight: bold;">127</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">command not found</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #192033;">\e[0;30m</span><span style="color: #98be65;">"</span>
+            ;;
+        <span style="color: #da8548; font-weight: bold;">255</span>)
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">exit status limit</span>
+            printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #A93F43;">\e[0;31m</span><span style="color: #98be65;">"</span>
+            ;;
+        *)
+            <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$1"</span> -gt <span style="color: #98be65;">"63"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$1"</span> -lt <span style="color: #98be65;">"84"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">syserror.h</span>
+                printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #EC6261;">\e[0;91m</span><span style="color: #98be65;">"</span>
+
+            <span style="color: #51afef;">elif</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$1"</span> -gt <span style="color: #98be65;">"127"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$1"</span> -lt <span style="color: #98be65;">"191"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Fatal error</span>
+                printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #A93F43;">\e[0;41m</span><span style="color: #98be65;">"</span>
+            <span style="color: #51afef;">else</span>
+                printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #A93F43;">\e[0;31m</span><span style="color: #98be65;">"</span>
+            <span style="color: #51afef;">fi</span>
+            <span style="color: #d76f10;">unset</span> _err
+            ;;
+    <span style="color: #51afef;">esac</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf9a58e4" class="outline-4">
+<h4 id="orgf9a58e4">Elapsed_time</h4>
+<div class="outline-text-4" id="text-orgf9a58e4">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_elapsed_time</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$1 is start time $2 is end time</span>
+    <span style="color: #ffffaf;">_cmd_start</span>=<span style="color: #98be65;">"$1"</span>
+    <span style="color: #ffffaf;">_cmd_end</span>=<span style="color: #98be65;">"$2"</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"$_cmd_end"</span> <span style="color: #c678dd;">]</span> || <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"$_cmd_start"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">_sec</span>=$<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> _cmd_end - _cmd_start <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+    <span style="color: #d76f10;">unset</span> _cmd_start
+    <span style="color: #d76f10;">unset</span> _cmd_end
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_sec"</span> -le <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_sec"</span> -le <span style="color: #da8548; font-weight: bold;">60</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">"%s"</span> <span style="color: #98be65;">"${_sec}"</span>
+        <span style="color: #d76f10;">unset</span> _sec
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">_min</span>=$<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> _sec/60 <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+    <span style="color: #d76f10;">unset</span> _sec
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_min"</span> -le <span style="color: #da8548; font-weight: bold;">60</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">"%sm"</span> <span style="color: #98be65;">"${_min}"</span>
+        <span style="color: #d76f10;">unset</span> _min
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">_hr</span>=$<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> _min/60 <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+    <span style="color: #d76f10;">unset</span> _min
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$_hr"</span> -le <span style="color: #da8548; font-weight: bold;">24</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">"%sh"</span> <span style="color: #98be65;">"${_hr}"</span>
+        <span style="color: #d76f10;">unset</span> _hr
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">_day</span>=$<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> _hr/24 <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>
+    <span style="color: #d76f10;">unset</span> _min
+    printf <span style="color: #98be65;">"%sd"</span> <span style="color: #98be65;">"${_day}"</span>
+    <span style="color: #d76f10;">unset</span> _day
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a35fba" class="outline-4">
+<h4 id="org6a35fba">PROMPT_COMMAND</h4>
+<div class="outline-text-4" id="text-org6a35fba">
+</div>
+<ul class="org-ul">
+<li><a id="orgd43cd4d"></a>bash<br />
+<div class="outline-text-5" id="text-orgd43cd4d">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export PROMPT_COMMAND=__prompt_command</span>
+
+<span style="color: #9f5f9f; font-weight: bold;">preexec</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">_cmd_start_t</span>=<span style="color: #98be65;">"${SECONDS}"</span>
+<span style="color: #51afef;">}</span>
+
+<span style="color: #9f5f9f; font-weight: bold;">precmd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">_exit_color</span>=<span style="color: #98be65;">"$(last_exit_color $?)"</span>
+
+    <span style="color: #ffffaf;">_elapsed</span>=<span style="color: #98be65;">"$(_elapsed_time $_cmd_start_t ${SECONDS})"</span>
+    <span style="color: #d76f10;">unset</span> _cmd_start_t
+
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">unset previous</span>
+    <span style="color: #ffffaf;">PS1</span>=<span style="color: #98be65;">""</span>
+    <span style="color: #ffffaf;">PS2</span>=<span style="color: #98be65;">""</span>
+    <span style="color: #ffffaf;">PS3</span>=<span style="color: #98be65;">""</span>
+    <span style="color: #ffffaf;">PS4</span>=<span style="color: #98be65;">""</span>
+    <span style="color: #ffffaf;">RPROMPT</span>=<span style="color: #98be65;">""</span>
+
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\[</span><span style="color: #000000; background-color: #59963A;">\e[0;32m</span><span style="color: #98be65;">\]\u\[\e[m\]"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\[\e[3;35m\]\$(_show_venv)\[\e[m\]"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"@"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\[</span><span style="color: #ffffff; background-color: #4068A3;">\e[0;34m</span><span style="color: #98be65;">\]\h\[\e[m\]"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\$(git_ps)"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\[</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">\]:\W"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"\[</span><span style="color: #000000; background-color: #7E8A90;">\e[0;37m</span><span style="color: #98be65;">\]"</span>
+
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"$(date '+%H:%M:%S')"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">" ${_exit_color}-${_elapsed}"</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">'\[\e[m\]\n&#187; '</span>
+
+    <span style="color: #ffffaf;">PS2</span>=<span style="color: #98be65;">""</span>
+    <span style="color: #ffffaf;">PS2</span>+=<span style="color: #98be65;">"\[</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">\]cont..."</span>
+    <span style="color: #ffffaf;">PS2</span>+=<span style="color: #98be65;">"\[\e[m\]"</span>
+    <span style="color: #ffffaf;">PS2</span>+=<span style="color: #98be65;">"&#187; "</span>;
+
+    <span style="color: #ffffaf;">PS3</span>=<span style="color: #98be65;">'Selection: '</span>;
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org9df1798"></a>zsh<br />
+<div class="outline-text-5" id="text-org9df1798">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #9f5f9f; font-weight: bold;">_pspexec</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">_cmd_start_t</span>=<span style="color: #98be65;">"${SECONDS}"</span>
+<span style="color: #51afef;">}</span>
+
+<span style="color: #9f5f9f; font-weight: bold;">_pspps</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">_exit_color</span>=<span style="color: #98be65;">"$(last_exit_color $?)"</span>
+
+    <span style="color: #ffffaf;">_elapsed</span>=<span style="color: #98be65;">"$(_elapsed_time $_cmd_start_t ${SECONDS})"</span>
+    <span style="color: #d76f10;">unset</span> _cmd_start_t
+
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">unset previous</span>
+    <span style="color: #ffffaf;">PS1</span>=$<span style="color: #98be65;">''</span>
+    <span style="color: #ffffaf;">PS2</span>=$<span style="color: #98be65;">''</span>
+    <span style="color: #ffffaf;">PS3</span>=$<span style="color: #98be65;">''</span>
+    <span style="color: #ffffaf;">PS4</span>=$<span style="color: #98be65;">''</span>
+    <span style="color: #ffffaf;">RPROMPT</span>=$<span style="color: #98be65;">''</span>
+
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{</span><span style="color: #000000; background-color: #59963A;">\e[0;32m</span><span style="color: #98be65;">%}%n%{\e[m%}'</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{\e[3;35m%}'</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"$(_show_venv)"</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{\e[m%}'</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'@'</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{</span><span style="color: #ffffff; background-color: #4068A3;">\e[0;34m</span><span style="color: #98be65;">%}%m%{\e[m%}'</span>
+    <span style="color: #ffffaf;">PS1</span>+=<span style="color: #98be65;">"$(git_ps)"</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">%}:%1~'</span>
+    <span style="color: #ffffaf;">PS1</span>+=$<span style="color: #98be65;">'%{</span><span style="color: #000000; background-color: #7E8A90;">\e[0;37m</span><span style="color: #98be65;">%}\n%{\e[m%}&#187; '</span>
+
+    <span style="color: #ffffaf;">PS2</span>+=$<span style="color: #98be65;">'%{</span><span style="color: #000000; background-color: #4E9B9B;">\e[0;36m</span><span style="color: #98be65;">%}cont...'</span>
+    <span style="color: #ffffaf;">PS2</span>+=$<span style="color: #98be65;">'%{\e[m%}'</span>
+    <span style="color: #ffffaf;">PS2</span>+=$<span style="color: #98be65;">'&#187; '</span>
+
+    <span style="color: #ffffaf;">PS3</span>=<span style="color: #98be65;">'Selection: '</span>
+
+    <span style="color: #ffffaf;">RPROMPT</span>+=$<span style="color: #98be65;">'%*'</span>
+    <span style="color: #ffffaf;">RPROMPT</span>+=<span style="color: #98be65;">"%{$_exit_color%}-${_elapsed}"</span>
+    <span style="color: #ffffaf;">RPROMPT</span>+=$<span style="color: #98be65;">'%{\e[m%}'</span>
+    <span style="color: #d76f10;">unset</span> _exit_stat
+    <span style="color: #d76f10;">unset</span> _elapsed
+<span style="color: #51afef;">}</span>
+
+add-zsh-hook precmd _pspps
+add-zsh-hook preexec _pspexec
+
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org33de3b3" class="outline-3">
+<h3 id="org33de3b3">Mathematical</h3>
+<div class="outline-text-3" id="text-org33de3b3">
+</div>
+<div id="outline-container-orgb3b15d3" class="outline-4">
+<h4 id="orgb3b15d3">In-Line Calculator</h4>
+<div class="outline-text-4" id="text-orgb3b15d3">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">mathcalc</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"$*"</span>| bc -lq
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org727e4b9" class="outline-4">
+<h4 id="org727e4b9">Computational</h4>
+<div class="outline-text-4" id="text-org727e4b9">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">dec2hex</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"hex:"</span>
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"obase=16; $*"</span>| bc
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"dec:"</span>
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"ibase=16; $*"</span>| bc
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8307adc" class="outline-3">
+<h3 id="org8307adc">Compilation</h3>
+<div class="outline-text-3" id="text-org8307adc">
+</div>
+<div id="outline-container-org1500076" class="outline-4">
+<h4 id="org1500076">PDF from Latex</h4>
+<div class="outline-text-4" id="text-org1500076">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">pdfcompile</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    pdflatex <span style="color: #98be65;">"$1"</span>
+    <span style="color: #51afef;">for</span> ext<span style="color: #51afef;"> in</span> <span style="color: #98be65;">".toc"</span> <span style="color: #98be65;">".log"</span> <span style="color: #98be65;">".aux"</span>; <span style="color: #51afef;">do</span>
+        <span style="color: #c678dd;">[</span> -f <span style="color: #98be65;">"${1%.tex}${ext}"</span> <span style="color: #c678dd;">]</span> &amp;&amp; rm <span style="color: #98be65;">"${1%.tex}${ext}"</span>
+    <span style="color: #51afef;">done</span>
+    evince <span style="color: #98be65;">"${1%.tex}.pdf"</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaded0c2" class="outline-4">
+<h4 id="orgaded0c2">Pandoc</h4>
+<div class="outline-text-4" id="text-orgaded0c2">
+</div>
+<ul class="org-ul">
+<li><a id="org3c2845d"></a>Org to Something<br />
+<div class="outline-text-5" id="text-org3c2845d">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2export</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Usage: org2oth [-f] &lt;infile&gt; &lt;othtype&gt;</span>
+    <span style="color: #ffffaf;">proceed</span>=
+    <span style="color: #51afef;">while</span> test $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">do</span>
+        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$1"</span><span style="color: #51afef;"> in</span>
+            -f|--force)
+                <span style="color: #ffffaf;">proceed</span>=true
+                <span style="color: #d76f10;">shift</span> <span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+            *)
+                <span style="color: #ffffaf;">infile</span>=<span style="color: #98be65;">"${1}"</span>
+                <span style="color: #d76f10;">shift</span> <span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">done</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> = <span style="color: #98be65;">"pdf"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">target</span>=<span style="color: #98be65;">"latex"</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #ffffaf;">target</span>=<span style="color: #98be65;">"${1}"</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$infile"</span><span style="color: #51afef;"> in</span>
+        *.org)
+            <span style="color: #ffffaf;">proceed</span>=true
+            ;;
+        *)
+            <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"Input file should be an org file"</span>
+            ;;
+    <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"$proceed"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        pandoc -f org -t <span style="color: #98be65;">"${target}"</span> -o <span style="color: #98be65;">"${infile%.*}.${1}"</span> <span style="color: #98be65;">"$infile"</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #d76f10;">unset</span> proceed
+    <span style="color: #d76f10;">unset</span> target
+    <span style="color: #d76f10;">unset</span> infile
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org87128b9"></a>Org to Docx<br />
+<div class="outline-text-5" id="text-org87128b9">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2doc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"docx"</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org0fc85ec"></a>Org to PDF<br />
+<div class="outline-text-5" id="text-org0fc85ec">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2pdf</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"pdf"</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="orgdc9aa73"></a>Docx to Org<br />
+<div class="outline-text-5" id="text-orgdc9aa73">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">doc2org</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${1}"</span><span style="color: #51afef;"> in</span>
+        *.docx)
+            pandoc -f docx -t org -o <span style="color: #98be65;">"${1%.docx}.org"</span> <span style="color: #98be65;">"$1"</span>
+            ;;
+        *)
+            <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"Input file must be a docx file"</span>
+            ;;
+    <span style="color: #51afef;">esac</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc9b18af" class="outline-3">
+<h3 id="orgc9b18af">Mount Home Server</h3>
+<div class="outline-text-3" id="text-orgc9b18af">
+<p>
+Home Cloud mounts
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">mount_home_cloud</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2154</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${home_cloud}"</span> <span style="color: #c678dd;">]</span> || <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${cloud_user}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"variables \$home_cloud OR \$cloud_user haven't been defined"</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=./netcheck.sh</span>
+    <span style="color: #ffffaf;">IFS</span>=<span style="color: #98be65;">"$(printf '\t')"</span> read -r IP_ADDR AP_ADDR netstate &lt;&lt; netcheck
+<span style="color: #98be65;">$("${RUNCOMDIR}"/netcheck.sh)</span>
+<span style="color: #98be65;">netcheck</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> $<span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span> netstate % <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span> -eq <span style="color: #da8548; font-weight: bold;">2</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">srv_mnt_dir</span>=<span style="color: #98be65;">"${HOME}/${home_cloud}"</span>
+
+        <span style="color: #d76f10;">set</span> -- <span style="color: #98be65;">"/media/data"</span> <span style="color: #98be65;">"/home/${cloud_user}"</span>
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$(mount | grep -c "${srv_mnt_dir}")"</span> -lt <span style="color: #98be65;">"$#"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">not mounted</span>
+            <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
+                mkdir -p <span style="color: #98be65;">"${srv_mnt_dir}${1}"</span>
+                sshfs -o <span style="color: #98be65;">\</span>
+                      <span style="color: #98be65;">"reconnect,ServerAliveInterval=15,ServerAliveCountMax=3"</span> <span style="color: #98be65;">\</span>
+                      <span style="color: #98be65;">"${cloud_user}@${home_cloud}:${1}"</span> <span style="color: #98be65;">"${srv_mnt_dir}${1}"</span>
+                <span style="color: #d76f10;">shift</span>
+            <span style="color: #51afef;">done</span>
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #d76f10;">unset</span> srv_mnt_dir
+<span style="color: #51afef;">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a3874f" class="outline-3">
+<h3 id="org6a3874f">Launch gui</h3>
+<div class="outline-text-3" id="text-org6a3874f">
+<p>
+Launch application and exit terminal window
+Acts like a launcher
+Uninteractive terminal commands may also be called
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">gui</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">usage</span>=<span style="color: #98be65;">"usage: $0 [-h|--help] CMD\n"</span>
+    <span style="color: #ffffaf;">cmd_help</span>=<span style="color: #98be65;">"Launch CMD, switch to it, and exit the parent terminal\n\n"</span>
+    <span style="color: #ffffaf;">cmd_help</span>=<span style="color: #98be65;">"${cmd_help}Optional arguments:\n"</span>
+    <span style="color: #ffffaf;">cmd_help</span>=<span style="color: #98be65;">"${cmd_help}-h|--help\tdisplay this help and exit\n"</span>
+    <span style="color: #ffffaf;">cmd</span>=
+    <span style="color: #ffffaf;">call</span>=
+
+    <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
+        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$1"</span><span style="color: #51afef;"> in</span>
+            --help|-h)
+                printf <span style="color: #98be65;">"%s""${usage}"</span>
+                printf <span style="color: #98be65;">"%s""${cmd_help}"</span>
+                <span style="color: #d76f10;">shift</span> <span style="color: #da8548; font-weight: bold;">1</span>
+                <span style="color: #d76f10;">unset</span> cmd
+                <span style="color: #d76f10;">unset</span> cmd_help
+                <span style="color: #d76f10;">unset</span> usage
+                <span style="color: #d76f10;">unset</span> call
+                <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
+                ;;
+            --)
+                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">end of gui arguments</span>
+                <span style="color: #ffffaf;">cmd</span>=<span style="color: #98be65;">"${cmd} $*"</span>
+                <span style="color: #51afef;">break</span>
+                ;;
+            *)
+                <span style="color: #ffffaf;">cmd</span>=<span style="color: #98be65;">"${1}"</span>
+                <span style="color: #d76f10;">shift</span> <span style="color: #da8548; font-weight: bold;">1</span>
+                ;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">done</span>
+
+    <span style="color: #ffffaf;">call</span>=<span style="color: #98be65;">"$(echo "${cmd}" | cut -d " " -f 1)"</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${call}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${call}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #d76f10;">unset</span> cmd_help
+            <span style="color: #d76f10;">unset</span> usage
+            <span style="color: #d76f10;">unset</span> call
+            nohup <span style="color: #98be65;">"${cmd}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">0</span>&lt;&amp;- <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span> &amp; <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">0</span>
+        <span style="color: #51afef;">else</span>
+            <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"${call} not found..."</span>
+            <span style="color: #d76f10;">unset</span> cmd
+            <span style="color: #d76f10;">unset</span> cmd_help
+            <span style="color: #d76f10;">unset</span> usage
+            <span style="color: #d76f10;">unset</span> call
+            <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">127</span>
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">else</span>
+        printf <span style="color: #98be65;">"%s""${usage}"</span>
+        <span style="color: #d76f10;">unset</span> cmd
+        <span style="color: #d76f10;">unset</span> cmd_help
+        <span style="color: #d76f10;">unset</span> usage
+        <span style="color: #d76f10;">unset</span> call
+        <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">1</span>
+    <span style="color: #51afef;">fi</span>
+
+<span style="color: #51afef;">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org073b6b9" class="outline-3">
+<h3 id="org073b6b9">Un-Compress by context</h3>
+<div class="outline-text-3" id="text-org073b6b9">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">deconvolute</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> -f <span style="color: #98be65;">"${1}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"${1}: no such file"</span>;
+    <span style="color: #51afef;">else</span>
+        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${1}"</span><span style="color: #51afef;"> in</span>
+            *.tar.bz2) tar -xjf <span style="color: #98be65;">"${1}"</span> ;;
+            *.tbz2) tar -xjf <span style="color: #98be65;">"${1}"</span> ;;
+            *.tar.gz) tar -x --use-compress-program=pigz -f <span style="color: #98be65;">"${1}"</span> ;;
+            *.tgz) tar -x --use-compress-program=pigz -f <span style="color: #98be65;">"${1}"</span> ;;
+            *.gz) unpigz <span style="color: #98be65;">"${1}"</span> ;;
+            *.rar) unrar -x <span style="color: #98be65;">"${1}"</span> ;;
+            *.tar) tar -xf <span style="color: #98be65;">"${1}"</span> ;;
+            *.zip) unzip <span style="color: #98be65;">"${1}"</span> ;;
+            *.tar.xz) tar -xf <span style="color: #98be65;">"${1}"</span> ;;
+            *) <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"Cannot extract ${1}, provide explicit command"</span>;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a1329d" class="outline-3">
+<h3 id="org1a1329d">Navigate</h3>
+<div class="outline-text-3" id="text-org1a1329d">
+<ul class="org-ul">
+<li>When no virtualenv is active, but one is available, switch to it</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">cd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${1}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #d76f10;">builtin</span> cd <span style="color: #98be65;">"${HOME}"</span> || <span style="color: #d76f10;">true</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #d76f10;">builtin</span> cd <span style="color: #98be65;">"${1}"</span>  || <span style="color: #d76f10;">true</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${VIRTUAL_ENV}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        to_venv <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Inspired by lukesmith.xyz</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> command -v <span style="color: #98be65;">'lf'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">tmp_file</span>=<span style="color: #98be65;">"$(mktemp)"</span>
+    lf -last-dir-path=<span style="color: #98be65;">"${tmp_file}"</span> <span style="color: #98be65;">"$@"</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -f <span style="color: #98be65;">"${tmp_file}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">target_dir</span>=<span style="color: #98be65;">"$(cat "${tmp_file}")"</span>
+        rm -f <span style="color: #98be65;">"${tmp_file}"</span> &gt;/dev/null
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -d <span style="color: #98be65;">"${target_dir}"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${target_dir}"</span> != <span style="color: #98be65;">"$(pwd)"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #d76f10;">cd</span> <span style="color: #98be65;">"${target_dir}"</span> || <span style="color: #51afef;">return</span>
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #d76f10;">unset</span> tmp_file
+    <span style="color: #d76f10;">unset</span> target_dir
+<span style="color: #51afef;">}</span>
+<span style="color: #9f5f9f; font-weight: bold;">fzfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #d76f10;">cd</span> <span style="color: #98be65;">"$(dirname "$(fzf)")"</span> || <span style="color: #d76f10;">true</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0e47712" class="outline-3">
+<h3 id="org0e47712">zwc</h3>
+<div class="outline-text-3" id="text-org0e47712">
+<ul class="org-ul">
+<li>Guess whether target is zipped;
+if zipped, unzip and count else classical wc</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">zwc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"$*"</span>
+    <span style="color: #ffffaf;">fname</span>=<span style="color: #98be65;">"${args##* }"</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args% ${fname}}"</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args%${fname}}"</span>
+
+    <span style="color: #51afef;">if</span> gzip -t <span style="color: #98be65;">"${fname}"</span> &gt; /dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${args}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            zcat -f <span style="color: #98be65;">"${fname}"</span> | wc
+        <span style="color: #51afef;">else</span>
+            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
+            zcat -f <span style="color: #98be65;">"${fname}"</span> | wc $<span style="color: #ffffaf;">args</span>
+        <span style="color: #51afef;">fi</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">else</span>
+        wc <span style="color: #98be65;">"$@"</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3f58dae" class="outline-3">
+<h3 id="org3f58dae">disable autovenv</h3>
+<div class="outline-text-3" id="text-org3f58dae">
+<ul class="org-ul">
+<li>To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
+<ul class="org-ul">
+<li>Calling the function again reverts</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">force_global_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${VIRTUAL_ENV}"</span> = <span style="color: #98be65;">"Global_Env"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #d76f10;">unset</span> VIRTUAL_ENV
+        to_venv <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
+    <span style="color: #51afef;">else</span>
+        deactivate <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
+        <span style="color: #ffffaf;">VIRTUAL_ENV</span>=<span style="color: #98be65;">"Global_Env"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaaf5348" class="outline-3">
+<h3 id="orgaaf5348">lszcat</h3>
+<div class="outline-text-3" id="text-orgaaf5348">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lszcat</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"$*"</span>
+    <span style="color: #ffffaf;">fname</span>=<span style="color: #98be65;">"${args##* }"</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args%% ${fname}}"</span>
+    <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args%%${fname}}"</span>
+
+    <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v bat &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">betcat</span>=<span style="color: #98be65;">"$(which bat)"</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #ffffaf;">betcat</span>=<span style="color: #98be65;">"$(which cat)"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v exa &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">betls</span>=<span style="color: #98be65;">"$(which exa)"</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #ffffaf;">betls</span>=<span style="color: #98be65;">"$(which ls)"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${fname}"</span> <span style="color: #c678dd;">]</span> || <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> <span style="color: #98be65;">"${fname#-}"</span> = <span style="color: #98be65;">"${fname}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${args}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${fname}"</span>
+        <span style="color: #51afef;">else</span>
+            <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args} ${fname}"</span>
+        <span style="color: #51afef;">fi</span>
+        <span style="color: #ffffaf;">fname</span>=<span style="color: #98be65;">"$(readlink -f ".")"</span>
+        <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"${fname}"</span>
+    <span style="color: #51afef;">fi</span>
+
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -d <span style="color: #98be65;">"${fname}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
+        <span style="color: #98be65;">"${betls}"</span> $<span style="color: #c678dd;">{</span><span style="color: #ffffaf;">args</span><span style="color: #c678dd;">}</span> <span style="color: #98be65;">"${fname}"</span>
+    <span style="color: #51afef;">elif</span> gzip -t <span style="color: #98be65;">"${fname}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
+        zcat -f $<span style="color: #c678dd;">{</span><span style="color: #ffffaf;">args</span><span style="color: #c678dd;">}</span> <span style="color: #98be65;">"${fname}"</span> | <span style="color: #98be65;">"${betcat}"</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
+        <span style="color: #98be65;">"${betcat}"</span> $<span style="color: #c678dd;">{</span><span style="color: #ffffaf;">args</span><span style="color: #c678dd;">}</span> <span style="color: #98be65;">"${fname}"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ed8a8c" class="outline-3">
+<h3 id="org9ed8a8c">manual pages</h3>
+<div class="outline-text-3" id="text-org9ed8a8c">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">man_help</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> man <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #51afef;">elif</span> tldr <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #51afef;">elif </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"$1"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
+        printf <span style="color: #98be65;">"trying to display %s --help output\n"</span> <span style="color: #98be65;">"${1}"</span>
+        <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">'bat'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
+            $<span style="color: #da8548; font-weight: bold;">1</span> --help <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span> | bat
+        <span style="color: #51afef;">else</span>
+            $<span style="color: #da8548; font-weight: bold;">1</span> --help <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span> | less -RF
+        <span style="color: #51afef;">fi</span>
+        <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #51afef;">else</span>
+        <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">16</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org12168a1" class="outline-2">
+<h2 id="org12168a1">Aliases</h2>
+<div class="outline-text-2" id="text-org12168a1">
+</div>
+<div id="outline-container-orgb3adae4" class="outline-3">
+<h3 id="orgb3adae4">Disk Usage</h3>
+<div class="outline-text-3" id="text-orgb3adae4">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">du</span>=<span style="color: #98be65;">'du -hc'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">df</span>=<span style="color: #98be65;">'df -h'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">duall</span>=<span style="color: #98be65;">"du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'"</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3a351c1" class="outline-3">
+<h3 id="org3a351c1">manual page help</h3>
+<div class="outline-text-3" id="text-org3a351c1">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">man</span>=<span style="color: #98be65;">"man_help"</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc336b50" class="outline-3">
+<h3 id="orgc336b50">Network</h3>
+<div class="outline-text-3" id="text-orgc336b50">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nload</span>=<span style="color: #98be65;">'nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'</span>
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nethogs</span>=<span style="color: #98be65;">'\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ping</span>=<span style="color: #98be65;">"ping -c 4 "</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd669cec" class="outline-3">
+<h3 id="orgd669cec">Monitor Job queues</h3>
+<div class="outline-text-3" id="text-orgd669cec">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">watch</span>=<span style="color: #98be65;">"watch -n 10 --color"</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa6a3ec" class="outline-3">
+<h3 id="orgfa6a3ec">Lazy single-handed exit</h3>
+<div class="outline-text-3" id="text-orgfa6a3ec">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">qqqq</span>=<span style="color: #98be65;">"exit"</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ff2ec7" class="outline-3">
+<h3 id="org3ff2ec7">[z]wc</h3>
+<div class="outline-text-3" id="text-org3ff2ec7">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">wc</span>=<span style="color: #98be65;">"zwc"</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f79e66" class="outline-2">
+<h2 id="org5f79e66">Networking</h2>
+<div class="outline-text-2" id="text-org5f79e66">
+</div>
+<div id="outline-container-org03ce012" class="outline-3">
+<h3 id="org03ce012">State</h3>
+<div class="outline-text-3" id="text-org03ce012">
+<p>
+Display state of network connection at the beginning
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=./netcheck.sh</span>
+<span style="color: #ffffaf;">IFS</span>=<span style="color: #98be65;">"$(printf '\t')"</span> read -r IP_ADDR AP_ADDR netstate &lt;&lt; netcheck
+<span style="color: #98be65;">$("${RUNCOMDIR}"/netcheck.sh)</span>
+<span style="color: #98be65;">netcheck</span>
+<span style="color: #d76f10;">export</span> IP_ADDR
+<span style="color: #d76f10;">export</span> AP_ADDR
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"${netstate}"</span> -gt <span style="color: #da8548; font-weight: bold;">7</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #63B4F6;">\e[1;34m</span><span style="color: #98be65;">Internet (GOOGLE) Connected\e[m\n"</span>
+    printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #59963A;">\033[0;32m</span><span style="color: #98be65;">%s \e[m is current wireless ip address\n"</span> <span style="color: #98be65;">"$IP_ADDR"</span>
+<span style="color: #51afef;">else</span>
+    printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #EC6261;">\e[1;31m</span><span style="color: #98be65;">Internet (GOOGLE) Not reachable\e[m\n"</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> $<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> netstate % <span style="color: #da8548; font-weight: bold;">8</span> <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> -gt <span style="color: #da8548; font-weight: bold;">3</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Intranet is connected</span>
+        printf <span style="color: #98be65;">"</span><span style="color: #ffffff; background-color: #A93F43;">\033[0;31m</span><span style="color: #98be65;">Internet Down\e[m\n"</span>
+        <span style="color: #51afef;">case</span> $<span style="color: #51afef;">(</span><span style="color: #c678dd;">(</span> netstate % <span style="color: #da8548; font-weight: bold;">4</span> <span style="color: #c678dd;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">in</span>
+            <span style="color: #da8548; font-weight: bold;">2</span>) printf <span style="color: #98be65;">"Home network connected,\n"</span>
+               ;;
+            <span style="color: #da8548; font-weight: bold;">1</span>) printf <span style="color: #98be65;">"OFFICE network connected,\n"</span>
+               <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=./proxy_send.py</span>
+               <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}/proxy_send.py"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+                   <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=./proxy_send.py</span>
+                   <span style="color: #98be65;">"${RUNCOMDIR}/proxy_send.py"</span> <span style="color: #98be65;">\</span>
+                       &amp;&amp; printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #BE8A2D;">\e[0;33m</span><span style="color: #98be65;">PROXY AUTH </span><span style="color: #3f9f9f;">SENT</span><span style="color: #98be65;">\e[m\n"</span>;
+               <span style="color: #51afef;">fi</span>
+               ;;
+            *) printf <span style="color: #98be65;">"HOTSPOT connected\n"</span>
+               ;;
+        <span style="color: #51afef;">esac</span>
+    <span style="color: #51afef;">else</span>
+        printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #F0C649;">\e[1;33m</span><span style="color: #98be65;">Network connection Disconnected\e[m\n"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf18842b" class="outline-3">
+<h3 id="orgf18842b">SSH Agent</h3>
+<div class="outline-text-3" id="text-orgf18842b">
+<p>
+Reuse ssh agent for all logins
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> -S ~/.ssh/ssh_auth_sock <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"$(ssh-agent)"</span>
+    ln -sf <span style="color: #98be65;">"$SSH_AUTH_SOCK"</span> ~/.ssh/ssh_auth_sock
+<span style="color: #51afef;">fi</span>
+<span style="color: #ffffaf;">SSH_AUTH_SOCK</span>=~/.ssh/ssh_auth_sock
+<span style="color: #d76f10;">export</span> SSH_AUTH_SOCK
+ssh-add -l &gt; /dev/null || ssh-add
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb5546e3" class="outline-2">
+<h2 id="orgb5546e3">Window Manager settings</h2>
+<div class="outline-text-2" id="text-orgb5546e3">
+</div>
+<div id="outline-container-orgcab857d" class="outline-3">
+<h3 id="orgcab857d">Terminal</h3>
+<div class="outline-text-3" id="text-orgcab857d">
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">for</span> term<span style="color: #51afef;"> in</span> foot termite tilix xterm gnome-terminal; <span style="color: #51afef;">do</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -n <span style="color: #98be65;">"$(builtin command -v $term)"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">defterm</span>=<span style="color: #98be65;">"$term"</span>;
+        <span style="color: #d76f10;">export</span> defterm
+        <span style="color: #51afef;">break</span>;
+    <span style="color: #51afef;">fi</span>;
+<span style="color: #51afef;">done</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org857c646" class="outline-3">
+<h3 id="org857c646">Sway exports</h3>
+<div class="outline-text-3" id="text-org857c646">
+<p>
+Don't really remember why these were made
+Not using currently. Preserved for future
+tangle to bash_login
+export WLR_BACKENDS="headless";
+export WLR_LIBINPUT_NO_DEVICES=1;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0a776af" class="outline-3">
+<h3 id="org0a776af">User Interface (GUI/CLI)</h3>
+<div class="outline-text-3" id="text-org0a776af">
+<p>
+If running from tty1 setup sway environment and start ui
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"$(tty)"</span> = <span style="color: #98be65;">"/dev/tty1"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">if</span> sway --validate; <span style="color: #51afef;">then</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export DISPLAY=":0"</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export WAYLAND_DISPLAY=wayland-0</span>
+        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export GDK_BACKEND=wayland,x11</span>
+        <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -z <span style="color: #98be65;">"$XDG_RUNTIME_DIR"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #ffffaf;">XDG_RUNTIME_DIR</span>=<span style="color: #98be65;">"/run/user/$(id -u)"</span>
+        <span style="color: #51afef;">fi</span>
+        <span style="color: #ffffaf;">XDG_SESSION_TYPE</span>=wayland
+        <span style="color: #ffffaf;">SDL_VIDEODRIVER</span>=wayland
+        <span style="color: #ffffaf;">QT_PLUGIN_PATH</span>=/usr/lib/kde4/plugins/
+        <span style="color: #ffffaf;">QT_AUTO_SCREEN_SCALE_FACTOR</span>=<span style="color: #da8548; font-weight: bold;">0</span>
+        <span style="color: #ffffaf;">QT_QPA_PLATFORMTHEME</span>=qt5ct
+        <span style="color: #ffffaf;">_JAVA_AWT_WM_NONREPARENTING</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+        <span style="color: #ffffaf;">SWAYROOT</span>=<span style="color: #98be65;">"${XDG_CONFIG_HOME:-${HOME}/.config}"</span>/sway
+        <span style="color: #ffffaf;">ECORE_EVAS_ENGINE</span>=wayland_egl
+        <span style="color: #ffffaf;">ELM_DISPLAY</span>=wl
+        <span style="color: #ffffaf;">ELM_ENGINE</span>=wayland_egl
+        <span style="color: #ffffaf;">ELM_ACCEL</span>=opengl
+        <span style="color: #ffffaf;">QT_QPA_PLATFORM</span>=<span style="color: #98be65;">"wayland-egl;xcb"</span>
+        <span style="color: #ffffaf;">QT_WAYLAND_FORCE_DPI</span>=<span style="color: #da8548; font-weight: bold;">100</span>
+        <span style="color: #ffffaf;">QT_WAYLAND_DISABLE_WINDOWDECORATION</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+        <span style="color: #ffffaf;">MOZ_ENABLE_WAYLAND</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+        <span style="color: #d76f10;">export</span> XDG_SESSION_TYPE
+        <span style="color: #d76f10;">export</span> SDL_VIDEODRIVER
+        <span style="color: #d76f10;">export</span> QT_PLUGIN_PATH
+        <span style="color: #d76f10;">export</span> QT_AUTO_SCREEN_SCALE_FACTOR
+        <span style="color: #d76f10;">export</span> QT_QPA_PLATFORMTHEME
+        <span style="color: #d76f10;">export</span> _JAVA_AWT_WM_NONREPARENTING
+        <span style="color: #d76f10;">export</span> SWAYROOT
+        <span style="color: #d76f10;">export</span> ECORE_EVAS_ENGINE
+        <span style="color: #d76f10;">export</span> ELM_DISPLAY
+        <span style="color: #d76f10;">export</span> ELM_ENGINE
+        <span style="color: #d76f10;">export</span> ELM_ACCEL
+        <span style="color: #d76f10;">export</span> QT_QPA_PLATFORM
+        <span style="color: #d76f10;">export</span> QT_WAYLAND_FORCE_DPI
+        <span style="color: #d76f10;">export</span> QT_WAYLAND_DISABLE_WINDOWDECORATION
+        <span style="color: #d76f10;">export</span> MOZ_ENABLE_WAYLAND
+        <span style="color: #51afef;">exec</span> dbus-launch --sh-syntax --exit-with-session sway
+    <span style="color: #51afef;">else</span>
+        <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"Error while validating sway configuration"</span>
+    <span style="color: #51afef;">fi</span>
+<span style="color: #51afef;">elif</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"$(tty)"</span> = <span style="color: #98be65;">"/dev/tty2"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -z <span style="color: #98be65;">"$XDG_RUNTIME_DIR"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #ffffaf;">XDG_RUNTIME_DIR</span>=<span style="color: #98be65;">"/run/user/$(id -u)"</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">XDG_SESSION_TYPE</span>=x11
+    <span style="color: #ffffaf;">SDL_VIDEODRIVER</span>=x11
+    <span style="color: #ffffaf;">QT_PLUGIN_PATH</span>=/usr/lib/kde4/plugins/
+    <span style="color: #ffffaf;">QT_AUTO_SCREEN_SCALE_FACTOR</span>=<span style="color: #da8548; font-weight: bold;">0</span>
+    <span style="color: #ffffaf;">QT_QPA_PLATFORMTHEME</span>=qt5ct
+    <span style="color: #ffffaf;">_JAVA_AWT_WM_NONREPARENTING</span>=<span style="color: #da8548; font-weight: bold;">1</span>
+    <span style="color: #ffffaf;">I3ROOT</span>=<span style="color: #98be65;">"${XDG_CONFIG_HOME:-${HOME}/.config}"</span>/i3
+    <span style="color: #d76f10;">export</span> XDG_SESSION_TYPE
+    <span style="color: #d76f10;">export</span> SDL_VIDEODRIVER
+    <span style="color: #d76f10;">export</span> QT_PLUGIN_PATH
+    <span style="color: #d76f10;">export</span> QT_AUTO_SCREEN_SCALE_FACTOR
+    <span style="color: #d76f10;">export</span> QT_QPA_PLATFORMTHEME
+    <span style="color: #d76f10;">export</span> _JAVA_AWT_WM_NONREPARENTING
+    <span style="color: #d76f10;">export</span> I3ROOT
+    <span style="color: #d76f10;">unset</span> ECORE_EVAS_ENGINE
+    <span style="color: #d76f10;">unset</span> ELM_DISPLAY
+    <span style="color: #d76f10;">unset</span> ELM_ENGINE
+    <span style="color: #d76f10;">unset</span> ELM_ACCEL
+    <span style="color: #d76f10;">unset</span> QT_QPA_PLATFORM
+    <span style="color: #d76f10;">unset</span> QT_WAYLAND_FORCE_DPI
+    <span style="color: #d76f10;">unset</span> QT_WAYLAND_DISABLE_WINDOWDECORATION
+    <span style="color: #d76f10;">unset</span> MOZ_ENABLE_WAYLAND
+    <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"Window managers:"</span>
+    ls <span style="color: #98be65;">"/usr/share/xsessions"</span>
+    <span style="color: #d76f10;">read</span> x11wm &amp;&amp; <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"${x11wm}"</span> &gt; ~/.xinitrc &amp;&amp; <span style="color: #d76f10;">unset</span> x11wm
+    <span style="color: #51afef;">exec</span> startx
+<span style="color: #51afef;">elif</span> <span style="color: #51afef;">[</span> <span style="color: #98be65;">"$TERM"</span> = <span style="color: #98be65;">"linux"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    printf <span style="color: #98be65;">"\e]P0000000"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">black</span>
+    printf <span style="color: #98be65;">"\e]P83f3f3f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkgrey</span>
+    printf <span style="color: #98be65;">"\e]P19f3f3f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkred</span>
+    printf <span style="color: #98be65;">"\e]P9ff9f9f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">red</span>
+    printf <span style="color: #98be65;">"\e]P23f9f3f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkgreen</span>
+    printf <span style="color: #98be65;">"\e]PAbfefbf"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">green</span>
+    printf <span style="color: #98be65;">"\e]P3bf9f3f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">brown</span>
+    printf <span style="color: #98be65;">"\e]PB9fff9f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">yellow</span>
+    printf <span style="color: #98be65;">"\e]P45f5f9f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkblue</span>
+    printf <span style="color: #98be65;">"\e]PC9f9fff"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">blue</span>
+    printf <span style="color: #98be65;">"\e]P59f3f9f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkmagenta</span>
+    printf <span style="color: #98be65;">"\e]PDff9fff"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">magenta</span>
+    printf <span style="color: #98be65;">"\e]P63f9f9f"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">darkcyan</span>
+    printf <span style="color: #98be65;">"\e]PE9fffff"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">cyan</span>
+    printf <span style="color: #98be65;">"\e]P7afafaf"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">lightgrey</span>
+    printf <span style="color: #98be65;">"\e]PFffffff"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">white</span>
+    clear <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">for background artifacting</span>
+<span style="color: #51afef;">fi</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf6781b" class="outline-2">
+<h2 id="orgdf6781b">Calls</h2>
+<div class="outline-text-2" id="text-orgdf6781b">
+</div>
+<div id="outline-container-org59b43b9" class="outline-3">
+<h3 id="org59b43b9">bash</h3>
+<div class="outline-text-3" id="text-org59b43b9">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/ui</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}"</span>/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}"</span>/ui
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7160c03" class="outline-3">
+<h3 id="org7160c03">zsh</h3>
+<div class="outline-text-3" id="text-org7160c03">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/ui</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR}"</span>/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    . <span style="color: #98be65;">"${RUNCOMDIR}"</span>/ui
+<span style="color: #51afef;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

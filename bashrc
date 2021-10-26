@@ -31,25 +31,43 @@ set -o vi
 bind '"jk":vi-movement-mode'
 
 # shellcheck source=".runcom/shrc"
-if [ -f "${RUNCOMDIR}"/shrc ]; then
-    . "${RUNCOMDIR}"/shrc
+if [ -f "${RUNCOMDIR}/shrc" ]; then
+    . "${RUNCOMDIR}/shrc"
+fi
+if [ -f "${RUNCOMDIR}/bash-preexec/bash-preexec.sh" ]; then
+    . "${RUNCOMDIR}/bash-preexec/bash-preexec.sh"
 fi
 
-export PROMPT_COMMAND=__prompt_command
-__prompt_command () {
-    exit_stat="$?"
+# export PROMPT_COMMAND=__prompt_command
+
+preexec() {
+    _cmd_start_t="${SECONDS}"
+}
+
+precmd () {
+    _exit_color="$(last_exit_color $?)"
+
+    _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+    unset _cmd_start_t
+
+    # unset previous
     PS1=""
-    PS1+="\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
+    PS2=""
+    PS3=""
+    PS4=""
+    RPROMPT=""
+
     PS1+="\[\e[0;32m\]\u\[\e[m\]"
     PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
     PS1+="@"
     PS1+="\[\e[0;34m\]\h\[\e[m\]"
     PS1+="\$(git_ps)"
-    PS1+="\[\e[0;37m\]<"
-    PS1+="\[\e[0;36m\]\W"
-    PS1+="\[\e[0;37m\]>"
-    PS1+="\[\e[0;33m\]\t\[\e[m\]"
-    PS1+="\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
+    PS1+="\[\e[0;36m\]:\W"
+    PS1+="\[\e[0;37m\]"
+
+    PS1+="$(date '+%H:%M:%S')"
+    PS1+=" ${_exit_color}-${_elapsed}"
+    PS1+='\[\e[m\]\n» '
 
     PS2=""
     PS2+="\[\e[0;36m\]cont..."
