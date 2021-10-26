@@ -102,8 +102,8 @@ bindkey '^r' history-incremental-search-backward
 zle -N zle-keymap-select
 
 # shellcheck source=".runcom/shrc"
-if [ -f "${RUNCOMDIR}"/shrc ]; then
-    . "${RUNCOMDIR}"/shrc
+if [ -f "${RUNCOMDIR}/shrc" ]; then
+    . "${RUNCOMDIR}/shrc"
 fi
 while read -r addition; do
     while read -r share_dir; do
@@ -130,11 +130,23 @@ unset addition
 unset share_dir
 unset add_dir
 
+_pspexec() {
+    _cmd_start_t="${SECONDS}"
+}
+
 _pspps () {
-    exit_stat="$?"
+    _exit_color="$(last_exit_color $?)"
+
+    _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+    unset _cmd_start_t
+
+    # unset previous
     PS1=$''
-    PS1+="%{$(last_exit_color ${exit_stat})%}"
-    PS1+=$'┏━ \e[m'
+    PS2=$''
+    PS3=$''
+    PS4=$''
+    RPROMPT=$''
+
     PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
     PS1+=$'%{\e[3;35m%}'
     PS1+="$(_show_venv)"
@@ -142,19 +154,21 @@ _pspps () {
     PS1+=$'@'
     PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
     PS1+="$(git_ps)"
-    PS1+=$'%{\e[0;37m%}<'
-    PS1+=$'%{\e[0;36m%}%1~'
-    PS1+=$'%{\e[0;37m%}>'
-    PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
-    PS1+="%{$(last_exit_color ${exit_stat})%}"
-    PS1+=$'┗━ %{\e[m%}'
+    PS1+=$'%{\e[0;36m%}:%1~'
+    PS1+=$'%{\e[0;37m%}\n%{\e[m%}» '
 
-    PS2=$''
     PS2+=$'%{\e[0;36m%}cont...'
     PS2+=$'%{\e[m%}'
-    PS2+=$'» ';
+    PS2+=$'» '
 
-    PS3='Selection: ';
+    PS3='Selection: '
+
+    RPROMPT+=$'%*'
+    RPROMPT+="%{$_exit_color%}-${_elapsed}"
+    RPROMPT+=$'%{\e[m%}'
+    unset _exit_stat
+    unset _elapsed
 }
 
 add-zsh-hook precmd _pspps
+add-zsh-hook preexec _pspexec

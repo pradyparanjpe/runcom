@@ -443,16 +443,19 @@
 ** bash
    #+BEGIN_SRC bash :tangle bashrc
      # shellcheck source=".runcom/shrc"
-     if [ -f "${RUNCOMDIR}"/shrc ]; then
-         . "${RUNCOMDIR}"/shrc
+     if [ -f "${RUNCOMDIR}/shrc" ]; then
+         . "${RUNCOMDIR}/shrc"
+     fi
+     if [ -f "${RUNCOMDIR}/bash-preexec/bash-preexec.sh" ]; then
+         . "${RUNCOMDIR}/bash-preexec/bash-preexec.sh"
      fi
    #+END_SRC
 
 ** zsh
    #+BEGIN_SRC bash :tangle zshrc
      # shellcheck source=".runcom/shrc"
-     if [ -f "${RUNCOMDIR}"/shrc ]; then
-         . "${RUNCOMDIR}"/shrc
+     if [ -f "${RUNCOMDIR}/shrc" ]; then
+         . "${RUNCOMDIR}/shrc"
      fi
      while read -r addition; do
          while read -r share_dir; do
@@ -487,8 +490,8 @@
     All files in ${RUNCOMDIR}/local.d will be sourced
     #+BEGIN_SRC sh :tangle shrc
       # shellcheck disable=SC1090
-      if [ -d "${RUNCOMDIR}"/local.d ]; then
-          for local_src in "${RUNCOMDIR}"/local.d/*; do
+      if [ -d "${RUNCOMDIR}/local.d" ]; then
+          for local_src in "${RUNCOMDIR}/local.d"/*; do
               . "${local_src}"
           done
       fi
@@ -499,9 +502,9 @@
     [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
     #+BEGIN_SRC sh :tangle shrc
       # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-      if [ -f "${RUNCOMDIR}"/complete.bash ]; then
+      if [ -f "${RUNCOMDIR}/complete.bash" ]; then
           # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-          . "${RUNCOMDIR}"/complete.bash
+          . "${RUNCOMDIR}/complete.bash"
       fi
     #+END_SRC
 
@@ -590,10 +593,12 @@
              export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
              ;;
          nvim)
-             export MANPAGER="nvim -c 'set ft=man' -"
+             export MANPAGER="nvim -c ':Man!' -"
              ;;
          ,*)
-             export MANPAGER='bat -l man -p'
+             if builtin command -v bat; then
+                 export MANPAGER='bat -l man -p'
+             fi
              ;;
      esac
      export MANPAGER
@@ -813,56 +818,122 @@
 *** Exit_color
     #+BEGIN_SRC sh :tangle shrc
       last_exit_color () {
-          err="$1"
-          if [ "$err"  = "0" ]; then
-              # no error
-              printf "\e[0;32m"
-          elif [ "$err"  = "1" ]; then
-              # general error
-              printf "\e[0;33m"
-          elif [ "$err"  = "2" ]; then
-              # misuse of shell builtins
-              printf "\e[0;31m"
-          elif [ "$err" -gt "63" ] && [ "$err" -lt "84" ]; then
-              # syserror.h
-              printf "\e[0;91m"
-          elif [ "$err"  = "126" ]; then
-              # cannot execute
-              printf "\e[0;37m"
-          elif [ "$err"  = "127" ]; then
-              # command not found
-              printf "\e[0;30m"
-          elif [ "$err" -gt "127" ] && [ "$err" -lt "191" ]; then
-              # Fatal error
-              printf "\e[0;41m"
-          elif [ "$err"  = "255" ]; then
-              # exit status limit
-              printf "\e[0;31m"
-          else
-              printf "\e[0;31m"
+          case "$1" in
+              0)
+                  # success
+                  printf "\e[0;32m"
+                  ;;
+              1)
+                  # general error
+                  printf "\e[0;33m"
+                  ;;
+              2)
+                  # misuse of shell builtins
+                  printf "\e[0;31m"
+                  ;;
+              126)
+                  # cannot execute
+                  printf "\e[0;37m"
+                  ;;
+              127)
+                  # command not found
+                  printf "\e[0;30m"
+                  ;;
+              255)
+                  # exit status limit
+                  printf "\e[0;31m"
+                  ;;
+              ,*)
+                  if [ "$1" -gt "63" ] && [ "$1" -lt "84" ]; then
+                      # syserror.h
+                      printf "\e[0;91m"
+
+                  elif [ "$1" -gt "127" ] && [ "$1" -lt "191" ]; then
+                      # Fatal error
+                      printf "\e[0;41m"
+                  else
+                      printf "\e[0;31m"
+                  fi
+                  unset _err
+                  ;;
+          esac
+      }
+    #+END_SRC
+
+*** Elapsed_time
+    #+BEGIN_SRC sh :tangle shrc
+      _elapsed_time() {
+          # $1 is start time $2 is end time
+          _cmd_start="$1"
+          _cmd_end="$2"
+          if [ -z "$_cmd_end" ] || [ -z "$_cmd_start" ]; then
+              return
           fi
-          unset err
+          _sec=$(( _cmd_end - _cmd_start ))
+          unset _cmd_start
+          unset _cmd_end
+          if [ "$_sec" -le 0 ]; then
+              return
+          fi
+          if [ "$_sec" -le 60 ]; then
+              printf "%s" "${_sec}"
+              unset _sec
+              return
+          fi
+          _min=$(( _sec/60 ))
+          unset _sec
+          if [ "$_min" -le 60 ]; then
+              printf "%sm" "${_min}"
+              unset _min
+              return
+          fi
+          _hr=$(( _min/60 ))
+          unset _min
+          if [ "$_hr" -le 24 ]; then
+              printf "%sh" "${_hr}"
+              unset _hr
+              return
+          fi
+          _day=$(( _hr/24 ))
+          unset _min
+          printf "%sd" "${_day}"
+          unset _day
       }
     #+END_SRC
 
 *** PROMPT_COMMAND
 **** bash
      #+BEGIN_SRC bash :tangle bashrc
-       export PROMPT_COMMAND=__prompt_command
-       __prompt_command () {
-           exit_stat="$?"
+       # export PROMPT_COMMAND=__prompt_command
+
+       preexec() {
+           _cmd_start_t="${SECONDS}"
+       }
+
+       precmd () {
+           _exit_color="$(last_exit_color $?)"
+
+           _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+           unset _cmd_start_t
+
+           # unset previous
            PS1=""
-           PS1+="\[\$(last_exit_color ${exit_stat})\]┏━ \[\e[m\]"
+           PS2=""
+           PS3=""
+           PS4=""
+           RPROMPT=""
+
            PS1+="\[\e[0;32m\]\u\[\e[m\]"
            PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
            PS1+="@"
            PS1+="\[\e[0;34m\]\h\[\e[m\]"
            PS1+="\$(git_ps)"
-           PS1+="\[\e[0;37m\]<"
-           PS1+="\[\e[0;36m\]\W"
-           PS1+="\[\e[0;37m\]>"
-           PS1+="\[\e[0;33m\]\t\[\e[m\]"
-           PS1+="\n\[\$(last_exit_color ${exit_stat})\]┗━ \[\e[m\]"
+           PS1+="\[\e[0;36m\]:\W"
+           PS1+="\[\e[0;37m\]"
+
+           PS1+="$(date '+%H:%M:%S')"
+           PS1+=" ${_exit_color}-${_elapsed}"
+           PS1+='\[\e[m\]\n» '
 
            PS2=""
            PS2+="\[\e[0;36m\]cont..."
@@ -875,11 +946,23 @@
 
 **** zsh
      #+BEGIN_SRC bash :tangle zshrc
+       _pspexec() {
+           _cmd_start_t="${SECONDS}"
+       }
+
        _pspps () {
-           exit_stat="$?"
+           _exit_color="$(last_exit_color $?)"
+
+           _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+           unset _cmd_start_t
+
+           # unset previous
            PS1=$''
-           PS1+="%{$(last_exit_color ${exit_stat})%}"
-           PS1+=$'┏━ \e[m'
+           PS2=$''
+           PS3=$''
+           PS4=$''
+           RPROMPT=$''
+
            PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
            PS1+=$'%{\e[3;35m%}'
            PS1+="$(_show_venv)"
@@ -887,22 +970,24 @@
            PS1+=$'@'
            PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
            PS1+="$(git_ps)"
-           PS1+=$'%{\e[0;37m%}<'
-           PS1+=$'%{\e[0;36m%}%1~'
-           PS1+=$'%{\e[0;37m%}>'
-           PS1+=$'%{\e[0;33m%}%*%{\e[m%}\n'
-           PS1+="%{$(last_exit_color ${exit_stat})%}"
-           PS1+=$'┗━ %{\e[m%}'
+           PS1+=$'%{\e[0;36m%}:%1~'
+           PS1+=$'%{\e[0;37m%}\n%{\e[m%}» '
 
-           PS2=$''
            PS2+=$'%{\e[0;36m%}cont...'
            PS2+=$'%{\e[m%}'
-           PS2+=$'» ';
+           PS2+=$'» '
 
-           PS3='Selection: ';
+           PS3='Selection: '
+
+           RPROMPT+=$'%*'
+           RPROMPT+="%{$_exit_color%}-${_elapsed}"
+           RPROMPT+=$'%{\e[m%}'
+           unset _exit_stat
+           unset _elapsed
        }
 
        add-zsh-hook precmd _pspps
+       add-zsh-hook preexec _pspexec
 
      #+END_SRC
 
