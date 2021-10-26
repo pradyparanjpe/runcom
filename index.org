@@ -1,0 +1,12 @@
+# -*- mode:org; coding: utf-8; -*-
+#+TITLE: Prady_runcom
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle
+
+* What's this
+  Configuration settings for (ba|z)?sh and .*profile
+  [[literate-config.html][Read HTML export of configuration]]
