@@ -2,7 +2,7 @@
 # -*- coding: utf-8; mode: shell-script; -*-
 dnf_install() {
 
-dnf update || return 65
+dnf -y update || return 65
 dnf -y install curl git stow || return 66
 
 }
@@ -17,20 +17,20 @@ apk --virtual runcom add curl git stow || return 66
  apt_install() {
 
 apt update || return 65
-apt install curl git stow || return 66
+apt install -y curl git stow || return 66
 
 }
 
  zypper_install() {
 
 zypper ref || return 65
-zypper install curl git stow || return 66
+zypper -n install curl git stow || return 66
 
 }
 
  pacman_install() {
 
-pacman -Syu curl git stow || return 65
+pacman --noconfirm -Syu curl git stow || return 65
 
 }
  guess_manager() {
