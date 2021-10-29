@@ -1,1 +1,0 @@
-/home/pradyumna/.local/share/pspman/src/vim-plug/plug.vim

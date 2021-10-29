@@ -327,27 +327,29 @@
     *_SETUP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
 * Structure
   Following configuration files are available. This literate configuration tangles their contents.
-  |---------------------------------+-------+--------+-------|
-  | Configuration File Path         | POSIX | Stowed | Owner |
-  |---------------------------------+-------+--------+-------|
-  | /etc/profile                    | yes   | no     | Root  |
-  | /etc/bashrc                     | yes   | no     | Root  |
-  | /etc/zshrc                      | yes   | no     | Root  |
-  | /etc/profile.d/*                | yes   | no     | Root  |
-  | ${HOME}/.bash_completion.d/*    | no    | no     | $USER |
-  | ${HOME}/.bashrc                 | no    | yes    | $USER |
-  | ${HOME}/.zshrc                  | no    | yes    | $USER |
-  | ${HOME}/.bash_profile           | yes   | yes    | $USER |
-  | ${HOME}/.bash_login             | yes   | yes    | $USER |
-  | ${HOME}/.profile                | yes   | yes    | $USER |
-  | ${HOME}/.zprofile               | yes   | yes    | $USER |
-  | ${HOME}/.zlogin                 | yes   | yes    | $USER |
-  | ${RUNCOMDIR}/shrc               | yes   | yes    | $USER |
-  | ${RUNCOMDIR}/ui                 | yes   | yes    | $USER |
-  | ${RUNCOMDIR}/complete.bash      | yes   | yes    | $USER |
-  | ${XDG_CONFIG_HOME}/local.d/.*rc | yes   | no     | $USER |
-  | ${XDG_CONFIG_HOME}/pvt.d/.*rc   | yes   | pvt    | $USER |
-  |---------------------------------+-------+--------+-------|
+  |------------------------------------------------+-------+--------+---------|
+  | Configuration File Path                        | POSIX | Stowed | Owner   |
+  |------------------------------------------------+-------+--------+---------|
+  | /etc/profile                                   | yes   | no     | root    |
+  | /etc/bashrc                                    | yes   | no     | root    |
+  | /etc/zshrc                                     | yes   | no     | root    |
+  | /etc/profile.d/*                               | yes   | no     | root    |
+  | ${HOME}/.bashrc                                | no    | yes    | ${USER} |
+  | ${HOME}/.zshrc                                 | no    | yes    | ${USER} |
+  | ${HOME}/.bash_profile                          | yes   | yes    | ${USER} |
+  | ${HOME}/.bash_login                            | yes   | yes    | ${USER} |
+  | ${HOME}/.profile                               | yes   | yes    | ${USER} |
+  | ${HOME}/.zprofile                              | yes   | yes    | ${USER} |
+  | ${HOME}/.zshenv                                | yes   | yes    | ${USER} |
+  | ${HOME}/.zlogin                                | yes   | yes    | ${USER} |
+  | ${RUNCOMDIR}/shrc                              | yes   | no     | RUNCOM  |
+  | ${RUNCOMDIR}/ui                                | yes   | no     | RUNCOM  |
+  | ${RUNCOMDIR}/complete.bash                     | yes   | no     | RUNCOM  |
+  | ${XDG_DATA_HOME}/bash-completion/completions/* | no    | yes    | ${USER} |
+  | ${XDG_CONFIG_DIR}                              | no    | yes    | ${USER} |
+  | ${XDG_CONFIG_HOME}/local.d/.*rc                | yes   | no     | ${USER} |
+  | ${XDG_CONFIG_HOME}/pvt.d/.*rc                  | yes   | pvt    | ${USER} |
+  |------------------------------------------------+-------+--------+---------|
   They are loaded in following order.
 
 ** Bash
@@ -1311,6 +1313,7 @@
 
 ** Mount over ssh
    ssh Cloud mounts
+   - see [[./cloud_mount.html][cloud_mount]]
    #+BEGIN_SRC sh :tangle shrc
      mount_cloud_sshfs() {
          mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
@@ -1608,7 +1611,7 @@
 ** State
    The *OLDEST* part of prady_runcom...
    - ... although, amended many times
-   Display state of network connection at the beginning
+   - see [[./netcheck.html][netcheck]]
    #+BEGIN_SRC sh :tangle shrc
      # shellcheck source=./bin/netcheck.sh
      IFS="$(printf '\t')" read -r IP_ADDR AP_ADDR netstate << netcheck

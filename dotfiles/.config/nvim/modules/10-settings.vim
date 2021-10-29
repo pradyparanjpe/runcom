@@ -22,7 +22,9 @@ set scrolloff=7
 set fileformat=unix
 set clipboard=unnamed
 set expandtab
-set undodir="${XDG_DATA_HOME:-${HOME}/.config/}/nvim/undoir"
-set undofile
+if has('persistent_undo')
+  let undodir = has('nvim') ? stdpath('cache') . '/undodir' : '~/.cache/vim/undodir'
+  set undofile
+endif
 set background=dark
 let g:python_host_prog="/usr/bin/python3"
