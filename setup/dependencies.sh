@@ -35,7 +35,7 @@ pacman -Syu curl git stow || return 65
 }
  guess_manager() {
      for manager in dnf apt apk zypper pacman; do
-         if builtin command -v "${manager}" 1>/dev/null 2>&1; then
+         if command -v "${manager}" 1>/dev/null 2>&1; then
              printf "${manager}"
              return 0
          fi
@@ -53,7 +53,7 @@ pacman -Syu curl git stow || return 65
      else
          manager="${1}"
      fi
-     return eval "${manager}_install"
+     eval "${manager}_install"
  }
 
  main() {
@@ -66,24 +66,24 @@ pacman -Syu curl git stow || return 65
          65)
              printf "Manager is available, but update threw error\n"
              printf "Please install dependencies manually\n"
-             printf "aborting..."
+             printf "aborting...\n"
              return 1;
              ;;
          66)
              printf "Manager is available, but package installation threw error\n"
              printf "Please install dependencies manually\n"
-             printf "aborting..."
+             printf "aborting...\n"
              return 1;
              ;;
          127)
              printf "Couldn't guess package manger\n"
              printf "Please install dependencies manually\n"
-             printf "aborting..."
+             printf "aborting...\n"
              return 127;
              ;;
          *) printf "Error number %s was thrown by the package manager\n" "$?"
             printf "Please install dependencies manually\n"
-            printf "aborting..."
+            printf "aborting...\n"
             ;;
      esac
  }
