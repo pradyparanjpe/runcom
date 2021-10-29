@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/pradyumna/.anubandha.git/src/sway/locals.conf.d'
+let g:netrw_dirhist_9='/home/pradyumna/.anubandha.git/src/config/nvim/autoload'
+let g:netrw_dirhist_8='/home/pradyumna/.anubandha.git/config/nvim/modules'
+let g:netrw_dirhist_7='/home/pradyumna/.anubandha.git/config/nvim'
+let g:netrw_dirhist_6='/usr/share/easy-rsa/3'
+let g:netrw_dirhist_5='/media/data/pass_time_scripts/packages/pspbar/pspbar'
+let g:netrw_dirhist_4='/media/data/pass_time_scripts/packages/pspman/psprint/psprint'
+let g:netrw_dirhist_3='/usr/local/searx/searx-src/searx.egg-info'
+let g:netrw_dirhist_2='/home/pradyumna/.runcom'
+let g:netrw_dirhist_1='/media/data/pass_time_scripts/packages/pspman/psprint/psprint'

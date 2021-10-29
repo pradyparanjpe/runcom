@@ -83,6 +83,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/.doctrees
 
 # PyBuilder
 .pybuilder/
@@ -158,4 +159,4 @@ cython_debug/
 # Locals
 *locals.conf.d/
 *local.d/
-
+*pvt.d/

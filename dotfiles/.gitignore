@@ -1,0 +1,5 @@
+# Backups
+*.bak
+
+# nvim plug updates
+nvim/plugged/

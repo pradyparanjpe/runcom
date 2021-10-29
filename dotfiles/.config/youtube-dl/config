@@ -1,0 +1,43 @@
+# --ignore-errors
+-i
+
+--default-search ytsearch:
+
+--yes-playlist
+
+# --retries RETRIES
+-R 10
+
+--fragment-retries 10
+
+--hls-use-mpegts
+
+# --output TEMPLATE
+-o "${HOME}/Downloads/youtube_dl/%(title)s.%(ext)s"
+
+--restrict-filenames
+
+--cache-dir $XDG_CACHE_HOME/youtube-dl
+
+# --format FORMAT
+-f 'bestvideo[height<=?720]+bestaudio/best[height<=?720]'
+
+--prefer-free-formats
+
+--write-sub
+
+--write-auto-sub
+
+--sub-format srt/best/ass
+
+--sub-lang mr,en
+
+--audio-quality 0
+
+--embed-subs
+
+--add-metadata
+
+--prefer-ffmpeg
+
+--ffmpeg-location /usr/bin/ffmpeg

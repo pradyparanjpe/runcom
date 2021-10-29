@@ -1,0 +1,173 @@
+#-*- coding:utf-8; mode:org -*-
+#+TITLE: Foot config
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle foot.ini
+
+* Table of Contents :toc:
+- [[#global-section][Global section]]
+  - [[#unset-options][Unset options]]
+- [[#scrollback][Scrollback]]
+  - [[#unset-options-1][Unset options]]
+- [[#cursor][Cursor]]
+  - [[#unset-options-2][Unset options]]
+- [[#mouse][Mouse]]
+  - [[#unset-options-3][Unset options]]
+- [[#colors][Colors]]
+  - [[#unset-options-4][Unset options]]
+  - [[#order-of-settings][Order of settings:]]
+- [[#csd][CSD]]
+  - [[#unset-options-5][Unset options]]
+- [[#keybindings][Keybindings]]
+  - [[#unset-options-6][Unset options]]
+- [[#search-bindings][Search Bindings]]
+  - [[#unset-options-7][Unset options]]
+- [[#mouse-bindings][Mouse bindings]]
+  - [[#unset-options-8][unset options]]
+- [[#tweaks][Tweaks]]
+  - [[#emojis-with-double-character-widths][Emojis with double character-widths]]
+
+* Global section
+** Unset options
+   geometry=700x500
+   pad=2x2
+   initial-window-mode=windowed
+   shell=$SHELL (if set, otherwise user's default shell from /etc/passwd)
+   login-shell=no
+   #+BEGIN_SRC conf
+     font=Fira Code Retina:size=12
+     term=xterm-256color
+     workers=4
+   #+END_SRC
+
+* Scrollback
+** Unset options
+   multiplier=1.0
+   indicator-position=relative
+   indicator-format=
+   #+BEGIN_SRC conf
+     [scrollback]
+     lines=8190
+   #+END_SRC
+
+* Cursor
+** Unset options
+   style=block
+   color=111111 dcdccc
+   blink=no
+   [cursor]
+
+* Mouse
+** Unset options
+   #+BEGIN_SRC conf
+     [mouse]
+     hide-when-typing=yes
+
+   #+END_SRC
+
+* Colors
+** Unset options
+   # selection-foreground=<inverse foreground/background>
+   # selection-background=<inverse foreground/background>
+** Order of settings:
+   Regular:
+   Black Red Green Yellow Blue Magenta Cyan White
+   Bright (BOLD):
+   Black Red Green Yellow Blue Magenta Cyan White
+   #+BEGIN_SRC conf
+     [colors]
+     alpha=1.0
+     foreground=bfbfbf
+     background=000000
+     regular0=000000
+     regular1=9f3f3f
+     regular2=3f9f3f
+     regular3=9f9f3f
+     regular4=3f5f9f
+     regular5=9f3f9f
+     regular6=3f9f9f
+     regular7=bfbfbf
+     bright0=000000
+     bright1=ff9f9f
+     bright2=9fef9f
+     bright3=ffff9f
+     bright4=9fbfff
+     bright5=ff9fff
+     bright6=9fffff
+     bright7=ffffff
+
+   #+END_SRC
+
+* CSD
+** Unset options
+   size=26
+   color=<foreground color>
+   button-width=26
+   button-minimize-color=ff0000ff
+   button-maximize-color=ff00ff00
+   button-close-color=ffff0000
+   #+BEGIN_SRC conf
+     [csd]
+     preferred=server
+
+   #+END_SRC
+
+* Keybindings
+** Unset options
+   scrollback-up=Shift+Page_Up
+   scrollback-down=Shift+Page_Down
+   clipboard-copy=Control+Shift+C
+   clipboard-paste=Control+Shift+V
+   search-start=Control+Shift+R
+   font-increase=Control+plus Control+equal Control+KP_Add
+   font-decrease=Control+minus Control+KP_Subtract
+   font-reset=Control+0 Control+KP_0
+   spawn-terminal=Control+Shift+N
+   minimize=none
+   maximize=none
+   fullscreen=none
+   pipe-visible=[sh -c "xurls | bemenu | xargs -r firefox"] none
+   pipe-scrollback=[sh -c "xurls | bemenu | xargs -r firefox"] none
+   pipe-selected=[xargs -r firefox] none
+   [key-bindings]
+
+* Search Bindings
+** Unset options
+   cancel=Control+g Escape
+   commit=Return
+   find-prev=Control+r
+   find-next=Control+s
+   cursor-left=Left Control+b
+   cursor-left-word=Control+Left Mod1+b
+   cursor-right=Right Control+f
+   cursor-right-word=Control+Right Mod1+f
+   cursor-home=Home Control+a
+   cursor-end=End Control+e
+   delete-prev=BackSpace
+   delete-prev-word=Mod1+BackSpace Control+BackSpace
+   delete-next=Delete
+   delete-next-word=Mod1+d Control+Delete
+   extend-to-word-boundary=Control+w
+   extend-to-next-whitespace=Control+Shift+W
+   [search-bindings]
+
+* Mouse bindings
+** unset options
+   primary-paste=BTN_MIDDLE
+   select-begin=BTN_LEFT
+   select-begin-block=Control+BTN_LEFT
+   select-extend=BTN_RIGHT
+   select-word=BTN_LEFT-2
+   select-word-whitespace=Control+BTN_LEFT-2
+   select-row=BTN_LEFT-3
+   [mouse-bindings]
+
+* Tweaks
+** Emojis with double character-widths
+   #+begin_src conf
+     [tweak]
+     overflowing-glyphs=true
+   #+end_src

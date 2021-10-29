@@ -1,0 +1,45 @@
+#-*- coding:utf-8; mode:org -*-
+#+TITLE: Foot config
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle t
+
+* Global section
+** Unset options
+   #+BEGIN_SRC conf :tangle Xresources
+     XTerm*faceName: Fira Code Retina:size=12
+   #+END_SRC
+
+* Colors
+** Unset options
+   # selection-foreground=<inverse foreground/background>
+   # selection-background=<inverse foreground/background>
+** Order of settings:
+   Regular:
+   Black Red Green Yellow Blue Magenta Cyan White
+   Bright (BOLD):
+   Black Red Green Yellow Blue Magenta Cyan White
+   #+BEGIN_SRC conf :tangle Xresources
+     XTerm*foreground: rgb:bf/bf/bf
+     XTerm*background: rgb:00/00/00
+     XTerm*color0: rgb:00/00/00
+     XTerm*color1: rgb:9f/3f/3f
+     XTerm*color2: rgb:3f/9f/3f
+     XTerm*color3: rgb:9f/9f/3f
+     XTerm*color4: rgb:3f/5f/9f
+     XTerm*color5: rgb:9f/3f/9f
+     XTerm*color6: rgb:3f/9f/9f
+     XTerm*color7: rgb:bf/bf/bf
+     XTerm*color8: rgb:00/00/00
+     XTerm*color9: rgb:ff/9f/9f
+     XTerm*color10: rgb:9f/ef/9f
+     XTerm*color11: rgb:ff/ff/9f
+     XTerm*color12: rgb:9f/bf/ff
+     XTerm*color13: rgb:ff/9f/ff
+     XTerm*color14: rgb:9f/ff/ff
+     XTerm*color15: rgb:ff/ff/ff
+
+   #+END_SRC

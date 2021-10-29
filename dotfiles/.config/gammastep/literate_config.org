@@ -1,0 +1,124 @@
+#-*- coding:utf-8; mode:org -*-
+#+TITLE: Gammastep Config
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle t
+* Table of Contents :toc:
+- [[#global-settings][Global settings]]
+  - [[#set-the-day-and-night-screen-temperatures][Set the day and night screen temperatures]]
+  - [[#smooth-fade][Smooth Fade]]
+  - [[#solar-elevation-thresholds][Solar elevation thresholds.]]
+  - [[#custom-dawndusk-intervals][Custom dawn/dusk intervals.]]
+  - [[#brightness][Brightness]]
+    - [[#composite][Composite]]
+    - [[#discrete][Discrete]]
+  - [[#screen-gamma][Screen gamma]]
+    - [[#composite-1][Composite]]
+    - [[#semi-discrete][Semi-Discrete]]
+    - [[#discrete-1][Discrete]]
+  - [[#location-provider][Location provider]]
+  - [[#adjustment-method][Adjustment method]]
+- [[#location-provider-configuration][Location provider configuration]]
+    - [[#manual][manual]]
+- [[#adjust-screen-no][Adjust screen No]]
+
+* Global settings
+  #+BEGIN_SRC conf :tangle config.ini
+    [general]
+  #+END_SRC
+** Set the day and night screen temperatures
+   #+BEGIN_SRC conf :tangle config.ini
+     temp-day=5700
+     temp-night=3500
+   #+END_SRC
+
+** Smooth Fade
+   Disable the smooth fade between temperatures when Redshift starts and stops.
+   0 will cause an immediate change between screen temperatures.
+   1 will gradually apply the new screen temperature over a couple of seconds.
+   #+BEGIN_SRC conf :tangle config.ini
+     fade=1
+   #+END_SRC
+
+** Solar elevation thresholds.
+   By default, Redshift will use the current elevation of the sun to determine
+   whether it is daytime, night or in transition (dawn/dusk). When the sun is
+   above the degrees specified with elevation-high it is considered daytime and
+   below elevation-low it is considered night.
+   ;elevation-high=3
+   ;elevation-low=-6
+
+** Custom dawn/dusk intervals.
+   Instead of using the solar elevation, the time intervals of dawn and dusk
+   can be specified manually. The times must be specified as HH:MM in 24-hour
+   format.
+   ;dawn-time=6:00-7:45
+   ;dusk-time=18:35-20:15
+
+** Brightness
+   Set the screen brightness. Default is 1.0.
+*** Composite
+    ;brightness=0.9
+
+*** Discrete
+    It is also possible to use different settings for day and night
+    ;brightness-day=0.7
+    ;brightness-night=0.4
+
+** Screen gamma
+*** Composite
+    #+BEGIN_SRC conf :tangle config.ini
+      gamma=0.8
+    #+END_SRC
+
+*** Semi-Discrete
+    ;gamma=0.8:0.7:0.8
+
+*** Discrete
+    This can also be set individually for day and night since
+    ;gamma-day=0.8:0.7:0.8
+    ;gamma-night=0.6
+
+** Location provider
+   ; Set the location-provider: 'geoclue2', 'manual'.
+   ; The location provider settings are in a different section.
+   #+BEGIN_SRC conf :tangle config.ini
+     location-provider=manual
+   #+END_SRC
+
+** Adjustment method
+   Set the adjustment-method: 'randr', 'vidmode', 'drm', 'wayland'.
+   'randr' is the preferred X11 method, 'vidmode' is an older API
+   that works in some cases when 'randr' does not.
+   The adjustment method settings are in a different section.
+   #+BEGIN_SRC conf :tangle config.ini
+     adjustment-method=wayland
+   #+END_SRC
+
+* Location provider configuration
+   Configuration of the location-provider:
+   type 'gammastep -l PROVIDER:help' to see the settings.
+   ex: 'gammastep -l manual:help'
+   Keep in mind that longitudes west of Greenwich (e.g. the Americas)
+   are negative numbers.
+*** manual
+    #+BEGIN_SRC conf :tangle config.ini
+      [manual]
+      lat=18.52
+      lon=73.86
+    #+END_SRC
+
+* Adjust screen No
+   Configuration of the adjustment-method
+   type 'gammastep -m METHOD:help' to see the settings.
+   ex: 'gammastep -m randr:help'
+   In this example, randr is configured to adjust only screen 0.
+   Note that the numbering starts from 0, so this is actually the first screen.
+   If this option is not specified, Redshift will try to adjust _all_ screens.
+   #+BEGIN_SRC conf :tangle config.ini
+     [randr]
+     screen=0
+   #+END_SRC

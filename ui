@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+# shellcheck shell=sh
 # -*- coding:utf-8; mode:shell-script; -*-
 #
 # Copyright 2020, 2021 Pradyumna Paranjape
@@ -34,74 +34,63 @@ SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK
 ssh-add -l > /dev/null || ssh-add
 
-for term in foot termite tilix xterm gnome-terminal; do
-    if [ -n "$(builtin command -v $term)" ]; then
-        defterm="$term";
-        export defterm
-        break;
-    fi;
-done
-
-if [ "$(tty)" = "/dev/tty1" ]; then
-    if sway --validate; then
-        # export DISPLAY=":0"
-        # export WAYLAND_DISPLAY=wayland-0
-        # export GDK_BACKEND=wayland,x11
-        if [ -z "$XDG_RUNTIME_DIR" ]; then
-            XDG_RUNTIME_DIR="/run/user/$(id -u)"
-        fi
-        XDG_SESSION_TYPE=wayland
-        SDL_VIDEODRIVER=wayland
-        QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
-        QT_AUTO_SCREEN_SCALE_FACTOR=0
-        QT_QPA_PLATFORMTHEME=qt5ct
-        _JAVA_AWT_WM_NONREPARENTING=1
-        SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/sway
-        ECORE_EVAS_ENGINE=wayland_egl
-        ELM_DISPLAY=wl
-        ELM_ENGINE=wayland_egl
-        ELM_ACCEL=opengl
-        QT_QPA_PLATFORM="wayland-egl;xcb"
-        QT_WAYLAND_FORCE_DPI=100
-        QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-        MOZ_ENABLE_WAYLAND=1
-        export XDG_SESSION_TYPE
-        export SDL_VIDEODRIVER
-        export QT_PLUGIN_PATH
-        export QT_AUTO_SCREEN_SCALE_FACTOR
-        export QT_QPA_PLATFORMTHEME
-        export _JAVA_AWT_WM_NONREPARENTING
-        export SWAYROOT
-        export ECORE_EVAS_ENGINE
-        export ELM_DISPLAY
-        export ELM_ENGINE
-        export ELM_ACCEL
-        export QT_QPA_PLATFORM
-        export QT_WAYLAND_FORCE_DPI
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION
-        export MOZ_ENABLE_WAYLAND
-        exec dbus-launch --sh-syntax --exit-with-session sway
-    else
-        echo "Error while validating sway configuration"
-    fi
-elif [ "$(tty)" = "/dev/tty2" ]; then
+_common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
         XDG_RUNTIME_DIR="/run/user/$(id -u)"
     fi
-    XDG_SESSION_TYPE=x11
-    SDL_VIDEODRIVER=x11
-    QT_PLUGIN_PATH=/usr/lib/kde4/plugins/
+    QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
     QT_AUTO_SCREEN_SCALE_FACTOR=0
-    QT_QPA_PLATFORMTHEME=qt5ct
+    QT_QPA_PLATFORMTHEME="qt5ct"
     _JAVA_AWT_WM_NONREPARENTING=1
-    I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}"/i3
-    export XDG_SESSION_TYPE
-    export SDL_VIDEODRIVER
+
+    export XDG_RUNTIME_DIR
     export QT_PLUGIN_PATH
     export QT_AUTO_SCREEN_SCALE_FACTOR
     export QT_QPA_PLATFORMTHEME
     export _JAVA_AWT_WM_NONREPARENTING
+}
+_exports_for_sway () {
+    # export DISPLAY=":0"
+    # export WAYLAND_DISPLAY=wayland-0
+    # export GDK_BACKEND=wayland,x11
+    _common_exports
+
+    XDG_SESSION_TYPE="wayland"
+    SDL_VIDEODRIVER="wayland"
+    SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
+    ECORE_EVAS_ENGINE="wayland_egl"
+    ELM_DISPLAY="wl"
+    ELM_ENGINE="wayland_egl"
+    ELM_ACCEL="opengl"
+    QT_QPA_PLATFORM="wayland-egl;xcb"
+    QT_WAYLAND_FORCE_DPI=100
+    QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    MOZ_ENABLE_WAYLAND=1
+
+    export XDG_SESSION_TYPE
+    export SDL_VIDEODRIVER
+    export SWAYROOT
+    export ECORE_EVAS_ENGINE
+    export ELM_DISPLAY
+    export ELM_ENGINE
+    export ELM_ACCEL
+    export QT_QPA_PLATFORM
+    export QT_WAYLAND_FORCE_DPI
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION
+    export MOZ_ENABLE_WAYLAND
+}
+
+_exports_for_x11 () {
+    _common_exports
+
+    XDG_SESSION_TYPE="x11"
+    SDL_VIDEODRIVER="x11"
+    I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
+
+    export XDG_SESSION_TYPE
+    export SDL_VIDEODRIVER
     export I3ROOT
+
     unset ECORE_EVAS_ENGINE
     unset ELM_DISPLAY
     unset ELM_ENGINE
@@ -110,9 +99,29 @@ elif [ "$(tty)" = "/dev/tty2" ]; then
     unset QT_WAYLAND_FORCE_DPI
     unset QT_WAYLAND_DISABLE_WINDOWDECORATION
     unset MOZ_ENABLE_WAYLAND
+}
+_select_x11_manager() {
     echo "Window managers:"
     ls "/usr/share/xsessions"
-    read x11wm && echo "${x11wm}" > ~/.xinitrc && unset x11wm
+    read x11wm && echo "${x11wm}" > "${HOME}/.xinitrc" && unset x11wm
+}
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+    if builtin command -v sway 2>&1 > /dev/null; then
+        if sway --validate; then
+            _exports_for_sway
+            exec dbus-launch --sh-syntax --exit-with-session sway
+        else
+            echo "Error while validating sway configuration"
+        fi
+    else
+        _exports_for_x11
+        _select_x11_manager
+        exec startx
+    fi
+elif [ "$(tty)" = "/dev/tty2" ]; then
+    _exports_for_x11
+    _select_x11_manager
     exec startx
 elif [ "$TERM" = "linux" ]; then
     printf "\e]P0000000" #black

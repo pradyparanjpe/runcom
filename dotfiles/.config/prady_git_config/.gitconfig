@@ -1,0 +1,28 @@
+[push]
+    default = current
+[user]
+	name = Pradyumna Paranjape
+    email = pradyparanjpe@rediffmail.com
+[credential]
+    helper = store
+[core]
+    autocrlf = input
+    pager = delta
+[alias]
+    cc = commit -a
+    mas = checkout master
+    co = checkout
+    url = remote -v
+    logs = log
+[merge]
+    tool = vimdiff3
+[diff]
+    tool = vimdiff3
+[pull]
+    rebase = true
+
+[delta]
+    side-by-side = true
+[github]
+	user = pradyparanjpe
+	oauth-token = ghp_phTlBvnVmdQTdJpni72MbxTCxklHRx05zB27

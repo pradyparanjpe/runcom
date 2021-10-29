@@ -1,4 +1,5 @@
 # shellcheck shell=sh
+
 # -*- coding:utf-8; mode:shell-script; -*-
 #
 # Copyright 2020, 2021 Pradyumna Paranjape
@@ -27,17 +28,25 @@
 #===================================================================
 
 # shellcheck disable=SC1090
-if [ -d "${RUNCOMDIR}/local.d" ]; then
-    for local_src in "${RUNCOMDIR}/local.d"/*; do
+if [ -d "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d" ]; then
+    for pvt_src in "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"/.*rc; do
+        . "${pvt_src}"
+    done
+fi
+unset pvt_src
+
+# shellcheck disable=SC1090
+if [ -d "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d" ]; then
+    for local_src in "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"/.*rc; do
         . "${local_src}"
     done
 fi
 unset local_src
 
 # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-if [ -f "${RUNCOMDIR}/complete.bash" ]; then
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash" ]; then
     # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-    . "${RUNCOMDIR}/complete.bash"
+    . "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash"
 fi
 
 if builtin command -v 'bat' >/dev/null 2>&1; then
@@ -169,10 +178,6 @@ endstat
     unset _untracked
     unset _stat_str
 }
-
-#!/usr/bin/env sh
-# -*- coding: utf-8; mode: shell-script; -*-
-
 
 git_branch() {
     branch_str=''
@@ -313,6 +318,11 @@ dec2hex() {
 }
 
 pdfcompile() {
+    if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        printf "pdflatex is not installed\n"
+        return 127
+    fi
+
     pdflatex "$1"
     for ext in ".toc" ".log" ".aux"; do
         [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
@@ -322,6 +332,10 @@ pdfcompile() {
 
 org2export() {
     # Usage: org2oth [-f] <infile> <othtype>
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
     proceed=
     while test $# -gt 1; do
         case "$1" in
@@ -365,6 +379,11 @@ org2pdf () {
 }
 
 doc2org() {
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
+
     case "${1}" in
         *.docx)
             pandoc -f docx -t org -o "${1%.docx}.org" "$1"
@@ -375,32 +394,18 @@ doc2org() {
     esac
 }
 
-mount_home_cloud() {
-    # shellcheck disable=SC2154
-    if [ -z "${home_cloud}" ] || [ -z "${cloud_user}" ]; then
-        echo "variables \$home_cloud OR \$cloud_user haven't been defined"
-        return
+mount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}"
     fi
-    # netcheck source=./netcheck.sh
-    IFS="$(printf '\t')" read -r IP_ADDR AP_ADDR netstate << netcheck
-$("${RUNCOMDIR}"/netcheck.sh)
-netcheck
-    if [ $(( netstate % 4 )) -eq 2 ]; then
-        srv_mnt_dir="${HOME}/${home_cloud}"
+}
 
-        set -- "/media/data" "/home/${cloud_user}"
-        if [ "$(mount | grep -c "${srv_mnt_dir}")" -lt "$#" ]; then
-            # not mounted
-            while [ $# -gt 0 ]; do
-                mkdir -p "${srv_mnt_dir}${1}"
-                sshfs -o \
-                      "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" \
-                      "${cloud_user}@${home_cloud}:${1}" "${srv_mnt_dir}${1}"
-                shift
-            done
-        fi
+umount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}" "umount"
     fi
-    unset srv_mnt_dir
 }
 
 gui () {
@@ -462,15 +467,20 @@ gui () {
 }
 
 deconvolute() {
+    if builtin command -v "pigz"; then
+        _gzip="pigz"
+    else
+        _gzip='gzip'
+    fi
     if [ ! -f "${1}" ]; then
         echo "${1}: no such file";
     else
         case "${1}" in
             *.tar.bz2) tar -xjf "${1}" ;;
             *.tbz2) tar -xjf "${1}" ;;
-            *.tar.gz) tar -x --use-compress-program=pigz -f "${1}" ;;
-            *.tgz) tar -x --use-compress-program=pigz -f "${1}" ;;
-            *.gz) unpigz "${1}" ;;
+            *.tar.gz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.tgz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.gz) unpigz "${1}" || gunzip "${1}" ;;
             *.rar) unrar -x "${1}" ;;
             *.tar) tar -xf "${1}" ;;
             *.zip) unzip "${1}" ;;
@@ -478,6 +488,7 @@ deconvolute() {
             *) echo "Cannot extract ${1}, provide explicit command";;
         esac
     fi
+    unset _gzip
 }
 
 cd () {
@@ -493,7 +504,8 @@ cd () {
 
 lfcd () {
     if ! command -v 'lf' >/dev/null 2>/dev/null; then
-        return
+        printf "lf is not installed\n"
+        return 127
     fi
     tmp_file="$(mktemp)"
     lf -last-dir-path="${tmp_file}" "$@"
@@ -507,7 +519,12 @@ lfcd () {
     unset tmp_file
     unset target_dir
 }
+
 fzfcd () {
+    if ! command -v 'fzf' >/dev/null 2>/dev/null; then
+        printf "fzf is not installed\n"
+        return 127
+    fi
     cd "$(dirname "$(fzf)")" || true
 }
 
@@ -607,7 +624,7 @@ alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 alias man="man_help";
 
 alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
-alias nethogs='\su - -c "nethogs $(ip a |grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
 alias ping="ping -c 4 ";
 
 alias watch="watch -n 10 --color";
@@ -616,33 +633,36 @@ alias qqqq="exit";
 
 alias wc="zwc";
 
-# shellcheck source=./netcheck.sh
+# shellcheck source=./bin/netcheck.sh
 IFS="$(printf '\t')" read -r IP_ADDR AP_ADDR netstate << netcheck
-$("${RUNCOMDIR}"/netcheck.sh)
+$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
 netcheck
 export IP_ADDR
 export AP_ADDR
-if [ "${netstate}" -gt 7 ]; then
+if [ $(( netstate & 8)) ]; then
     printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
+    if [ ! $(( netstate & 16)) ]; then
+        printf "\e[1;35mProblem with DNS\e[m\n"
+    fi
     printf "\033[0;32m%s \e[m is current wireless ip address\n" "$IP_ADDR"
 else
     printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
-    if [ $(( netstate % 8 )) -gt 3 ]; then  # Intranet is connected
+    if [ $(( netstate & 4 )) ]; then  # Intranet is connected
         printf "\033[0;31mInternet Down\e[m\n"
-        case $(( netstate % 4 )) in
-            2) printf "Home network connected,\n"
-               ;;
-            1) printf "OFFICE network connected,\n"
-               # shellcheck source=./proxy_send.py
-               if [ -f "${RUNCOMDIR}/proxy_send.py" ]; then
-                   # shellcheck source=./proxy_send.py
-                   "${RUNCOMDIR}/proxy_send.py" \
-                       && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
-               fi
-               ;;
-            *) printf "HOTSPOT connected\n"
-               ;;
-        esac
+        if [ $(( netstate & 2 )) ]; then
+            printf "Home network connected,\n"
+        elif [ $(( netstate & 1 )) ]; then
+            printf "OFFICE network connected,\n"
+            # shellcheck source=./bin/proxy_send.sh
+            auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
+            if [ -f "${auto_proxy}" ]; then
+                # shellcheck source=./proxy_send.py
+                eval $auto_proxy && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
+            fi
+            unset auto_proxy
+        else
+            printf "HOTSPOT connected\n"
+        fi
     else
         printf "\e[1;33mNetwork connection Disconnected\e[m\n"
     fi
