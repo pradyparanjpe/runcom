@@ -49,6 +49,13 @@
   You should have received a copy of the GNU General Public License
   along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+* Legend
+** Brackets
+   - *Square* =[]=: optional parts: =W[orld]H[ealth]O[rganisation]=
+   - *Angular* =<>=: instructions to fill: =<a global organisation>=
+   - *Curly*, following a dollar =${}=: environment variable =${HOME}=
+   - *Round*, with bar separator: =(WHO|UNO)= = /WHO or UNO/
+
 * Requirements
 ** Knowledge
    - Linux shell commands. We shall try to be POSIX-compliant.
@@ -71,7 +78,7 @@
 
 *** Bootstrap installation of dependencies
 
-    For automated setup, only run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
+    For automated setup, run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
     #+BEGIN_SRC sh :tangle no
       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
     #+END_SRC
@@ -95,7 +102,7 @@
 
     - dnf: Fedora, RockyLinux, RHEL, CentOS
       #+BEGIN_SRC sh :tangle setup/dependencies.sh
-        dnf update || return 65
+        dnf -y update || return 65
         dnf -y install curl git stow || return 66
       #+end_src
 
@@ -120,7 +127,7 @@
     - apt: Debian, Ubuntu
       #+begin_src sh :tangle setup/dependencies.sh
         apt update || return 65
-        apt install curl git stow || return 66
+        apt install -y curl git stow || return 66
       #+end_src
 
       #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
@@ -132,7 +139,7 @@
     - zypper: OpenSuSE, SuSE
       #+begin_src sh :tangle setup/dependencies.sh
         zypper ref || return 65
-        zypper install curl git stow || return 66
+        zypper -n install curl git stow || return 66
       #+end_src
 
       #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
@@ -143,14 +150,14 @@
 
     - pacman: Arch, Manjaro
       #+begin_src sh :tangle setup/dependencies.sh
-        pacman -Syu curl git stow || return 65
+        pacman --noconfirm -Syu curl git stow || return 65
       #+end_src
 
     #+begin_src sh :tangle setup/dependencies.sh :exports none
       }
        guess_manager() {
            for manager in dnf apt apk zypper pacman; do
-               if builtin command -v "${manager}" 1>/dev/null 2>&1; then
+               if command -v "${manager}" 1>/dev/null 2>&1; then
                    printf "${manager}"
                    return 0
                fi
@@ -168,7 +175,7 @@
            else
                manager="${1}"
            fi
-           return eval "${manager}_install"
+           eval "${manager}_install"
        }
 
        main() {
@@ -181,37 +188,30 @@
                65)
                    printf "Manager is available, but update threw error\n"
                    printf "Please install dependencies manually\n"
-                   printf "aborting..."
+                   printf "aborting...\n"
                    return 1;
                    ;;
                66)
                    printf "Manager is available, but package installation threw error\n"
                    printf "Please install dependencies manually\n"
-                   printf "aborting..."
+                   printf "aborting...\n"
                    return 1;
                    ;;
                127)
                    printf "Couldn't guess package manger\n"
                    printf "Please install dependencies manually\n"
-                   printf "aborting..."
+                   printf "aborting...\n"
                    return 127;
                    ;;
                ,*) printf "Error number %s was thrown by the package manager\n" "$?"
                   printf "Please install dependencies manually\n"
-                  printf "aborting..."
+                  printf "aborting...\n"
                   ;;
            esac
        }
 
        main "$@"
     #+END_SRC
-
-* Legend
-** Brackets
-   - *Square* =[]=: optional parts: =W[orld]H[ealth]O[rganisation]=
-   - *Angular* =<>=: instructions to fill: =<a global organisation>=
-   - *Curly*, following a dollar =${}=: environment variable =${HOME}=
-   - *Round*, with bar separator: =(WHO|UNO)= = /WHO or UNO/
 
 * Setup
   - Affirm [[*Requirements][requirements]].
