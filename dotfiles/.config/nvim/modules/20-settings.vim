@@ -23,7 +23,7 @@ set fileformat=unix
 set clipboard=unnamed
 set expandtab
 if has('persistent_undo')
-  let undodir = has('nvim') ? stdpath('cache') . '/undodir' : '~/.cache/vim/undodir'
+  let undodir = g:cachedir . '/undodir'
   set undofile
 endif
 set background=dark

@@ -26,14 +26,25 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
+XDG_CACHE_HOME="${HOME}/.cache"
+XDG_CONFIG_HOME="${HOME}/.config"
+XDG_DATA_HOME="${HOME}/.local/share"
+XDG_STATE_HOME="${HOME}/.local/state"
 RUNCOMDIR="${HOME}/.runcom"
+
+export XDG_CACHE_HOME
+export XDG_CONFIG_HOME
+export XDG_DATA_HOME
+export XDG_STATE_HOME
 export RUNCOMDIR
+
 # shellcheck source="bin"
 if [ -d "${HOME}/bin" ] ; then
     if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
         PATH="${HOME}/bin:${PATH}"
     fi
 fi
+
 # shellcheck source=".local/bin"
 if [ -d "${HOME}/.local/bin" ] ; then
     if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then

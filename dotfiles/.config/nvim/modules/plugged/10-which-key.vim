@@ -44,7 +44,7 @@ let g:leader_map.e = {
     \ }
 
 nnoremap <silent> <leader>fed :e $XDG_CONFIG_HOME/nvim/init.vim<CR>
-nnoremap <silent> <leader>fep :e $XDG_CONFIG_HOME/nvim/modules/40-plugins.vim<CR>
+nnoremap <silent> <leader>fep :e $XDG_CONFIG_HOME/nvim/modules/50-plugins.vim<CR>
 let g:leader_map.f = {
     \ 'name' : '+file',
     \ 'e': {
@@ -76,6 +76,10 @@ let g:leader_map.l = {
 
 let g:leader_map.p = {
     \ 'name': '+Plug',
+    \ 'C': {
+    \ 'name': '+coc',
+    \ 'u': ['CocUpdate', 'update coc'],
+    \ },
     \ 'c': ['PlugClean', 'clean'],
     \ 'i': ['PlugInstall', 'install'],
     \ 'u': ['PlugUpdate', 'update'],

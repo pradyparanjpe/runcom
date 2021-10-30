@@ -16,7 +16,7 @@
 
 
 *** Aim
-    - Cross-machine synchronization (hence, git, .local)
+    - Cross-machine synchronization (hence, git)
     - Modularity (hence, not a single file)
     - Self-documenting (hence, a single 😉 org file)
     - Workflow speed (obviously)
@@ -767,16 +767,33 @@
    #+END_SRC
 
 * Variables
+** XDG
+   XDG standard locations specifications these can be redefined in
+   =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.<some name>rc=
+
+   #+BEGIN_SRC sh :tangle dotfiles/.profile
+     XDG_CACHE_HOME="${HOME}/.cache"
+     XDG_CONFIG_HOME="${HOME}/.config"
+     XDG_DATA_HOME="${HOME}/.local/share"
+     XDG_STATE_HOME="${HOME}/.local/state"
+     RUNCOMDIR="${HOME}/.runcom"
+
+     export XDG_CACHE_HOME
+     export XDG_CONFIG_HOME
+     export XDG_DATA_HOME
+     export XDG_STATE_HOME
+     export RUNCOMDIR
+   #+END_SRC
+
 ** PATH
    #+BEGIN_SRC sh :tangle dotfiles/.profile
-     RUNCOMDIR="${HOME}/.runcom"
-     export RUNCOMDIR
      # shellcheck source="bin"
      if [ -d "${HOME}/bin" ] ; then
          if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
              PATH="${HOME}/bin:${PATH}"
          fi
      fi
+
      # shellcheck source=".local/bin"
      if [ -d "${HOME}/.local/bin" ] ; then
          if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then

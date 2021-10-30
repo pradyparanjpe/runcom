@@ -1,12 +1,12 @@
-" Plug plugins
-let g:data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.local/share/vim/site'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+" Plugged plugins
+"
+" download plug.vim if unavailable
+if empty(glob(g:datadir . '/site/autoload/plug.vim'))
+  silent execute '!curl -fLo '.g:datadir.'/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-let g:plugged_dir = has('nvim') ? stdpath('data') . '/plugged' : '~/.local/share/vim/plugged'
 
-call plug#begin(g:plugged_dir)
+call plug#begin(g:datadir . '/plugged')
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -49,3 +49,8 @@ Plug 'mg979/vim-visual-multi'
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 call plug#end()
+
+for plugcfg in split(glob(fnamemodify(resolve(expand('<sfile>:p')), ':h')
+      \ . '/plugged/*.vim'), '\n')
+exe 'source' plugcfg
+endfor

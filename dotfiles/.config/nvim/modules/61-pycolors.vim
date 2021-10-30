@@ -13,8 +13,10 @@ syntax keyword PyArgs args kwargs
 " Highlights
 highlight link PyMagic PyBuiltIn
 
-highlight PyBuiltin cterm=None  ctermbg=None    ctermfg=178  gui=None   guibg=None  guifg=#d7af00
-highlight DocString cterm=None  ctermbg=None    ctermfg=134  gui=None   guibg=None  guifg=#af5f00
+highlight PyBuiltin cterm=None ctermbg=None ctermfg=178
+      \ gui=None guibg=None guifg=#d7af00
+highlight DocString cterm=None ctermbg=None ctermfg=134
+      \ gui=None guibg=None guifg=#af5f00
 highlight link PyArgs Statement
 highlight link PySelf Statement
 
