@@ -111,14 +111,15 @@ cli () {
 
 extract_env () {
     url="${1}"
+    # keep consuming URL like $@ is consumed from command line
     _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
-    url="${url##${_proto}://}"  # - protocol
+    url="${url#${_proto}://}"  # - protocol
     userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
-    _user="${userpass%%:*}"
-    _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*:\(\d*\),\1,g')"
+    _user="${userpass%:*}"
+    _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
     url="$(printf "%s" "${url##${userpass}@}" | cut -d/ -f1)"  # - credentials
-    _host="${url%%:*}"
-    _port="$(printf "%s" "${url}" | grep : | sed -e 's,^.*:\(\d*\),\1,g')"
+    _host="${url%:*}"
+    _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
     if [ -n "${_proto}" ]; then
         proxy_protocol="${_proto}"
     fi
@@ -209,8 +210,7 @@ extract_secret () {
         unset secret_ley
     fi
     o_ifs="${IFS}"
-    IFS="
-"
+    IFS="$(printf '\n ')" && IFS="${IFS% }"
     for line in $1; do
         extract_key "${line}"
     done

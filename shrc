@@ -634,11 +634,11 @@ alias qqqq="exit";
 alias wc="zwc";
 
 # shellcheck source=./bin/netcheck.sh
-IFS="$(printf '\t')" read -r IP_ADDR AP_ADDR netstate << netcheck
+o_ifs="${IFS}"
+IFS="$(printf "\t")" read -r _ _ netstate << netcheck
 $("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
 netcheck
-export IP_ADDR
-export AP_ADDR
+IFS="${o_ifs}"
 if [ $(( netstate & 8)) ]; then
     printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
     if [ ! $(( netstate & 16)) ]; then
