@@ -84,8 +84,8 @@
     #+END_SRC
 
     #+begin_note
-    Inspecting scripts before running them (especially with =sudo=) is generally a good idea.
-    The /dependencies/ script is tangled from the code below.
+    Inspecting scripts before running them (especially with =sudo=) is always a good idea.
+    The /dependencies/ script is tangled (with automation wrappers) from the code below.
     If you feel an urge to inspect it or if it fails,
     install dependencies manually instead, that's all it does.
     #+end_note
@@ -221,7 +221,8 @@
 
   #+begin_warning
   - The next steps require you to delete all [[*Structure][stowed dotfiles]].
-  - Copy them elsewhere before proceeding.
+  - We shall copy them in a directory named =${HOME}/OLD_CONFIG= before proceeding.
+  - Preserve this backup, you will need this during un-setup.
   - You HAVE BEEN warned.
   #+end_warning
 
@@ -234,8 +235,8 @@
      #+END_SRC
 
      #+begin_note
-     Inspecting scripts before running them (especially with =sudo=) is generally a good idea.
-     The /setup/ script is tangled from the code below.
+     Inspecting scripts before running them is generally a good idea.
+     The /setup/ script is tangled (with automation wrappers) from the code below.
      If you feel an urge to inspect it or if it fails,
      follow manual setup instructions with modifications instead.
      #+end_note
@@ -247,84 +248,225 @@
      # -*- coding: utf-8; mode: shell-script; -*-
    #+end_src
 
-   - Clone the repository and place at =${HOME}/.runcom=
+*** Clone the repository and place at =${HOME}/.runcom=
 
-   #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
-     clone_repo () {
-         if [ ! -d "${HOME}/.runcom" ]; then
-   #+END_SRC
+    #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
+      clone_repo () {
+          if [ ! -d "${HOME}/.runcom" ]; then
+    #+END_SRC
 
-   #+BEGIN_SRC sh :tangle setup/setup.sh
-     git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
-   #+END_SRC
+    #+BEGIN_SRC sh :tangle setup/setup.sh
+      git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
+    #+END_SRC
 
-   #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
-     else
-         printf "${HOME}/.runcom already exists. Quitting...\n"
-         exit 0
-     fi
-     }
-   #+END_SRC
+    #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
+      else
+          printf "${HOME}/.runcom already exists. Quitting...\n"
+          exit 0
+      fi
+      }
 
-   - Stow dotfiles
+       mask_stow_directories() {
+    #+END_SRC
 
+*** Stow dotfiles
+    - =GNU stow= will create symlinked structure for all contents in =${HOME}/.runcom/dotfiles= in =${HOME}=.
+    - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
+    - If =stow= finds a pre-existing file (non-directory), it throws error.
+**** Preserve 'current' configuration in a *visible* folder in =${HOME}=
+     #+begin_src sh :tangle setup/setup.sh
+       presernce="${HOME}/OLD_CONFIG"
+       mkdir -p "${presence}"
+       cat << EOR >> "${presence}/README.md"
+       This directory contains a backup of configuration that existed before runcom setup.
+       Files in this directory may be merged to their respective place after inspection.
+       I recommend that this directory should **NOT** deleted.
+       It will be required during un-doing the setup.
+       EOR
+     #+end_src
+
+**** Create directories, so that symlinks are made /inside/ them.
+     #+begin_src sh :tangle setup/setup.sh
+       for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
+           if [ -d "${conf_mask}" ]; then
+               hard_directory="${HOME}/.config/${conf_mask##*/}"
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   mv "${hard_directory}" "${presence}/${hard_directory}"
+               fi
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   # still no luck
+                   printf "%s Couldn't be removed and backed up\n"
+                   printf "This *shall* cause stow error\n"
+               fi
+       done
+       for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
+           if [ -d "${conf_mask}" ]; then
+               hard_directory="${HOME}/.local/share/${data_mask##*/}"
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   mv "${hard_directory}" "${presence}/${hard_directory}"
+               fi
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   # still no luck
+                   printf "%s Couldn't be removed and backed up\n"
+                   printf "This *shall* cause stow error\n"
+               fi
+       done
+       unset hard_directory
+       unset non_mt_msg
+     #+end_src
+
+**** Stow
      #+begin_src sh :tangle no
        stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
      #+end_src
 
-   #+begin_src sh :tangle setup/setup.sh :exports none
-     stow_deploy() {
-         if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
-             # stow threw error
-             stow_error="$?"
-             printf "Fix above errors and try again."
-             exit "${stow_error}"
-         fi
-     }
+     #+begin_src sh :tangle setup/setup.sh :exports none
+       }
+        stow_deploy() {
+            if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
+                # stow threw error
+                stow_error="$?"
+                printf "Fix above errors and try again."
+                exit "${stow_error}"
+            fi
+        }
 
-     main () {
-         clone_repo
-         stow_deploy
-     }
-     main "$@"
+        main () {
+            clone_repo
+            mask_stow_directories
+            stow_deploy
+        }
+        main "$@"
+     #+end_src
+
+* Undo Setup
+  #+begin_warning
+  Do *NOT* use =sudo= during unset.
+  #+end_warning
+
+  #+begin_note
+  - The next steps will require a directory containing 'old configuration files'.
+  - You HAD BEEN warned against deleting it during the setup.
+  #+end_note
+
+** Bootstrap unset using script
+   - Unset may be bootstrapped by running the [[./setup/unset.sh][unset]] script.
+
+     #+BEGIN_SRC sh :tangle no
+       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sudo sh
+
+     #+END_SRC
+
+     #+begin_note
+     Inspecting scripts before running them is generally a good idea.
+     The /unset/ script is tangled (with automation wrappers) from the code below.
+     If you feel an urge to inspect it or if it fails,
+     follow manual unset instructions with modifications instead.
+     #+end_note
+
+** Guide for manual un-setup.
+
+   #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+     #!/usr/bin/env sh
+     # -*- coding: utf-8; mode: shell-script; -*-
    #+end_src
 
-** Personalization
-*** Local
-    Create a directory at the location  =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d=.
-    - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc= are sourced.
-    - Do not synchronize this directory. This directory is only for the machine.
-    #+begin_src sh :tangle no
-      mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"
-    #+end_src
+*** UnStow dotfiles
+    - Use =GNU stow= to unstow to un-linked structure for all contents in =${HOME}/.runcom/dotfiles= from =${HOME}=.
+**** UnStow
+     #+begin_src sh :tangle no
+       stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
 
-*** Synchronized
-    Create a directory at the location =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d=.
-    #+begin_src sh :tangle no
-      mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"
-    #+end_src
+     #+end_src
 
-    - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc= are sourced.
-    - Synchronize (stow) that directory using a local repository or by simply copying contents.
-    #+begin_danger
-    - *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
-    - *DO NOT* synchronize this directory using a public repository.
-    - *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
-    #+end_danger
+     #+begin_src sh :tangle setup/unset.sh :exports none
+       unstow_undeploy() {
+           if ! stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles; then
+               # stow threw error
+               stow_error="$?"
+               printf "Fix above errors and try again."
+               exit "${stow_error}"
+           fi
+       }
 
+       restore_configurations() {
 
-    #+begin_tip
-    - Remember to keep the repository updated.
+     #+end_src
 
-    #+BEGIN_SRC sh :tangle no
-      git pull --recurse-submodules
+**** Restore directories form =${HOME}/OLD_CONFIG=
+     #+begin_src sh :tangle setup/unset.sh
+       for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
+           cp -r "${conf_dir}" "${HOME}"/. || break
+       done
+
+       # shellcheck disable=SC2181
+       if [ $? -ne 0 ]; then
+           printf "Restoration unsuccessful, copy backup files manually.\n"
+       else
+           printf "Restoration successful, backup directory may be deleted.\n"
+       fi
+     #+end_src
+
+*** Delete runcom
+    Goodbye
+
+    #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+      }
+
+       delete_repo () {
     #+END_SRC
-    #+end_tip
 
-*** Proxy settings
-    Read set up for [[./proxy_send.html][proxy_send]].
+    #+BEGIN_SRC sh :tangle setup/unset.sh
+      rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
+    #+END_SRC
 
-    *_SETUP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
+    #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+      }
+
+       main () {
+           unstow_undeploy
+           restore_configurations "$@"
+           delete_repo
+       }
+       main "$@"
+    #+END_SRC
+
+* Personalization
+** Local
+   Create a directory at the location  =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d=.
+   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc= are sourced.
+   - Do not synchronize this directory. This directory is only for the machine.
+     #+begin_src sh :tangle no
+       mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"
+     #+end_src
+
+** Synchronized
+   Create a directory at the location =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d=.
+   #+begin_src sh :tangle no
+     mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"
+   #+end_src
+
+   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc= are sourced.
+   - Synchronize (stow) that directory using a local repository or by simply copying contents.
+     #+begin_danger
+     - *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
+     - *DO NOT* synchronize this directory using a public repository.
+     - *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
+     #+end_danger
+
+
+   #+begin_tip
+   - Remember to keep the repository updated.
+
+     #+BEGIN_SRC sh :tangle no
+       git pull --recurse-submodules
+     #+END_SRC
+   #+end_tip
+
+** Proxy settings
+   Read set up for [[./proxy_send.html][proxy_send]].
+
+   *_SETUP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
 * Structure
   Following configuration files are available. This literate configuration tangles their contents.
   |------------------------------------------------+-------+--------+---------|
@@ -344,7 +486,6 @@
   | ${HOME}/.zlogin                                | yes   | yes    | ${USER} |
   | ${RUNCOMDIR}/shrc                              | yes   | no     | RUNCOM  |
   | ${RUNCOMDIR}/ui                                | yes   | no     | RUNCOM  |
-  | ${RUNCOMDIR}/complete.bash                     | yes   | no     | RUNCOM  |
   | ${XDG_DATA_HOME}/bash-completion/completions/* | no    | yes    | ${USER} |
   | ${XDG_CONFIG_DIR}                              | no    | yes    | ${USER} |
   | ${XDG_CONFIG_HOME}/local.d/.*rc                | yes   | no     | ${USER} |
@@ -576,7 +717,9 @@
        autoload colors && colors
        autoload add-zsh-hook
        autoload -Uz compinit
+       autoload -Uz bashcompinit
        compinit
+       bashcompinit
      #+END_SRC
 
    - Keybindings
@@ -708,16 +851,6 @@
           done
       fi
       unset local_src
-    #+END_SRC
-
-*** Python
-    [[https://github.com/kislyuk/argcomplete][Argcomplete]] to complete python commands
-    #+BEGIN_SRC sh :tangle shrc
-      # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-      if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash" ]; then
-          # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-          . "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash"
-      fi
     #+END_SRC
 
 * Better alternatives
@@ -1235,12 +1368,12 @@
       }
     #+END_SRC
 
-** Compilation
+** Documents compilation
 *** PDF from Latex
     #+BEGIN_SRC sh :tangle shrc
       pdfcompile() {
-          if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
-              printf "pdflatex is not installed\n"
+          if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+              printf "pdftex is not installed\n"
               return 127
           fi
 
@@ -1248,7 +1381,9 @@
           for ext in ".toc" ".log" ".aux"; do
               [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
           done
-          evince "${1%.tex}.pdf"
+          if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+              zathura "${1%.tex}.pdf"
+          fi
       }
     #+END_SRC
 *** Pandoc
@@ -1260,33 +1395,44 @@
                printf "pandoc is not installed\n"
                return 127
            fi
-           proceed=
+           proceed=false
            while test $# -gt 1; do
                case "$1" in
                    -f|--force)
                        proceed=true
                        shift 1
                        ;;
-                   ,*)
-                       infile="${1}"
+                   -h|--help)
+                       printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
+                       printf "Optional Arguments:\n"
+                       printf "%s\tshow this help message\n\n" "-h|--help"
+                       printf "%s\tignore extension mismatch\n" "-f|--force"
+                       printf "Positional Arguments:\n"
+                       printf "FILENAME.org\tpath to input filename\n"
+                       printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
+                       return 0
+                       ;;
+                   --)
                        shift 1
+                       ;;
+                   ,*)
+                       infile="${1}";
+                       target="${2}";
+                       break
                        ;;
                esac
            done
-           if [ "${1}" = "pdf" ]; then
+           if [ "${target}" = "pdf" ]; then
                target="latex"
-           else
-               target="${1}"
            fi
-           case "$infile" in
-               ,*.org)
-                   proceed=true
-                   ;;
-               ,*)
-                   echo "Input file should be an org file"
-                   ;;
-           esac
-           if [ -n "$proceed" ]; then
+           if [ "${infile%.org}" = "${infile}" ]; then
+               # <infile>
+               printf "Input file should be an org file\n"
+           else
+               # <infile>.org
+               proceed=true
+           fi
+           if $proceed; then
                pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
            fi
            unset proceed
@@ -1352,65 +1498,15 @@
    Launch application and exit terminal window
    Acts like a launcher
    Uninteractive terminal commands may also be called
+   Code is tangled in gui.org
    #+BEGIN_SRC sh :tangle shrc
      gui () {
-         usage="usage: $0 [-h|--help] CMD\n"
-         cmd_help="Launch CMD, switch to it, and exit the parent terminal\n\n"
-         cmd_help="${cmd_help}Optional arguments:\n"
-         cmd_help="${cmd_help}-h|--help\tdisplay this help and exit\n"
-         cmd=
-         call=
-
-         while [ $# -gt 0 ]; do
-             case "$1" in
-                 --help|-h)
-                     printf "%s""${usage}"
-                     printf "%s""${cmd_help}"
-                     shift 1
-                     unset cmd
-                     unset cmd_help
-                     unset usage
-                     unset call
-                     return 0
-                     ;;
-                 --)
-                     # end of gui arguments
-                     cmd="${cmd} $*"
-                     break
-                     ;;
-                 ,*)
-                     cmd="${1}"
-                     shift 1
-                     ;;
-             esac
-         done
-
-         call="$(echo "${cmd}" | cut -d " " -f 1)"
-         if [ -n "${call}" ]; then
-             if builtin command -v "${call}" >/dev/null 2>&1; then
-                 unset cmd_help
-                 unset usage
-                 unset call
-                 nohup "${cmd}" >/dev/null 0<&- 2>&1 & exit 0
-             else
-                 echo "${call} not found..."
-                 unset cmd
-                 unset cmd_help
-                 unset usage
-                 unset call
-                 return 127
-             fi
-         else
-             printf "%s""${usage}"
-             unset cmd
-             unset cmd_help
-             unset usage
-             unset call
-             return 1
+         "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
+         if [ $? = 65 ]; then
+             # if bin/gui.sh returns 65, kill shell, else, maintain
+             exit 0
          fi
-
      }
-
    #+END_SRC
 
 ** Un-Compress by context
@@ -1632,7 +1728,7 @@
    #+BEGIN_SRC sh :tangle shrc
      # shellcheck source=./bin/netcheck.sh
      o_ifs="${IFS}"
-     IFS="$(printf "\t")" read -r _ _ netstate << netcheck
+     IFS="$(printf "\t")" read -r ip_addr _ netstate << netcheck
      $("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
      netcheck
      IFS="${o_ifs}"
@@ -1641,7 +1737,7 @@
          if [ ! $(( netstate & 16)) ]; then
              printf "\e[1;35mProblem with DNS\e[m\n"
          fi
-         printf "\033[0;32m%s \e[m is current wireless ip address\n" "$IP_ADDR"
+         printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
      else
          printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
          if [ $(( netstate & 4 )) ]; then  # Intranet is connected
@@ -1654,7 +1750,7 @@
                  auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
                  if [ -f "${auto_proxy}" ]; then
                      # shellcheck source=./proxy_send.py
-                     eval $auto_proxy && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
+                     eval "$auto_proxy" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
                  fi
                  unset auto_proxy
              else
@@ -1664,12 +1760,14 @@
              printf "\e[1;33mNetwork connection Disconnected\e[m\n"
          fi
      fi
+     unset o_ifs
+     unset ip_addr
    #+END_SRC
 
 ** SSH Agent
    Reuse ssh agent for all logins
    #+BEGIN_SRC sh :tangle ui
-     if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+     if [ ! -S "~/.ssh/ssh_auth_sock" ]; then
          eval "$(ssh-agent)"
          ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
      fi

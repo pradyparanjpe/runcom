@@ -43,12 +43,6 @@ if [ -d "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d" ]; then
 fi
 unset local_src
 
-# shellcheck source=.local/share/pspman/src/runcom/complete.bash
-if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash" ]; then
-    # shellcheck source=.local/share/pspman/src/runcom/complete.bash
-    . "${RUNCOMDIR:-${HOME}/.runcom}/complete.bash"
-fi
-
 if builtin command -v 'bat' >/dev/null 2>&1; then
     alias cat="bat --color=auto";
 fi
@@ -318,8 +312,8 @@ dec2hex() {
 }
 
 pdfcompile() {
-    if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
-        printf "pdflatex is not installed\n"
+    if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        printf "pdftex is not installed\n"
         return 127
     fi
 
@@ -327,7 +321,9 @@ pdfcompile() {
     for ext in ".toc" ".log" ".aux"; do
         [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
     done
-    evince "${1%.tex}.pdf"
+    if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        zathura "${1%.tex}.pdf"
+    fi
 }
 
 org2export() {
@@ -336,33 +332,44 @@ org2export() {
         printf "pandoc is not installed\n"
         return 127
     fi
-    proceed=
+    proceed=false
     while test $# -gt 1; do
         case "$1" in
             -f|--force)
                 proceed=true
                 shift 1
                 ;;
-            *)
-                infile="${1}"
+            -h|--help)
+                printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
+                printf "Optional Arguments:\n"
+                printf "%s\tshow this help message\n\n" "-h|--help"
+                printf "%s\tignore extension mismatch\n" "-f|--force"
+                printf "Positional Arguments:\n"
+                printf "FILENAME.org\tpath to input filename\n"
+                printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
+                return 0
+                ;;
+            --)
                 shift 1
+                ;;
+            *)
+                infile="${1}";
+                target="${2}";
+                break
                 ;;
         esac
     done
-    if [ "${1}" = "pdf" ]; then
+    if [ "${target}" = "pdf" ]; then
         target="latex"
-    else
-        target="${1}"
     fi
-    case "$infile" in
-        *.org)
-            proceed=true
-            ;;
-        *)
-            echo "Input file should be an org file"
-            ;;
-    esac
-    if [ -n "$proceed" ]; then
+    if [ "${infile%.org}" = "${infile}" ]; then
+        # <infile>
+        printf "Input file should be an org file\n"
+    else
+        # <infile>.org
+        proceed=true
+    fi
+    if $proceed; then
         pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
     fi
     unset proceed
@@ -409,61 +416,11 @@ umount_cloud_sshfs() {
 }
 
 gui () {
-    usage="usage: $0 [-h|--help] CMD\n"
-    cmd_help="Launch CMD, switch to it, and exit the parent terminal\n\n"
-    cmd_help="${cmd_help}Optional arguments:\n"
-    cmd_help="${cmd_help}-h|--help\tdisplay this help and exit\n"
-    cmd=
-    call=
-
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            --help|-h)
-                printf "%s""${usage}"
-                printf "%s""${cmd_help}"
-                shift 1
-                unset cmd
-                unset cmd_help
-                unset usage
-                unset call
-                return 0
-                ;;
-            --)
-                # end of gui arguments
-                cmd="${cmd} $*"
-                break
-                ;;
-            *)
-                cmd="${1}"
-                shift 1
-                ;;
-        esac
-    done
-
-    call="$(echo "${cmd}" | cut -d " " -f 1)"
-    if [ -n "${call}" ]; then
-        if builtin command -v "${call}" >/dev/null 2>&1; then
-            unset cmd_help
-            unset usage
-            unset call
-            nohup "${cmd}" >/dev/null 0<&- 2>&1 & exit 0
-        else
-            echo "${call} not found..."
-            unset cmd
-            unset cmd_help
-            unset usage
-            unset call
-            return 127
-        fi
-    else
-        printf "%s""${usage}"
-        unset cmd
-        unset cmd_help
-        unset usage
-        unset call
-        return 1
+    "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
+    if [ $? = 65 ]; then
+        # if bin/gui.sh returns 65, kill shell, else, maintain
+        exit 0
     fi
-
 }
 
 deconvolute() {
@@ -635,7 +592,7 @@ alias wc="zwc";
 
 # shellcheck source=./bin/netcheck.sh
 o_ifs="${IFS}"
-IFS="$(printf "\t")" read -r _ _ netstate << netcheck
+IFS="$(printf "\t")" read -r ip_addr _ netstate << netcheck
 $("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
 netcheck
 IFS="${o_ifs}"
@@ -644,7 +601,7 @@ if [ $(( netstate & 8)) ]; then
     if [ ! $(( netstate & 16)) ]; then
         printf "\e[1;35mProblem with DNS\e[m\n"
     fi
-    printf "\033[0;32m%s \e[m is current wireless ip address\n" "$IP_ADDR"
+    printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
 else
     printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
     if [ $(( netstate & 4 )) ]; then  # Intranet is connected
@@ -657,7 +614,7 @@ else
             auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
             if [ -f "${auto_proxy}" ]; then
                 # shellcheck source=./proxy_send.py
-                eval $auto_proxy && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
+                eval "$auto_proxy" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
             fi
             unset auto_proxy
         else
@@ -667,3 +624,5 @@ else
         printf "\e[1;33mNetwork connection Disconnected\e[m\n"
     fi
 fi
+unset o_ifs
+unset ip_addr

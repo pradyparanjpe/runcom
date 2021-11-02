@@ -64,7 +64,9 @@ unsetopt beep
 autoload colors && colors
 autoload add-zsh-hook
 autoload -Uz compinit
+autoload -Uz bashcompinit
 compinit
+bashcompinit
 
 term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
 if [ -f "${term_key_source}" ]; then
