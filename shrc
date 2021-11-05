@@ -28,20 +28,14 @@
 #===================================================================
 
 # shellcheck disable=SC1090
-if [ -d "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d" ]; then
-    for pvt_src in "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"/.*rc; do
-        . "${pvt_src}"
-    done
-fi
-unset pvt_src
+for unsync_d in local.d pvt.d; do
+    for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
+        . "${rcfile}"
+    done 2>/dev/null
+done 2>/dev/null
 
-# shellcheck disable=SC1090
-if [ -d "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d" ]; then
-    for local_src in "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"/.*rc; do
-        . "${local_src}"
-    done
-fi
-unset local_src
+unset rcfile
+unset unsync_d
 
 if builtin command -v 'bat' >/dev/null 2>&1; then
     alias cat="bat --color=auto";
