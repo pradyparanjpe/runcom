@@ -34,6 +34,7 @@ for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
             printf "%s Couldn't be removed and backed up\n"
             printf "This *shall* cause stow error\n"
         fi
+    fi
 done
 for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
     if [ -d "${conf_mask}" ]; then
@@ -46,6 +47,7 @@ for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
             printf "%s Couldn't be removed and backed up\n"
             printf "This *shall* cause stow error\n"
         fi
+    fi
 done
 unset hard_directory
 unset non_mt_msg
