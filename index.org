@@ -5,7 +5,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle
+#+PROPERTY: header-args :tangle yes
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+EXPORT_FILE_NAME: docs/index.html
 
@@ -1769,6 +1769,17 @@
    #+END_SRC
 
 * Window Manager settings
+** Terminal
+   #+BEGIN_SRC sh :tangle ui
+     for term in foot alacritty termite tilix urxvt xterm; do
+         if [ -n "$(command -v $term)" ]; then
+             defterm="$term";
+             export defterm
+             break;
+         fi;
+     done
+   #+END_SRC
+
 ** Sway exports
    Don't really remember why these were made
    Not using currently. Preserved for future

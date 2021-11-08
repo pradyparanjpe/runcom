@@ -34,6 +34,14 @@ SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK
 ssh-add -l > /dev/null || ssh-add
 
+for term in foot alacritty termite tilix urxvt xterm; do
+    if [ -n "$(command -v $term)" ]; then
+        defterm="$term";
+        export defterm
+        break;
+    fi;
+done
+
 _common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
         XDG_RUNTIME_DIR="/run/user/$(id -u)"
