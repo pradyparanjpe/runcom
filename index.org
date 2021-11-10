@@ -1724,19 +1724,19 @@
      $("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
      netcheck
      IFS="${o_ifs}"
-     if [ $(( netstate & 8)) ]; then
+     if [ $(( netstate & 8)) = 8 ]; then
          printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
-         if [ ! $(( netstate & 16)) ]; then
+         if [ ! $(( netstate & 16))  = 16 ]; then
              printf "\e[1;35mProblem with DNS\e[m\n"
          fi
          printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
      else
          printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
-         if [ $(( netstate & 4 )) ]; then  # Intranet is connected
+         if [ $(( netstate & 4 )) = 4 ]; then  # Intranet is connected
              printf "\033[0;31mInternet Down\e[m\n"
-             if [ $(( netstate & 2 )) ]; then
+             if [ $(( netstate & 2 )) = 2 ]; then
                  printf "Home network connected,\n"
-             elif [ $(( netstate & 1 )) ]; then
+             elif [ $(( netstate & 1 )) = 1 ]; then
                  printf "OFFICE network connected,\n"
                  # shellcheck source=./bin/proxy_send.sh
                  auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"

@@ -74,7 +74,9 @@
      set_vars() {
          google_ip="8.8.8.8"
          google_dn="www.google.com"
-         ip_addr="$(hostname -i | awk '{print $(NF);}')"
+         if ! ip_addr="$(hostname -I 2>/dev/null)"; then
+             ip_addr="$(hostname -i | awk '{print $(NF);}')"
+         fi
          ap_addr="$(ip route show default \
                  | grep -o "\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}")"
          net_state=0
