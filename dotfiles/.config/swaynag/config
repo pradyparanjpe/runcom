@@ -1,0 +1,26 @@
+# inherited by each type
+font=Monospace 14
+background=000000
+text=ffffff
+button-border-size=3
+
+[info]
+background=000078
+text=ffff87
+border=8787ff
+button-background=202098
+button-text=rfrf6f
+
+[error]
+background=800000
+text=7fffff
+border=ff7f7f
+button-background=a02020
+button-text=5fdfdf
+
+[warning]
+background=cf9c00
+text=0033cf
+border=ffcc30
+button-background=efbc20
+button-text=0013af

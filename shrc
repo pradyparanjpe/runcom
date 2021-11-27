@@ -604,19 +604,21 @@ else
             printf "Home network connected,\n"
         elif [ $(( netstate & 1 )) = 1 ]; then
             printf "OFFICE network connected,\n"
-            # shellcheck source=./bin/proxy_send.sh
-            auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
-            if [ -f "${auto_proxy}" ]; then
-                # shellcheck source=./proxy_send.py
-                eval "$auto_proxy" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
-            fi
-            unset auto_proxy
         else
             printf "HOTSPOT connected\n"
         fi
     else
         printf "\e[1;33mNetwork connection Disconnected\e[m\n"
     fi
+fi
+# shellcheck source=./bin/proxy_send.sh
+if [ $(( netstate & 1 )) = 1 ]; then
+    auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
+    if [ -f "${auto_proxy}" ]; then
+        # shellcheck source=./proxy_send.py
+        eval "${auto_proxy}" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
+    fi
+    unset auto_proxy
 fi
 unset o_ifs
 unset ip_addr

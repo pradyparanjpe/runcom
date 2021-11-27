@@ -264,7 +264,7 @@ quote () {
 }
 
 send_request () {
-    curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/"
+    curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
     case $? in
         0)
             clean_exit
