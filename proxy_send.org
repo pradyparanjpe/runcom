@@ -282,73 +282,14 @@
 
    #+end_src
 
-** Extract proxy information from password-store
-   #+begin_src sh :tangle bin/proxy_send.sh
-     extract_key () {
-         key="$(printf "%s" "$1" | cut -d: -f1 )"
-         value="$(printf "%s" "$1" | cut -d: -f2 )"
-         value="${value## }"  # remove exactly 1 space from the start
-         case "${key}" in
-             protocol)
-                 proxy_protocol="${value}"
-                 ;;
-             address)
-                 proxy_host="${value}"
-                 ;;
-             port)
-                 proxy_port="${value}"
-                 ;;
-             username)
-                 proxy_username="$(quote "${value}")"
-                 ;;
-             password)
-                 proxy_password="$(quote "${value}")"
-                 ;;
-             ,*)
-                 # do nothing about misplaced information
-                 true
-                 ;;
-         esac
-         unset key
-         unset value
-     }
-
-     extract_secret () {
-         if [ -z "$1" ]; then
-             return
-         fi
-         if [ "$(printf "%s" "$1" | wc -l)" = 1 ]; then
-             # only 1 line, may be password or single secret
-             if [ "${1##: *}" = "${1}" ]; then
-                 # ': ' is not present in the secret, must be password
-                 proxy_password="$(quote "$1")"
-                 return
-             fi
-             for secret in ${pass_keys}; do
-                 if [ "$(printf "%s" "${1}" | cut -d: -f1)" = "${secret}" ]; then
-                     # secret key is found
-                     extract_key "${1}"
-                     unset secret
-                     return
-                 fi
-             done
-             unset secret_ley
-         fi
-         o_ifs="${IFS}"
-         IFS="$(printf '\n ')" && IFS="${IFS% }"
-         for line in $1; do
-             extract_key "${line}"
-         done
-         IFS="${o_ifs}"
-         unset o_ifs
-         unset line
-     }
-
-
-   #+end_src
-
 ** Compile proxy information
    #+begin_src sh :tangle bin/proxy_send.sh
+     build () {
+         all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
+         extract_env "${all_proxy}"
+         get_env_proxy
+     }
+
      compile_proxy () {
          if [ -z "${proxy_host}" ]; then
              return
@@ -373,17 +314,6 @@
          fi
          proxy_header="${proxy_header}/"
          unset scrt
-     }
-
-     build () {
-         ## build proxy authentication
-         if command -v "pass" >/dev/null 2>&1; then
-             # password store is available
-             if [ -n "${proxy_auth}" ]; then
-                 extract_secret "$(pass show "${proxy_auth}")"
-             fi
-         fi
-         get_env_proxy
      }
 
    #+end_src

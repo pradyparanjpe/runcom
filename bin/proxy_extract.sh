@@ -19,7 +19,7 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 affirm_availability () {
-    for _import in curl printenv grep tr; do
+    for _import in pass curl; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
             unset _import
             clean_exit 127 "${_import} is not installed\n"
@@ -30,8 +30,8 @@ affirm_availability () {
 
 set_vars () {
     show=false
-    pass_keys="protocol username password host port"
     proxy_header=
+    pass_keys=
     if [ -z "${proxy_protocol}" ]; then
         proxy_protocol='all'
     fi
@@ -42,18 +42,17 @@ set_vars () {
     usage="
     usage: ${0} -h
     usage: ${0} --help
-    usage: ${0} [Optional Arguments*] INSTANCE
+    usage: ${0}
 "
     help_msg="${usage}
 
     DESCRIPTION: |
-      Auto-send proxy authentication
+      extract proxy authentication from password store
 
 
     Optional Arguments: |
       -h\t\t\tprint usage message and exit
       --help\t\t\tprint this help message and exit
-      -s|--show\tdisplay what will be sent as header, don't send
 
 "
 }
@@ -61,7 +60,6 @@ set_vars () {
 unset_vars() {
     unset help_msg
     unset usage
-    unset show
     unset proxy_port
     unset proxy_host
     unset proxy_password
@@ -88,6 +86,13 @@ clean_exit() {
     exit 0
 }
 
+quote () {
+    printf "%s" "$1" \
+        | tr -d '\n' \
+        | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
+        | cut -c 3-
+}
+
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -109,60 +114,74 @@ cli () {
     done
 }
 
-extract_env () {
-    url="${1}"
-    # keep consuming URL like $@ is consumed from command line
-    _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
-    url="${url#${_proto}://}"  # - protocol
-    userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
-    _user="${userpass%:*}"
-    _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
-    url="$(printf "%s" "${url##${userpass}@}" | cut -d/ -f1)"  # - credentials
-    _host="${url%:*}"
-    _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
-    if [ -n "${_proto}" ]; then
-        proxy_protocol="${_proto}"
-    fi
-
-    if [ -n "${_user}" ]; then
-        proxy_username="${_user}"
-    fi
-
-    if [ -n "${_pass}" ]; then
-        proxy_password="${_pass}"
-    fi
-
-    if [ -n "${_host}" ]; then
-        proxy_host="${_host}"
-    fi
-
-    if [ -n "${_port}" ]; then
-        proxy_port="${_port}"
-    fi
-
-    unset _port
-    unset _host
-    unset _pass
-    unset _user
-    unset _proto
-    unset userpass
-    unset url
+extract_key () {
+    key="$(printf "%s" "$1" | cut -d: -f1 )"
+    value="$(printf "%s" "$1" | cut -d: -f2 )"
+    value="${value## }"  # remove exactly 1 space from the start
+    case "${key}" in
+        protocol)
+            proxy_protocol="${value}"
+            ;;
+        address)
+            proxy_host="${value}"
+            ;;
+        port)
+            proxy_port="${value}"
+            ;;
+        username)
+            proxy_username="$(quote "${value}")"
+            ;;
+        password)
+            proxy_password="$(quote "${value}")"
+            ;;
+        *)
+            # do nothing about misplaced information
+            true
+            ;;
+    esac
+    unset key
+    unset value
 }
 
-get_env_proxy () {
-    # Parse environment variable.
-    proxy_str="$(printenv "${proxy_protocol}_proxy")"
-    if [ -z "${proxy_str}" ]; then
+extract_secret () {
+    if [ -z "$1" ]; then
         return
     fi
-    extract_env "${proxy_str}"
-    unset proxy_str
+    if [ "$(printf "%s" "$1" | wc -l)" = 1 ]; then
+        # only 1 line, may be password or single secret
+        if [ "${1##: *}" = "${1}" ]; then
+            # ': ' is not present in the secret, must be password
+            proxy_password="$(quote "$1")"
+            return
+        fi
+        for secret in ${pass_keys}; do
+            if [ "$(printf "%s" "${1}" | cut -d: -f1)" = "${secret}" ]; then
+                # secret key is found
+                extract_key "${1}"
+                unset secret
+                return
+            fi
+        done
+        unset secret_ley
+    fi
+    o_ifs="${IFS}"
+    IFS="$(printf '\n ')" && IFS="${IFS% }"
+    for line in $1; do
+        extract_key "${line}"
+    done
+    IFS="${o_ifs}"
+    unset o_ifs
+    unset line
 }
 
-build () {
-    all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
-    extract_env "${all_proxy}"
-    get_env_proxy
+get_pass_proxy () {
+    ## build proxy authentication
+    if command -v "pass" >/dev/null 2>&1; then
+        # password store is available
+        if [ -n "${proxy_auth}" ]; then
+            extract_secret "$(pass show "${proxy_auth}")"
+        fi
+    fi
 }
 
 compile_proxy () {
@@ -191,48 +210,14 @@ compile_proxy () {
     unset scrt
 }
 
-quote () {
-    printf "%s" "$1" \
-        | tr -d '\n' \
-        | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
-        | cut -c 3-
-}
-
-send_request () {
-    curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
-    case $? in
-        0)
-            clean_exit
-            ;;
-        6)
-            # Couldn't resolve
-            clean_exit 6
-            ;;
-        7)
-            # No route to proxy_host
-            clean_exit
-            ;;
-        *)
-            # other error
-            clean_exit "$?"
-            ;;
-    esac
-}
-
 main() {
     # Main routine call
-    affirm_availability
     set_vars
     cli "$@"
-    build
+    get_pass_proxy
     compile_proxy
-    if $show; then
-        printf "auth: '%s'\n" "${proxy_header}"
-        clean_exit
-    fi
-    send_request
+    printf "%s\n" "${proxy_header}"
     clean_exit
 }
-
 
 main "$@"
