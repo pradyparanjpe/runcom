@@ -86,13 +86,6 @@ clean_exit() {
     exit 0
 }
 
-quote () {
-    printf "%s" "$1" \
-        | tr -d '\n' \
-        | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
-        | cut -c 3-
-}
-
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -112,6 +105,13 @@ cli () {
                 clean_exit 1 "${usage}"
         esac
     done
+}
+
+quote () {
+    printf "%s" "$1" \
+        | tr -d '\n' \
+        | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
+        | cut -c 3-
 }
 
 extract_key () {

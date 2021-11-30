@@ -26,7 +26,7 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
-if [ ! -S "~/.ssh/ssh_auth_sock" ]; then
+if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
     eval "$(ssh-agent)"
     ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
 fi
@@ -111,42 +111,71 @@ _exports_for_x11 () {
 _select_x11_manager() {
     echo "Window managers:"
     ls "/usr/share/xsessions"
-    read x11wm && echo "${x11wm}" > "${HOME}/.xinitrc" && unset x11wm
+    read -r x11wm && echo "${x11wm}" > "${HOME}/.xinitrc" && unset x11wm
 }
 
-if [ "$(tty)" = "/dev/tty1" ]; then
-    if builtin command -v sway 2>&1 > /dev/null; then
-        if sway --validate; then
-            _exports_for_sway
-            exec dbus-launch --sh-syntax --exit-with-session sway
+_exports_for_proxies () {
+    if [ -z "${export_proxies}" ]; then
+        printf "Export proxies?[y/N]:\t"
+        read -r export_proxies
+    fi
+    case "${export_proxies}}" in
+        Y*|y*)
+            all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
+            http_proxy="${all_proxy}"
+            https_proxy="${all_proxy}"
+            ftp_proxy="${all_proxy}"
+            ftps_proxy="${all_proxy}"
+
+            export all_proxy
+            export http_proxy
+            export https_proxy
+            export ftp_proxy
+            export ftps_proxy
+            ;;
+        *)
+            ;;
+    esac
+
+}
+
+main () {
+    _exports_for_proxies
+    if [ "$(tty)" = "/dev/tty1" ]; then
+        if builtin command -v sway > /dev/null 2>&1; then
+            if sway --validate; then
+                _exports_for_sway
+                exec dbus-launch --sh-syntax --exit-with-session sway
+            else
+                echo "Error while validating sway configuration"
+            fi
         else
-            echo "Error while validating sway configuration"
+            _exports_for_x11
+            _select_x11_manager
+            exec startx
         fi
-    else
+    elif [ "$(tty)" = "/dev/tty2" ]; then
         _exports_for_x11
         _select_x11_manager
         exec startx
+    elif [ "$TERM" = "linux" ]; then
+        printf "\e]P0000000" #black
+        printf "\e]P83f3f3f" #darkgrey
+        printf "\e]P19f3f3f" #darkred
+        printf "\e]P9ff9f9f" #red
+        printf "\e]P23f9f3f" #darkgreen
+        printf "\e]PAbfefbf" #green
+        printf "\e]P3bf9f3f" #brown
+        printf "\e]PB9fff9f" #yellow
+        printf "\e]P45f5f9f" #darkblue
+        printf "\e]PC9f9fff" #blue
+        printf "\e]P59f3f9f" #darkmagenta
+        printf "\e]PDff9fff" #magenta
+        printf "\e]P63f9f9f" #darkcyan
+        printf "\e]PE9fffff" #cyan
+        printf "\e]P7afafaf" #lightgrey
+        printf "\e]PFffffff" #white
+        clear #for background artifacting
     fi
-elif [ "$(tty)" = "/dev/tty2" ]; then
-    _exports_for_x11
-    _select_x11_manager
-    exec startx
-elif [ "$TERM" = "linux" ]; then
-    printf "\e]P0000000" #black
-    printf "\e]P83f3f3f" #darkgrey
-    printf "\e]P19f3f3f" #darkred
-    printf "\e]P9ff9f9f" #red
-    printf "\e]P23f9f3f" #darkgreen
-    printf "\e]PAbfefbf" #green
-    printf "\e]P3bf9f3f" #brown
-    printf "\e]PB9fff9f" #yellow
-    printf "\e]P45f5f9f" #darkblue
-    printf "\e]PC9f9fff" #blue
-    printf "\e]P59f3f9f" #darkmagenta
-    printf "\e]PDff9fff" #magenta
-    printf "\e]P63f9f9f" #darkcyan
-    printf "\e]PE9fffff" #cyan
-    printf "\e]P7afafaf" #lightgrey
-    printf "\e]PFffffff" #white
-    clear #for background artifacting
-fi
+}
+main "$@"

@@ -612,7 +612,9 @@ else
     fi
 fi
 # shellcheck source=./bin/proxy_send.sh
-if [ $(( netstate & 1 )) = 1 ]; then
+if [ -n "${http_proxy}" ] \
+       && ! curl "https://duckduckgo.com/" > /dev/null 2>&1 \
+       && [ $(( netstate & 1 )) = 1 ]; then
     auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
     if [ -f "${auto_proxy}" ]; then
         # shellcheck source=./proxy_send.py

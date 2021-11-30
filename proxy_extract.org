@@ -38,9 +38,9 @@
         #+end_seealso
 
         #+BEGIN_SRC sh :tangle no
-        proxy_auth="office/proxy_server.example.com/best_employee"
-        export proxy_auth
-      #+END_SRC
+          proxy_auth="office/proxy_server.example.com/best_employee"
+          export proxy_auth
+        #+END_SRC
 
     - Secret *MUST* be stored in either of following formats.
 
@@ -172,13 +172,6 @@
 
 ** Parse command
    #+begin_src sh :tangle bin/proxy_extract.sh
-     quote () {
-         printf "%s" "$1" \
-             | tr -d '\n' \
-             | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
-             | cut -c 3-
-     }
-
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -204,6 +197,13 @@
 
 ** Extractor
    #+begin_src sh :tangle bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
+     quote () {
+         printf "%s" "$1" \
+             | tr -d '\n' \
+             | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
+             | cut -c 3-
+     }
+
      extract_key () {
          key="$(printf "%s" "$1" | cut -d: -f1 )"
          value="$(printf "%s" "$1" | cut -d: -f2 )"
