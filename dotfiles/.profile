@@ -26,6 +26,12 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
+LC_ALL=en_IN.UTF-8
+LANG=en_IN.UTF-8
+
+export LC_ALL
+export LANG
+
 XDG_CACHE_HOME="${HOME}/.cache"
 XDG_CONFIG_HOME="${HOME}/.config"
 XDG_DATA_HOME="${HOME}/.local/share"

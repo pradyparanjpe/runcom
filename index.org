@@ -648,6 +648,14 @@
   #+end_src
 
 * Init
+** profile
+   #+BEGIN_SRC sh :tangle dotfiles/.profile
+     LC_ALL=en_IN.UTF-8
+     LANG=en_IN.UTF-8
+
+     export LC_ALL
+     export LANG
+   #+end_src
 ** bash
    - Prevent bashrc from running outside non-interactive mode
    #+BEGIN_SRC bash :tangle dotfiles/.bashrc
