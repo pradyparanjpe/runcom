@@ -5,7 +5,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle
+#+PROPERTY: header-args :tangle yes
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+EXPORT_FILE_NAME: docs/proxy_extract.html
 
@@ -71,7 +71,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
+  #+begin_src sh :tangle ../bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
     #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
@@ -95,7 +95,7 @@
   #+end_src
 
 ** Check availability
-   #+begin_src sh :tangle bin/proxy_extract.sh
+   #+begin_src sh :tangle ../bin/proxy_extract.sh
      affirm_availability () {
          for _import in pass curl; do
              if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -109,7 +109,7 @@
    #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle bin/proxy_extract.sh
+   #+begin_src sh :tangle ../bin/proxy_extract.sh
      set_vars () {
          show=false
          proxy_header=
@@ -171,7 +171,7 @@
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle bin/proxy_extract.sh
+   #+begin_src sh :tangle ../bin/proxy_extract.sh
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -196,7 +196,7 @@
    #+end_src
 
 ** Extractor
-   #+begin_src sh :tangle bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
      quote () {
          printf "%s" "$1" \
              | tr -d '\n' \
@@ -276,7 +276,7 @@
    #+end_src
 
 ** Compiler
-   #+begin_src sh :tangle bin/proxy_extract.sh
+   #+begin_src sh :tangle ../bin/proxy_extract.sh
      compile_proxy () {
          if [ -z "${proxy_host}" ]; then
              return
@@ -305,7 +305,7 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle bin/proxy_extract.sh
+   #+begin_src sh :tangle ../bin/proxy_extract.sh
      main() {
          # Main routine call
          set_vars

@@ -121,9 +121,9 @@ bindkey '^r' history-incremental-search-backward
 
 zle -N zle-keymap-select
 
-# shellcheck source=".runcom/shrc"
-if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/shrc" ]; then
-    . "${RUNCOMDIR:-${HOME}/.runcom}/shrc"
+# shellcheck source=".runcom/env/shrc"
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
 fi
 while read -r addition; do
     while read -r share_dir; do

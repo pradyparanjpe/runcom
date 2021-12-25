@@ -26,7 +26,7 @@
 #                    |__/                      |__/|_|
 #===================================================================
 
-# netcheck source=.local/share/pspman/src/runcom/ui
-if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/ui ]; then
-    . "${RUNCOMDIR:-${HOME}/.runcom}"/ui
+# netcheck source=.local/share/pspman/src/runcom/env/ui
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
 fi

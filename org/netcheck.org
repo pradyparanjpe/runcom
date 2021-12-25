@@ -5,9 +5,9 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle
+#+PROPERTY: header-args :tangle yes
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/netcheck.html
+#+EXPORT_FILE_NAME: ../docs/netcheck.html
 
 * Description
   Identify connected network.
@@ -45,7 +45,7 @@
 
 * Code
   This section tangles source code
-  #+begin_src sh :tangle bin/netcheck.sh :exports none :tangle-mode (identity #o755)
+  #+begin_src sh :tangle ../bin/netcheck.sh :exports none :tangle-mode (identity #o755)
     #!/usr/bin/env sh
     #-*- coding:utf-8; mode:shell-script -*-
     #
@@ -70,7 +70,7 @@
   #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle bin/netcheck.sh
+   #+begin_src sh :tangle ../bin/netcheck.sh
      set_vars() {
          google_ip="8.8.8.8"
          google_dn="www.google.com"
@@ -120,7 +120,7 @@
    #+end_src
 
 ** Identify intranet
-   #+begin_src sh :tangle bin/netcheck.sh
+   #+begin_src sh :tangle ../bin/netcheck.sh
      at_home() {
          # shellcheck disable=SC2154
          for ap in ${home_ap}; do
@@ -134,7 +134,7 @@
    #+end_src
 
 ** ping
-   #+begin_src sh :tangle bin/netcheck.sh
+   #+begin_src sh :tangle ../bin/netcheck.sh
      ping_target () {
          if [ -z "${1}" ]; then
              return 1
@@ -175,7 +175,7 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle bin/netcheck.sh
+   #+begin_src sh :tangle ../bin/netcheck.sh
      main() {
          set_vars
          at_home

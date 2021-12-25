@@ -7,7 +7,7 @@
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle yes
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/index.html
+#+EXPORT_FILE_NAME: ../docs/index.html
 
 * Prady_runcom
 ** What's this?
@@ -94,66 +94,66 @@
     Use suitable package manager to install curl, git, stow.
     It may be useful to update existing packages and repository database before installing packages.
 
-    #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
+    #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
       #!/usr/bin/env sh
       # -*- coding: utf-8; mode: shell-script; -*-
       dnf_install() {
     #+end_src
 
     - dnf: Fedora, RockyLinux, RHEL, CentOS
-      #+BEGIN_SRC sh :tangle setup/dependencies.sh
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh
         dnf -y update || return 65
         dnf -y install curl git stow || return 66
       #+end_src
 
-      #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
         }
 
          apk_install() {
       #+end_src
 
     - apk: Alpine Linux
-      #+begin_src sh :tangle setup/dependencies.sh
+      #+begin_src sh :tangle ../setup/dependencies.sh
         apk update || return 65
         apk --virtual runcom add curl git stow || return 66
       #+end_src
 
-      #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
         }
 
          apt_install() {
       #+end_src
 
     - apt: Debian, Ubuntu
-      #+begin_src sh :tangle setup/dependencies.sh
+      #+begin_src sh :tangle ../setup/dependencies.sh
         apt update || return 65
         apt install -y curl git stow || return 66
       #+end_src
 
-      #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
         }
 
          zypper_install() {
       #+end_src
 
     - zypper: OpenSuSE, SuSE
-      #+begin_src sh :tangle setup/dependencies.sh
+      #+begin_src sh :tangle ../setup/dependencies.sh
         zypper ref || return 65
         zypper -n install curl git stow || return 66
       #+end_src
 
-      #+BEGIN_SRC sh :tangle setup/dependencies.sh :exports none
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
         }
 
          pacman_install() {
       #+end_src
 
     - pacman: Arch, Manjaro
-      #+begin_src sh :tangle setup/dependencies.sh
+      #+begin_src sh :tangle ../setup/dependencies.sh
         pacman --noconfirm -Syu curl git stow || return 65
       #+end_src
 
-    #+begin_src sh :tangle setup/dependencies.sh :exports none
+    #+begin_src sh :tangle ../setup/dependencies.sh :exports none
       }
        guess_manager() {
            for manager in dnf apt apk zypper pacman; do
@@ -243,23 +243,23 @@
 
 ** Guide for manual setup.
 
-   #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
+   #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
      #!/usr/bin/env sh
      # -*- coding: utf-8; mode: shell-script; -*-
    #+end_src
 
 *** Clone the repository and place at =${HOME}/.runcom=
 
-    #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
       clone_repo () {
           if [ ! -d "${HOME}/.runcom" ]; then
     #+END_SRC
 
-    #+BEGIN_SRC sh :tangle setup/setup.sh
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh
       git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
     #+END_SRC
 
-    #+BEGIN_SRC sh :tangle setup/setup.sh :exports none
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
       else
           printf "${HOME}/.runcom already exists. Quitting...\n"
           exit 0
@@ -274,19 +274,19 @@
     - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
     - If =stow= finds a pre-existing file (non-directory), it throws error.
 **** Preserve 'current' configuration in a *visible* folder in =${HOME}=
-     #+begin_src sh :tangle setup/setup.sh
-       presernce="${HOME}/OLD_CONFIG"
+     #+begin_src sh :tangle ../setup/setup.sh
+       presence="${HOME}/OLD_CONFIG"
        mkdir -p "${presence}"
        cat << EOR >> "${presence}/README.md"
        This directory contains a backup of configuration that existed before runcom setup.
        Files in this directory may be merged to their respective place after inspection.
-       I recommend that this directory should **NOT** deleted.
+       I recommend that this directory should **NOT** be deleted.
        It will be required during un-doing the setup.
        EOR
      #+end_src
 
 **** Create directories, so that symlinks are made /inside/ them.
-     #+begin_src sh :tangle setup/setup.sh
+     #+begin_src sh :tangle ../setup/setup.sh
        for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
            if [ -d "${conf_mask}" ]; then
                hard_directory="${HOME}/.config/${conf_mask##*/}"
@@ -322,7 +322,7 @@
        stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
      #+end_src
 
-     #+begin_src sh :tangle setup/setup.sh :exports none
+     #+begin_src sh :tangle ../setup/setup.sh :exports none
        }
         stow_deploy() {
             if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
@@ -368,7 +368,7 @@
 
 ** Guide for manual un-setup.
 
-   #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+   #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
      #!/usr/bin/env sh
      # -*- coding: utf-8; mode: shell-script; -*-
    #+end_src
@@ -381,7 +381,7 @@
 
      #+end_src
 
-     #+begin_src sh :tangle setup/unset.sh :exports none
+     #+begin_src sh :tangle ../setup/unset.sh :exports none
        unstow_undeploy() {
            if ! stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles; then
                # stow threw error
@@ -396,7 +396,7 @@
      #+end_src
 
 **** Restore directories form =${HOME}/OLD_CONFIG=
-     #+begin_src sh :tangle setup/unset.sh
+     #+begin_src sh :tangle ../setup/unset.sh
        for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
            cp -r "${conf_dir}" "${HOME}"/. || break
        done
@@ -412,17 +412,17 @@
 *** Delete runcom
     Goodbye
 
-    #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
       }
 
        delete_repo () {
     #+END_SRC
 
-    #+BEGIN_SRC sh :tangle setup/unset.sh
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh
       rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
     #+END_SRC
 
-    #+BEGIN_SRC sh :tangle setup/unset.sh :exports none
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
       }
 
        main () {
@@ -486,8 +486,8 @@
   | ${HOME}/.zprofile                              | yes   | yes    | ${USER} |
   | ${HOME}/.zshenv                                | yes   | yes    | ${USER} |
   | ${HOME}/.zlogin                                | yes   | yes    | ${USER} |
-  | ${RUNCOMDIR}/shrc                              | yes   | no     | RUNCOM  |
-  | ${RUNCOMDIR}/ui                                | yes   | no     | RUNCOM  |
+  | ${RUNCOMDIR}/env/shrc                          | yes   | no     | RUNCOM  |
+  | ${RUNCOMDIR}/env/ui                            | yes   | no     | RUNCOM  |
   | ${XDG_DATA_HOME}/bash-completion/completions/* | no    | yes    | ${USER} |
   | ${XDG_CONFIG_DIR}                              | no    | yes    | ${USER} |
   | ${XDG_CONFIG_HOME}/local.d/.*rc                | yes   | no     | ${USER} |
@@ -504,12 +504,12 @@
 **** ${HOME}/.profile
 
 **** ${HOME}/.bashrc
-****** ${RUNCOMDIR}/shrc
+****** ${RUNCOMDIR}/env/shrc
 ******* ${XDG_CONFIG_HOME}/local.d/*
 ******* ${XDG_CONFIG_HOME}/pvt.d/*
 
 **** ${HOME}/.bash_login
-****** ${RUNCOMDIR}/ui
+****** ${RUNCOMDIR}/env/ui
 
 ** Zsh
 *** /etc/profile
@@ -522,20 +522,20 @@
 **** ${HOME}/.profile
 
 *** ${HOME}/.zshrc
-***** ${RUNCOMDIR}/shrc
+***** ${RUNCOMDIR}/env/shrc
 ****** ${XDG_CONFIG_HOME}/local.d/*
 ****** ${XDG_CONFIG_HOME}/pvt.d/*
 
 *** ${HOME}/.zlogin
-***** ${RUNCOMDIR}/ui
+***** ${RUNCOMDIR}/env/ui
 
 * Headers
   Copyright, License banners
-  #+BEGIN_SRC sh :tangle shrc :exports none :noweb-ref posix-check
+  #+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref posix-check
     # shellcheck shell=sh
   #+end_src
 
-  #+BEGIN_SRC sh :tangle shrc :exports none :noweb-ref banner
+  #+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref banner
     # -*- coding:utf-8; mode:shell-script; -*-
     #
     # Copyright 2020, 2021 Pradyumna Paranjape
@@ -565,46 +565,46 @@
 
   #+end_src
 
-  #+BEGIN_SRC bash :tangle dotfiles/.bashrc :exports none :noweb-ref bash-check
+  #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb-ref bash-check
     # shellcheck shell=bash
   #+end_src
 
-  #+BEGIN_SRC bash :tangle dotfiles/.bashrc :exports none :noweb yes
+  #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb yes
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC bash :tangle dotfiles/.zshrc :exports none :noweb yes
+  #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc :exports none :noweb yes
     <<bash-check>>
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC bash :tangle dotfiles/.bash_login :exports none :noweb yes
+  #+BEGIN_SRC bash :tangle ../dotfiles/.bash_login :exports none :noweb yes
     <<posix-check>>
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC bash :tangle dotfiles/.zshenv :exports none :noweb yes
+  #+BEGIN_SRC bash :tangle ../dotfiles/.zshenv :exports none :noweb yes
     <<posix-check>>
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC bash :tangle dotfiles/.zlogin :exports none :noweb yes
+  #+BEGIN_SRC bash :tangle ../dotfiles/.zlogin :exports none :noweb yes
     <<posix-check>>
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC sh :tangle dotfiles/.profile :exports none :noweb yes
+  #+BEGIN_SRC sh :tangle ../dotfiles/.profile :exports none :noweb yes
     <<posix-check>>
     <<banner>>
   #+END_SRC
 
-  #+BEGIN_SRC sh :tangle ui :exports none :noweb yes
+  #+BEGIN_SRC sh :tangle ../env/ui :exports none :noweb yes
     <<posix-check>>
     <<banner>>
   #+END_SRC
 
 * Profiles
-  #+BEGIN_SRC bash :tangle dotfiles/.bash_profile
+  #+BEGIN_SRC bash :tangle ../dotfiles/.bash_profile
     if [ -f "${HOME}/.profile" ]; then
         # shellcheck disable=SC1091
         . "${HOME}/.profile"
@@ -622,7 +622,7 @@
 
   #+END_SRC
 
-  #+BEGIN_SRC bash :tangle dotfiles/.zprofile
+  #+BEGIN_SRC bash :tangle ../dotfiles/.zprofile
     # shellcheck source=".profile"
     if [ -f "${HOME}"/.profile ]; then
         # shellcheck disable=SC1091
@@ -630,7 +630,7 @@
     fi
   #+END_SRC
 
-  #+begin_src bash :tangle dotfiles/.zshrc
+  #+begin_src bash :tangle ../dotfiles/.zshrc
     # The following lines were added by compinstall
 
     zstyle ':completion:*' completer _complete _ignored _approximate
@@ -649,7 +649,7 @@
 
 * Init
 ** profile
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      LC_ALL=en_IN.UTF-8
      LANG=en_IN.UTF-8
 
@@ -658,7 +658,7 @@
    #+end_src
 ** bash
    - Prevent bashrc from running outside non-interactive mode
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      case $- in
          ,*i*)
          ;;
@@ -669,14 +669,14 @@
    #+END_SRC
 
    - Option settings
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      shopt -s autocd
      shopt -s checkwinsize
      shopt -s globstar
    #+END_SRC
 
    - History
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      shopt -s histappend
      HISTCONTROL=ignoreboth
      HISTSIZE=10000
@@ -684,14 +684,14 @@
    #+END_SRC
 
    - Colored terminals
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      case "$TERM" in
          xterm-color|*-256color) color_prompt=yes;;
      esac
    #+END_SRC
 
    - Keybindings
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      set -o vi
      bind '"jk":vi-movement-mode'
    #+END_SRC
@@ -699,14 +699,14 @@
 ** zsh
    Settings
    - History
-   #+BEGIN_SRC bash :tangle dotfiles/.zshrc
+   #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
      HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
      HISTSIZE=10000
      SAVEHIST=10000
    #+END_SRC
 
    - Options
-     #+BEGIN_SRC bash :tangle dotfiles/.zshrc
+     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
        ZSH_AUTOSUGGEST_STRATEGY=("history" "completion")
        setopt autocd
@@ -733,7 +733,7 @@
      #+END_SRC
 
    - Keybindings
-     #+BEGIN_SRC bash :tangle dotfiles/.zshrc
+     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
        term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
        if [ -f "${term_key_source}" ]; then
            source "${term_key_source}"
@@ -795,10 +795,10 @@
 
 * Inherit
 ** bash
-   #+BEGIN_SRC bash :tangle dotfiles/.bashrc
-     # shellcheck source=".runcom/shrc"
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/shrc" ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}/shrc"
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+     # shellcheck source=".runcom/env/shrc"
+     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+         . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
      fi
      if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh" ]; then
          . "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"
@@ -806,10 +806,10 @@
    #+END_SRC
 
 ** zsh
-   #+BEGIN_SRC bash :tangle dotfiles/.zshrc
-     # shellcheck source=".runcom/shrc"
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/shrc" ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}/shrc"
+   #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+     # shellcheck source=".runcom/env/shrc"
+     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+         . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
      fi
      while read -r addition; do
          while read -r share_dir; do
@@ -841,7 +841,7 @@
 ** shrc
 *** Local unsynced changes
     All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       # shellcheck disable=SC1090
       for unsync_d in local.d pvt.d; do
           for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
@@ -855,14 +855,14 @@
 
 * Better alternatives
 ** cat
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      if builtin command -v 'bat' >/dev/null 2>&1; then
          alias cat="bat --color=auto";
      fi
    #+END_SRC
 
 ** g/re/p
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      for sc in "ack" "pt" "ag" "rg"; do
          if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
              # shellcheck disable=SC2139
@@ -872,7 +872,7 @@
    #+END_SRC
 
 ** List Contents
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      if builtin command -v "exa" >/dev/null 2>&1; then
          alias ls="exa -Fh --color=auto";
          alias la='exa -a --color=auto';
@@ -884,7 +884,7 @@
    #+END_SRC
 
 ** neo visual editor improved
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      if builtin command -v nvim >/dev/null 2>&1; then
          alias ex="nvim"; # always open vim in normal mode
          alias vim="nvim"; # always use neo
@@ -892,7 +892,7 @@
    #+END_SRC
 
 ** Container
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      if builtin command -v podman >/dev/null 2>&1; then
          alias docker="podman";  # Podman is drop-in replacement for docker
          alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
@@ -904,7 +904,7 @@
    XDG standard locations specifications these can be redefined in
    =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.<some name>rc=
 
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      XDG_CACHE_HOME="${HOME}/.cache"
      XDG_CONFIG_HOME="${HOME}/.config"
      XDG_DATA_HOME="${HOME}/.local/share"
@@ -919,7 +919,7 @@
    #+END_SRC
 
 ** PATH
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      # shellcheck source="bin"
      if [ -d "${HOME}/bin" ] ; then
          if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
@@ -937,7 +937,7 @@
    #+END_SRC
 
 ** Editor wars
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      while read -r avail; do
          if builtin command -v "${avail}" >/dev/null 2>&1; then
              EDITOR="${avail}"
@@ -967,7 +967,7 @@
    #+END_SRC
 
 ** C(++) exports
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
      C_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
      CPLUS_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
@@ -977,7 +977,7 @@
    #+END_SRC
 
 ** GPU exports
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      PYOPENCL_CTX='0';
      PYOPENCL_COMPILER_OUTPUT=1;
      OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
@@ -987,13 +987,13 @@
    #+END_SRC
 
 ** Bemenu exports
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      export BEMENU_OPTS='--fn firacode 14 '
    #+END_SRC
 
 ** GTK+ debugging output
    Silence debugging output for gtk+
-   #+BEGIN_SRC sh :tangle dotfiles/.profile
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      NO_AT_BRIDGE=1
      export NO_AT_BRIDGE
    #+END_SRC
@@ -1003,7 +1003,7 @@
 *** Python version
     to locate site-packages
 
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       python_ver() {
           python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
       }
@@ -1012,7 +1012,7 @@
 *** Quickly change to virtualenv
     Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
     This may require shell-identification for ksh, csh, fish since they have a different activate
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       to_venv () {
           test_d="$(realpath "${PWD}")"
           parents=16  # path too long to waste time
@@ -1048,7 +1048,7 @@
     #+END_SRC
 
 *** Virtualenv in prompt string
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       _show_venv () {
           # if a virtualenv is active, print it's name
           if [ -n "${VIRTUAL_ENV}" ]; then
@@ -1065,7 +1065,7 @@
     #+END_SRC
 ** Git
 *** Status
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       git_status() {
           _modified=0
           _cached=0
@@ -1115,7 +1115,7 @@
     #+END_SRC
 
 *** Branch
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       git_branch() {
           branch_str=''
           branch="$(git branch 2>/dev/null | grep '^\*' | sed -e 's/^* //')"
@@ -1153,7 +1153,7 @@
 
     #+END_SRC
 *** Hash
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       git_hash() {
           git log --pretty=format:'%h' -n 1
       }
@@ -1163,7 +1163,7 @@
     Include git's branch, hash, status in PS1 if in git repository
     This function is called in PS1 section below
     #+NAME: Git PS
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       git_ps() {
           if ! git status --ignore-submodules >/dev/null 2>&1; then
               return
@@ -1175,7 +1175,7 @@
 
 ** Prompt String
 *** Exit_color
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       last_exit_color () {
           case "$1" in
               0)
@@ -1220,7 +1220,7 @@
     #+END_SRC
 
 *** Elapsed_time
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       _elapsed_time() {
           # $1 is start time $2 is end time
           _cmd_start="$1"
@@ -1262,7 +1262,7 @@
 
 *** PROMPT_COMMAND
 **** bash
-     #+BEGIN_SRC bash :tangle dotfiles/.bashrc
+     #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
        # export PROMPT_COMMAND=__prompt_command
 
        preexec() {
@@ -1304,7 +1304,7 @@
      #+END_SRC
 
 **** zsh
-     #+BEGIN_SRC bash :tangle dotfiles/.zshrc
+     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
        _pspexec() {
            _cmd_start_t="${SECONDS}"
        }
@@ -1352,14 +1352,14 @@
 
 ** Mathematical
 *** In-Line Calculator
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       mathcalc() {
           echo "$*"| bc -lq
       }
     #+END_SRC
 
 *** Computational
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       dec2hex() {
           echo "hex:"
           echo "obase=16; $*"| bc
@@ -1370,7 +1370,7 @@
 
 ** Documents compilation
 *** PDF from Latex
-    #+BEGIN_SRC sh :tangle shrc
+    #+BEGIN_SRC sh :tangle ../env/shrc
       pdfcompile() {
           if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
               printf "pdftex is not installed\n"
@@ -1388,7 +1388,7 @@
     #+END_SRC
 *** Pandoc
 **** Org to Something
-     #+BEGIN_SRC sh :tangle shrc
+     #+BEGIN_SRC sh :tangle ../env/shrc
        org2export() {
            # Usage: org2oth [-f] <infile> <othtype>
            if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
@@ -1442,21 +1442,21 @@
      #+END_SRC
 
 **** Org to Docx
-     #+BEGIN_SRC sh :tangle shrc
+     #+BEGIN_SRC sh :tangle ../env/shrc
        org2doc () {
            org2export "$@" "docx"
        }
      #+END_SRC
 
 **** Org to PDF
-     #+BEGIN_SRC sh :tangle shrc
+     #+BEGIN_SRC sh :tangle ../env/shrc
        org2pdf () {
            org2export "$@" "pdf"
        }
      #+END_SRC
 
 **** Docx to Org
-     #+BEGIN_SRC sh :tangle shrc
+     #+BEGIN_SRC sh :tangle ../env/shrc
        doc2org() {
            if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
                printf "pandoc is not installed\n"
@@ -1477,7 +1477,7 @@
 ** Mount over ssh
    ssh Cloud mounts
    - see [[./cloud_mount.html][cloud_mount]]
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      mount_cloud_sshfs() {
          mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
          if [ -f "${mount_script}" ]; then
@@ -1499,7 +1499,7 @@
    Acts like a launcher
    Uninteractive terminal commands may also be called
    Code is tangled in gui.org
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      gui () {
          "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
          if [ $? = 65 ]; then
@@ -1510,7 +1510,7 @@
    #+END_SRC
 
 ** Un-Compress by context
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      deconvolute() {
          if builtin command -v "pigz"; then
              _gzip="pigz"
@@ -1539,7 +1539,7 @@
 
 ** Navigate
    - When no virtualenv is active, but one is available, switch to it
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      cd () {
          if [ -z "${1}" ]; then
              builtin cd "${HOME}" || true
@@ -1553,7 +1553,7 @@
    #+END_SRC
 
    - Inspired by lukesmith.xyz
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      lfcd () {
          if ! command -v 'lf' >/dev/null 2>/dev/null; then
              printf "lf is not installed\n"
@@ -1584,7 +1584,7 @@
 ** zwc
    - Guess whether target is zipped;
      if zipped, unzip and count else classical wc
-   #+begin_src sh :tangle shrc
+   #+begin_src sh :tangle ../env/shrc
      zwc () {
          args="$*"
          fname="${args##* }"
@@ -1610,7 +1610,7 @@
 ** disable autovenv
    - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
      - Calling the function again reverts
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      force_global_venv () {
          if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
              unset VIRTUAL_ENV
@@ -1623,7 +1623,7 @@
    #+END_SRC
 
 ** lszcat
-   #+begin_src sh :tangle shrc
+   #+begin_src sh :tangle ../env/shrc
      lszcat () {
          args="$*"
          fname="${args##* }"
@@ -1666,7 +1666,7 @@
    #+end_src
 
 ** manual pages
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      man_help () {
          if man "$@"; then
              return 0
@@ -1688,35 +1688,35 @@
 
 * Aliases
 ** Disk Usage
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      alias du='du -hc';
      alias df='df -h';
      alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
    #+END_SRC
 
 ** manual page help
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      alias man="man_help";
    #+END_SRC
 ** Network
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
      alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
      alias ping="ping -c 4 ";
    #+END_SRC
 
 ** Monitor Job queues
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      alias watch="watch -n 10 --color";
    #+END_SRC
 
 ** Lazy single-handed exit
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      alias qqqq="exit";
    #+END_SRC
 
 ** [z]wc
-   #+begin_src sh :tangle shrc
+   #+begin_src sh :tangle ../env/shrc
      alias wc="zwc";
    #+end_src
 
@@ -1725,7 +1725,7 @@
    The *OLDEST* part of prady_runcom...
    - ... although, amended many times
    - see [[./netcheck.html][netcheck]]
-   #+BEGIN_SRC sh :tangle shrc
+   #+BEGIN_SRC sh :tangle ../env/shrc
      # shellcheck source=./bin/netcheck.sh
      o_ifs="${IFS}"
      IFS="$(printf "\t")" read -r ip_addr _ netstate << netcheck
@@ -1770,7 +1770,7 @@
 
 ** SSH Agent
    Reuse ssh agent for all logins
-   #+BEGIN_SRC sh :tangle ui
+   #+BEGIN_SRC sh :tangle ../env/ui
      if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
          eval "$(ssh-agent)"
          ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
@@ -1782,7 +1782,7 @@
 
 * Window Manager settings
 ** Terminal
-   #+BEGIN_SRC sh :tangle ui
+   #+BEGIN_SRC sh :tangle ../env/ui
      for term in foot alacritty termite tilix urxvt xterm; do
          if [ -n "$(command -v $term)" ]; then
              defterm="$term";
@@ -1801,7 +1801,7 @@
 
 ** User Interface (GUI/CLI)
    If running from tty1 setup sway environment and start ui
-   #+BEGIN_SRC sh :tangle ui
+   #+BEGIN_SRC sh :tangle ../env/ui
      _common_exports() {
          if [ -z "$XDG_RUNTIME_DIR" ]; then
              XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -1944,17 +1944,17 @@
 
 * Calls
 ** bash
-   #+BEGIN_SRC bash :tangle dotfiles/.bash_login
-     # netcheck source=.local/share/pspman/src/runcom/ui
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/ui ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}"/ui
+   #+BEGIN_SRC bash :tangle ../dotfiles/.bash_login
+     # netcheck source=.local/share/pspman/src/runcom/env/ui
+     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
+         . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
      fi
    #+END_SRC
 
 ** zsh
-   #+BEGIN_SRC bash :tangle dotfiles/.zlogin
-     # netcheck source=.local/share/pspman/src/runcom/ui
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/ui ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}"/ui
+   #+BEGIN_SRC bash :tangle ../dotfiles/.zlogin
+     # netcheck source=.local/share/pspman/src/runcom/env/ui
+     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
+         . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
      fi
    #+END_SRC

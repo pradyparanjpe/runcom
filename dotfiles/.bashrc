@@ -51,9 +51,9 @@ esac
 set -o vi
 bind '"jk":vi-movement-mode'
 
-# shellcheck source=".runcom/shrc"
-if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/shrc" ]; then
-    . "${RUNCOMDIR:-${HOME}/.runcom}/shrc"
+# shellcheck source=".runcom/env/shrc"
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
 fi
 if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh" ]; then
     . "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"

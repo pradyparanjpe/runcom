@@ -5,7 +5,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
-#+PROPERTY: header-args :tangle
+#+PROPERTY: header-args :tangle yes
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+EXPORT_FILE_NAME: docs/proxy_send.html
 
@@ -102,7 +102,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle bin/proxy_send.sh :exports none :tangle-mode (identity #o755)
+  #+begin_src sh :tangle ../bin/proxy_send.sh :exports none :tangle-mode (identity #o755)
     #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
@@ -126,7 +126,7 @@
   #+end_src
 
 ** Check availability
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      affirm_availability () {
          for _import in curl printenv grep tr; do
              if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -140,7 +140,7 @@
    #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      set_vars () {
          show=false
          pass_keys="protocol username password host port"
@@ -204,7 +204,7 @@
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -229,7 +229,7 @@
    #+end_src
 
 ** Extract proxy information from environment variable
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      extract_env () {
          url="${1}"
          # keep consuming URL like $@ is consumed from command line
@@ -283,7 +283,7 @@
    #+end_src
 
 ** Compile proxy information
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      build () {
          all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
          extract_env "${all_proxy}"
@@ -319,7 +319,7 @@
    #+end_src
 
 ** Html handling
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      quote () {
          printf "%s" "$1" \
              | tr -d '\n' \
@@ -351,7 +351,7 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle bin/proxy_send.sh
+   #+begin_src sh :tangle ../bin/proxy_send.sh
      main() {
          # Main routine call
          affirm_availability

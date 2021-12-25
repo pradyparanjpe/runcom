@@ -7,7 +7,7 @@
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/gui.html
+#+EXPORT_FILE_NAME: ../docs/gui.html
 
 * Description
   - Launch gui apps from command line and kill terminal.
@@ -15,7 +15,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle bin/gui.sh :exports none :tangle-mode (identity #o755)
+  #+begin_src sh :tangle ../bin/gui.sh :exports none :tangle-mode (identity #o755)
     #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
@@ -39,7 +39,7 @@
   #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle bin/gui.sh
+   #+begin_src sh :tangle ../bin/gui.sh
      set_vars () {
          args=
          call=
@@ -94,7 +94,7 @@
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle bin/gui.sh
+   #+begin_src sh :tangle ../bin/gui.sh
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -134,7 +134,7 @@
    #+end_src
 
 ** Launch
-   #+begin_src sh :tangle bin/gui.sh
+   #+begin_src sh :tangle ../bin/gui.sh
      launch_gui() {
          call="$(echo "${cmd}" | cut -d " " -f 1)"
          args="${cmd#${call}}"
@@ -155,7 +155,7 @@
 
    #+end_src
 ** Main routine call
-   #+begin_src sh :tangle bin/gui.sh
+   #+begin_src sh :tangle ../bin/gui.sh
      main() {
          # Main routine call
          set_vars
@@ -167,7 +167,3 @@
 
      main "$@"
    #+end_src
-
-   #+BEGIN_SRC sh :tangle bin/gui.sh
-
-   #+END_SRC

@@ -7,7 +7,7 @@
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/cloud_mount.html
+#+EXPORT_FILE_NAME: ../docs/cloud_mount.html
 
 * Description
   mount (unmount) cloud-media using sshfs
@@ -38,7 +38,7 @@
 
 * Code
   This section tangles source code
-  #+begin_src sh :tangle bin/cloud_mount.sh :exports none :tangle-mode (identity #o755)
+  #+begin_src sh :tangle ../bin/cloud_mount.sh :exports none :tangle-mode (identity #o755)
     #!/usr/bin/env sh
     #-*- coding:utf-8; mode:shell-script -*-
     #
@@ -63,7 +63,7 @@
   #+end_src
 
 ** Check availability
-   #+begin_src sh :tangle bin/cloud_mount.sh
+   #+begin_src sh :tangle ../bin/cloud_mount.sh
      affirm_availability () {
          for _import in sshfs grep; do
              if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -76,7 +76,7 @@
    #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle bin/cloud_mount.sh
+   #+begin_src sh :tangle ../bin/cloud_mount.sh
      set_vars() {
          # shellcheck disable=SC2154
          if [ -z "${cloud_sship}" ] || [ -z "${cloud_user}" ]; then
@@ -130,7 +130,7 @@
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle bin/cloud_mount.sh
+   #+begin_src sh :tangle ../bin/cloud_mount.sh
 
      cli () {
          while [ $# -gt 0 ]; do
@@ -156,7 +156,7 @@
    #+end_src
 
 ** Mount/Unmount
-   #+begin_src sh :tangle bin/cloud_mount.sh
+   #+begin_src sh :tangle ../bin/cloud_mount.sh
      discover () {
          IFS="$(printf '\t')" read -r _ _ netstate << netcheck
      $(eval "${RUNCOMDIR:-${HOME}/.runcom}/netcheck.sh")
@@ -197,7 +197,7 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle bin/cloud_mount.sh
+   #+begin_src sh :tangle ../bin/cloud_mount.sh
      main () {
          affirm_availability
          set_vars
