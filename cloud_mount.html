@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-29 Fri 15:45 -->
+<!-- 2021-12-25 Sat 16:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>cloud_mount</title>
@@ -229,33 +229,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org20a8c3e">Description</a></li>
-<li><a href="#orga89c21c">Setup</a></li>
-<li><a href="#org5582765">Code</a>
+<li><a href="#org72daffe">Description</a></li>
+<li><a href="#orgc1c3679">Setup</a></li>
+<li><a href="#orgaaa89ae">Code</a>
 <ul>
-<li><a href="#org19cfd6e">Check availability</a></li>
-<li><a href="#orgca67dfe">Handle global variables and exits</a></li>
-<li><a href="#orgfb1e44d">Parse command</a></li>
-<li><a href="#orgfda0c63">Mount/Unmount</a></li>
-<li><a href="#orgd6ace22">Main routine call</a></li>
+<li><a href="#org921135e">Check availability</a></li>
+<li><a href="#orgd942559">Handle global variables and exits</a></li>
+<li><a href="#org464e7c3">Parse command</a></li>
+<li><a href="#orgada7f88">Mount/Unmount</a></li>
+<li><a href="#org50a1792">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org20a8c3e" class="outline-2">
-<h2 id="org20a8c3e">Description</h2>
-<div class="outline-text-2" id="text-org20a8c3e">
+<div id="outline-container-org72daffe" class="outline-2">
+<h2 id="org72daffe">Description</h2>
+<div class="outline-text-2" id="text-org72daffe">
 <p>
 mount (unmount) cloud-media using sshfs
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga89c21c" class="outline-2">
-<h2 id="orga89c21c">Setup</h2>
-<div class="outline-text-2" id="text-orga89c21c">
+<div id="outline-container-orgc1c3679" class="outline-2">
+<h2 id="orgc1c3679">Setup</h2>
+<div class="outline-text-2" id="text-orgc1c3679">
 <p>
 Following variables should be declared by adding lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
@@ -288,16 +288,16 @@ Following variables should be declared by adding lines to
 </div>
 </div>
 
-<div id="outline-container-org5582765" class="outline-2">
-<h2 id="org5582765">Code</h2>
-<div class="outline-text-2" id="text-org5582765">
+<div id="outline-container-orgaaa89ae" class="outline-2">
+<h2 id="orgaaa89ae">Code</h2>
+<div class="outline-text-2" id="text-orgaaa89ae">
 <p>
 This section tangles source code
 </p>
 </div>
-<div id="outline-container-org19cfd6e" class="outline-3">
-<h3 id="org19cfd6e">Check availability</h3>
-<div class="outline-text-3" id="text-org19cfd6e">
+<div id="outline-container-org921135e" class="outline-3">
+<h3 id="org921135e">Check availability</h3>
+<div class="outline-text-3" id="text-org921135e">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> sshfs grep; <span style="color: #51afef;">do</span>
@@ -313,9 +313,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orgca67dfe" class="outline-3">
-<h3 id="orgca67dfe">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-orgca67dfe">
+<div id="outline-container-orgd942559" class="outline-3">
+<h3 id="orgd942559">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-orgd942559">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2154</span>
@@ -372,9 +372,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orgfb1e44d" class="outline-3">
-<h3 id="orgfb1e44d">Parse command</h3>
-<div class="outline-text-3" id="text-orgfb1e44d">
+<div id="outline-container-org464e7c3" class="outline-3">
+<h3 id="org464e7c3">Parse command</h3>
+<div class="outline-text-3" id="text-org464e7c3">
 <div class="org-src-container">
 <pre class="src src-sh">
 <span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
@@ -403,9 +403,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orgfda0c63" class="outline-3">
-<h3 id="orgfda0c63">Mount/Unmount</h3>
-<div class="outline-text-3" id="text-orgfda0c63">
+<div id="outline-container-orgada7f88" class="outline-3">
+<h3 id="orgada7f88">Mount/Unmount</h3>
+<div class="outline-text-3" id="text-orgada7f88">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">discover</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">IFS</span>=<span style="color: #98be65;">"$(printf '\t')"</span> read -r _ _ netstate &lt;&lt; netcheck
@@ -449,9 +449,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orgd6ace22" class="outline-3">
-<h3 id="orgd6ace22">Main routine call</h3>
-<div class="outline-text-3" id="text-orgd6ace22">
+<div id="outline-container-org50a1792" class="outline-3">
+<h3 id="org50a1792">Main routine call</h3>
+<div class="outline-text-3" id="text-org50a1792">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     affirm_availability

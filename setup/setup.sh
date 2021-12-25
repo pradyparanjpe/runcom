@@ -14,12 +14,12 @@ fi
 
  mask_stow_directories() {
 
-presernce="${HOME}/OLD_CONFIG"
+presence="${HOME}/OLD_CONFIG"
 mkdir -p "${presence}"
 cat << EOR >> "${presence}/README.md"
 This directory contains a backup of configuration that existed before runcom setup.
 Files in this directory may be merged to their respective place after inspection.
-I recommend that this directory should **NOT** deleted.
+I recommend that this directory should **NOT** be deleted.
 It will be required during un-doing the setup.
 EOR
 

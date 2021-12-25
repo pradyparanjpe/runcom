@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-11-30 Tue 10:12 -->
+<!-- 2021-12-25 Sat 16:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proxy_extract - extract proxy authentication from password store</title>
@@ -229,29 +229,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org500e06b">Description</a>
+<li><a href="#org66ad020">Description</a>
 <ul>
-<li><a href="#org981d890">plain password</a></li>
-<li><a href="#orgb12e454">multi-field</a></li>
+<li><a href="#orgdd2c165">plain password</a></li>
+<li><a href="#org57a16e8">multi-field</a></li>
 </ul>
 </li>
-<li><a href="#org36e516e">Code</a>
+<li><a href="#org6aa1119">Code</a>
 <ul>
-<li><a href="#orgdd16e83">Check availability</a></li>
-<li><a href="#org80dc410">Handle global variables and exits</a></li>
-<li><a href="#org4208e9c">Parse command</a></li>
-<li><a href="#org1a3fa24">Extractor</a></li>
-<li><a href="#org1f4f08a">Compiler</a></li>
-<li><a href="#org58b5762">Main routine call</a></li>
+<li><a href="#org6fcd6c3">Check availability</a></li>
+<li><a href="#orga575d38">Handle global variables and exits</a></li>
+<li><a href="#org8e982b4">Parse command</a></li>
+<li><a href="#orgb66d85d">Extractor</a></li>
+<li><a href="#orgcc3fe5c">Compiler</a></li>
+<li><a href="#orgedede96">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org500e06b" class="outline-2">
-<h2 id="org500e06b">Description</h2>
-<div class="outline-text-2" id="text-org500e06b">
+<div id="outline-container-org66ad020" class="outline-2">
+<h2 id="org66ad020">Description</h2>
+<div class="outline-text-2" id="text-org66ad020">
 <ul class="org-ul">
 <li>This script is automatically called by <code>bin/proxy_extract.sh</code>.</li>
 <li><p>
@@ -283,9 +283,9 @@ to extract proxy settings from the password store.
 <i>pass-name</i> can be declared by adding following lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
 </p>
-<div class="seealso" id="orged24bd3">
+<div class="seealso" id="orgd35d0d6">
 <ul class="org-ul">
-<li><a href="index.html#MissingReference">Personalization</a></li>
+<li><a href="index.html#org8959ec0">Personalization</a></li>
 </ul>
 
 </div>
@@ -302,9 +302,9 @@ to extract proxy settings from the password store.
 </ul>
 </div>
 
-<div id="outline-container-org981d890" class="outline-3">
-<h3 id="org981d890">plain password</h3>
-<div class="outline-text-3" id="text-org981d890">
+<div id="outline-container-orgdd2c165" class="outline-3">
+<h3 id="orgdd2c165">plain password</h3>
+<div class="outline-text-3" id="text-orgdd2c165">
 <p>
 Password store stores just the &lt;password&gt;.
 &lt;password&gt; may be stored in password manager using a command such as:
@@ -316,9 +316,9 @@ Password store stores just the &lt;password&gt;.
 </div>
 </div>
 
-<div id="outline-container-orgb12e454" class="outline-3">
-<h3 id="orgb12e454">multi-field</h3>
-<div class="outline-text-3" id="text-orgb12e454">
+<div id="outline-container-org57a16e8" class="outline-3">
+<h3 id="org57a16e8">multi-field</h3>
+<div class="outline-text-3" id="text-org57a16e8">
 <p>
 Information about <i>any</i> or <i>all</i> of following fields may be provided.
 </p>
@@ -349,16 +349,16 @@ Fields may be stored in password manager using a command such as:
 </div>
 </div>
 
-<div id="outline-container-org36e516e" class="outline-2">
-<h2 id="org36e516e">Code</h2>
-<div class="outline-text-2" id="text-org36e516e">
+<div id="outline-container-org6aa1119" class="outline-2">
+<h2 id="org6aa1119">Code</h2>
+<div class="outline-text-2" id="text-org6aa1119">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-orgdd16e83" class="outline-3">
-<h3 id="orgdd16e83">Check availability</h3>
-<div class="outline-text-3" id="text-orgdd16e83">
+<div id="outline-container-org6fcd6c3" class="outline-3">
+<h3 id="org6fcd6c3">Check availability</h3>
+<div class="outline-text-3" id="text-org6fcd6c3">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> pass curl; <span style="color: #51afef;">do</span>
@@ -375,9 +375,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org80dc410" class="outline-3">
-<h3 id="org80dc410">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org80dc410">
+<div id="outline-container-orga575d38" class="outline-3">
+<h3 id="orga575d38">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-orga575d38">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">show</span>=false
@@ -442,9 +442,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org4208e9c" class="outline-3">
-<h3 id="org4208e9c">Parse command</h3>
-<div class="outline-text-3" id="text-org4208e9c">
+<div id="outline-container-org8e982b4" class="outline-3">
+<h3 id="org8e982b4">Parse command</h3>
+<div class="outline-text-3" id="text-org8e982b4">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
@@ -472,12 +472,12 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org1a3fa24" class="outline-3">
-<h3 id="org1a3fa24">Extractor</h3>
+<div id="outline-container-orgb66d85d" class="outline-3">
+<h3 id="orgb66d85d">Extractor</h3>
 </div>
-<div id="outline-container-org1f4f08a" class="outline-3">
-<h3 id="org1f4f08a">Compiler</h3>
-<div class="outline-text-3" id="text-org1f4f08a">
+<div id="outline-container-orgcc3fe5c" class="outline-3">
+<h3 id="orgcc3fe5c">Compiler</h3>
+<div class="outline-text-3" id="text-orgcc3fe5c">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">compile_proxy</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${proxy_host}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
@@ -509,9 +509,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org58b5762" class="outline-3">
-<h3 id="org58b5762">Main routine call</h3>
-<div class="outline-text-3" id="text-org58b5762">
+<div id="outline-container-orgedede96" class="outline-3">
+<h3 id="orgedede96">Main routine call</h3>
+<div class="outline-text-3" id="text-orgedede96">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Main routine call</span>
