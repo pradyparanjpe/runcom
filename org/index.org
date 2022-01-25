@@ -11,7 +11,7 @@
 
 * Prady_runcom
 ** What's this?
-   - A compilation of dotfiles: default variables, custom functions.
+   - A compilation of dot-files: default variables, custom functions.
    - *My* configuration backup, "[[https://git-scm.com/docs/git-push][push]]"ed to work as a template for yours.
 
 
@@ -19,7 +19,7 @@
     - Cross-machine synchronization (hence, git)
     - Modularity (hence, not a single file)
     - Self-documenting (hence, a single 😉 org file)
-    - Workflow speed (obviously)
+    - Work-flow speed (obviously)
     - "Pretty" low resource load (hence, not GNOME/KDE)
 
 *** Non-aim
@@ -59,7 +59,7 @@
 * Requirements
 ** Knowledge
    - Linux shell commands. We shall try to be POSIX-compliant.
-   - Knowledge of Linux, "dotfiles".
+   - Knowledge of Linux, "dot-files".
    - super user (sudo) permissions (only for package installation)
      #+begin_warning
      Avoid use of *sudo* as much as possible.
@@ -68,7 +68,7 @@
 ** Dependencies
    - A GNU/Linux distribution. I use [[https://fedoraproject.org][Fedora]].
    - [[https://curl.se/][curl]] for proxy authentication.
-   - GNU [[https://www.gnu.org/software/stow/][stow]]: dotfile management
+   - GNU [[https://www.gnu.org/software/stow/][stow]]: dot-file management
    - [[https://git-scm.com/][git]]: git it
 
    #+begin_important
@@ -78,7 +78,7 @@
 
 *** Bootstrap installation of dependencies
 
-    For automated setup, run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
+    For automated set-up, run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
     #+BEGIN_SRC sh :tangle no
       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
     #+END_SRC
@@ -213,21 +213,21 @@
        main "$@"
     #+END_SRC
 
-* Setup
+* Set-up
   - Affirm [[*Requirements][requirements]].
   #+begin_warning
-  Do *NOT* use =sudo= during setup.
+  Do *NOT* use =sudo= during set-up.
   #+end_warning
 
   #+begin_warning
   - The next steps require you to delete all [[*Structure][stowed dotfiles]].
   - We shall copy them in a directory named =${HOME}/OLD_CONFIG= before proceeding.
-  - Preserve this backup, you will need this during un-setup.
+  - Preserve this backup, you will need this during undoing set-up.
   - You HAVE BEEN warned.
   #+end_warning
 
-** Bootstrap setup using script
-   - Setup may be bootstrapped by running the [[./setup/setup.sh][setup]] script.
+** Bootstrap set-up using script
+   - Set-up may be bootstrapped by running the [[./setup/setup.sh][setup]] script.
 
      #+BEGIN_SRC sh :tangle no
        curl -sLf "https://pradyparanjpe.github.io/runcom/setup/setup.sh" | sudo sh
@@ -236,12 +236,12 @@
 
      #+begin_note
      Inspecting scripts before running them is generally a good idea.
-     The /setup/ script is tangled (with automation wrappers) from the code below.
+     The /set-up/ script is tangled (with automation wrappers) from the code below.
      If you feel an urge to inspect it or if it fails,
-     follow manual setup instructions with modifications instead.
+     follow manual set-up instructions with modifications instead.
      #+end_note
 
-** Guide for manual setup.
+** Guide for manual set-up.
 
    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
      #!/usr/bin/env sh
@@ -269,7 +269,7 @@
        mask_stow_directories() {
     #+END_SRC
 
-*** Stow dotfiles
+*** Stow dot-files
     - =GNU stow= will create symlinked structure for all contents in =${HOME}/.runcom/dotfiles= in =${HOME}=.
     - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
     - If =stow= finds a pre-existing file (non-directory), it throws error.
@@ -341,14 +341,14 @@
         main "$@"
      #+end_src
 
-* Undo Setup
+* Undo Set-up
   #+begin_warning
   Do *NOT* use =sudo= during unset.
   #+end_warning
 
   #+begin_note
   - The next steps will require a directory containing 'old configuration files'.
-  - You HAD BEEN warned against deleting it during the setup.
+  - You HAD BEEN warned against deleting it during the set-up.
   #+end_note
 
 ** Bootstrap unset using script
@@ -366,14 +366,14 @@
      follow manual unset instructions with modifications instead.
      #+end_note
 
-** Guide for manual un-setup.
+** Guide to manually undo set-up.
 
    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
      #!/usr/bin/env sh
      # -*- coding: utf-8; mode: shell-script; -*-
    #+end_src
 
-*** UnStow dotfiles
+*** UnStow dot-files
     - Use =GNU stow= to unstow to un-linked structure for all contents in =${HOME}/.runcom/dotfiles= from =${HOME}=.
 **** UnStow
      #+begin_src sh :tangle no
@@ -468,7 +468,7 @@
 ** Proxy settings
    Read set up for [[./proxy_send.html][proxy_send]].
 
-   *_SETUP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
+   *_SET-UP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
 * Structure
   Following configuration files are available. This literate configuration tangles their contents.
   |------------------------------------------------+-------+--------+---------|
@@ -683,14 +683,14 @@
      HISTFILESIZE=10000
    #+END_SRC
 
-   - Colored terminals
+   - Coloured terminals
    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      case "$TERM" in
          xterm-color|*-256color) color_prompt=yes;;
      esac
    #+END_SRC
 
-   - Keybindings
+   - Key-bindings
    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      set -o vi
      bind '"jk":vi-movement-mode'
@@ -732,7 +732,7 @@
        bashcompinit
      #+END_SRC
 
-   - Keybindings
+   - Key-bindings
      #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
        term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
        if [ -f "${term_key_source}" ]; then
@@ -790,7 +790,7 @@
      #+END_SRC
    - Unset options:
      - setopt SHARE_HISTORY             # Share history between all sessions.
-     - setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+     - setopt HIST_BEEP                 # Beep when accessing non-existent history.
      - HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate
 
 * Inherit
@@ -839,7 +839,7 @@
    #+END_SRC
 
 ** shrc
-*** Local unsynced changes
+*** Local un-synced changes
     All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
     #+BEGIN_SRC sh :tangle ../env/shrc
       # shellcheck disable=SC1090
@@ -1010,7 +1010,7 @@
     #+END_SRC
 
 *** Quickly change to virtualenv
-    Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
+    Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
     This may require shell-identification for ksh, csh, fish since they have a different activate
     #+BEGIN_SRC sh :tangle ../env/shrc
       to_venv () {
@@ -1174,7 +1174,7 @@
     #+END_SRC
 
 ** Prompt String
-*** Exit_color
+*** Exit_colour
     #+BEGIN_SRC sh :tangle ../env/shrc
       last_exit_color () {
           case "$1" in
@@ -1494,10 +1494,10 @@
 
    #+END_SRC
 
-** Launch gui
+** Launch GUI
    Launch application and exit terminal window
    Acts like a launcher
-   Uninteractive terminal commands may also be called
+   Un-interactive terminal commands may also be called
    Code is tangled in gui.org
    #+BEGIN_SRC sh :tangle ../env/shrc
      gui () {
@@ -1552,7 +1552,7 @@
      }
    #+END_SRC
 
-   - Inspired by lukesmith.xyz
+   - Inspired by [[https://lukesmith.xyz/]]
    #+BEGIN_SRC sh :tangle ../env/shrc
      lfcd () {
          if ! command -v 'lf' >/dev/null 2>/dev/null; then
@@ -1607,8 +1607,8 @@
      }
    #+end_src
 
-** disable autovenv
-   - To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
+** disable auto-venv
+   - To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
      - Calling the function again reverts
    #+BEGIN_SRC sh :tangle ../env/shrc
      force_global_venv () {
@@ -1958,3 +1958,7 @@
          . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
      fi
    #+END_SRC
+
+#  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
+#  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
+#  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV

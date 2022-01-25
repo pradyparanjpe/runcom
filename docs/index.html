@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-29 Wed 18:16 -->
+<!-- 2022-01-25 Tue 20:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Prady_runcom</title>
+<meta name="generator" content="Org mode" />
 <meta name="author" content="Pradyumna Paranjape" />
-<meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,9 +31,8 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -42,21 +41,21 @@
   pre.src {
     position: relative;
     overflow: auto;
+    padding-top: 1.2em;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    top: -8px;
-    right: 12px;
+    background-color: white;
+    top: -10px;
+    right: 10px;
     padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
+    border: 1px solid black;
   }
   pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -192,6 +191,7 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
+  /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
@@ -199,173 +199,195 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
 </head>
 <body>
-<div id="content" class="content">
+<div id="content">
 <h1 class="title">Prady_runcom</h1>
-<div id="table-of-contents" role="doc-toc">
+<div id="table-of-contents">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
+<div id="text-table-of-contents">
 <ul>
-<li><a href="#org84f8b01">Prady_runcom</a>
+<li><a href="#org836f084">Prady_runcom</a>
 <ul>
-<li><a href="#org644d956">What's this?</a></li>
-<li><a href="#orgd310fd2">Will you be able to set this up?</a></li>
+<li><a href="#orgdc90b9a">What's this?</a></li>
+<li><a href="#org9dd6701">Will you be able to set this up?</a></li>
 </ul>
 </li>
-<li><a href="#orgaa1861b">Copyright/License Header</a></li>
-<li><a href="#orgc1044a7">Legend</a>
+<li><a href="#org68deae1">Copyright/License Header</a></li>
+<li><a href="#org0205664">Legend</a>
 <ul>
-<li><a href="#orga3c3a51">Brackets</a></li>
+<li><a href="#orga9d9b5d">Brackets</a></li>
 </ul>
 </li>
-<li><a href="#orgfd43364">Requirements</a>
+<li><a href="#orgef57995">Requirements</a>
 <ul>
-<li><a href="#org93bc00d">Knowledge</a></li>
-<li><a href="#org6ae5c5f">Dependencies</a></li>
+<li><a href="#org9076691">Knowledge</a></li>
+<li><a href="#orgf084bcd">Dependencies</a></li>
 </ul>
 </li>
-<li><a href="#org277a06a">Setup</a>
+<li><a href="#orge6606c8">Set-up</a>
 <ul>
-<li><a href="#org7eacf66">Bootstrap setup using script</a></li>
-<li><a href="#org007a521">Guide for manual setup.</a></li>
+<li><a href="#orgd8a5c66">Bootstrap set-up using script</a></li>
+<li><a href="#orgf764e69">Guide for manual set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org27d63e6">Undo Setup</a>
+<li><a href="#org5c7f076">Undo Set-up</a>
 <ul>
-<li><a href="#org52c0f19">Bootstrap unset using script</a></li>
-<li><a href="#org5ddde06">Guide for manual un-setup.</a></li>
+<li><a href="#orgf8d12a7">Bootstrap unset using script</a></li>
+<li><a href="#org022fa3d">Guide to manually undo set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org9759129">Personalization</a>
+<li><a href="#org5ef21d8">Personalization</a>
 <ul>
-<li><a href="#orgcc55c10">Local</a></li>
-<li><a href="#org3e333a8">Synchronized</a></li>
-<li><a href="#org00fadcc">Proxy settings</a></li>
+<li><a href="#org2e1d99d">Local</a></li>
+<li><a href="#orgdf70802">Synchronized</a></li>
+<li><a href="#orge976db9">Proxy settings</a></li>
 </ul>
 </li>
-<li><a href="#org2a4b5c7">Structure</a>
+<li><a href="#orgd7e8adc">Structure</a>
 <ul>
-<li><a href="#org089ac2f">Bash</a></li>
-<li><a href="#org9e2f59d">Zsh</a></li>
+<li><a href="#orgf42ce44">Bash</a></li>
+<li><a href="#org58d44af">Zsh</a></li>
 </ul>
 </li>
-<li><a href="#org515c0f7">Headers</a></li>
-<li><a href="#org62a1da6">Profiles</a></li>
-<li><a href="#orgd8b2c45">Init</a>
+<li><a href="#org90701db">Headers</a></li>
+<li><a href="#orgacb388c">Profiles</a></li>
+<li><a href="#org0195d7b">Init</a>
 <ul>
-<li><a href="#org8caed9f">profile</a></li>
-<li><a href="#orgcf89908">bash</a></li>
-<li><a href="#org4258b01">zsh</a></li>
+<li><a href="#org75f6d64">profile</a></li>
+<li><a href="#org82a86cc">bash</a></li>
+<li><a href="#org0b62c13">zsh</a></li>
 </ul>
 </li>
-<li><a href="#orgf087b48">Inherit</a>
+<li><a href="#org84455fd">Inherit</a>
 <ul>
-<li><a href="#org5001643">bash</a></li>
-<li><a href="#orgaf39a49">zsh</a></li>
-<li><a href="#orgdc9403d">shrc</a></li>
+<li><a href="#orgc6af300">bash</a></li>
+<li><a href="#org182f215">zsh</a></li>
+<li><a href="#orga15bc36">shrc</a></li>
 </ul>
 </li>
-<li><a href="#org9dd0820">Better alternatives</a>
+<li><a href="#org56aa440">Better alternatives</a>
 <ul>
-<li><a href="#org35701a9">cat</a></li>
-<li><a href="#orgd1a7d47">g/re/p</a></li>
-<li><a href="#orgb586cff">List Contents</a></li>
-<li><a href="#org6cd7a95">neo visual editor improved</a></li>
-<li><a href="#org8918b9a">Container</a></li>
+<li><a href="#orgf1e5963">cat</a></li>
+<li><a href="#org8e30d47">g/re/p</a></li>
+<li><a href="#org706d5aa">List Contents</a></li>
+<li><a href="#org093fc3c">neo visual editor improved</a></li>
+<li><a href="#org28ab099">Container</a></li>
 </ul>
 </li>
-<li><a href="#orgb1e874e">Variables</a>
+<li><a href="#org2cc3ddb">Variables</a>
 <ul>
-<li><a href="#org5993225">XDG</a></li>
-<li><a href="#org22326ab">PATH</a></li>
-<li><a href="#org3d2b9cb">Editor wars</a></li>
-<li><a href="#org42ae1aa">C(++) exports</a></li>
-<li><a href="#org4bbac48">GPU exports</a></li>
-<li><a href="#org387030a">Bemenu exports</a></li>
-<li><a href="#org363ed3e">GTK+ debugging output</a></li>
+<li><a href="#org2d2e16f">XDG</a></li>
+<li><a href="#org7ecfe5a">PATH</a></li>
+<li><a href="#org4c3964e">Editor wars</a></li>
+<li><a href="#orgd42e8d7">C(++) exports</a></li>
+<li><a href="#org15a5e91">GPU exports</a></li>
+<li><a href="#org1a334b6">Bemenu exports</a></li>
+<li><a href="#org3eea4a1">GTK+ debugging output</a></li>
 </ul>
 </li>
-<li><a href="#orgb8a4521">Functions</a>
+<li><a href="#org0e074a2">Functions</a>
 <ul>
-<li><a href="#orgac814f8">Python</a></li>
-<li><a href="#org612782d">Git</a></li>
-<li><a href="#org8b7f9bf">Prompt String</a></li>
-<li><a href="#org43d1094">Mathematical</a></li>
-<li><a href="#org68d2224">Documents compilation</a></li>
-<li><a href="#orgbcab855">Mount over ssh</a></li>
-<li><a href="#org3234cdf">Launch gui</a></li>
-<li><a href="#org85689c9">Un-Compress by context</a></li>
-<li><a href="#org1159a62">Navigate</a></li>
-<li><a href="#orga1ab3c2">zwc</a></li>
-<li><a href="#org9bcab35">disable autovenv</a></li>
-<li><a href="#orgaa2a487">lszcat</a></li>
-<li><a href="#org23fd5f7">manual pages</a></li>
+<li><a href="#orgb3903e2">Python</a></li>
+<li><a href="#orge729649">Git</a></li>
+<li><a href="#org1ec8402">Prompt String</a></li>
+<li><a href="#org1a69d03">Mathematical</a></li>
+<li><a href="#orgb498461">Documents compilation</a></li>
+<li><a href="#org663515a">Mount over ssh</a></li>
+<li><a href="#org9ee5ad3">Launch GUI</a></li>
+<li><a href="#orga36e9d8">Un-Compress by context</a></li>
+<li><a href="#org40e5c54">Navigate</a></li>
+<li><a href="#org8997bbb">zwc</a></li>
+<li><a href="#org7cd260c">disable auto-venv</a></li>
+<li><a href="#org89dc573">lszcat</a></li>
+<li><a href="#orga26ba46">manual pages</a></li>
 </ul>
 </li>
-<li><a href="#orgfd79963">Aliases</a>
+<li><a href="#org9257ca1">Aliases</a>
 <ul>
-<li><a href="#orgb9b29c3">Disk Usage</a></li>
-<li><a href="#orgc4e63ad">manual page help</a></li>
-<li><a href="#orgbd87b12">Network</a></li>
-<li><a href="#org5efc567">Monitor Job queues</a></li>
-<li><a href="#org4564841">Lazy single-handed exit</a></li>
-<li><a href="#org4b64278">[z]wc</a></li>
+<li><a href="#org8bc0a2d">Disk Usage</a></li>
+<li><a href="#org99729a7">manual page help</a></li>
+<li><a href="#org71aa082">Network</a></li>
+<li><a href="#org11b2520">Monitor Job queues</a></li>
+<li><a href="#orga27c9e4">Lazy single-handed exit</a></li>
+<li><a href="#org740d1d1">[z]wc</a></li>
 </ul>
 </li>
-<li><a href="#orga646910">Networking</a>
+<li><a href="#org0238053">Networking</a>
 <ul>
-<li><a href="#org855d6fb">State</a></li>
-<li><a href="#orgbc4cb5f">SSH Agent</a></li>
+<li><a href="#org9b1b0c3">State</a></li>
+<li><a href="#org3e2af54">SSH Agent</a></li>
 </ul>
 </li>
-<li><a href="#org71ff88a">Window Manager settings</a>
+<li><a href="#org0f71838">Window Manager settings</a>
 <ul>
-<li><a href="#orgddffab8">Terminal</a></li>
-<li><a href="#orgb2d53dd">Sway exports</a></li>
-<li><a href="#orge8da08f">User Interface (GUI/CLI)</a></li>
+<li><a href="#org6e05402">Terminal</a></li>
+<li><a href="#orga1ffd56">Sway exports</a></li>
+<li><a href="#org41e4cfa">User Interface (GUI/CLI)</a></li>
 </ul>
 </li>
-<li><a href="#orgd65f380">Calls</a>
+<li><a href="#org9acf2b5">Calls</a>
 <ul>
-<li><a href="#org022ffea">bash</a></li>
-<li><a href="#org4542f5b">zsh</a></li>
+<li><a href="#org8a2eab8">bash</a></li>
+<li><a href="#org029ff46">zsh</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org84f8b01" class="outline-2">
-<h2 id="org84f8b01">Prady_runcom</h2>
-<div class="outline-text-2" id="text-org84f8b01">
+<div id="outline-container-org836f084" class="outline-2">
+<h2 id="org836f084">Prady_runcom</h2>
+<div class="outline-text-2" id="text-org836f084">
 </div>
-<div id="outline-container-org644d956" class="outline-3">
-<h3 id="org644d956">What's this?</h3>
-<div class="outline-text-3" id="text-org644d956">
+<div id="outline-container-orgdc90b9a" class="outline-3">
+<h3 id="orgdc90b9a">What's this?</h3>
+<div class="outline-text-3" id="text-orgdc90b9a">
 <ul class="org-ul">
-<li>A compilation of dotfiles: default variables, custom functions.</li>
+<li>A compilation of dot-files: default variables, custom functions.</li>
 <li><b>My</b> configuration backup, "<a href="https://git-scm.com/docs/git-push">push</a>"ed to work as a template for yours.</li>
 </ul>
 </div>
 
 
-<div id="outline-container-orga37ce65" class="outline-4">
-<h4 id="orga37ce65">Aim</h4>
-<div class="outline-text-4" id="text-orga37ce65">
+<div id="outline-container-org06216f9" class="outline-4">
+<h4 id="org06216f9">Aim</h4>
+<div class="outline-text-4" id="text-org06216f9">
 <ul class="org-ul">
 <li>Cross-machine synchronization (hence, git)</li>
 <li>Modularity (hence, not a single file)</li>
 <li>Self-documenting (hence, a single 😉 org file)</li>
-<li>Workflow speed (obviously)</li>
+<li>Work-flow speed (obviously)</li>
 <li>"Pretty" low resource load (hence, not GNOME/KDE)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org73fc387" class="outline-4">
-<h4 id="org73fc387">Non-aim</h4>
-<div class="outline-text-4" id="text-org73fc387">
+<div id="outline-container-org30f96da" class="outline-4">
+<h4 id="org30f96da">Non-aim</h4>
+<div class="outline-text-4" id="text-org30f96da">
 <ul class="org-ul">
 <li>Ease</li>
 </ul>
@@ -373,13 +395,13 @@
 </div>
 </div>
 
-<div id="outline-container-orgd310fd2" class="outline-3">
-<h3 id="orgd310fd2">Will you be able to set this up?</h3>
-<div class="outline-text-3" id="text-orgd310fd2">
+<div id="outline-container-org9dd6701" class="outline-3">
+<h3 id="org9dd6701">Will you be able to set this up?</h3>
+<div class="outline-text-3" id="text-org9dd6701">
 <p>
-Probably <a href="#org93bc00d"><b>NOT</b></a>.
+Probably <a href="#org9076691"><b>NOT</b></a>.
 </p>
-<div class="important" id="org47d5c81">
+<div class="important" id="orga6ce7ff">
 <p>
 Read till the end before you decide to set this up.
 </p>
@@ -389,9 +411,9 @@ Read till the end before you decide to set this up.
 </div>
 </div>
 
-<div id="outline-container-orgaa1861b" class="outline-2">
-<h2 id="orgaa1861b">Copyright/License Header</h2>
-<div class="outline-text-2" id="text-orgaa1861b">
+<div id="outline-container-org68deae1" class="outline-2">
+<h2 id="org68deae1">Copyright/License Header</h2>
+<div class="outline-text-2" id="text-org68deae1">
 <p>
 Copyright 2020, 2021 Pradyumna Paranjape
 </p>
@@ -421,13 +443,13 @@ along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">ht
 </div>
 </div>
 
-<div id="outline-container-orgc1044a7" class="outline-2">
-<h2 id="orgc1044a7">Legend</h2>
-<div class="outline-text-2" id="text-orgc1044a7">
+<div id="outline-container-org0205664" class="outline-2">
+<h2 id="org0205664">Legend</h2>
+<div class="outline-text-2" id="text-org0205664">
 </div>
-<div id="outline-container-orga3c3a51" class="outline-3">
-<h3 id="orga3c3a51">Brackets</h3>
-<div class="outline-text-3" id="text-orga3c3a51">
+<div id="outline-container-orga9d9b5d" class="outline-3">
+<h3 id="orga9d9b5d">Brackets</h3>
+<div class="outline-text-3" id="text-orga9d9b5d">
 <ul class="org-ul">
 <li><b>Square</b> <code>[]</code>: optional parts: <code>W[orld]H[ealth]O[rganisation]</code></li>
 <li><b>Angular</b> <code>&lt;&gt;</code>: instructions to fill: <code>&lt;a global organisation&gt;</code></li>
@@ -438,20 +460,20 @@ along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">ht
 </div>
 </div>
 
-<div id="outline-container-orgfd43364" class="outline-2">
-<h2 id="orgfd43364">Requirements</h2>
-<div class="outline-text-2" id="text-orgfd43364">
+<div id="outline-container-orgef57995" class="outline-2">
+<h2 id="orgef57995">Requirements</h2>
+<div class="outline-text-2" id="text-orgef57995">
 </div>
-<div id="outline-container-org93bc00d" class="outline-3">
-<h3 id="org93bc00d">Knowledge</h3>
-<div class="outline-text-3" id="text-org93bc00d">
+<div id="outline-container-org9076691" class="outline-3">
+<h3 id="org9076691">Knowledge</h3>
+<div class="outline-text-3" id="text-org9076691">
 <ul class="org-ul">
 <li>Linux shell commands. We shall try to be POSIX-compliant.</li>
-<li>Knowledge of Linux, "dotfiles".</li>
+<li>Knowledge of Linux, "dot-files".</li>
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="org773e99e">
+<div class="warning" id="orgc992f56">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -461,17 +483,17 @@ Avoid use of <b>sudo</b> as much as possible.
 </div>
 </div>
 
-<div id="outline-container-org6ae5c5f" class="outline-3">
-<h3 id="org6ae5c5f">Dependencies</h3>
-<div class="outline-text-3" id="text-org6ae5c5f">
+<div id="outline-container-orgf084bcd" class="outline-3">
+<h3 id="orgf084bcd">Dependencies</h3>
+<div class="outline-text-3" id="text-orgf084bcd">
 <ul class="org-ul">
 <li>A GNU/Linux distribution. I use <a href="https://fedoraproject.org">Fedora</a>.</li>
 <li><a href="https://curl.se/">curl</a> for proxy authentication.</li>
-<li>GNU <a href="https://www.gnu.org/software/stow/">stow</a>: dotfile management</li>
+<li>GNU <a href="https://www.gnu.org/software/stow/">stow</a>: dot-file management</li>
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="orge574878">
+<div class="important" id="orgbd36d18">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -482,18 +504,18 @@ For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href=
 </div>
 </div>
 
-<div id="outline-container-org965ef6e" class="outline-4">
-<h4 id="org965ef6e">Bootstrap installation of dependencies</h4>
-<div class="outline-text-4" id="text-org965ef6e">
+<div id="outline-container-orgbbf30dc" class="outline-4">
+<h4 id="orgbbf30dc">Bootstrap installation of dependencies</h4>
+<div class="outline-text-4" id="text-orgbbf30dc">
 <p>
-For automated setup, run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
+For automated set-up, run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
 </p>
 <div class="org-src-container">
 <pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/dependencies.sh"</span> | sudo sh
 </pre>
 </div>
 
-<div class="note" id="org8e0e63b">
+<div class="note" id="org0232781">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
@@ -505,9 +527,9 @@ install dependencies manually instead, that's all it does.
 </div>
 </div>
 
-<div id="outline-container-org244b9eb" class="outline-4">
-<h4 id="org244b9eb">Guide for manual installation of dependencies.</h4>
-<div class="outline-text-4" id="text-org244b9eb">
+<div id="outline-container-org553bcab" class="outline-4">
+<h4 id="org553bcab">Guide for manual installation of dependencies.</h4>
+<div class="outline-text-4" id="text-org553bcab">
 <p>
 Use suitable package manager to install curl, git, stow.
 It may be useful to update existing packages and repository database before installing packages.
@@ -563,36 +585,36 @@ pacman: Arch, Manjaro
 </div>
 </div>
 
-<div id="outline-container-org277a06a" class="outline-2">
-<h2 id="org277a06a">Setup</h2>
-<div class="outline-text-2" id="text-org277a06a">
+<div id="outline-container-orge6606c8" class="outline-2">
+<h2 id="orge6606c8">Set-up</h2>
+<div class="outline-text-2" id="text-orge6606c8">
 <ul class="org-ul">
-<li>Affirm <a href="#orgfd43364">requirements</a>.</li>
+<li>Affirm <a href="#orgef57995">requirements</a>.</li>
 </ul>
-<div class="warning" id="org7b77215">
+<div class="warning" id="org1bf247d">
 <p>
-Do <b>NOT</b> use <code>sudo</code> during setup.
+Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="org8819bb0">
+<div class="warning" id="org099380c">
 <ul class="org-ul">
-<li>The next steps require you to delete all <a href="#org2a4b5c7">stowed dotfiles</a>.</li>
+<li>The next steps require you to delete all <a href="#orgd7e8adc">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
-<li>Preserve this backup, you will need this during un-setup.</li>
+<li>Preserve this backup, you will need this during undoing set-up.</li>
 <li>You HAVE BEEN warned.</li>
 </ul>
 
 </div>
 </div>
 
-<div id="outline-container-org7eacf66" class="outline-3">
-<h3 id="org7eacf66">Bootstrap setup using script</h3>
-<div class="outline-text-3" id="text-org7eacf66">
+<div id="outline-container-orgd8a5c66" class="outline-3">
+<h3 id="orgd8a5c66">Bootstrap set-up using script</h3>
+<div class="outline-text-3" id="text-orgd8a5c66">
 <ul class="org-ul">
 <li><p>
-Setup may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
+Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
 </p>
 
 <div class="org-src-container">
@@ -601,12 +623,12 @@ Setup may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> sc
 </pre>
 </div>
 
-<div class="note" id="orgb4c0a03">
+<div class="note" id="orgae26204">
 <p>
 Inspecting scripts before running them is generally a good idea.
-The <i>setup</i> script is tangled (with automation wrappers) from the code below.
+The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
 If you feel an urge to inspect it or if it fails,
-follow manual setup instructions with modifications instead.
+follow manual set-up instructions with modifications instead.
 </p>
 
 </div></li>
@@ -614,13 +636,13 @@ follow manual setup instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org007a521" class="outline-3">
-<h3 id="org007a521">Guide for manual setup.</h3>
-<div class="outline-text-3" id="text-org007a521">
+<div id="outline-container-orgf764e69" class="outline-3">
+<h3 id="orgf764e69">Guide for manual set-up.</h3>
+<div class="outline-text-3" id="text-orgf764e69">
 </div>
-<div id="outline-container-orgdbec66b" class="outline-4">
-<h4 id="orgdbec66b">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
-<div class="outline-text-4" id="text-orgdbec66b">
+<div id="outline-container-org3725f4c" class="outline-4">
+<h4 id="org3725f4c">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
+<div class="outline-text-4" id="text-org3725f4c">
 <div class="org-src-container">
 <pre class="src src-sh">git clone --recurse-submodules <span style="color: #98be65;">"https://github.com/pradyparanjpe/runcom"</span> <span style="color: #98be65;">"${HOME}/.runcom"</span> || <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">1</span>
 </pre>
@@ -628,18 +650,18 @@ follow manual setup instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgfd24256" class="outline-4">
-<h4 id="orgfd24256">Stow dotfiles</h4>
-<div class="outline-text-4" id="text-orgfd24256">
+<div id="outline-container-org36d15a9" class="outline-4">
+<h4 id="org36d15a9">Stow dot-files</h4>
+<div class="outline-text-4" id="text-org36d15a9">
 <ul class="org-ul">
 <li><code>GNU stow</code> will create symlinked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> in <code>${HOME}</code>.</li>
 <li>If <code>stow</code> finds a pre-existing directory, symlinks are created inside that directory.</li>
 <li>If <code>stow</code> finds a pre-existing file (non-directory), it throws error.</li>
 </ul>
 </div>
-<div id="outline-container-orgd9ac4c3" class="outline-5">
-<h5 id="orgd9ac4c3">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
-<div class="outline-text-5" id="text-orgd9ac4c3">
+<ul class="org-ul">
+<li><a id="org5753243"></a>Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code><br />
+<div class="outline-text-5" id="text-org5753243">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">presence</span>=<span style="color: #98be65;">"${HOME}/OLD_CONFIG"</span>
 mkdir -p <span style="color: #98be65;">"${presence}"</span>
@@ -652,11 +674,10 @@ cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"<
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orge1e7f53" class="outline-5">
-<h5 id="orge1e7f53">Create directories, so that symlinks are made <i>inside</i> them.</h5>
-<div class="outline-text-5" id="text-orge1e7f53">
+<li><a id="org03f4b74"></a>Create directories, so that symlinks are made <i>inside</i> them.<br />
+<div class="outline-text-5" id="text-org03f4b74">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> conf_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -689,43 +710,43 @@ cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"<
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orge147489" class="outline-5">
-<h5 id="orge147489">Stow</h5>
-<div class="outline-text-5" id="text-orge147489">
+<li><a id="org8ac84f9"></a>Stow<br />
+<div class="outline-text-5" id="text-org8ac84f9">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vS -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> dotfiles
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org27d63e6" class="outline-2">
-<h2 id="org27d63e6">Undo Setup</h2>
-<div class="outline-text-2" id="text-org27d63e6">
-<div class="warning" id="orga037dbf">
+<div id="outline-container-org5c7f076" class="outline-2">
+<h2 id="org5c7f076">Undo Set-up</h2>
+<div class="outline-text-2" id="text-org5c7f076">
+<div class="warning" id="org0f43a6b">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="org2c2f5ae">
+<div class="note" id="org8cd3c16">
 <ul class="org-ul">
 <li>The next steps will require a directory containing 'old configuration files'.</li>
-<li>You HAD BEEN warned against deleting it during the setup.</li>
+<li>You HAD BEEN warned against deleting it during the set-up.</li>
 </ul>
 
 </div>
 </div>
 
-<div id="outline-container-org52c0f19" class="outline-3">
-<h3 id="org52c0f19">Bootstrap unset using script</h3>
-<div class="outline-text-3" id="text-org52c0f19">
+<div id="outline-container-orgf8d12a7" class="outline-3">
+<h3 id="orgf8d12a7">Bootstrap unset using script</h3>
+<div class="outline-text-3" id="text-orgf8d12a7">
 <ul class="org-ul">
 <li><p>
 Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.
@@ -737,7 +758,7 @@ Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> sc
 </pre>
 </div>
 
-<div class="note" id="org272ad8e">
+<div class="note" id="orge3f03e4">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -750,31 +771,30 @@ follow manual unset instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org5ddde06" class="outline-3">
-<h3 id="org5ddde06">Guide for manual un-setup.</h3>
-<div class="outline-text-3" id="text-org5ddde06">
+<div id="outline-container-org022fa3d" class="outline-3">
+<h3 id="org022fa3d">Guide to manually undo set-up.</h3>
+<div class="outline-text-3" id="text-org022fa3d">
 </div>
-<div id="outline-container-orge903a49" class="outline-4">
-<h4 id="orge903a49">UnStow dotfiles</h4>
-<div class="outline-text-4" id="text-orge903a49">
+<div id="outline-container-orgc3e2ddc" class="outline-4">
+<h4 id="orgc3e2ddc">UnStow dot-files</h4>
+<div class="outline-text-4" id="text-orgc3e2ddc">
 <ul class="org-ul">
 <li>Use <code>GNU stow</code> to unstow to un-linked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> from <code>${HOME}</code>.</li>
 </ul>
 </div>
-<div id="outline-container-org3810c5a" class="outline-5">
-<h5 id="org3810c5a">UnStow</h5>
-<div class="outline-text-5" id="text-org3810c5a">
+<ul class="org-ul">
+<li><a id="orga35b5a4"></a>UnStow<br />
+<div class="outline-text-5" id="text-orga35b5a4">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vp -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> -D dotfiles
 
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org5623324" class="outline-5">
-<h5 id="org5623324">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
-<div class="outline-text-5" id="text-org5623324">
+<li><a id="org3c2ffac"></a>Restore directories form <code>${HOME}/OLD_CONFIG</code><br />
+<div class="outline-text-5" id="text-org3c2ffac">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> conf_dir<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${1:-${HOME}/OLD_CONFIG}"</span>/*; <span style="color: #51afef;">do</span>
     cp -r <span style="color: #98be65;">"${conf_dir}"</span> <span style="color: #98be65;">"${HOME}"</span>/. || <span style="color: #51afef;">break</span>
@@ -789,12 +809,13 @@ follow manual unset instructions with modifications instead.
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 
-<div id="outline-container-orgb809297" class="outline-4">
-<h4 id="orgb809297">Delete runcom</h4>
-<div class="outline-text-4" id="text-orgb809297">
+<div id="outline-container-org870c770" class="outline-4">
+<h4 id="org870c770">Delete runcom</h4>
+<div class="outline-text-4" id="text-org870c770">
 <p>
 Goodbye
 </p>
@@ -808,13 +829,13 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-org9759129" class="outline-2">
-<h2 id="org9759129">Personalization</h2>
-<div class="outline-text-2" id="text-org9759129">
+<div id="outline-container-org5ef21d8" class="outline-2">
+<h2 id="org5ef21d8">Personalization</h2>
+<div class="outline-text-2" id="text-org5ef21d8">
 </div>
-<div id="outline-container-orgcc55c10" class="outline-3">
-<h3 id="orgcc55c10">Local</h3>
-<div class="outline-text-3" id="text-orgcc55c10">
+<div id="outline-container-org2e1d99d" class="outline-3">
+<h3 id="org2e1d99d">Local</h3>
+<div class="outline-text-3" id="text-org2e1d99d">
 <p>
 Create a directory at the location  <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d</code>.
 </p>
@@ -831,9 +852,9 @@ Do not synchronize this directory. This directory is only for the machine.
 </div>
 </div>
 
-<div id="outline-container-org3e333a8" class="outline-3">
-<h3 id="org3e333a8">Synchronized</h3>
-<div class="outline-text-3" id="text-org3e333a8">
+<div id="outline-container-orgdf70802" class="outline-3">
+<h3 id="orgdf70802">Synchronized</h3>
+<div class="outline-text-3" id="text-orgdf70802">
 <p>
 Create a directory at the location <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d</code>.
 </p>
@@ -847,7 +868,7 @@ Create a directory at the location <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt
 <li><p>
 Synchronize (stow) that directory using a local repository or by simply copying contents.
 </p>
-<div class="danger" id="org0b7bbbb">
+<div class="danger" id="org69c82fc">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
@@ -858,7 +879,7 @@ Synchronize (stow) that directory using a local repository or by simply copying 
 </ul>
 
 
-<div class="tip" id="org584a8a6">
+<div class="tip" id="org6210617">
 <ul class="org-ul">
 <li><p>
 Remember to keep the repository updated.
@@ -874,22 +895,22 @@ Remember to keep the repository updated.
 </div>
 </div>
 
-<div id="outline-container-org00fadcc" class="outline-3">
-<h3 id="org00fadcc">Proxy settings</h3>
-<div class="outline-text-3" id="text-org00fadcc">
+<div id="outline-container-orge976db9" class="outline-3">
+<h3 id="orge976db9">Proxy settings</h3>
+<div class="outline-text-3" id="text-orge976db9">
 <p>
 Read set up for <a href="./proxy_send.html">proxy_send</a>.
 </p>
 
 <p>
-<b><span class="underline">SETUP COMPLETE!</span> Following sections explain and tangle the contents of runcom.</b>
+<b><span class="underline">SET-UP COMPLETE!</span> Following sections explain and tangle the contents of runcom.</b>
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2a4b5c7" class="outline-2">
-<h2 id="org2a4b5c7">Structure</h2>
-<div class="outline-text-2" id="text-org2a4b5c7">
+<div id="outline-container-orgd7e8adc" class="outline-2">
+<h2 id="orgd7e8adc">Structure</h2>
+<div class="outline-text-2" id="text-orgd7e8adc">
 <p>
 Following configuration files are available. This literate configuration tangles their contents.
 </p>
@@ -1046,124 +1067,116 @@ They are loaded in following order.
 </p>
 </div>
 
-<div id="outline-container-org089ac2f" class="outline-3">
-<h3 id="org089ac2f">Bash</h3>
-<div class="outline-text-3" id="text-org089ac2f">
+<div id="outline-container-orgf42ce44" class="outline-3">
+<h3 id="orgf42ce44">Bash</h3>
+<div class="outline-text-3" id="text-orgf42ce44">
 </div>
-<div id="outline-container-org830c28f" class="outline-4">
-<h4 id="org830c28f">/etc/profile</h4>
-<div class="outline-text-4" id="text-org830c28f">
-</div>
-<div id="outline-container-org9072313" class="outline-5">
-<h5 id="org9072313">/etc/bashrc</h5>
-<div class="outline-text-5" id="text-org9072313">
+<div id="outline-container-org4003751" class="outline-4">
+<h4 id="org4003751">/etc/profile</h4>
+<div class="outline-text-4" id="text-org4003751">
 </div>
 <ul class="org-ul">
-<li><a id="org1de0cab"></a>/etc/profile.d/*<br /></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgd4c0c05" class="outline-4">
-<h4 id="orgd4c0c05">${HOME}/.bash_profile</h4>
-<div class="outline-text-4" id="text-orgd4c0c05">
-</div>
-<div id="outline-container-org406ad6d" class="outline-5">
-<h5 id="org406ad6d">${HOME}/.profile</h5>
-</div>
-
-<div id="outline-container-org78a34ad" class="outline-5">
-<h5 id="org78a34ad">${HOME}/.bashrc</h5>
-<div class="outline-text-5" id="text-org78a34ad">
-</div>
+<li><a id="org9ff25ce"></a>/etc/bashrc<br />
 <ul class="org-ul">
-<li><a id="org081213c"></a>${RUNCOMDIR}/env/shrc<br />
-<ul class="org-ul">
-<li><a id="orgf82ecf3"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org487d1b7"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="org6b7c738"></a>/etc/profile.d/*<br /></li>
 </ul>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-org70112ed" class="outline-5">
-<h5 id="org70112ed">${HOME}/.bash_login</h5>
-<div class="outline-text-5" id="text-org70112ed">
+<div id="outline-container-org9d748b4" class="outline-4">
+<h4 id="org9d748b4">${HOME}/.bash_profile</h4>
+<div class="outline-text-4" id="text-org9d748b4">
 </div>
 <ul class="org-ul">
-<li><a id="orgf95adfc"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="org3f70343"></a>${HOME}/.profile<br /></li>
+
+<li><a id="orgb743fed"></a>${HOME}/.bashrc<br />
+<ul class="org-ul">
+<li><a id="org3ed6975"></a>${RUNCOMDIR}/env/shrc<br />
+<ul class="org-ul">
+<li><a id="org9fcdd39"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="orga933cac"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li><a id="orgc6a2308"></a>${HOME}/.bash_login<br />
+<ul class="org-ul">
+<li><a id="org4f41d93"></a>${RUNCOMDIR}/env/ui<br /></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-</div>
 
-<div id="outline-container-org9e2f59d" class="outline-3">
-<h3 id="org9e2f59d">Zsh</h3>
-<div class="outline-text-3" id="text-org9e2f59d">
+<div id="outline-container-org58d44af" class="outline-3">
+<h3 id="org58d44af">Zsh</h3>
+<div class="outline-text-3" id="text-org58d44af">
 </div>
-<div id="outline-container-org321e625" class="outline-4">
-<h4 id="org321e625">/etc/profile</h4>
-<div class="outline-text-4" id="text-org321e625">
-</div>
-<div id="outline-container-orgc47371b" class="outline-5">
-<h5 id="orgc47371b">/etc/zshrc</h5>
-<div class="outline-text-5" id="text-orgc47371b">
+<div id="outline-container-org5438c2a" class="outline-4">
+<h4 id="org5438c2a">/etc/profile</h4>
+<div class="outline-text-4" id="text-org5438c2a">
 </div>
 <ul class="org-ul">
-<li><a id="orgfd5507f"></a>/etc/profile.d/*<br /></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org4d6a2a8" class="outline-4">
-<h4 id="org4d6a2a8">${HOME}/.zshenv</h4>
-</div>
-
-<div id="outline-container-org440e918" class="outline-4">
-<h4 id="org440e918">${HOME}/.zprofile</h4>
-<div class="outline-text-4" id="text-org440e918">
-</div>
-<div id="outline-container-org2f0aee9" class="outline-5">
-<h5 id="org2f0aee9">${HOME}/.profile</h5>
-</div>
-</div>
-
-<div id="outline-container-org21c57a0" class="outline-4">
-<h4 id="org21c57a0">${HOME}/.zshrc</h4>
-<div class="outline-text-4" id="text-org21c57a0">
-</div>
+<li><a id="orga14d8f7"></a>/etc/zshrc<br />
 <ul class="org-ul">
-<li><a id="org7b5ed4a"></a>${RUNCOMDIR}/env/shrc<br />
-<ul class="org-ul">
-<li><a id="org7b1be1b"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="orgbf40f2f"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="org3c0288c"></a>/etc/profile.d/*<br /></li>
 </ul>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-org2b58644" class="outline-4">
-<h4 id="org2b58644">${HOME}/.zlogin</h4>
-<div class="outline-text-4" id="text-org2b58644">
+<div id="outline-container-org7dae4a1" class="outline-4">
+<h4 id="org7dae4a1">${HOME}/.zshenv</h4>
+</div>
+
+<div id="outline-container-org264262d" class="outline-4">
+<h4 id="org264262d">${HOME}/.zprofile</h4>
+<div class="outline-text-4" id="text-org264262d">
 </div>
 <ul class="org-ul">
-<li><a id="org67ecbd9"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="orgf75048e"></a>${HOME}/.profile<br /></li>
+</ul>
+</div>
+
+<div id="outline-container-orgbd6df2d" class="outline-4">
+<h4 id="orgbd6df2d">${HOME}/.zshrc</h4>
+<div class="outline-text-4" id="text-orgbd6df2d">
+</div>
+<ul class="org-ul">
+<li><a id="orgf204d60"></a>${RUNCOMDIR}/env/shrc<br />
+<ul class="org-ul">
+<li><a id="org092da00"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="orgca85088"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org169cdd8" class="outline-4">
+<h4 id="org169cdd8">${HOME}/.zlogin</h4>
+<div class="outline-text-4" id="text-org169cdd8">
+</div>
+<ul class="org-ul">
+<li><a id="org219d37c"></a>${RUNCOMDIR}/env/ui<br /></li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org515c0f7" class="outline-2">
-<h2 id="org515c0f7">Headers</h2>
-<div class="outline-text-2" id="text-org515c0f7">
+<div id="outline-container-org90701db" class="outline-2">
+<h2 id="org90701db">Headers</h2>
+<div class="outline-text-2" id="text-org90701db">
 <p>
 Copyright, License banners
 </p>
 </div>
 </div>
-<div id="outline-container-org62a1da6" class="outline-2">
-<h2 id="org62a1da6">Profiles</h2>
-<div class="outline-text-2" id="text-org62a1da6">
+<div id="outline-container-orgacb388c" class="outline-2">
+<h2 id="orgacb388c">Profiles</h2>
+<div class="outline-text-2" id="text-orgacb388c">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${HOME}/.profile"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1091</span>
@@ -1212,13 +1225,13 @@ zstyle :compinstall filename <span style="color: #98be65;">"${HOME}/.zshrc"</spa
 </div>
 </div>
 
-<div id="outline-container-orgd8b2c45" class="outline-2">
-<h2 id="orgd8b2c45">Init</h2>
-<div class="outline-text-2" id="text-orgd8b2c45">
+<div id="outline-container-org0195d7b" class="outline-2">
+<h2 id="org0195d7b">Init</h2>
+<div class="outline-text-2" id="text-org0195d7b">
 </div>
-<div id="outline-container-org8caed9f" class="outline-3">
-<h3 id="org8caed9f">profile</h3>
-<div class="outline-text-3" id="text-org8caed9f">
+<div id="outline-container-org75f6d64" class="outline-3">
+<h3 id="org75f6d64">profile</h3>
+<div class="outline-text-3" id="text-org75f6d64">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">LC_ALL</span>=en_IN.UTF-8
 <span style="color: #ffffaf;">LANG</span>=en_IN.UTF-8
@@ -1229,9 +1242,9 @@ zstyle :compinstall filename <span style="color: #98be65;">"${HOME}/.zshrc"</spa
 </div>
 </div>
 </div>
-<div id="outline-container-orgcf89908" class="outline-3">
-<h3 id="orgcf89908">bash</h3>
-<div class="outline-text-3" id="text-orgcf89908">
+<div id="outline-container-org82a86cc" class="outline-3">
+<h3 id="org82a86cc">bash</h3>
+<div class="outline-text-3" id="text-org82a86cc">
 <ul class="org-ul">
 <li>Prevent bashrc from running outside non-interactive mode</li>
 </ul>
@@ -1268,7 +1281,7 @@ shopt -s globstar
 </div>
 
 <ul class="org-ul">
-<li>Colored terminals</li>
+<li>Coloured terminals</li>
 </ul>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #51afef;">case</span> <span style="color: #98be65;">"$TERM"</span><span style="color: #51afef;"> in</span>
@@ -1278,7 +1291,7 @@ shopt -s globstar
 </div>
 
 <ul class="org-ul">
-<li>Keybindings</li>
+<li>Key-bindings</li>
 </ul>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #d76f10;">set</span> -o vi
@@ -1288,9 +1301,9 @@ bind <span style="color: #98be65;">'"jk":vi-movement-mode'</span>
 </div>
 </div>
 
-<div id="outline-container-org4258b01" class="outline-3">
-<h3 id="org4258b01">zsh</h3>
-<div class="outline-text-3" id="text-org4258b01">
+<div id="outline-container-org0b62c13" class="outline-3">
+<h3 id="org0b62c13">zsh</h3>
+<div class="outline-text-3" id="text-org0b62c13">
 <p>
 Settings
 </p>
@@ -1336,7 +1349,7 @@ bashcompinit
 </div></li>
 
 <li><p>
-Keybindings
+Key-bindings
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #ffffaf;">term_key_source</span>=<span style="color: #98be65;">"${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"</span>
@@ -1397,7 +1410,7 @@ zle -N zle-keymap-select
 <li>Unset options:
 <ul class="org-ul">
 <li>setopt SHARE_HISTORY             # Share history between all sessions.</li>
-<li>setopt HIST_BEEP                 # Beep when accessing nonexistent history.</li>
+<li>setopt HIST_BEEP                 # Beep when accessing non-existent history.</li>
 <li>HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate</li>
 </ul></li>
 </ul>
@@ -1405,13 +1418,13 @@ zle -N zle-keymap-select
 </div>
 </div>
 
-<div id="outline-container-orgf087b48" class="outline-2">
-<h2 id="orgf087b48">Inherit</h2>
-<div class="outline-text-2" id="text-orgf087b48">
+<div id="outline-container-org84455fd" class="outline-2">
+<h2 id="org84455fd">Inherit</h2>
+<div class="outline-text-2" id="text-org84455fd">
 </div>
-<div id="outline-container-org5001643" class="outline-3">
-<h3 id="org5001643">bash</h3>
-<div class="outline-text-3" id="text-org5001643">
+<div id="outline-container-orgc6af300" class="outline-3">
+<h3 id="orgc6af300">bash</h3>
+<div class="outline-text-3" id="text-orgc6af300">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -1425,9 +1438,9 @@ zle -N zle-keymap-select
 </div>
 </div>
 
-<div id="outline-container-orgaf39a49" class="outline-3">
-<h3 id="orgaf39a49">zsh</h3>
-<div class="outline-text-3" id="text-orgaf39a49">
+<div id="outline-container-org182f215" class="outline-3">
+<h3 id="org182f215">zsh</h3>
+<div class="outline-text-3" id="text-org182f215">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -1463,13 +1476,13 @@ zle -N zle-keymap-select
 </div>
 </div>
 
-<div id="outline-container-orgdc9403d" class="outline-3">
-<h3 id="orgdc9403d">shrc</h3>
-<div class="outline-text-3" id="text-orgdc9403d">
+<div id="outline-container-orga15bc36" class="outline-3">
+<h3 id="orga15bc36">shrc</h3>
+<div class="outline-text-3" id="text-orga15bc36">
 </div>
-<div id="outline-container-org5fe63e7" class="outline-4">
-<h4 id="org5fe63e7">Local unsynced changes</h4>
-<div class="outline-text-4" id="text-org5fe63e7">
+<div id="outline-container-orge5f55f7" class="outline-4">
+<h4 id="orge5f55f7">Local un-synced changes</h4>
+<div class="outline-text-4" id="text-orge5f55f7">
 <p>
 All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </p>
@@ -1490,13 +1503,13 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-org9dd0820" class="outline-2">
-<h2 id="org9dd0820">Better alternatives</h2>
-<div class="outline-text-2" id="text-org9dd0820">
+<div id="outline-container-org56aa440" class="outline-2">
+<h2 id="org56aa440">Better alternatives</h2>
+<div class="outline-text-2" id="text-org56aa440">
 </div>
-<div id="outline-container-org35701a9" class="outline-3">
-<h3 id="org35701a9">cat</h3>
-<div class="outline-text-3" id="text-org35701a9">
+<div id="outline-container-orgf1e5963" class="outline-3">
+<h3 id="orgf1e5963">cat</h3>
+<div class="outline-text-3" id="text-orgf1e5963">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">'bat'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
     <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">cat</span>=<span style="color: #98be65;">"bat --color=auto"</span>;
@@ -1506,9 +1519,9 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-orgd1a7d47" class="outline-3">
-<h3 id="orgd1a7d47">g/re/p</h3>
-<div class="outline-text-3" id="text-orgd1a7d47">
+<div id="outline-container-org8e30d47" class="outline-3">
+<h3 id="org8e30d47">g/re/p</h3>
+<div class="outline-text-3" id="text-org8e30d47">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> sc<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"ack"</span> <span style="color: #98be65;">"pt"</span> <span style="color: #98be65;">"ag"</span> <span style="color: #98be65;">"rg"</span>; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${sc%% *}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
@@ -1521,9 +1534,9 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-orgb586cff" class="outline-3">
-<h3 id="orgb586cff">List Contents</h3>
-<div class="outline-text-3" id="text-orgb586cff">
+<div id="outline-container-org706d5aa" class="outline-3">
+<h3 id="org706d5aa">List Contents</h3>
+<div class="outline-text-3" id="text-org706d5aa">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"exa"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
     <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ls</span>=<span style="color: #98be65;">"exa -Fh --color=auto"</span>;
@@ -1538,9 +1551,9 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-org6cd7a95" class="outline-3">
-<h3 id="org6cd7a95">neo visual editor improved</h3>
-<div class="outline-text-3" id="text-org6cd7a95">
+<div id="outline-container-org093fc3c" class="outline-3">
+<h3 id="org093fc3c">neo visual editor improved</h3>
+<div class="outline-text-3" id="text-org093fc3c">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v nvim &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
     <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ex</span>=<span style="color: #98be65;">"nvim"</span>; <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">always open vim in normal mode</span>
@@ -1551,9 +1564,9 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-org8918b9a" class="outline-3">
-<h3 id="org8918b9a">Container</h3>
-<div class="outline-text-3" id="text-org8918b9a">
+<div id="outline-container-org28ab099" class="outline-3">
+<h3 id="org28ab099">Container</h3>
+<div class="outline-text-3" id="text-org28ab099">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v podman &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
     <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">docker</span>=<span style="color: #98be65;">"podman"</span>;  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Podman is drop-in replacement for docker</span>
@@ -1565,13 +1578,13 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </div>
 </div>
 
-<div id="outline-container-orgb1e874e" class="outline-2">
-<h2 id="orgb1e874e">Variables</h2>
-<div class="outline-text-2" id="text-orgb1e874e">
+<div id="outline-container-org2cc3ddb" class="outline-2">
+<h2 id="org2cc3ddb">Variables</h2>
+<div class="outline-text-2" id="text-org2cc3ddb">
 </div>
-<div id="outline-container-org5993225" class="outline-3">
-<h3 id="org5993225">XDG</h3>
-<div class="outline-text-3" id="text-org5993225">
+<div id="outline-container-org2d2e16f" class="outline-3">
+<h3 id="org2d2e16f">XDG</h3>
+<div class="outline-text-3" id="text-org2d2e16f">
 <p>
 XDG standard locations specifications these can be redefined in
 <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.&lt;some name&gt;rc</code>
@@ -1594,9 +1607,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org22326ab" class="outline-3">
-<h3 id="org22326ab">PATH</h3>
-<div class="outline-text-3" id="text-org22326ab">
+<div id="outline-container-org7ecfe5a" class="outline-3">
+<h3 id="org7ecfe5a">PATH</h3>
+<div class="outline-text-3" id="text-org7ecfe5a">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source="bin"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${HOME}/bin"</span> <span style="color: #51afef;">]</span> ; <span style="color: #51afef;">then</span>
@@ -1617,9 +1630,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org3d2b9cb" class="outline-3">
-<h3 id="org3d2b9cb">Editor wars</h3>
-<div class="outline-text-3" id="text-org3d2b9cb">
+<div id="outline-container-org4c3964e" class="outline-3">
+<h3 id="org4c3964e">Editor wars</h3>
+<div class="outline-text-3" id="text-org4c3964e">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">while </span><span style="color: #d76f10;">read</span> -r avail; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${avail}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
@@ -1652,9 +1665,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org42ae1aa" class="outline-3">
-<h3 id="org42ae1aa">C(++) exports</h3>
-<div class="outline-text-3" id="text-org42ae1aa">
+<div id="outline-container-orgd42e8d7" class="outline-3">
+<h3 id="orgd42e8d7">C(++) exports</h3>
+<div class="outline-text-3" id="text-orgd42e8d7">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">LD_LIBRARY_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/lib:${HOME}/.local/lib64"</span>;
 <span style="color: #ffffaf;">C_INCLUDE_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/share/pspman/include/"</span>
@@ -1667,9 +1680,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org4bbac48" class="outline-3">
-<h3 id="org4bbac48">GPU exports</h3>
-<div class="outline-text-3" id="text-org4bbac48">
+<div id="outline-container-org15a5e91" class="outline-3">
+<h3 id="org15a5e91">GPU exports</h3>
+<div class="outline-text-3" id="text-org15a5e91">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">PYOPENCL_CTX</span>=<span style="color: #98be65;">'0'</span>;
 <span style="color: #ffffaf;">PYOPENCL_COMPILER_OUTPUT</span>=<span style="color: #da8548; font-weight: bold;">1</span>;
@@ -1682,9 +1695,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org387030a" class="outline-3">
-<h3 id="org387030a">Bemenu exports</h3>
-<div class="outline-text-3" id="text-org387030a">
+<div id="outline-container-org1a334b6" class="outline-3">
+<h3 id="org1a334b6">Bemenu exports</h3>
+<div class="outline-text-3" id="text-org1a334b6">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">export</span> <span style="color: #ffffaf;">BEMENU_OPTS</span>=<span style="color: #98be65;">'--fn firacode 14 '</span>
 </pre>
@@ -1692,9 +1705,9 @@ XDG standard locations specifications these can be redefined in
 </div>
 </div>
 
-<div id="outline-container-org363ed3e" class="outline-3">
-<h3 id="org363ed3e">GTK+ debugging output</h3>
-<div class="outline-text-3" id="text-org363ed3e">
+<div id="outline-container-org3eea4a1" class="outline-3">
+<h3 id="org3eea4a1">GTK+ debugging output</h3>
+<div class="outline-text-3" id="text-org3eea4a1">
 <p>
 Silence debugging output for gtk+
 </p>
@@ -1707,17 +1720,17 @@ Silence debugging output for gtk+
 </div>
 </div>
 
-<div id="outline-container-orgb8a4521" class="outline-2">
-<h2 id="orgb8a4521">Functions</h2>
-<div class="outline-text-2" id="text-orgb8a4521">
+<div id="outline-container-org0e074a2" class="outline-2">
+<h2 id="org0e074a2">Functions</h2>
+<div class="outline-text-2" id="text-org0e074a2">
 </div>
-<div id="outline-container-orgac814f8" class="outline-3">
-<h3 id="orgac814f8">Python</h3>
-<div class="outline-text-3" id="text-orgac814f8">
+<div id="outline-container-orgb3903e2" class="outline-3">
+<h3 id="orgb3903e2">Python</h3>
+<div class="outline-text-3" id="text-orgb3903e2">
 </div>
-<div id="outline-container-org2cb7df3" class="outline-4">
-<h4 id="org2cb7df3">Python version</h4>
-<div class="outline-text-4" id="text-org2cb7df3">
+<div id="outline-container-orgadfe3b8" class="outline-4">
+<h4 id="orgadfe3b8">Python version</h4>
+<div class="outline-text-4" id="text-orgadfe3b8">
 <p>
 to locate site-packages
 </p>
@@ -1731,11 +1744,11 @@ to locate site-packages
 </div>
 </div>
 
-<div id="outline-container-org4b35780" class="outline-4">
-<h4 id="org4b35780">Quickly change to virtualenv</h4>
-<div class="outline-text-4" id="text-org4b35780">
+<div id="outline-container-orgc518b66" class="outline-4">
+<h4 id="orgc518b66">Quickly change to virtualenv</h4>
+<div class="outline-text-4" id="text-orgc518b66">
 <p>
-Scan upto mountpoint, if any direct parent has .venv, source that ".venv/bin/activate"
+Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
 This may require shell-identification for ksh, csh, fish since they have a different activate
 </p>
 <div class="org-src-container">
@@ -1776,9 +1789,9 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </div>
 </div>
 
-<div id="outline-container-org0aece0d" class="outline-4">
-<h4 id="org0aece0d">Virtualenv in prompt string</h4>
-<div class="outline-text-4" id="text-org0aece0d">
+<div id="outline-container-orgd327502" class="outline-4">
+<h4 id="orgd327502">Virtualenv in prompt string</h4>
+<div class="outline-text-4" id="text-orgd327502">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_show_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">if a virtualenv is active, print it's name</span>
@@ -1798,13 +1811,13 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </div>
 </div>
 </div>
-<div id="outline-container-org612782d" class="outline-3">
-<h3 id="org612782d">Git</h3>
-<div class="outline-text-3" id="text-org612782d">
+<div id="outline-container-orge729649" class="outline-3">
+<h3 id="orge729649">Git</h3>
+<div class="outline-text-3" id="text-orge729649">
 </div>
-<div id="outline-container-org2aad0cd" class="outline-4">
-<h4 id="org2aad0cd">Status</h4>
-<div class="outline-text-4" id="text-org2aad0cd">
+<div id="outline-container-org62fcb19" class="outline-4">
+<h4 id="org62fcb19">Status</h4>
+<div class="outline-text-4" id="text-org62fcb19">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">git_status</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">_modified</span>=<span style="color: #da8548; font-weight: bold;">0</span>
@@ -1857,9 +1870,9 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </div>
 </div>
 
-<div id="outline-container-orgc38543e" class="outline-4">
-<h4 id="orgc38543e">Branch</h4>
-<div class="outline-text-4" id="text-orgc38543e">
+<div id="outline-container-org5e6d1a2" class="outline-4">
+<h4 id="org5e6d1a2">Branch</h4>
+<div class="outline-text-4" id="text-org5e6d1a2">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">git_branch</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">branch_str</span>=<span style="color: #98be65;">''</span>
@@ -1900,9 +1913,9 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </div>
 </div>
 </div>
-<div id="outline-container-org730bf02" class="outline-4">
-<h4 id="org730bf02">Hash</h4>
-<div class="outline-text-4" id="text-org730bf02">
+<div id="outline-container-org30df9a7" class="outline-4">
+<h4 id="org30df9a7">Hash</h4>
+<div class="outline-text-4" id="text-org30df9a7">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">git_hash</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     git log --pretty=format:<span style="color: #98be65;">'%h'</span> -n <span style="color: #da8548; font-weight: bold;">1</span>
@@ -1912,15 +1925,15 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </div>
 </div>
 
-<div id="outline-container-org4e1fc49" class="outline-4">
-<h4 id="org4e1fc49">Prompt string</h4>
-<div class="outline-text-4" id="text-org4e1fc49">
+<div id="outline-container-org48ec346" class="outline-4">
+<h4 id="org48ec346">Prompt string</h4>
+<div class="outline-text-4" id="text-org48ec346">
 <p>
 Include git's branch, hash, status in PS1 if in git repository
 This function is called in PS1 section below
 </p>
 <div class="org-src-container">
-<pre class="src src-sh" id="org85476d9"><span style="color: #9f5f9f; font-weight: bold;">git_ps</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh" id="org2aef0d9"><span style="color: #9f5f9f; font-weight: bold;">git_ps</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> git status --ignore-submodules &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
         <span style="color: #51afef;">return</span>
     <span style="color: #51afef;">else</span>
@@ -1933,13 +1946,13 @@ This function is called in PS1 section below
 </div>
 </div>
 
-<div id="outline-container-org8b7f9bf" class="outline-3">
-<h3 id="org8b7f9bf">Prompt String</h3>
-<div class="outline-text-3" id="text-org8b7f9bf">
+<div id="outline-container-org1ec8402" class="outline-3">
+<h3 id="org1ec8402">Prompt String</h3>
+<div class="outline-text-3" id="text-org1ec8402">
 </div>
-<div id="outline-container-orga773a27" class="outline-4">
-<h4 id="orga773a27">Exit_color</h4>
-<div class="outline-text-4" id="text-orga773a27">
+<div id="outline-container-org9fac801" class="outline-4">
+<h4 id="org9fac801">Exit_colour</h4>
+<div class="outline-text-4" id="text-org9fac801">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">last_exit_color</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$1"</span><span style="color: #51afef;"> in</span>
@@ -1987,9 +2000,9 @@ This function is called in PS1 section below
 </div>
 </div>
 
-<div id="outline-container-org976e041" class="outline-4">
-<h4 id="org976e041">Elapsed_time</h4>
-<div class="outline-text-4" id="text-org976e041">
+<div id="outline-container-org504e02b" class="outline-4">
+<h4 id="org504e02b">Elapsed_time</h4>
+<div class="outline-text-4" id="text-org504e02b">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_elapsed_time</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$1 is start time $2 is end time</span>
@@ -2033,13 +2046,13 @@ This function is called in PS1 section below
 </div>
 </div>
 
-<div id="outline-container-orgd94a264" class="outline-4">
-<h4 id="orgd94a264">PROMPT_COMMAND</h4>
-<div class="outline-text-4" id="text-orgd94a264">
+<div id="outline-container-orge2d2cb6" class="outline-4">
+<h4 id="orge2d2cb6">PROMPT_COMMAND</h4>
+<div class="outline-text-4" id="text-orge2d2cb6">
 </div>
-<div id="outline-container-org743ecad" class="outline-5">
-<h5 id="org743ecad">bash</h5>
-<div class="outline-text-5" id="text-org743ecad">
+<ul class="org-ul">
+<li><a id="orgd67bbb0"></a>bash<br />
+<div class="outline-text-5" id="text-orgd67bbb0">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export PROMPT_COMMAND=__prompt_command</span>
 
@@ -2082,11 +2095,10 @@ This function is called in PS1 section below
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org3995221" class="outline-5">
-<h5 id="org3995221">zsh</h5>
-<div class="outline-text-5" id="text-org3995221">
+<li><a id="org882e35e"></a>zsh<br />
+<div class="outline-text-5" id="text-org882e35e">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #9f5f9f; font-weight: bold;">_pspexec</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">_cmd_start_t</span>=<span style="color: #98be65;">"${SECONDS}"</span>
@@ -2134,17 +2146,18 @@ add-zsh-hook preexec _pspexec
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org43d1094" class="outline-3">
-<h3 id="org43d1094">Mathematical</h3>
-<div class="outline-text-3" id="text-org43d1094">
+<div id="outline-container-org1a69d03" class="outline-3">
+<h3 id="org1a69d03">Mathematical</h3>
+<div class="outline-text-3" id="text-org1a69d03">
 </div>
-<div id="outline-container-org7ea4577" class="outline-4">
-<h4 id="org7ea4577">In-Line Calculator</h4>
-<div class="outline-text-4" id="text-org7ea4577">
+<div id="outline-container-org4c69ed8" class="outline-4">
+<h4 id="org4c69ed8">In-Line Calculator</h4>
+<div class="outline-text-4" id="text-org4c69ed8">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">mathcalc</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"$*"</span>| bc -lq
@@ -2154,9 +2167,9 @@ add-zsh-hook preexec _pspexec
 </div>
 </div>
 
-<div id="outline-container-org83ea006" class="outline-4">
-<h4 id="org83ea006">Computational</h4>
-<div class="outline-text-4" id="text-org83ea006">
+<div id="outline-container-org1831800" class="outline-4">
+<h4 id="org1831800">Computational</h4>
+<div class="outline-text-4" id="text-org1831800">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">dec2hex</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"hex:"</span>
@@ -2170,13 +2183,13 @@ add-zsh-hook preexec _pspexec
 </div>
 </div>
 
-<div id="outline-container-org68d2224" class="outline-3">
-<h3 id="org68d2224">Documents compilation</h3>
-<div class="outline-text-3" id="text-org68d2224">
+<div id="outline-container-orgb498461" class="outline-3">
+<h3 id="orgb498461">Documents compilation</h3>
+<div class="outline-text-3" id="text-orgb498461">
 </div>
-<div id="outline-container-orgbed1f60" class="outline-4">
-<h4 id="orgbed1f60">PDF from Latex</h4>
-<div class="outline-text-4" id="text-orgbed1f60">
+<div id="outline-container-org8248927" class="outline-4">
+<h4 id="org8248927">PDF from Latex</h4>
+<div class="outline-text-4" id="text-org8248927">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">pdfcompile</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if ! </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pdflatex"</span> <span style="color: #da8548; font-weight: bold;">1</span>&gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
@@ -2196,13 +2209,13 @@ add-zsh-hook preexec _pspexec
 </div>
 </div>
 </div>
-<div id="outline-container-org721c97f" class="outline-4">
-<h4 id="org721c97f">Pandoc</h4>
-<div class="outline-text-4" id="text-org721c97f">
+<div id="outline-container-orgb419443" class="outline-4">
+<h4 id="orgb419443">Pandoc</h4>
+<div class="outline-text-4" id="text-orgb419443">
 </div>
-<div id="outline-container-org42aa7c5" class="outline-5">
-<h5 id="org42aa7c5">Org to Something</h5>
-<div class="outline-text-5" id="text-org42aa7c5">
+<ul class="org-ul">
+<li><a id="orgf41a167"></a>Org to Something<br />
+<div class="outline-text-5" id="text-orgf41a167">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2export</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Usage: org2oth [-f] &lt;infile&gt; &lt;othtype&gt;</span>
@@ -2257,11 +2270,10 @@ add-zsh-hook preexec _pspexec
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org111da43" class="outline-5">
-<h5 id="org111da43">Org to Docx</h5>
-<div class="outline-text-5" id="text-org111da43">
+<li><a id="orgd288aea"></a>Org to Docx<br />
+<div class="outline-text-5" id="text-orgd288aea">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2doc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"docx"</span>
@@ -2269,11 +2281,10 @@ add-zsh-hook preexec _pspexec
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orge263f2f" class="outline-5">
-<h5 id="orge263f2f">Org to PDF</h5>
-<div class="outline-text-5" id="text-orge263f2f">
+<li><a id="org6978823"></a>Org to PDF<br />
+<div class="outline-text-5" id="text-org6978823">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2pdf</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"pdf"</span>
@@ -2281,11 +2292,10 @@ add-zsh-hook preexec _pspexec
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orge6dfb7a" class="outline-5">
-<h5 id="orge6dfb7a">Docx to Org</h5>
-<div class="outline-text-5" id="text-orge6dfb7a">
+<li><a id="org60c9f14"></a>Docx to Org<br />
+<div class="outline-text-5" id="text-org60c9f14">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">doc2org</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if ! </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pandoc"</span> <span style="color: #da8548; font-weight: bold;">1</span>&gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
@@ -2305,13 +2315,14 @@ add-zsh-hook preexec _pspexec
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgbcab855" class="outline-3">
-<h3 id="orgbcab855">Mount over ssh</h3>
-<div class="outline-text-3" id="text-orgbcab855">
+<div id="outline-container-org663515a" class="outline-3">
+<h3 id="org663515a">Mount over ssh</h3>
+<div class="outline-text-3" id="text-org663515a">
 <p>
 ssh Cloud mounts
 </p>
@@ -2338,13 +2349,13 @@ ssh Cloud mounts
 </div>
 </div>
 
-<div id="outline-container-org3234cdf" class="outline-3">
-<h3 id="org3234cdf">Launch gui</h3>
-<div class="outline-text-3" id="text-org3234cdf">
+<div id="outline-container-org9ee5ad3" class="outline-3">
+<h3 id="org9ee5ad3">Launch GUI</h3>
+<div class="outline-text-3" id="text-org9ee5ad3">
 <p>
 Launch application and exit terminal window
 Acts like a launcher
-Uninteractive terminal commands may also be called
+Un-interactive terminal commands may also be called
 Code is tangled in gui.org
 </p>
 <div class="org-src-container">
@@ -2360,9 +2371,9 @@ Code is tangled in gui.org
 </div>
 </div>
 
-<div id="outline-container-org85689c9" class="outline-3">
-<h3 id="org85689c9">Un-Compress by context</h3>
-<div class="outline-text-3" id="text-org85689c9">
+<div id="outline-container-orga36e9d8" class="outline-3">
+<h3 id="orga36e9d8">Un-Compress by context</h3>
+<div class="outline-text-3" id="text-orga36e9d8">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">deconvolute</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pigz"</span>; <span style="color: #51afef;">then</span>
@@ -2393,9 +2404,9 @@ Code is tangled in gui.org
 </div>
 </div>
 
-<div id="outline-container-org1159a62" class="outline-3">
-<h3 id="org1159a62">Navigate</h3>
-<div class="outline-text-3" id="text-org1159a62">
+<div id="outline-container-org40e5c54" class="outline-3">
+<h3 id="org40e5c54">Navigate</h3>
+<div class="outline-text-3" id="text-org40e5c54">
 <ul class="org-ul">
 <li>When no virtualenv is active, but one is available, switch to it</li>
 </ul>
@@ -2414,7 +2425,7 @@ Code is tangled in gui.org
 </div>
 
 <ul class="org-ul">
-<li>Inspired by lukesmith.xyz</li>
+<li>Inspired by <a href="https://lukesmith.xyz/">https://lukesmith.xyz/</a></li>
 </ul>
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
@@ -2447,9 +2458,9 @@ Code is tangled in gui.org
 </div>
 </div>
 
-<div id="outline-container-orga1ab3c2" class="outline-3">
-<h3 id="orga1ab3c2">zwc</h3>
-<div class="outline-text-3" id="text-orga1ab3c2">
+<div id="outline-container-org8997bbb" class="outline-3">
+<h3 id="org8997bbb">zwc</h3>
+<div class="outline-text-3" id="text-org8997bbb">
 <ul class="org-ul">
 <li>Guess whether target is zipped;
 if zipped, unzip and count else classical wc</li>
@@ -2480,11 +2491,11 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org9bcab35" class="outline-3">
-<h3 id="org9bcab35">disable autovenv</h3>
-<div class="outline-text-3" id="text-org9bcab35">
+<div id="outline-container-org7cd260c" class="outline-3">
+<h3 id="org7cd260c">disable auto-venv</h3>
+<div class="outline-text-3" id="text-org7cd260c">
 <ul class="org-ul">
-<li>To disable autoswitching virtualenvs, hard-set VIRTUAL_ENV
+<li>To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
 <ul class="org-ul">
 <li>Calling the function again reverts</li>
 </ul></li>
@@ -2504,9 +2515,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-orgaa2a487" class="outline-3">
-<h3 id="orgaa2a487">lszcat</h3>
-<div class="outline-text-3" id="text-orgaa2a487">
+<div id="outline-container-org89dc573" class="outline-3">
+<h3 id="org89dc573">lszcat</h3>
+<div class="outline-text-3" id="text-org89dc573">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lszcat</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"$*"</span>
@@ -2552,9 +2563,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org23fd5f7" class="outline-3">
-<h3 id="org23fd5f7">manual pages</h3>
-<div class="outline-text-3" id="text-org23fd5f7">
+<div id="outline-container-orga26ba46" class="outline-3">
+<h3 id="orga26ba46">manual pages</h3>
+<div class="outline-text-3" id="text-orga26ba46">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">man_help</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> man <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
@@ -2579,13 +2590,13 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-orgfd79963" class="outline-2">
-<h2 id="orgfd79963">Aliases</h2>
-<div class="outline-text-2" id="text-orgfd79963">
+<div id="outline-container-org9257ca1" class="outline-2">
+<h2 id="org9257ca1">Aliases</h2>
+<div class="outline-text-2" id="text-org9257ca1">
 </div>
-<div id="outline-container-orgb9b29c3" class="outline-3">
-<h3 id="orgb9b29c3">Disk Usage</h3>
-<div class="outline-text-3" id="text-orgb9b29c3">
+<div id="outline-container-org8bc0a2d" class="outline-3">
+<h3 id="org8bc0a2d">Disk Usage</h3>
+<div class="outline-text-3" id="text-org8bc0a2d">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">du</span>=<span style="color: #98be65;">'du -hc'</span>;
 <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">df</span>=<span style="color: #98be65;">'df -h'</span>;
@@ -2595,18 +2606,18 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-orgc4e63ad" class="outline-3">
-<h3 id="orgc4e63ad">manual page help</h3>
-<div class="outline-text-3" id="text-orgc4e63ad">
+<div id="outline-container-org99729a7" class="outline-3">
+<h3 id="org99729a7">manual page help</h3>
+<div class="outline-text-3" id="text-org99729a7">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">man</span>=<span style="color: #98be65;">"man_help"</span>;
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgbd87b12" class="outline-3">
-<h3 id="orgbd87b12">Network</h3>
-<div class="outline-text-3" id="text-orgbd87b12">
+<div id="outline-container-org71aa082" class="outline-3">
+<h3 id="org71aa082">Network</h3>
+<div class="outline-text-3" id="text-org71aa082">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nload</span>=<span style="color: #98be65;">'nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'</span>
 <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nethogs</span>=<span style="color: #98be65;">'\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"'</span>;
@@ -2616,9 +2627,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org5efc567" class="outline-3">
-<h3 id="org5efc567">Monitor Job queues</h3>
-<div class="outline-text-3" id="text-org5efc567">
+<div id="outline-container-org11b2520" class="outline-3">
+<h3 id="org11b2520">Monitor Job queues</h3>
+<div class="outline-text-3" id="text-org11b2520">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">watch</span>=<span style="color: #98be65;">"watch -n 10 --color"</span>;
 </pre>
@@ -2626,9 +2637,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org4564841" class="outline-3">
-<h3 id="org4564841">Lazy single-handed exit</h3>
-<div class="outline-text-3" id="text-org4564841">
+<div id="outline-container-orga27c9e4" class="outline-3">
+<h3 id="orga27c9e4">Lazy single-handed exit</h3>
+<div class="outline-text-3" id="text-orga27c9e4">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">qqqq</span>=<span style="color: #98be65;">"exit"</span>;
 </pre>
@@ -2636,9 +2647,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org4b64278" class="outline-3">
-<h3 id="org4b64278">[z]wc</h3>
-<div class="outline-text-3" id="text-org4b64278">
+<div id="outline-container-org740d1d1" class="outline-3">
+<h3 id="org740d1d1">[z]wc</h3>
+<div class="outline-text-3" id="text-org740d1d1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">wc</span>=<span style="color: #98be65;">"zwc"</span>;
 </pre>
@@ -2647,13 +2658,13 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-orga646910" class="outline-2">
-<h2 id="orga646910">Networking</h2>
-<div class="outline-text-2" id="text-orga646910">
+<div id="outline-container-org0238053" class="outline-2">
+<h2 id="org0238053">Networking</h2>
+<div class="outline-text-2" id="text-org0238053">
 </div>
-<div id="outline-container-org855d6fb" class="outline-3">
-<h3 id="org855d6fb">State</h3>
-<div class="outline-text-3" id="text-org855d6fb">
+<div id="outline-container-org9b1b0c3" class="outline-3">
+<h3 id="org9b1b0c3">State</h3>
+<div class="outline-text-3" id="text-org9b1b0c3">
 <p>
 The <b>OLDEST</b> part of prady_runcom&#x2026;
 </p>
@@ -2707,9 +2718,9 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 </div>
 </div>
 
-<div id="outline-container-orgbc4cb5f" class="outline-3">
-<h3 id="orgbc4cb5f">SSH Agent</h3>
-<div class="outline-text-3" id="text-orgbc4cb5f">
+<div id="outline-container-org3e2af54" class="outline-3">
+<h3 id="org3e2af54">SSH Agent</h3>
+<div class="outline-text-3" id="text-org3e2af54">
 <p>
 Reuse ssh agent for all logins
 </p>
@@ -2727,13 +2738,13 @@ ssh-add -l &gt; /dev/null || ssh-add
 </div>
 </div>
 
-<div id="outline-container-org71ff88a" class="outline-2">
-<h2 id="org71ff88a">Window Manager settings</h2>
-<div class="outline-text-2" id="text-org71ff88a">
+<div id="outline-container-org0f71838" class="outline-2">
+<h2 id="org0f71838">Window Manager settings</h2>
+<div class="outline-text-2" id="text-org0f71838">
 </div>
-<div id="outline-container-orgddffab8" class="outline-3">
-<h3 id="orgddffab8">Terminal</h3>
-<div class="outline-text-3" id="text-orgddffab8">
+<div id="outline-container-org6e05402" class="outline-3">
+<h3 id="org6e05402">Terminal</h3>
+<div class="outline-text-3" id="text-org6e05402">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> term<span style="color: #51afef;"> in</span> foot alacritty termite tilix urxvt xterm; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -n <span style="color: #98be65;">"$(command -v $term)"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -2747,9 +2758,9 @@ ssh-add -l &gt; /dev/null || ssh-add
 </div>
 </div>
 
-<div id="outline-container-orgb2d53dd" class="outline-3">
-<h3 id="orgb2d53dd">Sway exports</h3>
-<div class="outline-text-3" id="text-orgb2d53dd">
+<div id="outline-container-orga1ffd56" class="outline-3">
+<h3 id="orga1ffd56">Sway exports</h3>
+<div class="outline-text-3" id="text-orga1ffd56">
 <p>
 Don't really remember why these were made
 Not using currently. Preserved for future
@@ -2760,9 +2771,9 @@ export WLR_LIBINPUT_NO_DEVICES=1;
 </div>
 </div>
 
-<div id="outline-container-orge8da08f" class="outline-3">
-<h3 id="orge8da08f">User Interface (GUI/CLI)</h3>
-<div class="outline-text-3" id="text-orge8da08f">
+<div id="outline-container-org41e4cfa" class="outline-3">
+<h3 id="org41e4cfa">User Interface (GUI/CLI)</h3>
+<div class="outline-text-3" id="text-org41e4cfa">
 <p>
 If running from tty1 setup sway environment and start ui
 </p>
@@ -2911,13 +2922,13 @@ main <span style="color: #98be65;">"$@"</span>
 </div>
 </div>
 
-<div id="outline-container-orgd65f380" class="outline-2">
-<h2 id="orgd65f380">Calls</h2>
-<div class="outline-text-2" id="text-orgd65f380">
+<div id="outline-container-org9acf2b5" class="outline-2">
+<h2 id="org9acf2b5">Calls</h2>
+<div class="outline-text-2" id="text-org9acf2b5">
 </div>
-<div id="outline-container-org022ffea" class="outline-3">
-<h3 id="org022ffea">bash</h3>
-<div class="outline-text-3" id="text-org022ffea">
+<div id="outline-container-org8a2eab8" class="outline-3">
+<h3 id="org8a2eab8">bash</h3>
+<div class="outline-text-3" id="text-org8a2eab8">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -2928,9 +2939,9 @@ main <span style="color: #98be65;">"$@"</span>
 </div>
 </div>
 
-<div id="outline-container-org4542f5b" class="outline-3">
-<h3 id="org4542f5b">zsh</h3>
-<div class="outline-text-3" id="text-org4542f5b">
+<div id="outline-container-org029ff46" class="outline-3">
+<h3 id="org029ff46">zsh</h3>
+<div class="outline-text-3" id="text-org029ff46">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
