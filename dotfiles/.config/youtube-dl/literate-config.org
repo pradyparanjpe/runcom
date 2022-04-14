@@ -1,182 +1,11 @@
-#-*- coding:utf-8; mode:org -*-
+# -*- coding:utf-8; mode:org -*-
 #+TITLE: youtube-dl configuration
 #+AUTHOR: Pradyumna Paranjape
 #+EMAIL: pradyparanjpe@rediffmail.com
 #+LANGUAGE: en
-#+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
+#+OPTIONS: toc: 2 mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
 #+PROPERTY: header-args: tangle:config
-
-
-* Table of contents :toc:
-- [[#configuration][Configuration]]
-  - [[#general-options][General Options]]
-    - [[#update-this-program-to-latest-version][Update this program to latest version.]]
-    - [[#continue-on-download-errors][Continue on download errors]]
-    - [[#abort-on-error][Abort on Error]]
-    - [[#display-the-current-browser-identification][Display the current browser identification]]
-    - [[#list-all-supported-extractors][List all supported extractors]]
-    - [[#output-descriptions-of-all-supported-extractors][Output descriptions of all supported extractors]]
-    - [[#force-extraction-to-use-the-generic-extractor][Force extraction to use the generic extractor]]
-    - [[#use-this-prefix-for-unqualified-urls][Use this prefix for unqualified URLs.]]
-    - [[#do-not-read-configuration-files][Do not read configuration files.]]
-    - [[#location-of-the-configuration-file-either-the-path-to-the-config-or-its-containing-directory][Location of the configuration file; either the path to the config or its containing directory.]]
-    - [[#do-not-extract-the-videos-of-a-playlist-only-list-them][Do not extract the videos of a playlist, only list them.]]
-    - [[#mark-videos-watched-youtube-only][Mark videos watched (YouTube only)]]
-    - [[#do-not-mark-videos-watched-youtube-only][Do not mark videos watched (YouTube only)]]
-    - [[#do-not-emit-color-codes-in-output][Do not emit color codes in output]]
-  - [[#network-options][Network Options]]
-    - [[#proxy][Proxy:]]
-    - [[#time-to-wait-before-giving-up-in-seconds][Time to wait before giving up, in seconds]]
-    - [[#client-side-ip-address-to-bind-to][Client-side IP address to bind to]]
-    - [[#make-all-connections-via-ipv4][Make all connections via IPv4]]
-    - [[#make-all-connections-via-ipv6][Make all connections via IPv6]]
-  - [[#geo-restriction][Geo Restriction]]
-    - [[#use-this-proxy-to-verify-the-ip-address-for-some-geo-restricted-sites][Use this proxy to verify the IP address for some geo-restricted sites.]]
-    - [[#bypass-geographic-restriction-via-faking-x-forwarded-for-http-header][Bypass geographic restriction via faking X-Forwarded-For HTTP header]]
-    - [[#do-not-bypass-geographic-restriction-via-faking-x-forwarded-for-http-header][Do not bypass geographic restriction via faking X-Forwarded-For HTTP header]]
-    - [[#force-bypass-geographic-restriction-with-explicitly-provided-two-letter-iso-3166-2-country-code][Force bypass geographic restriction with explicitly provided two-letter ISO 3166-2 country code]]
-    - [[#force-bypass-geographic-restriction-with-explicitly-provided-ip-block-in-cidr-notation][Force bypass geographic restriction with explicitly provided IP block in CIDR notation]]
-  - [[#video-selection][Video Selection]]
-    - [[#playlist-video-to-start-at-default-is-1][Playlist video to start at (default is 1)]]
-    - [[#playlist-video-to-end-at-default-is-last][Playlist video to end at (default is last)]]
-    - [[#playlist-video-items-to-download][Playlist video items to download.]]
-    - [[#download-only-matching-titles-regex-or-caseless-sub-string][Download only matching titles (regex or caseless sub-string)]]
-    - [[#skip-download-for-matching-titles-regex-or-caseless-sub-string][Skip download for matching titles (regex or caseless sub-string)]]
-    - [[#abort-after-downloading-number-files][Abort after downloading NUMBER files]]
-    - [[#do-not-download-any-videos-smaller-than-size-eg-50k-or-446m][Do not download any videos smaller than SIZE (e.g. 50k or 44.6m)]]
-    - [[#do-not-download-any-videos-larger-than-size-eg-50k-or-446m][Do not download any videos larger than SIZE (e.g. 50k or 44.6m)]]
-    - [[#download-only-videos-uploaded-in-this-date][Download only videos uploaded in this date]]
-    - [[#download-only-videos-uploaded-on-or-before-this-date-ie-inclusive][Download only videos uploaded on or before this date (i.e. inclusive)]]
-    - [[#download-only-videos-uploaded-on-or-after-this-date-ie-inclusive][Download only videos uploaded on or after this date (i.e. inclusive)]]
-    - [[#do-not-download-any-videos-with-less-than-count-views][Do not download any videos with less than COUNT views]]
-    - [[#do-not-download-any-videos-with-more-than-count-views][Do not download any videos with more than COUNT views]]
-    - [[#generic-video-filter][Generic video filter.]]
-    - [[#download-only-the-video-if-the-url-refers-to-a-video-and-a-playlist][Download only the video, if the URL refers to a video and a playlist.]]
-    - [[#download-the-playlist-if-the-url-refers-to-a-video-and-a-playlist][Download the playlist, if the URL refers to a video and a playlist.]]
-    - [[#download-only-videos-suitable-for-the-given-age][Download only videos suitable for the given age]]
-    - [[#download-only-videos-not-listed-in-the-archive-file][Download only videos not listed in the archive file.]]
-    - [[#download-advertisements-as-well-experimental][Download advertisements as well (experimental)]]
-  - [[#download-options][Download Options]]
-    - [[#maximum-download-rate-in-bytes-per-second-eg-50k-or-42m][Maximum download rate in bytes per second (e.g. 50K or 4.2M)]]
-    - [[#number-of-retries-default-is-10-or-infinite][Number of retries (default is 10), or "infinite".]]
-    - [[#number-of-retries-for-a-fragment-default-is-10-or-infinite-dash-hlsnative-and-ism][Number of retries for a fragment (default is 10), or "infinite" (DASH, hlsnative and ISM)]]
-    - [[#skip-unavailable-fragments-dash-hlsnative-and-ism][Skip unavailable fragments (DASH, hlsnative and ISM)]]
-    - [[#abort-downloading-when-some-fragment-is-not-available][Abort downloading when some fragment is not available]]
-    - [[#keep-downloaded-fragments-on-disk-after-downloading-is-finished][Keep downloaded fragments on disk after downloading is finished]]
-    - [[#size-of-download-buffer-eg-1024-or-16k-default-is-1024][Size of download buffer (e.g. 1024 or 16K) (default is 1024)]]
-    - [[#do-not-automatically-adjust-the-buffer-size][Do not automatically adjust the buffer size.]]
-    - [[#size-of-a-chunk-for-chunk-based-http-downloading-eg-10485760-or-10m-default-is-disabled][Size of a chunk for chunk-based HTTP downloading (e.g. 10485760 or 10M) (default is disabled).]]
-    - [[#download-playlist-videos-in-reverse-order][Download playlist videos in reverse order]]
-    - [[#download-playlist-videos-in-random-order][Download playlist videos in random order]]
-    - [[#set-file-xattribute-ytdlfilesize-with-expected-file-size][Set file xattribute ytdl.filesize with expected file size]]
-    - [[#use-the-native-hls-downloader-instead-of-ffmpeg][Use the native HLS downloader instead of ffmpeg]]
-    - [[#use-ffmpeg-instead-of-the-native-hls-downloader][Use ffmpeg instead of the native HLS downloader]]
-    - [[#use-the-mpegts-container-for-hls-videos][Use the mpegts container for HLS videos,]]
-    - [[#use-the-specified-external-downloader-currently-supports-aria2cavconvaxelcurlffmpeghttpiewget][Use the specified external downloader. Currently supports aria2c,avconv,axel,curl,ffmpeg,httpie,wget]]
-    - [[#give-these-arguments-to-the-external-downloader][Give these arguments to the external downloader]]
-  - [[#filesystem-options][Filesystem Options]]
-    - [[#file-containing-urls-to-download---for-stdin-one-url-per-line][File containing URLs to download ('-' for stdin), one URL per line.]]
-    - [[#use-only-video-id-in-file-name][Use only video ID in file name]]
-    - [[#output-filename-template-see-the-output-template-for-all-the-info][Output filename template, see the "OUTPUT TEMPLATE" for all the info]]
-    - [[#specify-the-start-value-for-autonumbers-default-is-1][Specify the start value for %(autonumber)s (default is 1)]]
-    - [[#restrict-filenames-to-only-ascii-characters-and-avoid--and-spaces-in-filenames][Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames]]
-    - [[#do-not-overwrite-files][Do not overwrite files]]
-    - [[#force-resume-of-partially-downloaded-files-by-default-youtube-dl-will-resume-downloads-if-possible][Force resume of partially downloaded files. By default, youtube-dl will resume downloads if possible.]]
-    - [[#do-not-resume-partially-downloaded-files-restart-from-beginning][Do not resume partially downloaded files (restart from beginning)]]
-    - [[#do-not-use-part-files---write-directly-into-output-file][Do not use .part files - write directly into output file]]
-    - [[#do-not-use-the-last-modified-header-to-set-the-file-modification-time][Do not use the Last-modified header to set the file modification time]]
-    - [[#write-video-description-to-a-description-file][Write video description to a .description file]]
-    - [[#write-video-metadata-to-a-infojson-file][Write video metadata to a .info.json file]]
-    - [[#write-video-annotations-to-a-annotationsxml-file][Write video annotations to a .annotations.xml file]]
-    - [[#json-file-containing-the-video-information-created-with-the---write-info-json-option][JSON file containing the video information (created with the "--write-info-json" option)]]
-    - [[#file-to-read-cookies-from-and-dump-cookie-jar-in][File to read cookies from and dump cookie jar in]]
-    - [[#location-in-the-filesystem-where-youtube-dl-can-store-some-downloaded-information-permanently][Location in the filesystem where youtube-dl can store some downloaded information permanently.]]
-    - [[#disable-filesystem-caching][Disable filesystem caching]]
-    - [[#delete-all-filesystem-cache-files][Delete all filesystem cache files]]
-  - [[#thumbnail-images][Thumbnail images]]
-    - [[#write-thumbnail-image-to-disk][Write thumbnail image to disk]]
-    - [[#write-all-thumbnail-image-formats-to-disk][Write all thumbnail image formats to disk]]
-    - [[#simulate-and-list-all-available-thumbnail-formats][Simulate and list all available thumbnail formats]]
-  - [[#verbosity--simulation-options][Verbosity / Simulation Options]]
-    - [[#activate-quiet-mode][Activate quiet mode]]
-    - [[#ignore-warnings][Ignore warnings]]
-    - [[#do-not-download-the-video-and-do-not-write-anything-to-disk][Do not download the video and do not write anything to disk]]
-    - [[#do-not-download-the-video][Do not download the video]]
-    - [[#simulate-quiet-but-print-url][Simulate, quiet but print URL]]
-    - [[#simulate-quiet-but-print-title][Simulate, quiet but print title]]
-    - [[#simulate-quiet-but-print-id][Simulate, quiet but print id]]
-    - [[#simulate-quiet-but-print-thumbnail-url][Simulate, quiet but print thumbnail URL]]
-    - [[#simulate-quiet-but-print-video-description][Simulate, quiet but print video description]]
-    - [[#simulate-quiet-but-print-video-length][Simulate, quiet but print video length]]
-    - [[#simulate-quiet-but-print-output-filename][Simulate, quiet but print output filename]]
-    - [[#simulate-quiet-but-print-output-format][Simulate, quiet but print output format]]
-    - [[#simulate-quiet-but-print-json-information-see-the-output-template-for-a-description-of-available-keys][Simulate, quiet but print JSON information. See the "OUTPUT TEMPLATE" for a description of available keys.]]
-    - [[#simulate-quiet-but-print-json-information-for-each-command-line-argument-if-the-url-refers-to-a-playlist-dump-the-whole-playlist-information-in-a-single-line][Simulate, quiet but print JSON information for each command-line argument. If the URL refers to a playlist, dump the whole playlist information in a single line.]]
-    - [[#be-quiet-and-print-the-video-information-as-json-video-is-still-being-downloaded][Be quiet and print the video information as JSON (video is still being downloaded).]]
-    - [[#output-progress-bar-as-new-lines][Output progress bar as new lines]]
-    - [[#do-not-print-progress-bar][Do not print progress bar]]
-    - [[#display-progress-in-console-titlebar][Display progress in console titlebar]]
-    - [[#print-various-debugging-information][Print various debugging information]]
-    - [[#print-downloaded-pages-encoded-using-base64-to-debug-problems-very-verbose][Print downloaded pages encoded using base64 to debug problems (very verbose)]]
-    - [[#write-downloaded-intermediary-pages-to-files-in-the-current-directory-to-debug-problems][Write downloaded intermediary pages to files in the current directory to debug problems]]
-    - [[#display-sent-and-read-http-traffic][Display sent and read HTTP traffic]]
-    - [[#contact-the-youtube-dl-server-for-debugging][Contact the youtube-dl server for debugging]]
-    - [[#do-not-contact-the-youtube-dl-server-for-debugging][Do NOT contact the youtube-dl server for debugging]]
-  - [[#workarounds][Workarounds]]
-    - [[#force-the-specified-encoding-experimental][Force the specified encoding (experimental)]]
-    - [[#suppress-https-certificate-validation][Suppress HTTPS certificate validation]]
-    - [[#use-an-unencrypted-connection-to-retrieve-information-about-the-video][Use an unencrypted connection to retrieve information about the video.]]
-    - [[#specify-a-custom-user-agent][Specify a custom user agent]]
-    - [[#specify-a-custom-referer-use-if-the-video-access-is-restricted-to-one-domain][Specify a custom referer, use if the video access is restricted to one domain]]
-    - [[#specify-a-custom-http-header-and-its-value-separated-by-a-colon-][Specify a custom HTTP header and its value, separated by a colon ':'.]]
-    - [[#work-around-terminals-that-lack-bidirectional-text-support][Work around terminals that lack bidirectional text support.]]
-    - [[#number-of-seconds-to-sleep-before-each-download-when-used-alone][Number of seconds to sleep before each download when used alone]]
-    - [[#upper-bound-of-a-range-for-randomized-sleep-before-each-download-maximum-possible-number-of-seconds-to-sleep-must-only-be-used-along-with---min-sleep-interval][Upper bound of a range for randomized sleep before each download (maximum possible number of seconds to sleep). Must only be used along with --min-sleep-interval.]]
-  - [[#video-format-options][Video Format Options]]
-    - [[#video-format-code-see-the-format-selection-for-all-the-info][Video format code, see the "FORMAT SELECTION" for all the info]]
-    - [[#download-all-available-video-formats][Download all available video formats]]
-    - [[#prefer-free-video-formats-unless-a-specific-one-is-requested][Prefer free video formats unless a specific one is requested]]
-    - [[#list-all-available-formats-of-requested-videos][List all available formats of requested videos]]
-    - [[#do-not-download-the-dash-manifests-and-related-data-on-youtube-videos][Do not download the DASH manifests and related data on YouTube videos]]
-    - [[#if-a-merge-is-required-eg-bestvideobestaudio][If a merge is required (e.g. bestvideo+bestaudio),]]
-  - [[#subtitle-options][Subtitle Options]]
-    - [[#write-subtitle-file][Write subtitle file]]
-    - [[#write-automatically-generated-subtitle-file-youtube-only][Write automatically generated subtitle file (YouTube only)]]
-    - [[#download-all-the-available-subtitles-of-the-video][Download all the available subtitles of the video]]
-    - [[#list-all-available-subtitles-for-the-video][List all available subtitles for the video]]
-    - [[#subtitle-format-accepts-formats-preference-for-example-srt-or-asssrtbest][Subtitle format, accepts formats preference, for example: "srt" or "ass/srt/best"]]
-    - [[#languages-of-the-subtitles-to-download][Languages of the subtitles to download]]
-  - [[#authentication-options][Authentication Options]]
-    - [[#login-with-this-account-id][Login with this account ID]]
-    - [[#account-password-if-this-option-is-left-out-youtube-dl-will-ask-interactively][Account password. If this option is left out, youtube-dl will ask interactively.]]
-    - [[#two-factor-authentication-code][Two-factor authentication code]]
-    - [[#use-netrc-authentication-data][Use .netrc authentication data]]
-    - [[#video-password-vimeo-smotri-youku][Video password (vimeo, smotri, youku)]]
-  - [[#adobe-pass-options][Adobe Pass Options]]
-    - [[#adobe-pass-multiple-system-operator-tv-provider-identifier][Adobe Pass multiple-system operator (TV provider) identifier,]]
-    - [[#multiple-system-operator-account-login][Multiple-system operator account login]]
-    - [[#multiple-system-operator-account-password-if-this-option-is-left-out-youtube-dl-will-ask-interactively][Multiple-system operator account password. If this option is left out, youtube-dl will ask interactively.]]
-    - [[#list-all-supported-multiple-system-operators][List all supported multiple-system operators]]
-  - [[#post-processing-options][Post-processing Options]]
-    - [[#convert-video-files-to-audio-only-files-requires-ffmpeg-or-avconv-and-ffprobe-or-avprobe][Convert video files to audio-only files (requires ffmpeg or avconv and ffprobe or avprobe)]]
-    - [[#specify-audio-format][Specify audio format:]]
-    - [[#specify-ffmpegavconv-audio-quality][Specify ffmpeg/avconv audio quality,]]
-    - [[#encode-the-video-to-another-format-if-necessary][Encode the video to another format if necessary]]
-    - [[#give-these-arguments-to-the-postprocessor][Give these arguments to the postprocessor]]
-    - [[#keep-the-video-file-on-disk-after-the-post-processing-the-video-is-erased-by-default][Keep the video file on disk after the post-processing; the video is erased by default]]
-    - [[#do-not-overwrite-post-processed-files-the-post-processed-files-are-overwritten-by-default][Do not overwrite post-processed files; the post-processed files are overwritten by default]]
-    - [[#embed-subtitles-in-the-video-only-for-mp4-webm-and-mkv-videos][Embed subtitles in the video (only for mp4, webm and mkv videos)]]
-    - [[#embed-thumbnail-in-the-audio-as-cover-art][Embed thumbnail in the audio as cover art]]
-    - [[#write-metadata-to-the-video-file][Write metadata to the video file]]
-    - [[#parse-additional-metadata-like-song-title--artist-from-the-video-title][Parse additional metadata like song title / artist from the video title.]]
-    - [[#write-metadata-to-the-video-files-xattrs-using-dublin-core-and-xdg-standards][Write metadata to the video file's xattrs (using dublin core and xdg standards)]]
-    - [[#automatically-correct-known-faults-of-the-file][Automatically correct known faults of the file.]]
-    - [[#prefer-avconv-over-ffmpeg-for-running-the-postprocessors][Prefer avconv over ffmpeg for running the postprocessors]]
-    - [[#prefer-ffmpeg-over-avconv-for-running-the-postprocessors-default][Prefer ffmpeg over avconv for running the postprocessors (default)]]
-    - [[#location-of-the-ffmpegavconv-binary][Location of the ffmpeg/avconv binary;]]
-    - [[#execute-a-command-on-the-file-after-downloading-and-post-processing][Execute a command on the file after downloading and post-processing,]]
-    - [[#convert-the-subtitles-to-other-format-currently-supported-srtassvttlrc][Convert the subtitles to other format (currently supported: srt|ass|vtt|lrc)]]
 
 * Configuration
   Note: This configuration file was created by salvaging the help (-h)
@@ -273,7 +102,6 @@
       --no-color
     #+END_SRC
 
-
 ** Network Options
 
 *** Proxy:
@@ -305,7 +133,6 @@
       -6, --force-ipv6
     #+END_SRC
 
-
 ** Geo Restriction
 
 *** Use this proxy to verify the IP address for some geo-restricted sites.
@@ -333,7 +160,6 @@
     #+BEGIN_SRC sh :tangle no
       --geo-bypass-ip-block # {SOME IP_BLOCK}
     #+END_SRC
-
 
 ** Video Selection
 
@@ -451,7 +277,6 @@
       --include-ads
     #+END_SRC
 
-
 ** Download Options
 
 *** Maximum download rate in bytes per second (e.g. 50K or 4.2M)
@@ -545,7 +370,6 @@
       --external-downloader-args -c
     #+END_SRC
 
-
 ** Filesystem Options
 
 *** File containing URLs to download ('-' for stdin), one URL per line.
@@ -630,7 +454,7 @@
     By default $XDG_CACHE_HOME/youtube-dl or ~/.cache/youtube-dl.
     At the moment, only YouTube player files (for videos with obfuscated signatures) are cached, but that may change.
     #+BEGIN_SRC sh :tangle config
-      --cache-dir $XDG_CACHE_HOME/youtube-dl
+      --cache-dir ${XDG_CACHE_HOME:-${HOME}/.cache}/youtube-dl
     #+END_SRC
 
 *** Disable filesystem caching
@@ -642,7 +466,6 @@
     #+BEGIN_SRC sh :tangle no
       --rm-cache-dir
     #+END_SRC
-
 
 ** Thumbnail images
 
@@ -660,7 +483,6 @@
     #+BEGIN_SRC sh :tangle no
       --list-thumbnails
     #+END_SRC
-
 
 ** Verbosity / Simulation Options
 
@@ -784,7 +606,6 @@
       --no-call-home
     #+END_SRC
 
-
 ** Workarounds
 
 *** Force the specified encoding (experimental)
@@ -837,7 +658,6 @@
       --max-sleep-interval SECONDS
     #+END_SRC
 
-
 ** Video Format Options
 
 *** Video format code, see the "FORMAT SELECTION" for all the info
@@ -874,7 +694,6 @@
       --merge-output-format webm
     #+END_SRC
 
-
 ** Subtitle Options
 
 *** Write subtitle file
@@ -905,9 +724,8 @@
 *** Languages of the subtitles to download
     (optional) separated by commas, use --list-subs for available language tags
     #+BEGIN_SRC sh :tangle config
-      --sub-lang mr,en
+      --sub-lang mr,mr_IN,en_IN,en,hi,hi_IN
     #+END_SRC
-
 
 ** Authentication Options
 
@@ -936,7 +754,6 @@
       --video-password PASSWORD
     #+END_SRC
 
-
 ** Adobe Pass Options
 
 *** Adobe Pass multiple-system operator (TV provider) identifier,
@@ -959,7 +776,6 @@
     #+BEGIN_SRC sh :tangle no
       --ap-list-mso
     #+END_SRC
-
 
 ** Post-processing Options
 

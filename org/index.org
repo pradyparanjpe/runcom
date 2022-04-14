@@ -438,6 +438,7 @@
    Create a directory at the location  =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d=.
    - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc= are sourced.
    - Do not synchronize this directory. This directory is only for the machine.
+   - To disable ui launch from tty1, set export environment variable =RUNCOM_LAUNCH_UI=false=
      #+begin_src sh :tangle no
        mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"
      #+end_src
@@ -1901,24 +1902,27 @@
 
      main () {
          _exports_for_proxies
-         if [ "$(tty)" = "/dev/tty1" ]; then
-             if builtin command -v sway > /dev/null 2>&1; then
-                 if sway --validate; then
-                     _exports_for_sway
-                     exec dbus-launch --sh-syntax --exit-with-session sway
+         if ${RUNCOM_LAUNCH_UI}; then
+             if [ "$(tty)" = "/dev/tty1" ]; then
+                 if builtin command -v sway > /dev/null 2>&1; then
+                     if sway --validate; then
+                         _exports_for_sway
+                         exec dbus-launch --sh-syntax --exit-with-session sway
+                     else
+                         echo "Error while validating sway configuration"
+                     fi
                  else
-                     echo "Error while validating sway configuration"
+                     _exports_for_x11
+                     _select_x11_manager
+                     exec startx
                  fi
-             else
+             elif [ "$(tty)" = "/dev/tty2" ]; then
                  _exports_for_x11
                  _select_x11_manager
                  exec startx
              fi
-         elif [ "$(tty)" = "/dev/tty2" ]; then
-             _exports_for_x11
-             _select_x11_manager
-             exec startx
-         elif [ "$TERM" = "linux" ]; then
+         fi
+         if [ "$TERM" = "linux" ]; then
              printf "\e]P0000000" #black
              printf "\e]P83f3f3f" #darkgrey
              printf "\e]P19f3f3f" #darkred
@@ -1959,6 +1963,6 @@
      fi
    #+END_SRC
 
-#  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
-#  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
-#  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV
+   #  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
+   #  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
+   #  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV

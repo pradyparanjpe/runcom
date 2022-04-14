@@ -141,24 +141,27 @@ _exports_for_proxies () {
 
 main () {
     _exports_for_proxies
-    if [ "$(tty)" = "/dev/tty1" ]; then
-        if builtin command -v sway > /dev/null 2>&1; then
-            if sway --validate; then
-                _exports_for_sway
-                exec dbus-launch --sh-syntax --exit-with-session sway
+    if ${RUNCOM_LAUNCH_UI}; then
+        if [ "$(tty)" = "/dev/tty1" ]; then
+            if builtin command -v sway > /dev/null 2>&1; then
+                if sway --validate; then
+                    _exports_for_sway
+                    exec dbus-launch --sh-syntax --exit-with-session sway
+                else
+                    echo "Error while validating sway configuration"
+                fi
             else
-                echo "Error while validating sway configuration"
+                _exports_for_x11
+                _select_x11_manager
+                exec startx
             fi
-        else
+        elif [ "$(tty)" = "/dev/tty2" ]; then
             _exports_for_x11
             _select_x11_manager
             exec startx
         fi
-    elif [ "$(tty)" = "/dev/tty2" ]; then
-        _exports_for_x11
-        _select_x11_manager
-        exec startx
-    elif [ "$TERM" = "linux" ]; then
+    fi
+    if [ "$TERM" = "linux" ]; then
         printf "\e]P0000000" #black
         printf "\e]P83f3f3f" #darkgrey
         printf "\e]P19f3f3f" #darkred

@@ -17,7 +17,7 @@
 
 --restrict-filenames
 
---cache-dir $XDG_CACHE_HOME/youtube-dl
+--cache-dir ${XDG_CACHE_HOME:-${HOME}/.cache}/youtube-dl
 
 # --format FORMAT
 -f 'bestvideo[height<=?720]+bestaudio/best[height<=?720]'
@@ -30,7 +30,7 @@
 
 --sub-format srt/best/ass
 
---sub-lang mr,en
+--sub-lang mr,mr_IN,en_IN,en,hi,hi_IN
 
 --audio-quality 0
 
