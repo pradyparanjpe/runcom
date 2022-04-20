@@ -136,6 +136,7 @@ while read -r addition; do
     done << data_dir
 /usr/local/share
 /usr/share
+/usr/share/zsh/plugins
 ${XDG_DATA_HOME:-${HOME}/.local/share}
 ${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
 ${HOME}/local/share
