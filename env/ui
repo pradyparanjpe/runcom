@@ -57,7 +57,8 @@ _common_exports() {
     export QT_QPA_PLATFORMTHEME
     export _JAVA_AWT_WM_NONREPARENTING
 }
-_exports_for_sway () {
+
+_exports_for_wayland () {
     # export DISPLAY=":0"
     # export WAYLAND_DISPLAY=wayland-0
     # export GDK_BACKEND=wayland,x11
@@ -65,7 +66,6 @@ _exports_for_sway () {
 
     XDG_SESSION_TYPE="wayland"
     SDL_VIDEODRIVER="wayland"
-    SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
     ECORE_EVAS_ENGINE="wayland_egl"
     ELM_DISPLAY="wl"
     ELM_ENGINE="wayland_egl"
@@ -74,10 +74,10 @@ _exports_for_sway () {
     QT_WAYLAND_FORCE_DPI=100
     QT_WAYLAND_DISABLE_WINDOWDECORATION=1
     MOZ_ENABLE_WAYLAND=1
+    SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
 
     export XDG_SESSION_TYPE
     export SDL_VIDEODRIVER
-    export SWAYROOT
     export ECORE_EVAS_ENGINE
     export ELM_DISPLAY
     export ELM_ENGINE
@@ -86,6 +86,7 @@ _exports_for_sway () {
     export QT_WAYLAND_FORCE_DPI
     export QT_WAYLAND_DISABLE_WINDOWDECORATION
     export MOZ_ENABLE_WAYLAND
+    export SWAYROOT
 }
 
 _exports_for_x11 () {
@@ -107,11 +108,6 @@ _exports_for_x11 () {
     unset QT_WAYLAND_FORCE_DPI
     unset QT_WAYLAND_DISABLE_WINDOWDECORATION
     unset MOZ_ENABLE_WAYLAND
-}
-_select_x11_manager() {
-    echo "Window managers:"
-    ls "/usr/share/xsessions"
-    read -r x11wm && echo "${x11wm}" > "${HOME}/.xinitrc" && unset x11wm
 }
 
 _exports_for_proxies () {
@@ -139,28 +135,8 @@ _exports_for_proxies () {
 
 }
 
-main () {
-    _exports_for_proxies
-    if ${RUNCOM_LAUNCH_UI}; then
-        if [ "$(tty)" = "/dev/tty1" ]; then
-            if builtin command -v sway > /dev/null 2>&1; then
-                if sway --validate; then
-                    _exports_for_sway
-                    exec dbus-launch --sh-syntax --exit-with-session sway
-                else
-                    echo "Error while validating sway configuration"
-                fi
-            else
-                _exports_for_x11
-                _select_x11_manager
-                exec startx
-            fi
-        elif [ "$(tty)" = "/dev/tty2" ]; then
-            _exports_for_x11
-            _select_x11_manager
-            exec startx
-        fi
-    fi
+_clean_up_tty() {
+    _common_exports
     if [ "$TERM" = "linux" ]; then
         printf "\e]P0000000" #black
         printf "\e]P83f3f3f" #darkgrey
@@ -181,4 +157,88 @@ main () {
         clear #for background artifacting
     fi
 }
+
+_select_display_protocol () {
+    mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
+    default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
+    if [ -z "${default_proto}" ]; then
+        default_proto="non-graphical"
+    fi
+    echo ""
+    echo "Display protocols [${default_proto}]"
+    graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+    if [ -n "${graph_proto}" ]; then
+        echo "${graph_proto}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
+    else
+        graph_proto="${default_proto}"
+    fi
+    unset default_proto
+}
+
+_select_wayland_session () {
+    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+    if [ -z "${default_session}" ]; then
+        default_session=".wayinitrc"
+    fi
+    echo ""
+    echo "Wayland sessions [${default_session}]"
+
+    # shellcheck disable=SC2046
+    exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+    if [ -n "${exec_session}" ]; then
+        echo "${exec_session}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+    else
+        exec_session="${default_session}"
+    fi
+    unset default_session
+}
+
+
+_select_x11_session () {
+    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
+    if [ -z "${default_session}" ]; then
+        default_session=".xinitrc"
+    fi
+    echo "X11 sessions [${default_session}]"
+    # shellcheck disable=SC2046
+    exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
+    if [ -n "${exec_session}" ]; then
+        echo "${exec_session}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
+    else
+        exec_session="${default_session}"
+    fi
+    unset default_session
+}
+
+main () {
+    _exports_for_proxies
+    if ${RUNCOM_LAUNCH_UI}; then
+        nowtty="$(tty)"
+        if [ -z "${RUNCOM_SESSION}" ]; then
+            if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+                _select_display_protocol
+                if [ "${graph_proto}" = "x11" ]; then
+                    _exports_for_x11
+                    _select_x11_session
+                    export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                    exec startx "${exec_session%.desktop}"
+                elif [ "${graph_proto}" = "wayland" ]; then
+                    _exports_for_wayland
+                    _select_wayland_session
+                    export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                    exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
+                fi
+            fi
+        fi
+    fi
+    unset nowtty
+    unset graph_proto
+    unset exec_session
+    unset RUNCOM_SESSION
+    _clean_up_tty
+}
+
 main "$@"

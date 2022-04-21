@@ -44,6 +44,8 @@ HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 
+ZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
 ZSH_AUTOSUGGEST_STRATEGY=("history" "completion")
 setopt autocd

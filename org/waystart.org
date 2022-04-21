@@ -1,0 +1,165 @@
+# -*- mode:org; coding: utf-8; -*-
+#+TITLE: Wayland start graphics ui
+#+SETUPFILE: ./setup.org
+#+EXPORT_FILE_NAME: ../docs/gui.html
+
+* Code
+** Header
+   This section tangles the code (POSIX)
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     #!/usr/bin/env sh
+     # -*- coding:utf-8; mode:shell-script -*-
+     #
+     # Copyright 2020, 2021, 2022 Pradyumna Paranjape
+     #
+     # This file is part of Prady_runcom.
+     #
+     # Prady_runcom is free software: you can redistribute it and/or modify
+     # it under the terms of the GNU General Public License as published by
+     # the Free Software Foundation, either version 3 of the License, or
+     # (at your option) any later version.
+     #
+     # Prady_runcom is distributed in the hope that it will be useful,
+     # but WITHOUT ANY WARRANTY; without even the implied warranty of
+     # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     # GNU General Public License for more details.
+     #
+     # You should have received a copy of the GNU General Public License
+     # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+   #+end_src
+
+** Variables
+   With dbus-run-session under wayland, we don't define DISPLAY
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     set_vars() {
+         unset DBUS_SESSION_BUS_ADDRESS
+         unset SESSION_MANAGER
+         # Hopefully, following X11's rc
+         client=""
+         userclientrc="${HOME}/.wayinitrc"
+         sysclientrc="/etc/wayland/wayinit/wayinitrc"
+         defaultclientargs=""
+         clientargs=""
+         exec_cmd=""
+     }
+   #+end_src
+
+** Parse command line arguments
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     cli_args () {
+         while [ -n "$1" ]; do
+             case "$1" in
+                 --)
+                     printf "Wayland doesn't run an xserver. " >&2
+                     printf "Ignoring server-args.\n" >&2
+                     break
+                     ;;
+                 ,*)
+                     if [ -z "${client}" ]; then
+                         client="${1}"
+                     else
+                         clientargs="${clientargs} ${1}"
+                     fi
+                     ;;
+             esac
+             shift
+         done
+
+         if [ -z "${client}" ]; then
+             if [ -f "${userclientrc}" ]; then
+                 client="${userclientrc}"
+             elif [ -f "${sysclientrc}" ]; then
+                 client="${sysclientrc}"
+             fi
+         fi
+
+         # if no client arguments, use defaults
+         if [ -z "$clientargs" ]; then
+             clientargs="${defaultclientargs}"
+         fi
+     }
+
+   #+end_src
+
+** Parse files
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     parse_desktop_entry () {
+         client="${1}"
+         if [ ! -f "${client}" ]; then
+             if [ "$(dirname "${client}")" = '.' ]; then
+                 client="/usr/share/wayland-sessions/${client}"
+             else
+                 echo "Bad wayland session: ${client}." >&2
+                 exit 1
+             fi
+         fi
+         exec_line="$(grep -i "^exec" ${client} | head -1)"
+         if [ -z "${exec_line}" ]; then
+             exec_line="$(grep -i "^tryexec" ${client} | head -1)"
+         fi
+         exec_cmd="${exec_line#*=}"
+         unset desk_line
+     }
+     parse_initrc () {
+         # $1 wayinitrc file path
+         file_is_exec=true
+         while read -r init_line; do
+             if [ ! "${init_line%.desktop}" = "${init_line}" ]; then
+                 file_is_exec=false
+                 parse_desktop_entry "${init_line}"
+                 break
+             fi
+         done<"${1}"
+         if ${file_is_exec}; then
+             exec_cmd="sh ${1}"
+         fi
+         unset file_is_exec
+     }
+   #+end_src
+
+** Launch
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     parse_client () {
+         if builtin command -v "${client}" >/dev/null 2>&1 \
+                || [ -x "${client}" ]; then
+             exec_cmd="${client}"
+         elif [ ! "${client%.desktop}" = "${client}" ]; then
+             parse_desktop_entry "${client}"
+         else
+             # parse it to locate .desktop entry if available
+             parse_initrc "${client}"
+         fi
+         if [ -z "${exec_cmd}" ]; then
+             echo "Couldn't find session executable for ${client}."
+             exit 1
+         fi
+     }
+     clean_up () {
+         unset client
+         unset userclientrc
+         unset sysclientrc
+         unset defaultclientargs
+         unset clientargs
+         unset exec_cmd
+
+         if builtin command -v deallocvt > /dev/null 2>&1; then
+             deallocvt
+         fi
+     }
+   #+end_src
+
+** Entry-Point
+   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+     main () {
+         set_vars
+         cli_args "$@"
+         parse_client
+         # shellcheck disable=SC2086
+         dbus-run-session ${exec_cmd} ${clientargs}
+         exit_code=$?
+         clean_up
+         exit $exit_code
+     }
+     main "$@"
+   #+end_src

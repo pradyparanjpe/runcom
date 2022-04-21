@@ -568,6 +568,26 @@ man_help () {
     fi
 }
 
+posix_select () {
+    # select implementation for POSIX
+    word_l=""
+    count=0
+    for word in "${@}"; do
+        if [ -z "${word_l}" ]; then
+            word_l="${word}"
+        else
+            word_l="${word_l} ${word}"
+        fi
+        count=$((count + 1))
+        echo "${count}: ${word}" >&2
+    done
+    printf "Selection: " >&2
+    read -r select_num
+    echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
+    unset word
+    unset word_l
+}
+
 alias du='du -hc';
 alias df='df -h';
 alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";

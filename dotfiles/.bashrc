@@ -37,12 +37,16 @@ esac
 
 shopt -s autocd
 shopt -s checkwinsize
+shopt -s extglob
 shopt -s globstar
+shopt -s histappend
+shopt -s histverify
 
 shopt -s histappend
 HISTCONTROL=ignoreboth
-HISTSIZE=10000
+HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"
 HISTFILESIZE=10000
+HISTSIZE=10000
 
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;

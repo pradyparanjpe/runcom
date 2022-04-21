@@ -1,19 +1,12 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Prady_runcom
-#+AUTHOR: Pradyumna Paranjape
-#+EMAIL: pradyparanjpe@rediffmail.com
-#+LANGUAGE: en
-#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
-#+STARTUP: overview
-#+PROPERTY: header-args :tangle yes
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: setup.org
 #+EXPORT_FILE_NAME: ../docs/index.html
 
 * Prady_runcom
 ** What's this?
    - A compilation of dot-files: default variables, custom functions.
    - *My* configuration backup, "[[https://git-scm.com/docs/git-push][push]]"ed to work as a template for yours.
-
 
 *** Aim
     - Cross-machine synchronization (hence, git)
@@ -673,15 +666,19 @@
    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      shopt -s autocd
      shopt -s checkwinsize
+     shopt -s extglob
      shopt -s globstar
+     shopt -s histappend
+     shopt -s histverify
    #+END_SRC
 
    - History
    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
      shopt -s histappend
      HISTCONTROL=ignoreboth
-     HISTSIZE=10000
+     HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"
      HISTFILESIZE=10000
+     HISTSIZE=10000
    #+END_SRC
 
    - Coloured terminals
@@ -705,6 +702,11 @@
      HISTSIZE=10000
      SAVEHIST=10000
    #+END_SRC
+   - cache files
+     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+       ZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"
+     #+END_SRC
+
 
    - Options
      #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
@@ -792,7 +794,6 @@
    - Unset options:
      - setopt SHARE_HISTORY             # Share history between all sessions.
      - setopt HIST_BEEP                 # Beep when accessing non-existent history.
-     - HISTCONTROL=ignoreboth           # ignore commands staring with " " and duplicate
 
 * Inherit
 ** bash
@@ -1688,6 +1689,29 @@
      }
    #+END_SRC
 
+** selection menu
+   #+BEGIN_SRC sh :tangle ../env/shrc
+     posix_select () {
+         # select implementation for POSIX
+         word_l=""
+         count=0
+         for word in "${@}"; do
+             if [ -z "${word_l}" ]; then
+                 word_l="${word}"
+             else
+                 word_l="${word_l} ${word}"
+             fi
+             count=$((count + 1))
+             echo "${count}: ${word}" >&2
+         done
+         printf "Selection: " >&2
+         read -r select_num
+         echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
+         unset word
+         unset word_l
+     }
+   #+END_SRC
+
 * Aliases
 ** Disk Usage
    #+BEGIN_SRC sh :tangle ../env/shrc
@@ -1802,150 +1826,220 @@
    export WLR_LIBINPUT_NO_DEVICES=1;
 
 ** User Interface (GUI/CLI)
-   If running from tty1 setup sway environment and start ui
-   #+BEGIN_SRC sh :tangle ../env/ui
-     _common_exports() {
-         if [ -z "$XDG_RUNTIME_DIR" ]; then
-             XDG_RUNTIME_DIR="/run/user/$(id -u)"
-         fi
-         QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
-         QT_AUTO_SCREEN_SCALE_FACTOR=0
-         QT_QPA_PLATFORMTHEME="qt5ct"
-         _JAVA_AWT_WM_NONREPARENTING=1
+   If running from tty1 offer to launch a graphical session
+*** Graphical exports preparations
+    Exports to be made according to selected graphical environment
+    #+BEGIN_SRC sh :tangle ../env/ui
+      _common_exports() {
+          if [ -z "$XDG_RUNTIME_DIR" ]; then
+              XDG_RUNTIME_DIR="/run/user/$(id -u)"
+          fi
+          QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
+          QT_AUTO_SCREEN_SCALE_FACTOR=0
+          QT_QPA_PLATFORMTHEME="qt5ct"
+          _JAVA_AWT_WM_NONREPARENTING=1
 
-         export XDG_RUNTIME_DIR
-         export QT_PLUGIN_PATH
-         export QT_AUTO_SCREEN_SCALE_FACTOR
-         export QT_QPA_PLATFORMTHEME
-         export _JAVA_AWT_WM_NONREPARENTING
-     }
-     _exports_for_sway () {
-         # export DISPLAY=":0"
-         # export WAYLAND_DISPLAY=wayland-0
-         # export GDK_BACKEND=wayland,x11
-         _common_exports
+          export XDG_RUNTIME_DIR
+          export QT_PLUGIN_PATH
+          export QT_AUTO_SCREEN_SCALE_FACTOR
+          export QT_QPA_PLATFORMTHEME
+          export _JAVA_AWT_WM_NONREPARENTING
+      }
 
-         XDG_SESSION_TYPE="wayland"
-         SDL_VIDEODRIVER="wayland"
-         SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
-         ECORE_EVAS_ENGINE="wayland_egl"
-         ELM_DISPLAY="wl"
-         ELM_ENGINE="wayland_egl"
-         ELM_ACCEL="opengl"
-         QT_QPA_PLATFORM="wayland-egl;xcb"
-         QT_WAYLAND_FORCE_DPI=100
-         QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-         MOZ_ENABLE_WAYLAND=1
+      _exports_for_wayland () {
+          # export DISPLAY=":0"
+          # export WAYLAND_DISPLAY=wayland-0
+          # export GDK_BACKEND=wayland,x11
+          _common_exports
 
-         export XDG_SESSION_TYPE
-         export SDL_VIDEODRIVER
-         export SWAYROOT
-         export ECORE_EVAS_ENGINE
-         export ELM_DISPLAY
-         export ELM_ENGINE
-         export ELM_ACCEL
-         export QT_QPA_PLATFORM
-         export QT_WAYLAND_FORCE_DPI
-         export QT_WAYLAND_DISABLE_WINDOWDECORATION
-         export MOZ_ENABLE_WAYLAND
-     }
+          XDG_SESSION_TYPE="wayland"
+          SDL_VIDEODRIVER="wayland"
+          ECORE_EVAS_ENGINE="wayland_egl"
+          ELM_DISPLAY="wl"
+          ELM_ENGINE="wayland_egl"
+          ELM_ACCEL="opengl"
+          QT_QPA_PLATFORM="wayland-egl;xcb"
+          QT_WAYLAND_FORCE_DPI=100
+          QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+          MOZ_ENABLE_WAYLAND=1
+          SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
 
-     _exports_for_x11 () {
-         _common_exports
+          export XDG_SESSION_TYPE
+          export SDL_VIDEODRIVER
+          export ECORE_EVAS_ENGINE
+          export ELM_DISPLAY
+          export ELM_ENGINE
+          export ELM_ACCEL
+          export QT_QPA_PLATFORM
+          export QT_WAYLAND_FORCE_DPI
+          export QT_WAYLAND_DISABLE_WINDOWDECORATION
+          export MOZ_ENABLE_WAYLAND
+          export SWAYROOT
+      }
 
-         XDG_SESSION_TYPE="x11"
-         SDL_VIDEODRIVER="x11"
-         I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
+      _exports_for_x11 () {
+          _common_exports
 
-         export XDG_SESSION_TYPE
-         export SDL_VIDEODRIVER
-         export I3ROOT
+          XDG_SESSION_TYPE="x11"
+          SDL_VIDEODRIVER="x11"
+          I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
 
-         unset ECORE_EVAS_ENGINE
-         unset ELM_DISPLAY
-         unset ELM_ENGINE
-         unset ELM_ACCEL
-         unset QT_QPA_PLATFORM
-         unset QT_WAYLAND_FORCE_DPI
-         unset QT_WAYLAND_DISABLE_WINDOWDECORATION
-         unset MOZ_ENABLE_WAYLAND
-     }
-     _select_x11_manager() {
-         echo "Window managers:"
-         ls "/usr/share/xsessions"
-         read -r x11wm && echo "${x11wm}" > "${HOME}/.xinitrc" && unset x11wm
-     }
+          export XDG_SESSION_TYPE
+          export SDL_VIDEODRIVER
+          export I3ROOT
 
-     _exports_for_proxies () {
-         if [ -z "${export_proxies}" ]; then
-             printf "Export proxies?[y/N]:\t"
-             read -r export_proxies
-         fi
-         case "${export_proxies}}" in
-             Y*|y*)
-                 all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
-                 http_proxy="${all_proxy}"
-                 https_proxy="${all_proxy}"
-                 ftp_proxy="${all_proxy}"
-                 ftps_proxy="${all_proxy}"
+          unset ECORE_EVAS_ENGINE
+          unset ELM_DISPLAY
+          unset ELM_ENGINE
+          unset ELM_ACCEL
+          unset QT_QPA_PLATFORM
+          unset QT_WAYLAND_FORCE_DPI
+          unset QT_WAYLAND_DISABLE_WINDOWDECORATION
+          unset MOZ_ENABLE_WAYLAND
+      }
 
-                 export all_proxy
-                 export http_proxy
-                 export https_proxy
-                 export ftp_proxy
-                 export ftps_proxy
-                 ;;
-             ,*)
-                 ;;
-         esac
+      _exports_for_proxies () {
+          if [ -z "${export_proxies}" ]; then
+              printf "Export proxies?[y/N]:\t"
+              read -r export_proxies
+          fi
+          case "${export_proxies}}" in
+              Y*|y*)
+                  all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
+                  http_proxy="${all_proxy}"
+                  https_proxy="${all_proxy}"
+                  ftp_proxy="${all_proxy}"
+                  ftps_proxy="${all_proxy}"
 
-     }
+                  export all_proxy
+                  export http_proxy
+                  export https_proxy
+                  export ftp_proxy
+                  export ftps_proxy
+                  ;;
+              ,*)
+                  ;;
+          esac
 
-     main () {
-         _exports_for_proxies
-         if ${RUNCOM_LAUNCH_UI}; then
-             if [ "$(tty)" = "/dev/tty1" ]; then
-                 if builtin command -v sway > /dev/null 2>&1; then
-                     if sway --validate; then
-                         _exports_for_sway
-                         exec dbus-launch --sh-syntax --exit-with-session sway
-                     else
-                         echo "Error while validating sway configuration"
-                     fi
-                 else
-                     _exports_for_x11
-                     _select_x11_manager
-                     exec startx
-                 fi
-             elif [ "$(tty)" = "/dev/tty2" ]; then
-                 _exports_for_x11
-                 _select_x11_manager
-                 exec startx
-             fi
-         fi
-         if [ "$TERM" = "linux" ]; then
-             printf "\e]P0000000" #black
-             printf "\e]P83f3f3f" #darkgrey
-             printf "\e]P19f3f3f" #darkred
-             printf "\e]P9ff9f9f" #red
-             printf "\e]P23f9f3f" #darkgreen
-             printf "\e]PAbfefbf" #green
-             printf "\e]P3bf9f3f" #brown
-             printf "\e]PB9fff9f" #yellow
-             printf "\e]P45f5f9f" #darkblue
-             printf "\e]PC9f9fff" #blue
-             printf "\e]P59f3f9f" #darkmagenta
-             printf "\e]PDff9fff" #magenta
-             printf "\e]P63f9f9f" #darkcyan
-             printf "\e]PE9fffff" #cyan
-             printf "\e]P7afafaf" #lightgrey
-             printf "\e]PFffffff" #white
-             clear #for background artifacting
-         fi
-     }
-     main "$@"
+      }
+    #+END_SRC
 
-   #+END_SRC
+*** Graphical selections
+    Display protocol and session selection
+    #+BEGIN_SRC sh :tangle ../env/ui
+      _clean_up_tty() {
+          _common_exports
+          if [ "$TERM" = "linux" ]; then
+              printf "\e]P0000000" #black
+              printf "\e]P83f3f3f" #darkgrey
+              printf "\e]P19f3f3f" #darkred
+              printf "\e]P9ff9f9f" #red
+              printf "\e]P23f9f3f" #darkgreen
+              printf "\e]PAbfefbf" #green
+              printf "\e]P3bf9f3f" #brown
+              printf "\e]PB9fff9f" #yellow
+              printf "\e]P45f5f9f" #darkblue
+              printf "\e]PC9f9fff" #blue
+              printf "\e]P59f3f9f" #darkmagenta
+              printf "\e]PDff9fff" #magenta
+              printf "\e]P63f9f9f" #darkcyan
+              printf "\e]PE9fffff" #cyan
+              printf "\e]P7afafaf" #lightgrey
+              printf "\e]PFffffff" #white
+              clear #for background artifacting
+          fi
+      }
+
+      _select_display_protocol () {
+          mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
+          default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
+          if [ -z "${default_proto}" ]; then
+              default_proto="non-graphical"
+          fi
+          echo ""
+          echo "Display protocols [${default_proto}]"
+          graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+          if [ -n "${graph_proto}" ]; then
+              echo "${graph_proto}" \
+                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
+          else
+              graph_proto="${default_proto}"
+          fi
+          unset default_proto
+      }
+
+      _select_wayland_session () {
+          default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+          if [ -z "${default_session}" ]; then
+              default_session=".wayinitrc"
+          fi
+          echo ""
+          echo "Wayland sessions [${default_session}]"
+
+          # shellcheck disable=SC2046
+          exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+          if [ -n "${exec_session}" ]; then
+              echo "${exec_session}" \
+                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+          else
+              exec_session="${default_session}"
+          fi
+          unset default_session
+      }
+
+
+      _select_x11_session () {
+          default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
+          if [ -z "${default_session}" ]; then
+              default_session=".xinitrc"
+          fi
+          echo "X11 sessions [${default_session}]"
+          # shellcheck disable=SC2046
+          exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
+          if [ -n "${exec_session}" ]; then
+              echo "${exec_session}" \
+                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
+          else
+              exec_session="${default_session}"
+          fi
+          unset default_session
+      }
+
+    #+END_SRC
+
+*** Interaction
+    #+BEGIN_SRC sh :tangle ../env/ui
+      main () {
+          _exports_for_proxies
+          if ${RUNCOM_LAUNCH_UI}; then
+              nowtty="$(tty)"
+              if [ -z "${RUNCOM_SESSION}" ]; then
+                  if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+                      _select_display_protocol
+                      if [ "${graph_proto}" = "x11" ]; then
+                          _exports_for_x11
+                          _select_x11_session
+                          export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                          exec startx "${exec_session%.desktop}"
+                      elif [ "${graph_proto}" = "wayland" ]; then
+                          _exports_for_wayland
+                          _select_wayland_session
+                          export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                          exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
+                      fi
+                  fi
+              fi
+          fi
+          unset nowtty
+          unset graph_proto
+          unset exec_session
+          unset RUNCOM_SESSION
+          _clean_up_tty
+      }
+
+      main "$@"
+
+    #+END_SRC
 
 * Calls
 ** bash

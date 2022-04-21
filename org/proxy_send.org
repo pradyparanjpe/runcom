@@ -1,13 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_send - send proxy authentication
-#+AUTHOR: Pradyumna Paranjape
-#+EMAIL: pradyparanjpe@rediffmail.com
-#+LANGUAGE: en
-#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
-#+STARTUP: overview
-#+PROPERTY: header-args :tangle yes
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/proxy_send.html
+#+SETUPFILE: setup.org
+#+EXPORT_FILE_NAME: ../docs/proxy_send.html
 
 * Description
   - This script is automatically called by prady_runcom's profile scripts when network is inferred as /office/.

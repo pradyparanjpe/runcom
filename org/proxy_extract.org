@@ -1,13 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_extract - extract proxy authentication from password store
-#+AUTHOR: Pradyumna Paranjape
-#+EMAIL: pradyparanjpe@rediffmail.com
-#+LANGUAGE: en
-#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
-#+STARTUP: overview
-#+PROPERTY: header-args :tangle yes
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+EXPORT_FILE_NAME: docs/proxy_extract.html
+#+SETUPFILE: setup.org
+#+EXPORT_FILE_NAME: ../docs/proxy_extract.html
 
 * Description
   - This script is automatically called by =bin/proxy_extract.sh=.
