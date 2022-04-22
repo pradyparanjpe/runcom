@@ -12,6 +12,12 @@ unstow_undeploy() {
 
 restore_configurations() {
 
+if [ ! -d "${1:-${HOME}/OLD_CONFIG}" ]; then
+    printf "Old Configuration not found. Please supply as a positional argument.\n"
+    printf "Such as %s <path/to/old/config/directory>\n" "$0"
+    exit 1
+fi
+
 for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
     cp -r "${conf_dir}" "${HOME}"/. || break
 done
@@ -22,6 +28,15 @@ if [ $? -ne 0 ]; then
 else
     printf "Restoration successful, backup directory may be deleted.\n"
 fi
+
+BAD_CARGO_HOME="${HOME}/.cargo"
+if [ -L "${BAD_CARGO_HOME}" ]; then
+    rm "${BAD_CARGO_HOME}"
+fi
+mv "${CARGO_HOME}" "${HOME}/.cargo"
+unset CARGO_HOME
+unset BAD_CARGO_HOME
+export CARGO_HOME
 
 }
 

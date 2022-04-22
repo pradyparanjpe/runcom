@@ -1,17 +1,16 @@
 # -*- mode:org; coding: utf-8; -*-
-#+TITLE: Prady_runcom
-#+SETUPFILE: setup.org
-#+EXPORT_FILE_NAME: ../docs/index.html
+#+TITLE: Prady runcom
+#+SETUPFILE: header.org
 
 * Prady_runcom
 ** What's this?
-   - A compilation of dot-files: default variables, custom functions.
+   - A compilation of dot-files: default variables, custom functions, aliases.
    - *My* configuration backup, "[[https://git-scm.com/docs/git-push][push]]"ed to work as a template for yours.
 
 *** Aim
     - Cross-machine synchronization (hence, git)
     - Modularity (hence, not a single file)
-    - Self-documenting (hence, a single 😉 org file)
+    - Self-documenting (hence, a 😉 org files)
     - Work-flow speed (obviously)
     - "Pretty" low resource load (hence, not GNOME/KDE)
 
@@ -19,7 +18,8 @@
     - Ease
 
 ** Will you be able to set this up?
-   Probably [[*Knowledge][*NOT*]].
+   Probably [[file:setup.org::*Knowledge][*NOT*]].
+   If you insist, check [[file:setup.org][setup]] instructions.
    #+begin_important
    Read till the end before you decide to set this up.
    #+end_important
@@ -42,450 +42,29 @@
   You should have received a copy of the GNU General Public License
   along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
-* Legend
-** Brackets
-   - *Square* =[]=: optional parts: =W[orld]H[ealth]O[rganisation]=
-   - *Angular* =<>=: instructions to fill: =<a global organisation>=
-   - *Curly*, following a dollar =${}=: environment variable =${HOME}=
-   - *Round*, with bar separator: =(WHO|UNO)= = /WHO or UNO/
-
-* Requirements
-** Knowledge
-   - Linux shell commands. We shall try to be POSIX-compliant.
-   - Knowledge of Linux, "dot-files".
-   - super user (sudo) permissions (only for package installation)
-     #+begin_warning
-     Avoid use of *sudo* as much as possible.
-     #+end_warning
-
-** Dependencies
-   - A GNU/Linux distribution. I use [[https://fedoraproject.org][Fedora]].
-   - [[https://curl.se/][curl]] for proxy authentication.
-   - GNU [[https://www.gnu.org/software/stow/][stow]]: dot-file management
-   - [[https://git-scm.com/][git]]: git it
-
-   #+begin_important
-   For Alpine Linux, [[/etc/apk/repositories][enable]] the [[https://<mirror-server>/alpine/<version>/community][community repository]].
-   - If you are using Alpine, you *MUST* know how.
-   #+end_important
-
-*** Bootstrap installation of dependencies
-
-    For automated set-up, run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
-    #+BEGIN_SRC sh :tangle no
-      curl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
-    #+END_SRC
-
-    #+begin_note
-    Inspecting scripts before running them (especially with =sudo=) is always a good idea.
-    The /dependencies/ script is tangled (with automation wrappers) from the code below.
-    If you feel an urge to inspect it or if it fails,
-    install dependencies manually instead, that's all it does.
-    #+end_note
-
-*** Guide for manual installation of dependencies.
-    Use suitable package manager to install curl, git, stow.
-    It may be useful to update existing packages and repository database before installing packages.
-
-    #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
-      #!/usr/bin/env sh
-      # -*- coding: utf-8; mode: shell-script; -*-
-      dnf_install() {
-    #+end_src
-
-    - dnf: Fedora, RockyLinux, RHEL, CentOS
-      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh
-        dnf -y update || return 65
-        dnf -y install curl git stow || return 66
-      #+end_src
-
-      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
-        }
-
-         apk_install() {
-      #+end_src
-
-    - apk: Alpine Linux
-      #+begin_src sh :tangle ../setup/dependencies.sh
-        apk update || return 65
-        apk --virtual runcom add curl git stow || return 66
-      #+end_src
-
-      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
-        }
-
-         apt_install() {
-      #+end_src
-
-    - apt: Debian, Ubuntu
-      #+begin_src sh :tangle ../setup/dependencies.sh
-        apt update || return 65
-        apt install -y curl git stow || return 66
-      #+end_src
-
-      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
-        }
-
-         zypper_install() {
-      #+end_src
-
-    - zypper: OpenSuSE, SuSE
-      #+begin_src sh :tangle ../setup/dependencies.sh
-        zypper ref || return 65
-        zypper -n install curl git stow || return 66
-      #+end_src
-
-      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
-        }
-
-         pacman_install() {
-      #+end_src
-
-    - pacman: Arch, Manjaro
-      #+begin_src sh :tangle ../setup/dependencies.sh
-        pacman --noconfirm -Syu curl git stow || return 65
-      #+end_src
-
-    #+begin_src sh :tangle ../setup/dependencies.sh :exports none
-      }
-       guess_manager() {
-           for manager in dnf apt apk zypper pacman; do
-               if command -v "${manager}" 1>/dev/null 2>&1; then
-                   printf "${manager}"
-                   return 0
-               fi
-           done
-           printf ""
-           return 127
-       }
-
-       install_dep () {
-           if [ -z "$1" ]; then
-               manager="$(guess_manager)"
-               if [ -z "${manager}" ]; then
-                   return 127
-               fi
-           else
-               manager="${1}"
-           fi
-           eval "${manager}_install"
-       }
-
-       main() {
-           install_dep "$@"
-           case $? in
-               0)
-                   printf "Dependencies installation complete\n"
-                   printf "Proceed to setup\n"
-                   ;;
-               65)
-                   printf "Manager is available, but update threw error\n"
-                   printf "Please install dependencies manually\n"
-                   printf "aborting...\n"
-                   return 1;
-                   ;;
-               66)
-                   printf "Manager is available, but package installation threw error\n"
-                   printf "Please install dependencies manually\n"
-                   printf "aborting...\n"
-                   return 1;
-                   ;;
-               127)
-                   printf "Couldn't guess package manger\n"
-                   printf "Please install dependencies manually\n"
-                   printf "aborting...\n"
-                   return 127;
-                   ;;
-               ,*) printf "Error number %s was thrown by the package manager\n" "$?"
-                  printf "Please install dependencies manually\n"
-                  printf "aborting...\n"
-                  ;;
-           esac
-       }
-
-       main "$@"
-    #+END_SRC
-
-* Set-up
-  - Affirm [[*Requirements][requirements]].
-  #+begin_warning
-  Do *NOT* use =sudo= during set-up.
-  #+end_warning
-
-  #+begin_warning
-  - The next steps require you to delete all [[*Structure][stowed dotfiles]].
-  - We shall copy them in a directory named =${HOME}/OLD_CONFIG= before proceeding.
-  - Preserve this backup, you will need this during undoing set-up.
-  - You HAVE BEEN warned.
-  #+end_warning
-
-** Bootstrap set-up using script
-   - Set-up may be bootstrapped by running the [[./setup/setup.sh][setup]] script.
-
-     #+BEGIN_SRC sh :tangle no
-       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/setup.sh" | sudo sh
-
-     #+END_SRC
-
-     #+begin_note
-     Inspecting scripts before running them is generally a good idea.
-     The /set-up/ script is tangled (with automation wrappers) from the code below.
-     If you feel an urge to inspect it or if it fails,
-     follow manual set-up instructions with modifications instead.
-     #+end_note
-
-** Guide for manual set-up.
-
-   #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
-     #!/usr/bin/env sh
-     # -*- coding: utf-8; mode: shell-script; -*-
-   #+end_src
-
-*** Clone the repository and place at =${HOME}/.runcom=
-
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
-      clone_repo () {
-          if [ ! -d "${HOME}/.runcom" ]; then
-    #+END_SRC
-
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh
-      git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
-    #+END_SRC
-
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
-      else
-          printf "${HOME}/.runcom already exists. Quitting...\n"
-          exit 0
-      fi
-      }
-
-       mask_stow_directories() {
-    #+END_SRC
-
-*** Stow dot-files
-    - =GNU stow= will create symlinked structure for all contents in =${HOME}/.runcom/dotfiles= in =${HOME}=.
-    - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
-    - If =stow= finds a pre-existing file (non-directory), it throws error.
-**** Preserve 'current' configuration in a *visible* folder in =${HOME}=
-     #+begin_src sh :tangle ../setup/setup.sh
-       presence="${HOME}/OLD_CONFIG"
-       mkdir -p "${presence}"
-       cat << EOR >> "${presence}/README.md"
-       This directory contains a backup of configuration that existed before runcom setup.
-       Files in this directory may be merged to their respective place after inspection.
-       I recommend that this directory should **NOT** be deleted.
-       It will be required during un-doing the setup.
-       EOR
-     #+end_src
-
-**** Create directories, so that symlinks are made /inside/ them.
-     #+begin_src sh :tangle ../setup/setup.sh
-       for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
-           if [ -d "${conf_mask}" ]; then
-               hard_directory="${HOME}/.config/${conf_mask##*/}"
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   mv "${hard_directory}" "${presence}/${hard_directory}"
-               fi
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   # still no luck
-                   printf "%s Couldn't be removed and backed up\n"
-                   printf "This *shall* cause stow error\n"
-               fi
-           fi
-       done
-       for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
-           if [ -d "${conf_mask}" ]; then
-               hard_directory="${HOME}/.local/share/${data_mask##*/}"
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   mv "${hard_directory}" "${presence}/${hard_directory}"
-               fi
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   # still no luck
-                   printf "%s Couldn't be removed and backed up\n"
-                   printf "This *shall* cause stow error\n"
-               fi
-           fi
-       done
-       unset hard_directory
-       unset non_mt_msg
-     #+end_src
-
-**** Stow
-     #+begin_src sh :tangle no
-       stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
-     #+end_src
-
-     #+begin_src sh :tangle ../setup/setup.sh :exports none
-       }
-        stow_deploy() {
-            if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
-                # stow threw error
-                stow_error="$?"
-                printf "Fix above errors and try again."
-                exit "${stow_error}"
-            fi
-        }
-
-        main () {
-            clone_repo
-            mask_stow_directories
-            stow_deploy
-        }
-        main "$@"
-     #+end_src
-
-* Undo Set-up
-  #+begin_warning
-  Do *NOT* use =sudo= during unset.
-  #+end_warning
-
-  #+begin_note
-  - The next steps will require a directory containing 'old configuration files'.
-  - You HAD BEEN warned against deleting it during the set-up.
-  #+end_note
-
-** Bootstrap unset using script
-   - Unset may be bootstrapped by running the [[./setup/unset.sh][unset]] script.
-
-     #+BEGIN_SRC sh :tangle no
-       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sudo sh
-
-     #+END_SRC
-
-     #+begin_note
-     Inspecting scripts before running them is generally a good idea.
-     The /unset/ script is tangled (with automation wrappers) from the code below.
-     If you feel an urge to inspect it or if it fails,
-     follow manual unset instructions with modifications instead.
-     #+end_note
-
-** Guide to manually undo set-up.
-
-   #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-     #!/usr/bin/env sh
-     # -*- coding: utf-8; mode: shell-script; -*-
-   #+end_src
-
-*** UnStow dot-files
-    - Use =GNU stow= to unstow to un-linked structure for all contents in =${HOME}/.runcom/dotfiles= from =${HOME}=.
-**** UnStow
-     #+begin_src sh :tangle no
-       stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
-
-     #+end_src
-
-     #+begin_src sh :tangle ../setup/unset.sh :exports none
-       unstow_undeploy() {
-           if ! stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles; then
-               # stow threw error
-               stow_error="$?"
-               printf "Fix above errors and try again."
-               exit "${stow_error}"
-           fi
-       }
-
-       restore_configurations() {
-
-     #+end_src
-
-**** Restore directories form =${HOME}/OLD_CONFIG=
-     #+begin_src sh :tangle ../setup/unset.sh
-       for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
-           cp -r "${conf_dir}" "${HOME}"/. || break
-       done
-
-       # shellcheck disable=SC2181
-       if [ $? -ne 0 ]; then
-           printf "Restoration unsuccessful, copy backup files manually.\n"
-       else
-           printf "Restoration successful, backup directory may be deleted.\n"
-       fi
-     #+end_src
-
-*** Delete runcom
-    Goodbye
-
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-      }
-
-       delete_repo () {
-    #+END_SRC
-
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh
-      rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
-    #+END_SRC
-
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-      }
-
-       main () {
-           unstow_undeploy
-           restore_configurations "$@"
-           delete_repo
-       }
-       main "$@"
-    #+END_SRC
-
-* Personalization
-** Local
-   Create a directory at the location  =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d=.
-   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc= are sourced.
-   - Do not synchronize this directory. This directory is only for the machine.
-   - To disable ui launch from tty1, set export environment variable =RUNCOM_LAUNCH_UI=false=
-     #+begin_src sh :tangle no
-       mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"
-     #+end_src
-
-** Synchronized
-   Create a directory at the location =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d=.
-   #+begin_src sh :tangle no
-     mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"
-   #+end_src
-
-   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc= are sourced.
-   - Synchronize (stow) that directory using a local repository or by simply copying contents.
-     #+begin_danger
-     - *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
-     - *DO NOT* synchronize this directory using a public repository.
-     - *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
-     #+end_danger
-
-
-   #+begin_tip
-   - Remember to keep the repository updated.
-
-     #+BEGIN_SRC sh :tangle no
-       git pull --recurse-submodules
-     #+END_SRC
-   #+end_tip
-
-** Proxy settings
-   Read set up for [[./proxy_send.html][proxy_send]].
-
-   *_SET-UP COMPLETE!_ Following sections explain and tangle the contents of runcom.*
 * Structure
   Following configuration files are available. This literate configuration tangles their contents.
   |------------------------------------------------+-------+--------+---------|
   | Configuration File Path                        | POSIX | Stowed | Owner   |
   |------------------------------------------------+-------+--------+---------|
-  | /etc/profile                                   | yes   | no     | root    |
-  | /etc/bashrc                                    | yes   | no     | root    |
-  | /etc/zshrc                                     | yes   | no     | root    |
-  | /etc/profile.d/*                               | yes   | no     | root    |
-  | ${HOME}/.bashrc                                | no    | yes    | ${USER} |
-  | ${HOME}/.zshrc                                 | no    | yes    | ${USER} |
-  | ${HOME}/.bash_profile                          | yes   | yes    | ${USER} |
-  | ${HOME}/.bash_login                            | yes   | yes    | ${USER} |
-  | ${HOME}/.profile                               | yes   | yes    | ${USER} |
-  | ${HOME}/.zprofile                              | yes   | yes    | ${USER} |
-  | ${HOME}/.zshenv                                | yes   | yes    | ${USER} |
-  | ${HOME}/.zlogin                                | yes   | yes    | ${USER} |
-  | ${RUNCOMDIR}/env/shrc                          | yes   | no     | RUNCOM  |
-  | ${RUNCOMDIR}/env/ui                            | yes   | no     | RUNCOM  |
-  | ${XDG_DATA_HOME}/bash-completion/completions/* | no    | yes    | ${USER} |
-  | ${XDG_CONFIG_DIR}                              | no    | yes    | ${USER} |
-  | ${XDG_CONFIG_HOME}/local.d/.*rc                | yes   | no     | ${USER} |
-  | ${XDG_CONFIG_HOME}/pvt.d/.*rc                  | yes   | pvt    | ${USER} |
+  | =/etc/profile=                                   | yes   | no     | root    |
+  | =/etc/bashrc=                                    | yes   | no     | root    |
+  | =/etc/zshrc=                                     | yes   | no     | root    |
+  | =/etc/profile.d/*=                               | yes   | no     | root    |
+  | =${HOME}/.bashrc=                                | no    | yes    | =${USER}= |
+  | =${HOME}/.zshrc=                                 | no    | yes    | =${USER}= |
+  | =${HOME}/.bash_profile=                          | yes   | yes    | =${USER}= |
+  | =${HOME}/.bash_login=                            | yes   | yes    | =${USER}= |
+  | =${HOME}/.profile=                               | yes   | yes    | =${USER}= |
+  | =${HOME}/.zprofile=                              | yes   | yes    | =${USER}= |
+  | =${HOME}/.zshenv=                                | yes   | yes    | =${USER}= |
+  | =${HOME}/.zlogin=                                | yes   | yes    | =${USER}= |
+  | =${RUNCOMDIR}/env/shrc=                          | yes   | no     | RUNCOM  |
+  | =${RUNCOMDIR}/env/ui=                            | yes   | no     | RUNCOM  |
+  | =${XDG_DATA_HOME}/bash-completion/completions/*= | no    | yes    | =${USER}= |
+  | =${XDG_CONFIG_DIR}=                              | no    | yes    | =${USER}= |
+  | =${XDG_CONFIG_HOME}/local.d/.*rc=                | yes   | no     | =${USER}= |
+  | =${XDG_CONFIG_HOME}/pvt.d/.*rc=                  | yes   | pvt    | =${USER}= |
   |------------------------------------------------+-------+--------+---------|
   They are loaded in following order.
 
@@ -618,9 +197,9 @@
 
   #+BEGIN_SRC bash :tangle ../dotfiles/.zprofile
     # shellcheck source=".profile"
-    if [ -f "${HOME}"/.profile ]; then
+    if [ -f "${HOME}/.profile" ]; then
         # shellcheck disable=SC1091
-        . "${HOME}"/.profile
+        . "${HOME}/.profile"
     fi
   #+END_SRC
 
@@ -739,7 +318,7 @@
      #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
        term_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
        if [ -f "${term_key_source}" ]; then
-           source "${term_key_source}"
+           . "${term_key_source}"
        fi
        # keybindings
        bindkey -v
@@ -835,9 +414,7 @@
      autosuggestions
      addlist
 
-     unset addition
-     unset share_dir
-     unset add_dir
+     unset addition share_dir add_dir
 
    #+END_SRC
 
@@ -846,14 +423,13 @@
     All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
     #+BEGIN_SRC sh :tangle ../env/shrc
       # shellcheck disable=SC1090
-      for unsync_d in local.d pvt.d; do
+      for unsync_d in "local.d" "pvt.d"; do
           for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
               . "${rcfile}"
           done 2>/dev/null
       done 2>/dev/null
 
-      unset rcfile
-      unset unsync_d
+      unset rcfile unsync_d
     #+END_SRC
 
 * Better alternatives
@@ -972,11 +548,21 @@
 ** C(++) exports
    #+BEGIN_SRC sh :tangle ../dotfiles/.profile
      LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-     C_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
-     CPLUS_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
+     C_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+     CPLUS_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
      export LD_LIBRARY_PATH
      export C_INCLUDE_PATH
      export CPLUS_INCLUDE_PATH
+   #+END_SRC
+
+** CARGO (Rust) exports
+   Cargo unnecessarily clutters =${HOME}= with its DATA.
+   It should be in =XDG_DATA_HOME=
+   Also, cargo's binaries should be installed in
+   =${XDG_DATA_HOME}/../bin= like python3.
+   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
+     CARGO_HOME="${HOME}/.local/share/cargo"
+     export CARGO_HOME
    #+END_SRC
 
 ** GPU exports
@@ -1017,14 +603,12 @@
     This may require shell-identification for ksh, csh, fish since they have a different activate
     #+BEGIN_SRC sh :tangle ../env/shrc
       to_venv () {
-          test_d="$(realpath "${PWD}")"
+          test_d="$(readlink -f "${PWD}")"
           parents=16  # path too long to waste time
           until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
               if [ $parents -le 0 ]; then
                   printf "Too many branch-nodes searched" >&2
-                  unset parents
-                  unset test_d
-                  unset env_d
+                  unset parents test_d env_d
                   return 126
               fi
               for env_d in ".venv" "venv"; do
@@ -1033,9 +617,7 @@
                       # shellcheck disable=SC1090
                       . "${test_d}/${env_d}/bin/activate"
                       printf "Found %s, switching...\n" "${test_d}/${env_d}"
-                      unset parents
-                      unset test_d
-                      unset env_d
+                      unset parents test_d env_d
                       return 0
                   fi
               done
@@ -1043,9 +625,7 @@
               parents=$((parents - 1))
           done
           printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
-          unset parents
-          unset test_d
-          unset env_d
+          unset parents test_d env_d
           return 126
       }
     #+END_SRC
@@ -1110,10 +690,7 @@
               # shellcheck disable=SC2059  # I do want escape characters
               printf "${_stat_str}\e[m"
           fi
-          unset _modified
-          unset _cached
-          unset _untracked
-          unset _stat_str
+          unset _modified _cached _untracked _stat_str
       }
     #+END_SRC
 
@@ -1140,8 +717,7 @@
                       branch_str="${branch_str}\e[0;33m"
                       ;;
                   main|master)
-                      unset branch
-                      unset branch_str
+                      unset branch branch_str
                       return
                       ;;
                   ,*)
@@ -1150,8 +726,7 @@
               esac
           fi
           printf "${branch_str}%s\ue725\e[m" "${branch}"
-          unset branch_str
-          unset branch
+          unset branch_str branch
       }
 
     #+END_SRC
@@ -1232,8 +807,7 @@
               return
           fi
           _sec=$(( _cmd_end - _cmd_start ))
-          unset _cmd_start
-          unset _cmd_end
+          unset _cmd_start _cmd_end
           if [ "$_sec" -le 0 ]; then
               return
           fi
@@ -1257,9 +831,8 @@
               return
           fi
           _day=$(( _hr/24 ))
-          unset _min
           printf "%sd" "${_day}"
-          unset _day
+          unset _min _day
       }
     #+END_SRC
 
@@ -1344,8 +917,7 @@
            RPROMPT+=$'%*'
            RPROMPT+="%{$_exit_color%}-${_elapsed}"
            RPROMPT+=$'%{\e[m%}'
-           unset _exit_stat
-           unset _elapsed
+           unset _exit_stat _elapsed
        }
 
        add-zsh-hook precmd _pspps
@@ -1438,9 +1010,7 @@
            if $proceed; then
                pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
            fi
-           unset proceed
-           unset target
-           unset infile
+           unset proceed target infile
        }
      #+END_SRC
 
@@ -1515,7 +1085,7 @@
 ** Un-Compress by context
    #+BEGIN_SRC sh :tangle ../env/shrc
      deconvolute() {
-         if builtin command -v "pigz"; then
+         if builtin command -v "pigz" >/dev/null 2>&1; then
              _gzip="pigz"
          else
              _gzip='gzip'
@@ -1571,8 +1141,7 @@
                  cd "${target_dir}" || return
              fi
          fi
-         unset tmp_file
-         unset target_dir
+         unset tmp_file target_dir
      }
 
      fzfcd () {
@@ -1668,7 +1237,7 @@
      }
    #+end_src
 
-** manual pages
+** Manual pages
    #+BEGIN_SRC sh :tangle ../env/shrc
      man_help () {
          if man "$@"; then
@@ -1689,7 +1258,7 @@
      }
    #+END_SRC
 
-** selection menu
+** Selection menu
    #+BEGIN_SRC sh :tangle ../env/shrc
      posix_select () {
          # select implementation for POSIX
@@ -1707,8 +1276,7 @@
          printf "Selection: " >&2
          read -r select_num
          echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
-         unset word
-         unset word_l
+         unset word word_l
      }
    #+END_SRC
 
@@ -1760,7 +1328,7 @@
      IFS="${o_ifs}"
      if [ $(( netstate & 8)) = 8 ]; then
          printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
-         if [ ! $(( netstate & 16))  = 16 ]; then
+         if [ ! $(( netstate & 16 )) = 16 ]; then
              printf "\e[1;35mProblem with DNS\e[m\n"
          fi
          printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
@@ -1783,15 +1351,11 @@
      if [ -n "${http_proxy}" ] \
             && ! curl "https://duckduckgo.com/" > /dev/null 2>&1 \
             && [ $(( netstate & 1 )) = 1 ]; then
-         auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
-         if [ -f "${auto_proxy}" ]; then
-             # shellcheck source=./proxy_send.py
-             eval "${auto_proxy}" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
-         fi
+         # shellcheck source=./proxy_send.sh
+         eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
          unset auto_proxy
      fi
-     unset o_ifs
-     unset ip_addr
+     unset o_ifs ip_addr
    #+END_SRC
 
 ** SSH Agent
@@ -2030,10 +1594,7 @@
                   fi
               fi
           fi
-          unset nowtty
-          unset graph_proto
-          unset exec_session
-          unset RUNCOM_SESSION
+          unset nowtty graph_proto exec_session RUNCOM_SESSION
           _clean_up_tty
       }
 
@@ -2045,19 +1606,18 @@
 ** bash
    #+BEGIN_SRC bash :tangle ../dotfiles/.bash_login
      # netcheck source=.local/share/pspman/src/runcom/env/ui
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
-     fi
+     . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
    #+END_SRC
 
 ** zsh
    #+BEGIN_SRC bash :tangle ../dotfiles/.zlogin
      # netcheck source=.local/share/pspman/src/runcom/env/ui
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
-     fi
+     . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
    #+END_SRC
+
+
 
    #  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
    #  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
    #  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV
+   #  LocalWords:  coreutils

@@ -1,0 +1,7 @@
+#+AUTHOR: Pradyumna Paranjape
+#+EMAIL: pradyparanjpe@rediffmail.com
+#+LANGUAGE: en
+#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup

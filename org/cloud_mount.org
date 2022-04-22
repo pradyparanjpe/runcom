@@ -1,7 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
-#+TITLE: cloud_mount
-#+SETUPFILE: setup.org
-#+EXPORT_FILE_NAME: ../docs/cloud_mount.html
+#+TITLE: Cloud mount
+#+SETUPFILE: header.org
 
 * Description
   mount (unmount) cloud-media using sshfs

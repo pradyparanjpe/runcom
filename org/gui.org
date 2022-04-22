@@ -1,7 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Gui - launch gui
-#+SETUPFILE: setup.org
-#+EXPORT_FILE_NAME: ../docs/gui.html
+#+SETUPFILE: header.org
 
 * Description
   - Launch gui apps from command line and kill terminal.

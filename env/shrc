@@ -28,7 +28,7 @@
 #===================================================================
 
 # shellcheck disable=SC1090
-for unsync_d in local.d pvt.d; do
+for unsync_d in "local.d" "pvt.d"; do
     for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
         . "${rcfile}"
     done 2>/dev/null
@@ -74,7 +74,7 @@ python_ver() {
 }
 
 to_venv () {
-    test_d="$(realpath "${PWD}")"
+    test_d="$(readlink -f "${PWD}")"
     parents=16  # path too long to waste time
     until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
         if [ $parents -le 0 ]; then
@@ -612,7 +612,7 @@ netcheck
 IFS="${o_ifs}"
 if [ $(( netstate & 8)) = 8 ]; then
     printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
-    if [ ! $(( netstate & 16))  = 16 ]; then
+    if [ ! $(( netstate & 16 )) = 16 ]; then
         printf "\e[1;35mProblem with DNS\e[m\n"
     fi
     printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
@@ -635,11 +635,8 @@ fi
 if [ -n "${http_proxy}" ] \
        && ! curl "https://duckduckgo.com/" > /dev/null 2>&1 \
        && [ $(( netstate & 1 )) = 1 ]; then
-    auto_proxy="${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"
-    if [ -f "${auto_proxy}" ]; then
-        # shellcheck source=./proxy_send.py
-        eval "${auto_proxy}" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
-    fi
+    # shellcheck source=./proxy_send.sh
+    eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
     unset auto_proxy
 fi
 unset o_ifs

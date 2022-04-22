@@ -1,7 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: netcheck - identify connected network
-#+SETUPFILE: setup.org
-#+EXPORT_FILE_NAME: ../docs/netcheck.html
+#+SETUPFILE: header.org
 
 * Description
   Identify connected network.

@@ -1,6 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_extract - extract proxy authentication from password store
-#+SETUPFILE: setup.org
+#+SETUPFILE: header.org
 #+EXPORT_FILE_NAME: ../docs/proxy_extract.html
 
 * Description
@@ -28,7 +28,7 @@
       - /pass-name/ can be declared by adding following lines to
         =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
         #+begin_seealso
-        - [[file:index.org::*Personalization][Personalization]]
+        - [[file:setup.org::*Personalization][Personalization]]
         #+end_seealso
 
         #+BEGIN_SRC sh :tangle no
@@ -223,8 +223,7 @@
                  true
                  ;;
          esac
-         unset key
-         unset value
+         unset key value
      }
 
      extract_secret () {
@@ -254,8 +253,7 @@
              extract_key "${line}"
          done
          IFS="${o_ifs}"
-         unset o_ifs
-         unset line
+         unset o_ifs line
      }
 
      get_pass_proxy () {

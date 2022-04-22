@@ -1,7 +1,474 @@
-#+AUTHOR: Pradyumna Paranjape
-#+EMAIL: pradyparanjpe@rediffmail.com
-#+LANGUAGE: en
-#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
-#+STARTUP: overview
-#+PROPERTY: header-args :tangle
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+# -*- mode:org; coding: utf-8; -*-
+#+TITLE: Setup runcom
+#+SETUPFILE: header.org
+
+* Legend
+** Brackets
+   - *Square* =[]=: optional parts: =W[orld]H[ealth]O[rganisation]=
+   - *Angular* =<>=: instructions to fill: =<a global organisation>=
+   - *Curly*, following a dollar =${}=: environment variable =${HOME}=
+   - *Round*, with bar separator: =(WHO|UNO)= = /WHO or UNO/
+
+* Requirements
+** Knowledge
+   - Linux shell commands. We shall try to be POSIX-compliant.
+   - Knowledge of Linux, "dot-files".
+   - super user (sudo) permissions (only for package installation)
+     #+begin_warning
+     Avoid use of *sudo* as much as possible.
+     #+end_warning
+
+** Dependencies
+   - A GNU/Linux distribution. I use [[https://fedoraproject.org][Fedora]].
+   - GNU [[https://www.gnu.org/software/coreutils/coreutils.html][coreutils]]: Basic OS utilities.
+   - [[https://curl.se/][curl]] for proxy authentication.
+   - GNU [[https://www.gnu.org/software/stow/][stow]]: dot-file management
+   - [[https://git-scm.com/][git]]: git it
+
+   #+begin_important
+   For Alpine Linux, [[/etc/apk/repositories][enable]] the [[https://<mirror-server>/alpine/<version>/community][community repository]].
+   - If you are using Alpine, you *MUST* know how.
+   #+end_important
+
+*** Bootstrap installation of dependencies
+
+    For automated installation of dependencies,
+    run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
+    #+BEGIN_SRC sh :tangle no
+      curl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
+    #+END_SRC
+
+    #+begin_note
+    Inspecting scripts before running them (especially with =sudo=) is always a good idea.
+    The /dependencies/ script is tangled (with automation wrappers) from the code below.
+    If you feel an urge to inspect it or if it fails,
+    install dependencies manually instead, that's all it does.
+    #+end_note
+
+*** Guide for manual installation of dependencies.
+    Use suitable package manager ([[https://wiki.debian.org/Apt][apt]]|[[https://pkgs.alpinelinux.org/packages][apk]]|[[https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/][dnf]]|[[https://archlinux.org/pacman/][pacman]]|[[https://documentation.suse.com/smart/linux/html/concept-zypper/index.html][zypper]])
+    to install coreutils, curl, git, stow.
+    It may be useful to update existing packages
+    and repository database before installing packages.
+
+    #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+      #!/usr/bin/env sh
+      # -*- coding: utf-8; mode: shell-script; -*-
+      dnf_install() {
+    #+end_src
+
+    - dnf: Fedora, RockyLinux, RHEL, CentOS
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh
+        dnf -y update || return 65
+        dnf -y install coreutils curl git stow || return 66
+      #+end_src
+
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+        }
+
+         apk_install() {
+      #+end_src
+
+    - apk: Alpine Linux
+      #+begin_src sh :tangle ../setup/dependencies.sh
+        apk update || return 65
+        apk --virtual runcom add coreutils curl git stow || return 66
+      #+end_src
+
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+        }
+
+         apt_install() {
+      #+end_src
+
+    - apt: Debian, Ubuntu
+      #+begin_src sh :tangle ../setup/dependencies.sh
+        apt update || return 65
+        apt install -y coreutils curl git stow || return 66
+      #+end_src
+
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+        }
+
+         zypper_install() {
+      #+end_src
+
+    - zypper: OpenSuSE, SuSE
+      #+begin_src sh :tangle ../setup/dependencies.sh
+        zypper ref || return 65
+        zypper -n install coreutils curl git stow || return 66
+      #+end_src
+
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+        }
+
+         pacman_install() {
+      #+end_src
+
+    - pacman: Arch, Manjaro
+      #+begin_src sh :tangle ../setup/dependencies.sh
+        pacman --noconfirm -Syu coreutils curl git stow || return 65
+      #+end_src
+
+    #+begin_src sh :tangle ../setup/dependencies.sh :exports none
+      }
+       guess_manager() {
+           for manager in apt apk dnf pacman zypper; do
+               if command -v "${manager}" 1>/dev/null 2>&1; then
+                   printf "%s" "${manager}"
+                   return 0
+               fi
+           done
+           printf ""
+           return 127
+       }
+
+       install_dep () {
+           if [ -z "$1" ]; then
+               manager="$(guess_manager)"
+               if [ -z "${manager}" ]; then
+                   return 127
+               fi
+           else
+               manager="${1}"
+           fi
+           eval "${manager}_install"
+       }
+
+       main() {
+           install_dep "$@"
+           case $? in
+               0)
+                   printf "Dependencies installation complete\n"
+                   printf "Proceed to setup\n"
+                   ;;
+               65)
+                   printf "Manager is available, but update threw error\n"
+                   printf "Please install dependencies manually\n"
+                   printf "aborting...\n"
+                   return 1;
+                   ;;
+               66)
+                   printf "Manager is available, but package installation threw error\n"
+                   printf "Please install dependencies manually\n"
+                   printf "aborting...\n"
+                   return 1;
+                   ;;
+               127)
+                   printf "Couldn't guess package manger\n"
+                   printf "Please install dependencies manually\n"
+                   printf "aborting...\n"
+                   return 127;
+                   ;;
+               ,*) printf "Error number %s was thrown by the package manager\n" "$?"
+                  printf "Please install dependencies manually\n"
+                  printf "aborting...\n"
+                  ;;
+           esac
+       }
+
+       main "$@"
+    #+END_SRC
+
+* Set-up
+  - Affirm [[*Requirements][requirements]].
+  #+begin_warning
+  Do *NOT* use =sudo= during set-up.
+  #+end_warning
+
+  #+begin_warning
+  - The next steps require you to delete all [[file:index.org::*Structure][stowed dotfiles]].
+  - We shall copy them in a directory named =${HOME}/OLD_CONFIG= before proceeding.
+  - Preserve this backup, you will need this during undoing set-up.
+  - You HAVE BEEN warned.
+  #+end_warning
+
+** Bootstrap set-up using script
+   - Set-up may be bootstrapped by running the [[./setup/setup.sh][setup]] script.
+
+     #+BEGIN_SRC sh :tangle no
+       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/setup.sh" | sh
+
+     #+END_SRC
+
+     #+begin_note
+     Inspecting scripts before running them is generally a good idea.
+     The /set-up/ script is tangled (with automation wrappers) from the code below.
+     If you feel an urge to inspect it or if it fails,
+     follow manual set-up instructions with modifications instead.
+     #+end_note
+
+** Guide for manual set-up.
+
+   #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
+     #!/usr/bin/env sh
+     # -*- coding: utf-8; mode: shell-script; -*-
+   #+end_src
+
+*** Clone the repository and place at =${HOME}/.runcom=
+
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
+      clone_repo () {
+          if [ ! -d "${HOME}/.runcom" ]; then
+    #+END_SRC
+
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh
+      git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
+    #+END_SRC
+
+    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
+      else
+          printf "%s already exists. Quitting...\n" "${HOME}/.runcom"
+          exit 0
+      fi
+      }
+
+       mask_stow_directories() {
+    #+END_SRC
+
+*** Stow dot-files
+    - =GNU stow= will create symlinked structure for all contents in =${HOME}/.runcom/dotfiles= in =${HOME}=.
+    - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
+    - If =stow= finds a pre-existing file (non-directory), it throws error.
+**** Preserve 'current' configuration in a *visible* folder in =${HOME}=
+     #+begin_src sh :tangle ../setup/setup.sh
+       presence="${HOME}/OLD_CONFIG"
+       mkdir -p "${presence}"
+       cat << EOR >> "${presence}/README.md"
+       # RUNCOM backup
+         This directory contains a backup of configuration that existed before runcom setup.
+         Files in this directory may be merged to their respective place after inspection.
+         I recommend that this directory should **NOT** be deleted.
+         It will be required during un-doing the setup.
+       EOR
+     #+end_src
+
+**** Create directories, so that symlinks are made /inside/ them.
+     #+begin_src sh :tangle ../setup/setup.sh
+       for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
+           if [ -d "${conf_mask}" ]; then
+               hard_directory="${HOME}/.config/${conf_mask##*/}"
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   mv "${hard_directory}" "${presence}/${hard_directory}"
+                   if ! mkdir "${hard_directory}" 2>/dev/null; then
+                       # still no luck
+                       printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
+                       printf "This *shall* cause stow error\n"
+                   fi
+               fi
+           fi
+       done
+       mkdir -p "${HOME}/.config/pvt.d"
+       mkdir -p "${HOME}/.config/local.d"
+
+       for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
+           if [ -d "${conf_mask}" ]; then
+               hard_directory="${HOME}/.local/share/${data_mask##*/}"
+               if ! mkdir "${hard_directory}" 2>/dev/null; then
+                   mv "${hard_directory}" "${presence}/${hard_directory}"
+                   if ! mkdir "${hard_directory}" 2>/dev/null; then
+                       # still no luck
+                       printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
+                       printf "This *shall* cause stow error\n"
+                   fi
+               fi
+           fi
+       done
+       unset hard_directory non_mt_msg
+     #+end_src
+
+**** Stow
+     #+begin_src sh :tangle no
+       stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
+     #+end_src
+
+*** Set up Cargo (RUST) HOME
+    Cargo (RUST) clutters =${HOME}= with its /data/. Put it at the right place.
+    Cargo's binaries should be installed in =${XDG_DATA_HOME}/../bin= like python3.
+
+    #+begin_src sh :tangle ../setup/setup.sh
+      move_cargo () {
+          CARGO_HOME="${HOME}/.local/share/cargo"
+          LOCAL_BIN="${HOME}/.local/bin"
+          BAD_CARGO_HOME="${HOME}/.cargo"
+          BAD_CARGO_BIN="${HOME}/.cargo/bin"
+          if [ -d "${BAD_CARGO_HOME}" ] && [ ! -L "${BAD_CARGO_HOME}" ]; then
+              mv -t "${CARGO_HOME}" "${BAD_CARGO_HOME}"
+          fi
+          if [ ! "$(readlink -f "${CARGO_HOME}/bin")" = "${LOCAL_BIN}" ]; then
+              mv -t "${LOCAL_BIN}" "${CARGO_HOME}/bin"/* && \
+                  rmdir "${CARGO_HOME}/bin" && \
+                  ln -s "${LOCAL_BIN}" "${CARGO_HOME}/bin"
+          fi
+          export CARGO_HOME
+          unset LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
+      }
+
+    #+end_src
+
+
+    #+begin_src sh :tangle ../setup/setup.sh :exports none
+      }
+       stow_deploy() {
+           if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
+               # stow threw error
+               stow_error="$?"
+               printf "Fix above errors and try again."
+               exit "${stow_error}"
+           fi
+       }
+
+       main () {
+           clone_repo
+           mask_stow_directories
+           stow_deploy
+           move_cargo
+       }
+       main "$@"
+    #+end_src
+
+
+* Undo Set-up
+  #+begin_warning
+  Do *NOT* use =sudo= during unset.
+  #+end_warning
+
+  #+begin_note
+  - The next steps will require a directory containing 'old configuration files'.
+  - You HAD BEEN warned against deleting it during the set-up.
+  #+end_note
+
+** Bootstrap unset using script
+   - Unset may be bootstrapped by running the [[./setup/unset.sh][unset]] script.
+
+     #+BEGIN_SRC sh :tangle no
+       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
+
+     #+END_SRC
+
+     #+begin_note
+     Inspecting scripts before running them is generally a good idea.
+     The /unset/ script is tangled (with automation wrappers) from the code below.
+     If you feel an urge to inspect it or if it fails,
+     follow manual unset instructions with modifications instead.
+     #+end_note
+
+** Guide to manually undo set-up.
+
+   #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+     #!/usr/bin/env sh
+     # -*- coding: utf-8; mode: shell-script; -*-
+   #+end_src
+
+*** UnStow dot-files
+    - Use =GNU stow= to unstow to un-linked structure for all contents in =${HOME}/.runcom/dotfiles= from =${HOME}=.
+**** UnStow
+     #+begin_src sh :tangle no
+       stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
+
+     #+end_src
+
+     #+begin_src sh :tangle ../setup/unset.sh :exports none
+       unstow_undeploy() {
+           if ! stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles; then
+               # stow threw error
+               stow_error="$?"
+               printf "Fix above errors and try again."
+               exit "${stow_error}"
+           fi
+       }
+
+       restore_configurations() {
+
+     #+end_src
+
+**** Restore directories form =${HOME}/OLD_CONFIG=
+     #+begin_src sh :tangle ../setup/unset.sh :exports none
+       if [ ! -d "${1:-${HOME}/OLD_CONFIG}" ]; then
+           printf "Old Configuration not found. Please supply as a positional argument.\n"
+           printf "Such as %s <path/to/old/config/directory>\n" "$0"
+           exit 1
+       fi
+     #+end_src
+
+     Replace the target directory =${1:-${HOME}/OLD_CONFIG}= in following code block
+     with <path/to/old/config/directory>.
+     #+begin_src sh :tangle ../setup/unset.sh
+       for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
+           cp -r "${conf_dir}" "${HOME}"/. || break
+       done
+
+       # shellcheck disable=SC2181
+       if [ $? -ne 0 ]; then
+           printf "Restoration unsuccessful, copy backup files manually.\n"
+       else
+           printf "Restoration successful, backup directory may be deleted.\n"
+       fi
+     #+end_src
+
+*** Restore CARGO_HOME
+    move =${XDG_DATA_HOME}/cargo= to "${HOME}/.cargo"
+    #+BEGIN_SRC sh :tangle no
+      mv "${XDG_DATA_HOME}/cargo" "${HOME}/.cargo"
+    #+END_SRC
+
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+      BAD_CARGO_HOME="${HOME}/.cargo"
+      if [ -L "${BAD_CARGO_HOME}" ]; then
+          rm "${BAD_CARGO_HOME}"
+      fi
+      mv "${CARGO_HOME}" "${HOME}/.cargo"
+      unset CARGO_HOME BAD_CARGO_HOME
+      export CARGO_HOME
+    #+END_SRC
+
+*** Delete runcom
+    Goodbye
+
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+      }
+
+       delete_repo () {
+    #+END_SRC
+
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh
+      rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
+    #+END_SRC
+
+    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+      }
+
+       main () {
+           unstow_undeploy
+           restore_configurations "$@"
+           delete_repo
+       }
+       main "$@"
+    #+END_SRC
+
+* Personalization
+** Local
+   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc= are sourced.
+   - Do not synchronize this directory. This directory is only for the machine.
+   - To disable ui launch from =/dev/tty*=, set export environment variable =RUNCOM_LAUNCH_UI=false=
+
+** Synchronized
+   - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc= are sourced.
+   - Synchronize (stow) that directory using a local repository or by simply copying contents.
+
+     #+begin_danger
+     - *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
+     - *DO NOT* synchronize this directory using a public repository.
+     - *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
+     #+end_danger
+
+   #+begin_tip
+   - Remember to keep the repository updated.
+
+     #+BEGIN_SRC sh :tangle no
+       git pull --recurse-submodules
+     #+END_SRC
+   #+end_tip
+
+** Proxy settings
+   Read set up for [[./proxy_send.html][proxy_send]].

@@ -1,7 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Wayland start graphics ui
-#+SETUPFILE: ./setup.org
-#+EXPORT_FILE_NAME: ../docs/gui.html
+#+SETUPFILE: header.org
 
 * Code
 ** Header

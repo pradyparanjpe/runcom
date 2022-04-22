@@ -87,11 +87,14 @@ esac
 export MANPAGER
 
 LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-C_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
-CPLUS_INCLUDE_PATH="${HOME}/.local/share/pspman/include/"
+C_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+CPLUS_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
 export LD_LIBRARY_PATH
 export C_INCLUDE_PATH
 export CPLUS_INCLUDE_PATH
+
+CARGO_HOME="${HOME}/.local/share/cargo"
+export CARGO_HOME
 
 PYOPENCL_CTX='0';
 PYOPENCL_COMPILER_OUTPUT=1;

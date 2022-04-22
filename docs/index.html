@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-22 Fri 02:13 -->
+<!-- 2022-04-22 Fri 20:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Prady_runcom</title>
+<title>Prady runcom</title>
 <meta name="author" content="Pradyumna Paranjape" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -202,7 +202,7 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Prady_runcom</h1>
+<h1 class="title">Prady runcom</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
@@ -214,36 +214,6 @@
 </ul>
 </li>
 <li><a href="#orgaa1861b">Copyright/License Header</a></li>
-<li><a href="#orgc1044a7">Legend</a>
-<ul>
-<li><a href="#orga3c3a51">Brackets</a></li>
-</ul>
-</li>
-<li><a href="#orgfd43364">Requirements</a>
-<ul>
-<li><a href="#org93bc00d">Knowledge</a></li>
-<li><a href="#org6ae5c5f">Dependencies</a></li>
-</ul>
-</li>
-<li><a href="#org8c6da46">Set-up</a>
-<ul>
-<li><a href="#org3f6ddae">Bootstrap set-up using script</a></li>
-<li><a href="#org6892c80">Guide for manual set-up.</a></li>
-</ul>
-</li>
-<li><a href="#org2356ce7">Undo Set-up</a>
-<ul>
-<li><a href="#org52c0f19">Bootstrap unset using script</a></li>
-<li><a href="#org4be89ee">Guide to manually undo set-up.</a></li>
-</ul>
-</li>
-<li><a href="#org9759129">Personalization</a>
-<ul>
-<li><a href="#orgcc55c10">Local</a></li>
-<li><a href="#org3e333a8">Synchronized</a></li>
-<li><a href="#org00fadcc">Proxy settings</a></li>
-</ul>
-</li>
 <li><a href="#org2a4b5c7">Structure</a>
 <ul>
 <li><a href="#org089ac2f">Bash</a></li>
@@ -255,14 +225,14 @@
 <li><a href="#orgd8b2c45">Init</a>
 <ul>
 <li><a href="#org8caed9f">profile</a></li>
-<li><a href="#org4114b96">bash</a></li>
-<li><a href="#org5899e06">zsh</a></li>
+<li><a href="#org94fb092">bash</a></li>
+<li><a href="#org7726f69">zsh</a></li>
 </ul>
 </li>
 <li><a href="#orgf087b48">Inherit</a>
 <ul>
-<li><a href="#orgaea00bb">bash</a></li>
-<li><a href="#org5d7c3df">zsh</a></li>
+<li><a href="#org8d7ca3e">bash</a></li>
+<li><a href="#org0ae1bca">zsh</a></li>
 <li><a href="#orgdc9403d">shrc</a></li>
 </ul>
 </li>
@@ -281,6 +251,7 @@
 <li><a href="#org22326ab">PATH</a></li>
 <li><a href="#org3d2b9cb">Editor wars</a></li>
 <li><a href="#org42ae1aa">C(++) exports</a></li>
+<li><a href="#org0fb1538">CARGO (Rust) exports</a></li>
 <li><a href="#org4bbac48">GPU exports</a></li>
 <li><a href="#org387030a">Bemenu exports</a></li>
 <li><a href="#org363ed3e">GTK+ debugging output</a></li>
@@ -300,8 +271,8 @@
 <li><a href="#orga1ab3c2">zwc</a></li>
 <li><a href="#org4366660">disable auto-venv</a></li>
 <li><a href="#orgaa2a487">lszcat</a></li>
-<li><a href="#org23fd5f7">manual pages</a></li>
-<li><a href="#org901b663">selection menu</a></li>
+<li><a href="#orgc4a643b">Manual pages</a></li>
+<li><a href="#orgf0cbed5">Selection menu</a></li>
 </ul>
 </li>
 <li><a href="#orgfd79963">Aliases</a>
@@ -329,8 +300,8 @@
 </li>
 <li><a href="#orgd65f380">Calls</a>
 <ul>
-<li><a href="#orgea43b51">bash</a></li>
-<li><a href="#org46ce0cf">zsh</a></li>
+<li><a href="#org74520a4">bash</a></li>
+<li><a href="#org35366ce">zsh</a></li>
 </ul>
 </li>
 </ul>
@@ -345,7 +316,7 @@
 <h3 id="org644d956">What's this?</h3>
 <div class="outline-text-3" id="text-org644d956">
 <ul class="org-ul">
-<li>A compilation of dot-files: default variables, custom functions.</li>
+<li>A compilation of dot-files: default variables, custom functions, aliases.</li>
 <li><b>My</b> configuration backup, "<a href="https://git-scm.com/docs/git-push">push</a>"ed to work as a template for yours.</li>
 </ul>
 </div>
@@ -356,7 +327,7 @@
 <ul class="org-ul">
 <li>Cross-machine synchronization (hence, git)</li>
 <li>Modularity (hence, not a single file)</li>
-<li>Self-documenting (hence, a single 😉 org file)</li>
+<li>Self-documenting (hence, a 😉 org files)</li>
 <li>Work-flow speed (obviously)</li>
 <li>"Pretty" low resource load (hence, not GNOME/KDE)</li>
 </ul>
@@ -377,9 +348,10 @@
 <h3 id="orgd310fd2">Will you be able to set this up?</h3>
 <div class="outline-text-3" id="text-orgd310fd2">
 <p>
-Probably <a href="#org93bc00d"><b>NOT</b></a>.
+Probably <a href="setup.html#orgf5a683d"><b>NOT</b></a>.
+If you insist, check <a href="setup.html">setup</a> instructions.
 </p>
-<div class="important" id="orgc3cad1a">
+<div class="important" id="org3d16b75">
 <p>
 Read till the end before you decide to set this up.
 </p>
@@ -421,473 +393,6 @@ along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">ht
 </div>
 </div>
 
-<div id="outline-container-orgc1044a7" class="outline-2">
-<h2 id="orgc1044a7">Legend</h2>
-<div class="outline-text-2" id="text-orgc1044a7">
-</div>
-<div id="outline-container-orga3c3a51" class="outline-3">
-<h3 id="orga3c3a51">Brackets</h3>
-<div class="outline-text-3" id="text-orga3c3a51">
-<ul class="org-ul">
-<li><b>Square</b> <code>[]</code>: optional parts: <code>W[orld]H[ealth]O[rganisation]</code></li>
-<li><b>Angular</b> <code>&lt;&gt;</code>: instructions to fill: <code>&lt;a global organisation&gt;</code></li>
-<li><b>Curly</b>, following a dollar <code>${}</code>: environment variable <code>${HOME}</code></li>
-<li><b>Round</b>, with bar separator: <code>(WHO|UNO)</code> = <i>WHO or UNO</i></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgfd43364" class="outline-2">
-<h2 id="orgfd43364">Requirements</h2>
-<div class="outline-text-2" id="text-orgfd43364">
-</div>
-<div id="outline-container-org93bc00d" class="outline-3">
-<h3 id="org93bc00d">Knowledge</h3>
-<div class="outline-text-3" id="text-org93bc00d">
-<ul class="org-ul">
-<li>Linux shell commands. We shall try to be POSIX-compliant.</li>
-<li>Knowledge of Linux, "dot-files".</li>
-<li><p>
-super user (sudo) permissions (only for package installation)
-</p>
-<div class="warning" id="orgcb0f2df">
-<p>
-Avoid use of <b>sudo</b> as much as possible.
-</p>
-
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org6ae5c5f" class="outline-3">
-<h3 id="org6ae5c5f">Dependencies</h3>
-<div class="outline-text-3" id="text-org6ae5c5f">
-<ul class="org-ul">
-<li>A GNU/Linux distribution. I use <a href="https://fedoraproject.org">Fedora</a>.</li>
-<li><a href="https://curl.se/">curl</a> for proxy authentication.</li>
-<li>GNU <a href="https://www.gnu.org/software/stow/">stow</a>: dot-file management</li>
-<li><a href="https://git-scm.com/">git</a>: git it</li>
-</ul>
-
-<div class="important" id="org6e3248d">
-<p>
-For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
-</p>
-<ul class="org-ul">
-<li>If you are using Alpine, you <b>MUST</b> know how.</li>
-</ul>
-
-</div>
-</div>
-
-<div id="outline-container-org965ef6e" class="outline-4">
-<h4 id="org965ef6e">Bootstrap installation of dependencies</h4>
-<div class="outline-text-4" id="text-org965ef6e">
-<p>
-For automated set-up, run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/dependencies.sh"</span> | sudo sh
-</pre>
-</div>
-
-<div class="note" id="orgae2a144">
-<p>
-Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
-The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
-If you feel an urge to inspect it or if it fails,
-install dependencies manually instead, that's all it does.
-</p>
-
-</div>
-</div>
-</div>
-
-<div id="outline-container-org244b9eb" class="outline-4">
-<h4 id="org244b9eb">Guide for manual installation of dependencies.</h4>
-<div class="outline-text-4" id="text-org244b9eb">
-<p>
-Use suitable package manager to install curl, git, stow.
-It may be useful to update existing packages and repository database before installing packages.
-</p>
-
-<ul class="org-ul">
-<li><p>
-dnf: Fedora, RockyLinux, RHEL, CentOS
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">dnf -y update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-dnf -y install curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
-</pre>
-</div></li>
-
-<li><p>
-apk: Alpine Linux
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">apk update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-apk --virtual runcom add curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
-</pre>
-</div></li>
-
-<li><p>
-apt: Debian, Ubuntu
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">apt update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-apt install -y curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
-</pre>
-</div></li>
-
-<li><p>
-zypper: OpenSuSE, SuSE
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">zypper ref || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-zypper -n install curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
-</pre>
-</div></li>
-
-<li><p>
-pacman: Arch, Manjaro
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">pacman --noconfirm -Syu curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-</pre>
-</div></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org8c6da46" class="outline-2">
-<h2 id="org8c6da46">Set-up</h2>
-<div class="outline-text-2" id="text-org8c6da46">
-<ul class="org-ul">
-<li>Affirm <a href="#orgfd43364">requirements</a>.</li>
-</ul>
-<div class="warning" id="orgb7dea82">
-<p>
-Do <b>NOT</b> use <code>sudo</code> during set-up.
-</p>
-
-</div>
-
-<div class="warning" id="orgd42c743">
-<ul class="org-ul">
-<li>The next steps require you to delete all <a href="#org2a4b5c7">stowed dotfiles</a>.</li>
-<li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
-<li>Preserve this backup, you will need this during undoing set-up.</li>
-<li>You HAVE BEEN warned.</li>
-</ul>
-
-</div>
-</div>
-
-<div id="outline-container-org3f6ddae" class="outline-3">
-<h3 id="org3f6ddae">Bootstrap set-up using script</h3>
-<div class="outline-text-3" id="text-org3f6ddae">
-<ul class="org-ul">
-<li><p>
-Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/setup.sh"</span> | sudo sh
-
-</pre>
-</div>
-
-<div class="note" id="org5d77838">
-<p>
-Inspecting scripts before running them is generally a good idea.
-The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
-If you feel an urge to inspect it or if it fails,
-follow manual set-up instructions with modifications instead.
-</p>
-
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org6892c80" class="outline-3">
-<h3 id="org6892c80">Guide for manual set-up.</h3>
-<div class="outline-text-3" id="text-org6892c80">
-</div>
-<div id="outline-container-orgdbec66b" class="outline-4">
-<h4 id="orgdbec66b">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
-<div class="outline-text-4" id="text-orgdbec66b">
-<div class="org-src-container">
-<pre class="src src-sh">git clone --recurse-submodules <span style="color: #98be65;">"https://github.com/pradyparanjpe/runcom"</span> <span style="color: #98be65;">"${HOME}/.runcom"</span> || <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">1</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgc29f549" class="outline-4">
-<h4 id="orgc29f549">Stow dot-files</h4>
-<div class="outline-text-4" id="text-orgc29f549">
-<ul class="org-ul">
-<li><code>GNU stow</code> will create symlinked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> in <code>${HOME}</code>.</li>
-<li>If <code>stow</code> finds a pre-existing directory, symlinks are created inside that directory.</li>
-<li>If <code>stow</code> finds a pre-existing file (non-directory), it throws error.</li>
-</ul>
-</div>
-<div id="outline-container-orgd9ac4c3" class="outline-5">
-<h5 id="orgd9ac4c3">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
-<div class="outline-text-5" id="text-orgd9ac4c3">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">presence</span>=<span style="color: #98be65;">"${HOME}/OLD_CONFIG"</span>
-mkdir -p <span style="color: #98be65;">"${presence}"</span>
-cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"</span>
-<span style="color: #98be65;">This directory contains a backup of configuration that existed before runcom setup.</span>
-<span style="color: #98be65;">Files in this directory may be merged to their respective place after inspection.</span>
-<span style="color: #98be65;">I recommend that this directory should **NOT** be deleted.</span>
-<span style="color: #98be65;">It will be required during un-doing the setup.</span>
-<span style="color: #98be65;">EOR</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge1e7f53" class="outline-5">
-<h5 id="orge1e7f53">Create directories, so that symlinks are made <i>inside</i> them.</h5>
-<div class="outline-text-5" id="text-orge1e7f53">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">for</span> conf_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span style="color: #51afef;">do</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">hard_directory</span>=<span style="color: #98be65;">"${HOME}/.config/${conf_mask##*/}"</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            mv <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #98be65;">"${presence}/${hard_directory}"</span>
-        <span style="color: #51afef;">fi</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">still no luck</span>
-            printf <span style="color: #98be65;">"%s Couldn't be removed and backed up\n"</span>
-            printf <span style="color: #98be65;">"This *shall* cause stow error\n"</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">done</span>
-<span style="color: #51afef;">for</span> data_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.local/share"</span>/*; <span style="color: #51afef;">do</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">hard_directory</span>=<span style="color: #98be65;">"${HOME}/.local/share/${data_mask##*/}"</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            mv <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #98be65;">"${presence}/${hard_directory}"</span>
-        <span style="color: #51afef;">fi</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">still no luck</span>
-            printf <span style="color: #98be65;">"%s Couldn't be removed and backed up\n"</span>
-            printf <span style="color: #98be65;">"This *shall* cause stow error\n"</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">done</span>
-<span style="color: #d76f10;">unset</span> hard_directory
-<span style="color: #d76f10;">unset</span> non_mt_msg
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge147489" class="outline-5">
-<h5 id="orge147489">Stow</h5>
-<div class="outline-text-5" id="text-orge147489">
-<div class="org-src-container">
-<pre class="src src-sh">stow -vS -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> dotfiles
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org2356ce7" class="outline-2">
-<h2 id="org2356ce7">Undo Set-up</h2>
-<div class="outline-text-2" id="text-org2356ce7">
-<div class="warning" id="orgf660fcb">
-<p>
-Do <b>NOT</b> use <code>sudo</code> during unset.
-</p>
-
-</div>
-
-<div class="note" id="org8e0255b">
-<ul class="org-ul">
-<li>The next steps will require a directory containing 'old configuration files'.</li>
-<li>You HAD BEEN warned against deleting it during the set-up.</li>
-</ul>
-
-</div>
-</div>
-
-<div id="outline-container-org52c0f19" class="outline-3">
-<h3 id="org52c0f19">Bootstrap unset using script</h3>
-<div class="outline-text-3" id="text-org52c0f19">
-<ul class="org-ul">
-<li><p>
-Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/unset.sh"</span> | sudo sh
-
-</pre>
-</div>
-
-<div class="note" id="org5039ad9">
-<p>
-Inspecting scripts before running them is generally a good idea.
-The <i>unset</i> script is tangled (with automation wrappers) from the code below.
-If you feel an urge to inspect it or if it fails,
-follow manual unset instructions with modifications instead.
-</p>
-
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org4be89ee" class="outline-3">
-<h3 id="org4be89ee">Guide to manually undo set-up.</h3>
-<div class="outline-text-3" id="text-org4be89ee">
-</div>
-<div id="outline-container-orgbd0229e" class="outline-4">
-<h4 id="orgbd0229e">UnStow dot-files</h4>
-<div class="outline-text-4" id="text-orgbd0229e">
-<ul class="org-ul">
-<li>Use <code>GNU stow</code> to unstow to un-linked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> from <code>${HOME}</code>.</li>
-</ul>
-</div>
-<div id="outline-container-org3810c5a" class="outline-5">
-<h5 id="org3810c5a">UnStow</h5>
-<div class="outline-text-5" id="text-org3810c5a">
-<div class="org-src-container">
-<pre class="src src-sh">stow -vp -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> -D dotfiles
-
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org5623324" class="outline-5">
-<h5 id="org5623324">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
-<div class="outline-text-5" id="text-org5623324">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">for</span> conf_dir<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${1:-${HOME}/OLD_CONFIG}"</span>/*; <span style="color: #51afef;">do</span>
-    cp -r <span style="color: #98be65;">"${conf_dir}"</span> <span style="color: #98be65;">"${HOME}"</span>/. || <span style="color: #51afef;">break</span>
-<span style="color: #51afef;">done</span>
-
-<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2181</span>
-<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> $<span style="color: #ffffaf;">?</span> -ne <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    printf <span style="color: #98be65;">"Restoration unsuccessful, copy backup files manually.\n"</span>
-<span style="color: #51afef;">else</span>
-    printf <span style="color: #98be65;">"Restoration successful, backup directory may be deleted.\n"</span>
-<span style="color: #51afef;">fi</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb809297" class="outline-4">
-<h4 id="orgb809297">Delete runcom</h4>
-<div class="outline-text-4" id="text-orgb809297">
-<p>
-Goodbye
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">rm -rf <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span> &amp;&amp; printf <span style="color: #98be65;">"Goodbye &#9995;"</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9759129" class="outline-2">
-<h2 id="org9759129">Personalization</h2>
-<div class="outline-text-2" id="text-org9759129">
-</div>
-<div id="outline-container-orgcc55c10" class="outline-3">
-<h3 id="orgcc55c10">Local</h3>
-<div class="outline-text-3" id="text-orgcc55c10">
-<p>
-Create a directory at the location  <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d</code>.
-</p>
-<ul class="org-ul">
-<li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc</code> are sourced.</li>
-<li>Do not synchronize this directory. This directory is only for the machine.</li>
-<li><p>
-To disable ui launch from tty1, set export environment variable <code>RUNCOM_LAUNCH_UI=false</code>
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">mkdir -p <span style="color: #98be65;">"${XDG_CONFIG_HOME:-${HOME}/.config}/local.d"</span>
-</pre>
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org3e333a8" class="outline-3">
-<h3 id="org3e333a8">Synchronized</h3>
-<div class="outline-text-3" id="text-org3e333a8">
-<p>
-Create a directory at the location <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d</code>.
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">mkdir -p <span style="color: #98be65;">"${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d"</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc</code> are sourced.</li>
-<li><p>
-Synchronize (stow) that directory using a local repository or by simply copying contents.
-</p>
-<div class="danger" id="org3a06505">
-<ul class="org-ul">
-<li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
-<li><b>DO NOT</b> synchronize this directory using a public repository.</li>
-<li><b>DO NOT</b> store passwords in this directory. For password management, use <a href="https://passwordstore.org">pass</a></li>
-</ul>
-
-</div></li>
-</ul>
-
-
-<div class="tip" id="org9d81ca3">
-<ul class="org-ul">
-<li><p>
-Remember to keep the repository updated.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">git pull --recurse-submodules
-</pre>
-</div></li>
-</ul>
-
-</div>
-</div>
-</div>
-
-<div id="outline-container-org00fadcc" class="outline-3">
-<h3 id="org00fadcc">Proxy settings</h3>
-<div class="outline-text-3" id="text-org00fadcc">
-<p>
-Read set up for <a href="./proxy_send.html">proxy_send</a>.
-</p>
-
-<p>
-<b><span class="underline">SET-UP COMPLETE!</span> Following sections explain and tangle the contents of runcom.</b>
-</p>
-</div>
-</div>
-</div>
 <div id="outline-container-org2a4b5c7" class="outline-2">
 <h2 id="org2a4b5c7">Structure</h2>
 <div class="outline-text-2" id="text-org2a4b5c7">
@@ -916,129 +421,129 @@ Following configuration files are available. This literate configuration tangles
 </thead>
 <tbody>
 <tr>
-<td class="org-left">/etc/profile</td>
+<td class="org-left"><code>/etc/profile</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">root</td>
 </tr>
 
 <tr>
-<td class="org-left">/etc/bashrc</td>
+<td class="org-left"><code>/etc/bashrc</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">root</td>
 </tr>
 
 <tr>
-<td class="org-left">/etc/zshrc</td>
+<td class="org-left"><code>/etc/zshrc</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">root</td>
 </tr>
 
 <tr>
-<td class="org-left">/etc/profile.d/*</td>
+<td class="org-left"><code>/etc/profile.d/*</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">root</td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.bashrc</td>
+<td class="org-left"><code>${HOME}/.bashrc</code></td>
 <td class="org-left">no</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.zshrc</td>
+<td class="org-left"><code>${HOME}/.zshrc</code></td>
 <td class="org-left">no</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.bash_profile</td>
+<td class="org-left"><code>${HOME}/.bash_profile</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.bash_login</td>
+<td class="org-left"><code>${HOME}/.bash_login</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.profile</td>
+<td class="org-left"><code>${HOME}/.profile</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.zprofile</td>
+<td class="org-left"><code>${HOME}/.zprofile</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.zshenv</td>
+<td class="org-left"><code>${HOME}/.zshenv</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${HOME}/.zlogin</td>
+<td class="org-left"><code>${HOME}/.zlogin</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${RUNCOMDIR}/env/shrc</td>
+<td class="org-left"><code>${RUNCOMDIR}/env/shrc</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">RUNCOM</td>
 </tr>
 
 <tr>
-<td class="org-left">${RUNCOMDIR}/env/ui</td>
+<td class="org-left"><code>${RUNCOMDIR}/env/ui</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
 <td class="org-left">RUNCOM</td>
 </tr>
 
 <tr>
-<td class="org-left">${XDG_DATA_HOME}/bash-completion/completions/*</td>
+<td class="org-left"><code>${XDG_DATA_HOME}/bash-completion/completions/*</code></td>
 <td class="org-left">no</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${XDG_CONFIG_DIR}</td>
+<td class="org-left"><code>${XDG_CONFIG_DIR}</code></td>
 <td class="org-left">no</td>
 <td class="org-left">yes</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${XDG_CONFIG_HOME}/local.d/.*rc</td>
+<td class="org-left"><code>${XDG_CONFIG_HOME}/local.d/.*rc</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">no</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left">${XDG_CONFIG_HOME}/pvt.d/.*rc</td>
+<td class="org-left"><code>${XDG_CONFIG_HOME}/pvt.d/.*rc</code></td>
 <td class="org-left">yes</td>
 <td class="org-left">pvt</td>
-<td class="org-left">${USER}</td>
+<td class="org-left"><code>${USER}</code></td>
 </tr>
 </tbody>
 </table>
@@ -1051,16 +556,16 @@ They are loaded in following order.
 <h3 id="org089ac2f">Bash</h3>
 <div class="outline-text-3" id="text-org089ac2f">
 </div>
-<div id="outline-container-org7e658e4" class="outline-4">
-<h4 id="org7e658e4">/etc/profile</h4>
-<div class="outline-text-4" id="text-org7e658e4">
+<div id="outline-container-orgb929429" class="outline-4">
+<h4 id="orgb929429">/etc/profile</h4>
+<div class="outline-text-4" id="text-orgb929429">
 </div>
 <div id="outline-container-org9072313" class="outline-5">
 <h5 id="org9072313">/etc/bashrc</h5>
 <div class="outline-text-5" id="text-org9072313">
 </div>
 <ul class="org-ul">
-<li><a id="org465f102"></a>/etc/profile.d/*<br /></li>
+<li><a id="org3b069c1"></a>/etc/profile.d/*<br /></li>
 </ul>
 </div>
 </div>
@@ -1069,8 +574,8 @@ They are loaded in following order.
 <h4 id="orgd4c0c05">${HOME}/.bash_profile</h4>
 <div class="outline-text-4" id="text-orgd4c0c05">
 </div>
-<div id="outline-container-org4b8c04d" class="outline-5">
-<h5 id="org4b8c04d">${HOME}/.profile</h5>
+<div id="outline-container-orgec904af" class="outline-5">
+<h5 id="orgec904af">${HOME}/.profile</h5>
 </div>
 
 <div id="outline-container-org78a34ad" class="outline-5">
@@ -1078,10 +583,10 @@ They are loaded in following order.
 <div class="outline-text-5" id="text-org78a34ad">
 </div>
 <ul class="org-ul">
-<li><a id="orge7a9db5"></a>${RUNCOMDIR}/env/shrc<br />
+<li><a id="orgfc36d7a"></a>${RUNCOMDIR}/env/shrc<br />
 <ul class="org-ul">
-<li><a id="org39f461d"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org762437f"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="orgcde04da"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="org101f25c"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
 </ul>
 </li>
 </ul>
@@ -1092,7 +597,7 @@ They are loaded in following order.
 <div class="outline-text-5" id="text-org70112ed">
 </div>
 <ul class="org-ul">
-<li><a id="org4436baa"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="org7be4cda"></a>${RUNCOMDIR}/env/ui<br /></li>
 </ul>
 </div>
 </div>
@@ -1102,16 +607,16 @@ They are loaded in following order.
 <h3 id="org9e2f59d">Zsh</h3>
 <div class="outline-text-3" id="text-org9e2f59d">
 </div>
-<div id="outline-container-org7f9b8b3" class="outline-4">
-<h4 id="org7f9b8b3">/etc/profile</h4>
-<div class="outline-text-4" id="text-org7f9b8b3">
+<div id="outline-container-orgcd13e16" class="outline-4">
+<h4 id="orgcd13e16">/etc/profile</h4>
+<div class="outline-text-4" id="text-orgcd13e16">
 </div>
 <div id="outline-container-orgc47371b" class="outline-5">
 <h5 id="orgc47371b">/etc/zshrc</h5>
 <div class="outline-text-5" id="text-orgc47371b">
 </div>
 <ul class="org-ul">
-<li><a id="orgc9d0f98"></a>/etc/profile.d/*<br /></li>
+<li><a id="org672a418"></a>/etc/profile.d/*<br /></li>
 </ul>
 </div>
 </div>
@@ -1124,8 +629,8 @@ They are loaded in following order.
 <h4 id="org440e918">${HOME}/.zprofile</h4>
 <div class="outline-text-4" id="text-org440e918">
 </div>
-<div id="outline-container-org30f9093" class="outline-5">
-<h5 id="org30f9093">${HOME}/.profile</h5>
+<div id="outline-container-org17448e9" class="outline-5">
+<h5 id="org17448e9">${HOME}/.profile</h5>
 </div>
 </div>
 
@@ -1134,10 +639,10 @@ They are loaded in following order.
 <div class="outline-text-4" id="text-org21c57a0">
 </div>
 <ul class="org-ul">
-<li><a id="org280db54"></a>${RUNCOMDIR}/env/shrc<br />
+<li><a id="org1fbee29"></a>${RUNCOMDIR}/env/shrc<br />
 <ul class="org-ul">
-<li><a id="orga7010f2"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org73681a6"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="org5a44dce"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="orge9f967e"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
 </ul>
 </li>
 </ul>
@@ -1148,7 +653,7 @@ They are loaded in following order.
 <div class="outline-text-4" id="text-org2b58644">
 </div>
 <ul class="org-ul">
-<li><a id="org732262a"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="org083cd0d"></a>${RUNCOMDIR}/env/ui<br /></li>
 </ul>
 </div>
 </div>
@@ -1186,9 +691,9 @@ Copyright, License banners
 
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".profile"</span>
-<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${HOME}"</span>/.profile <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${HOME}/.profile"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1091</span>
-    . <span style="color: #98be65;">"${HOME}"</span>/.profile
+    . <span style="color: #98be65;">"${HOME}/.profile"</span>
 <span style="color: #51afef;">fi</span>
 </pre>
 </div>
@@ -1230,9 +735,9 @@ zstyle :compinstall filename <span style="color: #98be65;">"${HOME}/.zshrc"</spa
 </div>
 </div>
 </div>
-<div id="outline-container-org4114b96" class="outline-3">
-<h3 id="org4114b96">bash</h3>
-<div class="outline-text-3" id="text-org4114b96">
+<div id="outline-container-org94fb092" class="outline-3">
+<h3 id="org94fb092">bash</h3>
+<div class="outline-text-3" id="text-org94fb092">
 <ul class="org-ul">
 <li>Prevent bashrc from running outside non-interactive mode</li>
 </ul>
@@ -1293,9 +798,9 @@ bind <span style="color: #98be65;">'"jk":vi-movement-mode'</span>
 </div>
 </div>
 
-<div id="outline-container-org5899e06" class="outline-3">
-<h3 id="org5899e06">zsh</h3>
-<div class="outline-text-3" id="text-org5899e06">
+<div id="outline-container-org7726f69" class="outline-3">
+<h3 id="org7726f69">zsh</h3>
+<div class="outline-text-3" id="text-org7726f69">
 <p>
 Settings
 </p>
@@ -1311,7 +816,6 @@ Settings
 <ul class="org-ul">
 <li><p>
 cache files
-Save the location of the current completion dump file.
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #ffffaf;">ZSH_COMPDUMP</span>=<span style="color: #98be65;">"${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"</span>
@@ -1357,7 +861,7 @@ Key-bindings
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #ffffaf;">term_key_source</span>=<span style="color: #98be65;">"${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${term_key_source}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #d76f10;">source</span> <span style="color: #98be65;">"${term_key_source}"</span>
+    . <span style="color: #98be65;">"${term_key_source}"</span>
 <span style="color: #51afef;">fi</span>
 <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">keybindings</span>
 <span style="color: #d76f10;">bindkey</span> -v
@@ -1424,9 +928,9 @@ zle -N zle-keymap-select
 <h2 id="orgf087b48">Inherit</h2>
 <div class="outline-text-2" id="text-orgf087b48">
 </div>
-<div id="outline-container-orgaea00bb" class="outline-3">
-<h3 id="orgaea00bb">bash</h3>
-<div class="outline-text-3" id="text-orgaea00bb">
+<div id="outline-container-org8d7ca3e" class="outline-3">
+<h3 id="org8d7ca3e">bash</h3>
+<div class="outline-text-3" id="text-org8d7ca3e">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -1440,9 +944,9 @@ zle -N zle-keymap-select
 </div>
 </div>
 
-<div id="outline-container-org5d7c3df" class="outline-3">
-<h3 id="org5d7c3df">zsh</h3>
-<div class="outline-text-3" id="text-org5d7c3df">
+<div id="outline-container-org0ae1bca" class="outline-3">
+<h3 id="org0ae1bca">zsh</h3>
+<div class="outline-text-3" id="text-org0ae1bca">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -1491,7 +995,7 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 </p>
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC1090</span>
-<span style="color: #51afef;">for</span> unsync_d<span style="color: #51afef;"> in</span> local.d pvt.d; <span style="color: #51afef;">do</span>
+<span style="color: #51afef;">for</span> unsync_d<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"local.d"</span> <span style="color: #98be65;">"pvt.d"</span>; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">for</span> rcfile<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"</span>/.*rc; <span style="color: #51afef;">do</span>
         . <span style="color: #98be65;">"${rcfile}"</span>
     <span style="color: #51afef;">done</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
@@ -1673,11 +1177,28 @@ XDG standard locations specifications these can be redefined in
 <div class="outline-text-3" id="text-org42ae1aa">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">LD_LIBRARY_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/lib:${HOME}/.local/lib64"</span>;
-<span style="color: #ffffaf;">C_INCLUDE_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/share/pspman/include/"</span>
-<span style="color: #ffffaf;">CPLUS_INCLUDE_PATH</span>=<span style="color: #98be65;">"${HOME}/.local/share/pspman/include/"</span>
+<span style="color: #ffffaf;">C_INCLUDE_PATH</span>=<span style="color: #98be65;">"${XDG_DATA_HOME}/pspman/include/"</span>
+<span style="color: #ffffaf;">CPLUS_INCLUDE_PATH</span>=<span style="color: #98be65;">"${XDG_DATA_HOME}/pspman/include/"</span>
 <span style="color: #d76f10;">export</span> LD_LIBRARY_PATH
 <span style="color: #d76f10;">export</span> C_INCLUDE_PATH
 <span style="color: #d76f10;">export</span> CPLUS_INCLUDE_PATH
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0fb1538" class="outline-3">
+<h3 id="org0fb1538">CARGO (Rust) exports</h3>
+<div class="outline-text-3" id="text-org0fb1538">
+<p>
+Cargo unnecessarily clutters <code>${HOME}</code> with its DATA.
+It should be in <code>XDG_DATA_HOME</code>
+Also, cargo's binaries should be installed in
+<code>${XDG_DATA_HOME}/../bin</code> like python3.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">CARGO_HOME</span>=<span style="color: #98be65;">"${HOME}/.local/share/cargo"</span>
+<span style="color: #d76f10;">export</span> CARGO_HOME
 </pre>
 </div>
 </div>
@@ -1756,7 +1277,7 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 </p>
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">to_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">test_d</span>=<span style="color: #98be65;">"$(realpath "${PWD}")"</span>
+    <span style="color: #ffffaf;">test_d</span>=<span style="color: #98be65;">"$(readlink -f "${PWD}")"</span>
     <span style="color: #ffffaf;">parents</span>=<span style="color: #da8548; font-weight: bold;">16</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">path too long to waste time</span>
     <span style="color: #51afef;">until</span> mountpoint <span style="color: #98be65;">"${test_d}"</span> &gt; /dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt; /dev/null; <span style="color: #51afef;">do</span>
         <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">parents</span> -le <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
@@ -2053,9 +1574,9 @@ This function is called in PS1 section below
 <h4 id="orgd94a264">PROMPT_COMMAND</h4>
 <div class="outline-text-4" id="text-orgd94a264">
 </div>
-<div id="outline-container-org4a5031d" class="outline-5">
-<h5 id="org4a5031d">bash</h5>
-<div class="outline-text-5" id="text-org4a5031d">
+<div id="outline-container-org318740c" class="outline-5">
+<h5 id="org318740c">bash</h5>
+<div class="outline-text-5" id="text-org318740c">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export PROMPT_COMMAND=__prompt_command</span>
 
@@ -2100,9 +1621,9 @@ This function is called in PS1 section below
 </div>
 </div>
 
-<div id="outline-container-orgdfb9ab7" class="outline-5">
-<h5 id="orgdfb9ab7">zsh</h5>
-<div class="outline-text-5" id="text-orgdfb9ab7">
+<div id="outline-container-org77987fc" class="outline-5">
+<h5 id="org77987fc">zsh</h5>
+<div class="outline-text-5" id="text-org77987fc">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #9f5f9f; font-weight: bold;">_pspexec</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">_cmd_start_t</span>=<span style="color: #98be65;">"${SECONDS}"</span>
@@ -2568,9 +2089,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org23fd5f7" class="outline-3">
-<h3 id="org23fd5f7">manual pages</h3>
-<div class="outline-text-3" id="text-org23fd5f7">
+<div id="outline-container-orgc4a643b" class="outline-3">
+<h3 id="orgc4a643b">Manual pages</h3>
+<div class="outline-text-3" id="text-orgc4a643b">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">man_help</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> man <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
@@ -2594,9 +2115,9 @@ if zipped, unzip and count else classical wc</li>
 </div>
 </div>
 
-<div id="outline-container-org901b663" class="outline-3">
-<h3 id="org901b663">selection menu</h3>
-<div class="outline-text-3" id="text-org901b663">
+<div id="outline-container-orgf0cbed5" class="outline-3">
+<h3 id="orgf0cbed5">Selection menu</h3>
+<div class="outline-text-3" id="text-orgf0cbed5">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">posix_select</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">select implementation for POSIX</span>
@@ -2714,7 +2235,7 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 <span style="color: #ffffaf;">IFS</span>=<span style="color: #98be65;">"${o_ifs}"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> $<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> netstate &amp; <span style="color: #da8548; font-weight: bold;">8</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> = <span style="color: #da8548; font-weight: bold;">8</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
     printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #63B4F6;">\e[1;34m</span><span style="color: #98be65;">Internet (GOOGLE) Connected\e[m\n"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> $<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> netstate &amp; <span style="color: #da8548; font-weight: bold;">16</span><span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span>  = <span style="color: #da8548; font-weight: bold;">16</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> $<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> netstate &amp; <span style="color: #da8548; font-weight: bold;">16</span> <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> = <span style="color: #da8548; font-weight: bold;">16</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #CB77F9;">\e[1;35m</span><span style="color: #98be65;">Problem with DNS\e[m\n"</span>
     <span style="color: #51afef;">fi</span>
     printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #59963A;">\033[0;32m</span><span style="color: #98be65;">%s \e[m is current wireless ip address\n"</span> <span style="color: #98be65;">"$ip_addr"</span>
@@ -2737,11 +2258,8 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -n <span style="color: #98be65;">"${http_proxy}"</span> <span style="color: #51afef;">]</span> <span style="color: #98be65;">\</span>
        &amp;&amp; <span style="color: #51afef; font-weight: bold;">!</span> curl <span style="color: #98be65;">"https://duckduckgo.com/"</span> &gt; /dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #98be65;">\</span>
        &amp;&amp; <span style="color: #51afef;">[</span> $<span style="color: #c678dd;">(</span><span style="color: #98be65;">(</span> netstate &amp; <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #98be65;">)</span><span style="color: #c678dd;">)</span> = <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #ffffaf;">auto_proxy</span>=<span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${auto_proxy}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=./proxy_send.py</span>
-        <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"${auto_proxy}"</span> &amp;&amp; printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #BE8A2D;">\e[0;33m</span><span style="color: #98be65;">PROXY AUTH </span><span style="color: #3f9f9f;">SENT</span><span style="color: #98be65;">\e[m\n"</span>;
-    <span style="color: #51afef;">fi</span>
+    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=./proxy_send.sh</span>
+    <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"</span> &amp;&amp; printf <span style="color: #98be65;">"</span><span style="color: #000000; background-color: #BE8A2D;">\e[0;33m</span><span style="color: #98be65;">PROXY AUTH </span><span style="color: #3f9f9f;">SENT</span><span style="color: #98be65;">\e[m\n"</span>;
     <span style="color: #d76f10;">unset</span> auto_proxy
 <span style="color: #51afef;">fi</span>
 <span style="color: #d76f10;">unset</span> o_ifs
@@ -3050,27 +2568,23 @@ main <span style="color: #98be65;">"$@"</span>
 <h2 id="orgd65f380">Calls</h2>
 <div class="outline-text-2" id="text-orgd65f380">
 </div>
-<div id="outline-container-orgea43b51" class="outline-3">
-<h3 id="orgea43b51">bash</h3>
-<div class="outline-text-3" id="text-orgea43b51">
+<div id="outline-container-org74520a4" class="outline-3">
+<h3 id="org74520a4">bash</h3>
+<div class="outline-text-3" id="text-org74520a4">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
-<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    . <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui
-<span style="color: #51afef;">fi</span>
+. <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org46ce0cf" class="outline-3">
-<h3 id="org46ce0cf">zsh</h3>
-<div class="outline-text-3" id="text-org46ce0cf">
+<div id="outline-container-org35366ce" class="outline-3">
+<h3 id="org35366ce">zsh</h3>
+<div class="outline-text-3" id="text-org35366ce">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
-<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    . <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span>/env/ui
-<span style="color: #51afef;">fi</span>
+. <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
 </pre>
 </div>
 </div>

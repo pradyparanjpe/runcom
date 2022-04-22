@@ -27,6 +27,4 @@
 #===================================================================
 
 # netcheck source=.local/share/pspman/src/runcom/env/ui
-if [ -f "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui ]; then
-    . "${RUNCOMDIR:-${HOME}/.runcom}"/env/ui
-fi
+. "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"

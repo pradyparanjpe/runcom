@@ -1,7 +1,6 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_send - send proxy authentication
-#+SETUPFILE: setup.org
-#+EXPORT_FILE_NAME: ../docs/proxy_send.html
+#+SETUPFILE: header.org
 
 * Description
   - This script is automatically called by prady_runcom's profile scripts when network is inferred as /office/.
@@ -26,7 +25,7 @@
      - /pass-name/ can be declared by adding following lines to
        =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
        #+begin_seealso
-       - [[file:index.org::*Personalization][Personalization]]
+       - [[file:setup.org::*Personalization][Personalization]]
        #+end_seealso
 
        #+BEGIN_SRC sh :tangle no
@@ -255,13 +254,7 @@
              proxy_port="${_port}"
          fi
 
-         unset _port
-         unset _host
-         unset _pass
-         unset _user
-         unset _proto
-         unset userpass
-         unset url
+          unset _port _host _pass _user _proto userpass url
      }
 
      get_env_proxy () {
