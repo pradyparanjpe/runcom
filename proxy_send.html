@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-21 Thu 20:50 -->
+<!-- 2022-04-22 Fri 18:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proxy_send - send proxy authentication</title>
@@ -248,7 +248,7 @@ does not demand proxy authentication again.</li>
 Proxy secret may be provided through any of the tools explained in following sections.
 </p>
 
-<div class="note" id="orgd30ffc7">
+<div class="note" id="org851ec05">
 <ul class="org-ul">
 <li>If information is available at both locations, it is loaded in order.</li>
 <li>Information available from the latter supersedes the former.</li>
@@ -270,9 +270,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 <i>pass-name</i> can be declared by adding following lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
 </p>
-<div class="seealso" id="org455a30a">
+<div class="seealso" id="org0c4aa7f">
 <ul class="org-ul">
-<li><a href="index.html#org9759129">Personalization</a></li>
+<li><a href="setup.html#orgc6747a1">Personalization</a></li>
 </ul>
 
 </div>
@@ -367,7 +367,7 @@ It can be declared by adding following lines to
 <li><p>
 Its value must be of the form:
 </p>
-<pre class="example" id="orgda0bc22">
+<pre class="example" id="orgd251911">
 &lt;p_type&gt;_proxy="&lt;protocol&gt;://[&lt;encoded_username&gt;[:&lt;encoded_password&gt;]]@&lt;address&gt;[:&lt;port&gt;]/"
 </pre></li>
 
@@ -379,7 +379,7 @@ Its value must be of the form:
 </pre>
 </div>
 
-<div class="danger" id="orgd7e664f">
+<div class="danger" id="org85b626a">
 <p>
 Storing password in environment is strongly <b>discouraged</b>.
 </p>

@@ -3,40 +3,40 @@
 dnf_install() {
 
 dnf -y update || return 65
-dnf -y install curl git stow || return 66
+dnf -y install coreutils curl git stow || return 66
 
 }
 
  apk_install() {
 
 apk update || return 65
-apk --virtual runcom add curl git stow || return 66
+apk --virtual runcom add coreutils curl git stow || return 66
 
 }
 
  apt_install() {
 
 apt update || return 65
-apt install -y curl git stow || return 66
+apt install -y coreutils curl git stow || return 66
 
 }
 
  zypper_install() {
 
 zypper ref || return 65
-zypper -n install curl git stow || return 66
+zypper -n install coreutils curl git stow || return 66
 
 }
 
  pacman_install() {
 
-pacman --noconfirm -Syu curl git stow || return 65
+pacman --noconfirm -Syu coreutils curl git stow || return 65
 
 }
  guess_manager() {
-     for manager in dnf apt apk zypper pacman; do
+     for manager in apt apk dnf pacman zypper; do
          if command -v "${manager}" 1>/dev/null 2>&1; then
-             printf "${manager}"
+             printf "%s" "${manager}"
              return 0
          fi
      done
