@@ -25,7 +25,7 @@
    #+end_important
 
 * Copyright/License Header
-  Copyright 2020, 2021 Pradyumna Paranjape
+  Copyright 2020, 2021, 2022 Pradyumna Paranjape
 
   This file is part of Prady_runcom.
 
@@ -1584,7 +1584,7 @@
                           _exports_for_x11
                           _select_x11_session
                           export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
-                          exec startx "${exec_session%.desktop}"
+                          exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
                       elif [ "${graph_proto}" = "wayland" ]; then
                           _exports_for_wayland
                           _select_wayland_session

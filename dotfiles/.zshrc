@@ -149,9 +149,7 @@ syntax-highlighting
 autosuggestions
 addlist
 
-unset addition
-unset share_dir
-unset add_dir
+unset addition share_dir add_dir
 
 _pspexec() {
     _cmd_start_t="${SECONDS}"
@@ -189,8 +187,7 @@ _pspps () {
     RPROMPT+=$'%*'
     RPROMPT+="%{$_exit_color%}-${_elapsed}"
     RPROMPT+=$'%{\e[m%}'
-    unset _exit_stat
-    unset _elapsed
+    unset _exit_stat _elapsed
 }
 
 add-zsh-hook precmd _pspps

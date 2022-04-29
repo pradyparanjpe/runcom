@@ -35,7 +35,7 @@
     #!/usr/bin/env sh
     #-*- coding:utf-8; mode:shell-script -*-
     #
-    # Copyright 2020, 2021 Pradyumna Paranjape
+    # Copyright 2020, 2021, 2022 Pradyumna Paranjape
     #
     ## Check for network connectivity at the beginning
     # This file is part of Prady_runcom.

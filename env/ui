@@ -224,7 +224,7 @@ main () {
                     _exports_for_x11
                     _select_x11_session
                     export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
-                    exec startx "${exec_session%.desktop}"
+                    exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
                 elif [ "${graph_proto}" = "wayland" ]; then
                     _exports_for_wayland
                     _select_wayland_session
@@ -234,10 +234,7 @@ main () {
             fi
         fi
     fi
-    unset nowtty
-    unset graph_proto
-    unset exec_session
-    unset RUNCOM_SESSION
+    unset nowtty graph_proto exec_session RUNCOM_SESSION
     _clean_up_tty
 }
 

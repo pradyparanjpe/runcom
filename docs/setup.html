@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-22 Fri 20:10 -->
+<!-- 2022-04-29 Fri 23:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setup runcom</title>
@@ -271,7 +271,7 @@
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="orgd8518a2">
+<div class="warning" id="org6c85968">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -292,7 +292,7 @@ Avoid use of <b>sudo</b> as much as possible.
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="org50b4c78">
+<div class="important" id="org26a5558">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -315,7 +315,7 @@ run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated 
 </pre>
 </div>
 
-<div class="note" id="org788b454">
+<div class="note" id="orgcf258f1">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
@@ -393,14 +393,14 @@ pacman: Arch, Manjaro
 <ul class="org-ul">
 <li>Affirm <a href="#org66a27e6">requirements</a>.</li>
 </ul>
-<div class="warning" id="orgf9268b4">
+<div class="warning" id="orge3d4fee">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="orgef9cb7f">
+<div class="warning" id="org58f2fd3">
 <ul class="org-ul">
 <li>The next steps require you to delete all <a href="index.html#org2a4b5c7">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
@@ -425,7 +425,7 @@ Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> s
 </pre>
 </div>
 
-<div class="note" id="orgbdaee59">
+<div class="note" id="org15d7278">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
@@ -512,8 +512,7 @@ mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
         <span style="color: #51afef;">fi</span>
     <span style="color: #51afef;">fi</span>
 <span style="color: #51afef;">done</span>
-<span style="color: #d76f10;">unset</span> hard_directory
-<span style="color: #d76f10;">unset</span> non_mt_msg
+<span style="color: #d76f10;">unset</span> hard_directory non_mt_msg
 </pre>
 </div>
 </div>
@@ -553,9 +552,7 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
             ln -s <span style="color: #98be65;">"${LOCAL_BIN}"</span> <span style="color: #98be65;">"${CARGO_HOME}/bin"</span>
     <span style="color: #51afef;">fi</span>
     <span style="color: #d76f10;">export</span> CARGO_HOME
-    <span style="color: #d76f10;">unset</span> LOCAL_BIN
-    <span style="color: #d76f10;">unset</span> BAD_CARGO_HOME
-    <span style="color: #d76f10;">unset</span> BAD_CARGO_BIN
+    <span style="color: #d76f10;">unset</span> LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
 <span style="color: #51afef;">}</span>
 
 </pre>
@@ -569,14 +566,14 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
 <div id="outline-container-orge27b83c" class="outline-2">
 <h2 id="orge27b83c">Undo Set-up</h2>
 <div class="outline-text-2" id="text-orge27b83c">
-<div class="warning" id="orgd96618e">
+<div class="warning" id="org2a101eb">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="org28d3503">
+<div class="note" id="org29790a9">
 <ul class="org-ul">
 <li>The next steps will require a directory containing 'old configuration files'.</li>
 <li>You HAD BEEN warned against deleting it during the set-up.</li>
@@ -599,7 +596,7 @@ Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> sc
 </pre>
 </div>
 
-<div class="note" id="org0fdb74a">
+<div class="note" id="org02f9e8d">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -711,7 +708,7 @@ Goodbye
 Synchronize (stow) that directory using a local repository or by simply copying contents.
 </p>
 
-<div class="danger" id="org50bc7d9">
+<div class="danger" id="orgfeee12e">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
@@ -721,7 +718,7 @@ Synchronize (stow) that directory using a local repository or by simply copying 
 </div></li>
 </ul>
 
-<div class="tip" id="orga73bb24">
+<div class="tip" id="orgdbf73e7">
 <ul class="org-ul">
 <li><p>
 Remember to keep the repository updated.

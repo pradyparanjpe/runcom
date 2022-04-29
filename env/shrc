@@ -34,8 +34,7 @@ for unsync_d in "local.d" "pvt.d"; do
     done 2>/dev/null
 done 2>/dev/null
 
-unset rcfile
-unset unsync_d
+unset rcfile unsync_d
 
 if builtin command -v 'bat' >/dev/null 2>&1; then
     alias cat="bat --color=auto";
@@ -79,9 +78,7 @@ to_venv () {
     until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
         if [ $parents -le 0 ]; then
             printf "Too many branch-nodes searched" >&2
-            unset parents
-            unset test_d
-            unset env_d
+            unset parents test_d env_d
             return 126
         fi
         for env_d in ".venv" "venv"; do
@@ -90,9 +87,7 @@ to_venv () {
                 # shellcheck disable=SC1090
                 . "${test_d}/${env_d}/bin/activate"
                 printf "Found %s, switching...\n" "${test_d}/${env_d}"
-                unset parents
-                unset test_d
-                unset env_d
+                unset parents test_d env_d
                 return 0
             fi
         done
@@ -100,9 +95,7 @@ to_venv () {
         parents=$((parents - 1))
     done
     printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
-    unset parents
-    unset test_d
-    unset env_d
+    unset parents test_d env_d
     return 126
 }
 
@@ -161,10 +154,7 @@ endstat
         # shellcheck disable=SC2059  # I do want escape characters
         printf "${_stat_str}\e[m"
     fi
-    unset _modified
-    unset _cached
-    unset _untracked
-    unset _stat_str
+    unset _modified _cached _untracked _stat_str
 }
 
 git_branch() {
@@ -188,8 +178,7 @@ git_branch() {
                 branch_str="${branch_str}\e[0;33m"
                 ;;
             main|master)
-                unset branch
-                unset branch_str
+                unset branch branch_str
                 return
                 ;;
             *)
@@ -198,8 +187,7 @@ git_branch() {
         esac
     fi
     printf "${branch_str}%s\ue725\e[m" "${branch}"
-    unset branch_str
-    unset branch
+    unset branch_str branch
 }
 
 git_hash() {
@@ -264,8 +252,7 @@ _elapsed_time() {
         return
     fi
     _sec=$(( _cmd_end - _cmd_start ))
-    unset _cmd_start
-    unset _cmd_end
+    unset _cmd_start _cmd_end
     if [ "$_sec" -le 0 ]; then
         return
     fi
@@ -289,9 +276,8 @@ _elapsed_time() {
         return
     fi
     _day=$(( _hr/24 ))
-    unset _min
     printf "%sd" "${_day}"
-    unset _day
+    unset _min _day
 }
 
 mathcalc() {
@@ -366,9 +352,7 @@ org2export() {
     if $proceed; then
         pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
     fi
-    unset proceed
-    unset target
-    unset infile
+    unset proceed target infile
 }
 
 org2doc () {
@@ -418,7 +402,7 @@ gui () {
 }
 
 deconvolute() {
-    if builtin command -v "pigz"; then
+    if builtin command -v "pigz" >/dev/null 2>&1; then
         _gzip="pigz"
     else
         _gzip='gzip'
@@ -467,8 +451,7 @@ lfcd () {
             cd "${target_dir}" || return
         fi
     fi
-    unset tmp_file
-    unset target_dir
+    unset tmp_file target_dir
 }
 
 fzfcd () {
@@ -584,8 +567,7 @@ posix_select () {
     printf "Selection: " >&2
     read -r select_num
     echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
-    unset word
-    unset word_l
+    unset word word_l
 }
 
 alias du='du -hc';
@@ -639,5 +621,4 @@ if [ -n "${http_proxy}" ] \
     eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
     unset auto_proxy
 fi
-unset o_ifs
-unset ip_addr
+unset o_ifs ip_addr
