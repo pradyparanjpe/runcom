@@ -587,11 +587,11 @@ alias qqqq="exit";
 alias wc="zwc";
 
 # shellcheck source=./bin/netcheck.sh
-o_ifs="${IFS}"
-IFS="$(printf "\t")" read -r ip_addr _ netstate << netcheck
-$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh)
-netcheck
-IFS="${o_ifs}"
+net_out="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"
+# fish first arg as ip_addr and last arg as netstat
+ip_addr="$(echo "${net_out}" | awk '{print $1}')"
+netstate="$(echo "${net_out}" | rev | awk '{print $1}' | rev)"
+unset net_out
 if [ $(( netstate & 8)) = 8 ]; then
     printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
     if [ ! $(( netstate & 16 )) = 16 ]; then
