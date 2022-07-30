@@ -22,8 +22,8 @@ Plug 'preservim/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'equalsraf/neovim-gui-shim'
-
-"Plug 'neovim/nvim-lspconfig'
+Plug 'jalvesaq/Nvim-r'
+Plug 'neovim/nvim-lspconfig'
 
 Plug 'scrooloose/syntastic'
 
@@ -41,6 +41,7 @@ Plug 'etdev/vim-hexcolor'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jceb/vim-orgmode'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-speeddating'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'

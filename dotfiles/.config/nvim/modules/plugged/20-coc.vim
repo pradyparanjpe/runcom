@@ -5,7 +5,8 @@ let g:coc_global_extensions = [
             \ 'coc-eslint',
             \ 'coc-json',
             \ 'coc-prettier',
-            \ 'coc-esbonio',
+            \ 'coc-r-lsp',
+            "\ 'coc-esbonio',
             "\ 'coc-jedi',
             \ ]
 
