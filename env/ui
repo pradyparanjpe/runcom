@@ -214,11 +214,11 @@ _select_x11_session () {
 }
 
 main () {
-    _exports_for_proxies
-    if ${RUNCOM_LAUNCH_UI}; then
-        nowtty="$(tty)"
-        if [ -z "${RUNCOM_SESSION}" ]; then
-            if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+    nowtty="$(tty)"
+    if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+        _exports_for_proxies
+        if ${RUNCOM_LAUNCH_UI}; then
+            if [ -z "${RUNCOM_SESSION}" ]; then
                 _select_display_protocol
                 if [ "${graph_proto}" = "x11" ]; then
                     _exports_for_x11
