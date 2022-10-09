@@ -38,8 +38,7 @@
 
 * Code
   This section tangles source code
-  #+begin_src sh :tangle ../bin/netcheck.sh :exports none :tangle-mode (identity #o755)
-    #!/usr/bin/env sh
+  #+begin_src sh :tangle ../bin/netcheck.sh :exports none :shebang #!/usr/bin/env sh
     #-*- coding:utf-8; mode:shell-script -*-
     #
     # Copyright 2020, 2021, 2022 Pradyumna Paranjape

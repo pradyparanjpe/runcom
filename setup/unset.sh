@@ -34,8 +34,7 @@ if [ -L "${BAD_CARGO_HOME}" ]; then
     rm "${BAD_CARGO_HOME}"
 fi
 mv "${CARGO_HOME}" "${HOME}/.cargo"
-unset CARGO_HOME
-unset BAD_CARGO_HOME
+unset CARGO_HOME BAD_CARGO_HOME
 export CARGO_HOME
 
 }

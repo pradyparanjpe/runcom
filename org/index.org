@@ -4,69 +4,69 @@
 
 * Prady_runcom
 ** What's this?
-   - A compilation of dot-files: default variables, custom functions, aliases.
-   - *My* configuration backup, "[[https://git-scm.com/docs/git-push][push]]"ed to work as a template for yours.
+- A compilation of dot-files: default variables, custom functions, aliases.
+- *My* configuration backup, "[[https://git-scm.com/docs/git-push][push]]"ed to work as a template for yours.
 
 *** Aim
-    - Cross-machine synchronization (hence, git)
-    - Modularity (hence, not a single file)
-    - Self-documenting (hence, a 😉 org files)
-    - Work-flow speed (obviously)
-    - "Pretty" low resource load (hence, not GNOME/KDE)
+- Cross-machine synchronization (hence, git)
+- Modularity (hence, not a single file)
+- Self-documenting (hence, a 😉 org files)
+- Work-flow speed (obviously)
+- "Pretty" low resource load (hence, not GNOME/KDE)
 
 *** Non-aim
-    - Ease
+- Ease
 
 ** Will you be able to set this up?
-   Probably [[file:setup.org::*Knowledge][*NOT*]].
-   If you insist, check [[file:setup.org][setup]] instructions.
-   #+begin_important
-   Read till the end before you decide to set this up.
-   #+end_important
+Probably [[file:setup.org::*Knowledge][*NOT*]].
+If you insist, check [[file:setup.org][setup]] instructions.
+#+begin_important
+Read till the end before you decide to set this up.
+#+end_important
 
 * Copyright/License Header
-  Copyright 2020, 2021, 2022 Pradyumna Paranjape
+Copyright 2020, 2021, 2022 Pradyumna Paranjape
 
-  This file is part of Prady_runcom.
+This file is part of Prady_runcom.
 
-  Prady_runcom is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+Prady_runcom is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-  Prady_runcom is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+Prady_runcom is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 * Structure
-  Following configuration files are available. This literate configuration tangles their contents.
-  |------------------------------------------------+-------+--------+---------|
-  | Configuration File Path                        | POSIX | Stowed | Owner   |
-  |------------------------------------------------+-------+--------+---------|
-  | =/etc/profile=                                   | yes   | no     | root    |
-  | =/etc/bashrc=                                    | yes   | no     | root    |
-  | =/etc/zshrc=                                     | yes   | no     | root    |
-  | =/etc/profile.d/*=                               | yes   | no     | root    |
-  | =${HOME}/.bashrc=                                | no    | yes    | =${USER}= |
-  | =${HOME}/.zshrc=                                 | no    | yes    | =${USER}= |
-  | =${HOME}/.bash_profile=                          | yes   | yes    | =${USER}= |
-  | =${HOME}/.bash_login=                            | yes   | yes    | =${USER}= |
-  | =${HOME}/.profile=                               | yes   | yes    | =${USER}= |
-  | =${HOME}/.zprofile=                              | yes   | yes    | =${USER}= |
-  | =${HOME}/.zshenv=                                | yes   | yes    | =${USER}= |
-  | =${HOME}/.zlogin=                                | yes   | yes    | =${USER}= |
-  | =${RUNCOMDIR}/env/shrc=                          | yes   | no     | RUNCOM  |
-  | =${RUNCOMDIR}/env/ui=                            | yes   | no     | RUNCOM  |
-  | =${XDG_DATA_HOME}/bash-completion/completions/*= | no    | yes    | =${USER}= |
-  | =${XDG_CONFIG_DIR}=                              | no    | yes    | =${USER}= |
-  | =${XDG_CONFIG_HOME}/local.d/.*rc=                | yes   | no     | =${USER}= |
-  | =${XDG_CONFIG_HOME}/pvt.d/.*rc=                  | yes   | pvt    | =${USER}= |
-  |------------------------------------------------+-------+--------+---------|
-  They are loaded in following order.
+Following configuration files are available. This literate configuration tangles their contents.
+|------------------------------------------------+-------+--------+---------|
+| Configuration File Path                        | POSIX | Stowed | Owner   |
+|------------------------------------------------+-------+--------+---------|
+| =/etc/profile=                                   | yes   | no     | root    |
+| =/etc/bashrc=                                    | yes   | no     | root    |
+| =/etc/zshrc=                                     | yes   | no     | root    |
+| =/etc/profile.d/*=                               | yes   | no     | root    |
+| =${HOME}/.bashrc=                                | no    | yes    | =${USER}= |
+| =${HOME}/.zshrc=                                 | no    | yes    | =${USER}= |
+| =${HOME}/.bash_profile=                          | yes   | yes    | =${USER}= |
+| =${HOME}/.bash_login=                            | yes   | yes    | =${USER}= |
+| =${HOME}/.profile=                               | yes   | yes    | =${USER}= |
+| =${HOME}/.zprofile=                              | yes   | yes    | =${USER}= |
+| =${HOME}/.zshenv=                                | yes   | yes    | =${USER}= |
+| =${HOME}/.zlogin=                                | yes   | yes    | =${USER}= |
+| =${RUNCOMDIR}/env/shrc=                          | yes   | no     | RUNCOM  |
+| =${RUNCOMDIR}/env/ui=                            | yes   | no     | RUNCOM  |
+| =${XDG_DATA_HOME}/bash-completion/completions/*= | no    | yes    | =${USER}= |
+| =${XDG_CONFIG_DIR}=                              | no    | yes    | =${USER}= |
+| =${XDG_CONFIG_HOME}/local.d/.*rc=                | yes   | no     | =${USER}= |
+| =${XDG_CONFIG_HOME}/pvt.d/.*rc=                  | yes   | pvt    | =${USER}= |
+|------------------------------------------------+-------+--------+---------|
+They are loaded in following order.
 
 ** Bash
 *** /etc/profile
@@ -103,188 +103,188 @@
 ***** ${RUNCOMDIR}/env/ui
 
 * Headers
-  Copyright, License banners
-  #+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref posix-check
-    # shellcheck shell=sh
-  #+end_src
+Copyright, License banners
+#+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref posix-check
+  # shellcheck shell=sh
+#+end_src
 
-  #+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref banner
-    # -*- coding:utf-8; mode:shell-script; -*-
-    #
-    # Copyright 2020, 2021 Pradyumna Paranjape
-    #
-    # This file is part of Prady_runcom.
-    #
-    # Prady_runcom is free software: you can redistribute it and/or modify
-    # it under the terms of the GNU General Public License as published by
-    # the Free Software Foundation, either version 3 of the License, or
-    # (at your option) any later version.
-    #
-    # Prady_runcom is distributed in the hope that it will be useful,
-    # but WITHOUT ANY WARRANTY; without even the implied warranty of
-    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    # GNU General Public License for more details.
-    #
-    # You should have received a copy of the GNU General Public License
-    # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-    #
-    #===================================================================
-    #  ___             _      ___                     _
-    # | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
-    # |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
-    # |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
-    #                    |__/                      |__/|_|
-    #===================================================================
+#+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref banner
+  # -*- coding:utf-8; mode:shell-script; -*-
+  #
+  # Copyright 2020, 2021 Pradyumna Paranjape
+  #
+  # This file is part of Prady_runcom.
+  #
+  # Prady_runcom is free software: you can redistribute it and/or modify
+  # it under the terms of the GNU General Public License as published by
+  # the Free Software Foundation, either version 3 of the License, or
+  # (at your option) any later version.
+  #
+  # Prady_runcom is distributed in the hope that it will be useful,
+  # but WITHOUT ANY WARRANTY; without even the implied warranty of
+  # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  # GNU General Public License for more details.
+  #
+  # You should have received a copy of the GNU General Public License
+  # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+  #
+  #===================================================================
+  #  ___             _      ___                     _
+  # | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+  # |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+  # |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+  #                    |__/                      |__/|_|
+  #===================================================================
 
-  #+end_src
+#+end_src
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb-ref bash-check
-    # shellcheck shell=bash
-  #+end_src
+#+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb-ref bash-check
+  # shellcheck shell=bash
+#+end_src
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb yes
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.bashrc :exports none :noweb yes
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc :exports none :noweb yes
-    <<bash-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.zshrc :exports none :noweb yes
+  <<bash-check>>
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.bash_login :exports none :noweb yes
-    <<posix-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.bash_login :exports none :noweb yes
+  <<posix-check>>
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.zshenv :exports none :noweb yes
-    <<posix-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.zshenv :exports none :noweb yes
+  <<posix-check>>
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.zlogin :exports none :noweb yes
-    <<posix-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.zlogin :exports none :noweb yes
+  <<posix-check>>
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC sh :tangle ../dotfiles/.profile :exports none :noweb yes
-    <<posix-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile :exports none :noweb yes
+  <<posix-check>>
+  <<banner>>
+#+END_SRC
 
-  #+BEGIN_SRC sh :tangle ../env/ui :exports none :noweb yes
-    <<posix-check>>
-    <<banner>>
-  #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/ui :exports none :noweb yes
+  <<posix-check>>
+  <<banner>>
+#+END_SRC
 
 * Profiles
-  #+BEGIN_SRC bash :tangle ../dotfiles/.bash_profile
-    if [ -f "${HOME}/.profile" ]; then
-        # shellcheck disable=SC1091
-        . "${HOME}/.profile"
-    fi
+#+BEGIN_SRC bash :tangle ../dotfiles/.bash_profile
+  if [ -f "${HOME}/.profile" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.profile"
+  fi
 
-    if [ -f "${HOME}/.bashrc" ]; then
-        # shellcheck disable=SC1091
-        . "${HOME}/.bashrc"
-    fi
+  if [ -f "${HOME}/.bashrc" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.bashrc"
+  fi
 
-    if [ -f "${HOME}/.bash_login" ]; then
-        # shellcheck disable=SC1091
-        . "${HOME}/.bash_login"
-    fi
+  if [ -f "${HOME}/.bash_login" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.bash_login"
+  fi
 
-  #+END_SRC
+#+END_SRC
 
-  #+BEGIN_SRC bash :tangle ../dotfiles/.zprofile
-    # shellcheck source=".profile"
-    if [ -f "${HOME}/.profile" ]; then
-        # shellcheck disable=SC1091
-        . "${HOME}/.profile"
-    fi
-  #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.zprofile
+  # shellcheck source=".profile"
+  if [ -f "${HOME}/.profile" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.profile"
+  fi
+#+END_SRC
 
-  #+begin_src bash :tangle ../dotfiles/.zshrc
-    # The following lines were added by compinstall
+#+begin_src bash :tangle ../dotfiles/.zshrc
+  # The following lines were added by compinstall
 
-    zstyle ':completion:*' completer _complete _ignored _approximate
-    zstyle ':completion:*' list-colors ''
-    zstyle ':completion:*' matcher-list ''
-    zstyle ':completion:*' max-errors 2
-    zstyle ':completion:*' menu select=3
-    zstyle ':completion:*' select-prompt %SScrolling \
-           active: current selection at %p%s
-    zstyle :compinstall filename "${HOME}/.zshrc"
+  zstyle ':completion:*' completer _complete _ignored _approximate
+  zstyle ':completion:*' list-colors ''
+  zstyle ':completion:*' matcher-list ''
+  zstyle ':completion:*' max-errors 2
+  zstyle ':completion:*' menu select=3
+  zstyle ':completion:*' select-prompt %SScrolling \
+         active: current selection at %p%s
+  zstyle :compinstall filename "${HOME}/.zshrc"
 
-    # End of lines added by compinstall
-    # Lines configured by zsh-newuser-install
+  # End of lines added by compinstall
+  # Lines configured by zsh-newuser-install
 
-  #+end_src
+#+end_src
 
 * Init
 ** profile
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     LC_ALL=en_IN.UTF-8
-     LANG=en_IN.UTF-8
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  LC_ALL=en_IN.UTF-8
+  LANG=en_IN.UTF-8
 
-     export LC_ALL
-     export LANG
-   #+end_src
+  export LC_ALL
+  export LANG
+#+end_src
 ** bash
-   - Prevent bashrc from running outside non-interactive mode
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     case $- in
-         ,*i*)
-         ;;
-         ,*)
-             return
-             ;;
-     esac
-   #+END_SRC
+- Prevent bashrc from running outside non-interactive mode
+  #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+    case $- in
+        ,*i*)
+        ;;
+        ,*)
+            return
+            ;;
+    esac
+  #+END_SRC
 
-   - Option settings
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     shopt -s autocd
-     shopt -s checkwinsize
-     shopt -s extglob
-     shopt -s globstar
-     shopt -s histappend
-     shopt -s histverify
-   #+END_SRC
+  - Option settings
+    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+      shopt -s autocd
+      shopt -s checkwinsize
+      shopt -s extglob
+      shopt -s globstar
+      shopt -s histappend
+      shopt -s histverify
+    #+END_SRC
 
-   - History
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     shopt -s histappend
-     HISTCONTROL=ignoreboth
-     HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"
-     HISTFILESIZE=10000
-     HISTSIZE=10000
-   #+END_SRC
+    - History
+    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+      shopt -s histappend
+      HISTCONTROL=ignoreboth
+      HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"
+      HISTFILESIZE=10000
+      HISTSIZE=10000
+    #+END_SRC
 
-   - Coloured terminals
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     case "$TERM" in
-         xterm-color|*-256color) color_prompt=yes;;
-     esac
-   #+END_SRC
+    - Coloured terminals
+    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+      case "$TERM" in
+          xterm-color|*-256color) color_prompt=yes;;
+      esac
+    #+END_SRC
 
-   - Key-bindings
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     set -o vi
-     bind '"jk":vi-movement-mode'
-   #+END_SRC
+    - Key-bindings
+    #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+      set -o vi
+      bind '"jk":vi-movement-mode'
+    #+END_SRC
 
 ** zsh
-   Settings
-   - History
-   #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
-     HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
-     HISTSIZE=10000
-     SAVEHIST=10000
-   #+END_SRC
-   - cache files
-     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
-       ZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"
-     #+END_SRC
+Settings
+- History
+  #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+    HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
+    HISTSIZE=10000
+    SAVEHIST=10000
+  #+END_SRC
+  - cache files
+    #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+      ZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"
+    #+END_SRC
 
 
    - Options
@@ -376,1248 +376,1210 @@
 
 * Inherit
 ** bash
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-     # shellcheck source=".runcom/env/shrc"
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
-     fi
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh" ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"
-     fi
-   #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+  # shellcheck source=".runcom/env/shrc"
+  if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+      . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
+  fi
+  if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh" ]; then
+      . "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"
+  fi
+#+END_SRC
 
 ** zsh
-   #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
-     # shellcheck source=".runcom/env/shrc"
-     if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
-         . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
-     fi
-     while read -r addition; do
-         while read -r share_dir; do
-             add_dir="${share_dir}/zsh-${addition}"
-             if [ -d "${add_dir}" ]; then
-                 # shellcheck disable=SC1090
-                 . "${add_dir}/zsh-${addition}.zsh"
-                 break
-             fi
-         done << data_dir
-     /usr/local/share
-     /usr/share
-     /usr/share/zsh/plugins
-     ${XDG_DATA_HOME:-${HOME}/.local/share}
-     ${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
-     ${HOME}/local/share
-     ${HOME}/share
-     data_dir
-     done << addlist
-     syntax-highlighting
-     autosuggestions
-     addlist
+#+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+  # shellcheck source=".runcom/env/shrc"
+  if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+      . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
+  fi
+  while read -r addition; do
+      while read -r share_dir; do
+          add_dir="${share_dir}/zsh-${addition}"
+          if [ -d "${add_dir}" ]; then
+              # shellcheck disable=SC1090
+              . "${add_dir}/zsh-${addition}.zsh"
+              break
+          fi
+      done << data_dir
+  /usr/local/share
+  /usr/share
+  /usr/share/zsh/plugins
+  ${XDG_DATA_HOME:-${HOME}/.local/share}
+  ${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
+  ${HOME}/local/share
+  ${HOME}/share
+  data_dir
+  done << addlist
+  syntax-highlighting
+  autosuggestions
+  addlist
 
-     unset addition share_dir add_dir
+  unset addition share_dir add_dir
 
-   #+END_SRC
+#+END_SRC
 
 ** shrc
 *** Local un-synced changes
-    All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      # shellcheck disable=SC1090
-      for unsync_d in "local.d" "pvt.d"; do
-          for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
-              . "${rcfile}"
-          done 2>/dev/null
+All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
+#+BEGIN_SRC sh :tangle ../env/shrc
+  # shellcheck disable=SC1090
+  for unsync_d in "local.d" "pvt.d"; do
+      for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
+          . "${rcfile}"
       done 2>/dev/null
+  done 2>/dev/null
 
-      unset rcfile unsync_d
-    #+END_SRC
+  unset rcfile unsync_d
+#+END_SRC
 
 * Better alternatives
 ** cat
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     if builtin command -v 'bat' >/dev/null 2>&1; then
-         alias cat="bat --color=auto";
-     fi
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  if builtin command -v 'bat' >/dev/null 2>&1; then
+      alias cat="bat --color=auto";
+  fi
+#+END_SRC
 
 ** g/re/p
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     for sc in "ack" "pt" "ag" "rg"; do
-         if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
-             # shellcheck disable=SC2139
-             alias grep="${sc} --color=auto";
-         fi
-     done
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  for sc in "ack" "pt" "ag" "rg"; do
+      if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
+          # shellcheck disable=SC2139
+          alias grep="${sc} --color=auto";
+      fi
+  done
+#+END_SRC
 
 ** List Contents
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     if builtin command -v "exa" >/dev/null 2>&1; then
-         alias ls="exa -Fh --color=auto";
-         alias la='exa -a --color=auto';
-         alias ll='exa -lr -s size';
-         alias lla='exa -a';
-         alias l.='exa -a --color=auto |grep "^\."';
-         alias sl="ls";
-     fi
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  if builtin command -v "exa" >/dev/null 2>&1; then
+      alias ls="exa -Fh --color=auto";
+      alias la='exa -a --color=auto';
+      alias ll='exa -lr -s size';
+      alias lla='exa -a';
+      alias l.='exa -a --color=auto |grep "^\."';
+      alias sl="ls";
+  fi
+#+END_SRC
 
 ** neo visual editor improved
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     if builtin command -v nvim >/dev/null 2>&1; then
-         alias ex="nvim"; # always open vim in normal mode
-         alias vim="nvim"; # always use neo
-     fi
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  if builtin command -v nvim >/dev/null 2>&1; then
+      alias ex="nvim"; # always open vim in normal mode
+      alias vim="nvim"; # always use neo
+  fi
+#+END_SRC
 
 ** Container
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     if builtin command -v podman >/dev/null 2>&1; then
-         alias docker="podman";  # Podman is drop-in replacement for docker
-         alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-     fi
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  if builtin command -v podman >/dev/null 2>&1; then
+      alias docker="podman";  # Podman is drop-in replacement for docker
+      alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
+  fi
+#+END_SRC
 
 * Variables
 ** XDG
-   XDG standard locations specifications these can be redefined in
-   =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.<some name>rc=
+XDG standard locations specifications these can be redefined in
+=${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.<some name>rc=
 
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     XDG_CACHE_HOME="${HOME}/.cache"
-     XDG_CONFIG_HOME="${HOME}/.config"
-     XDG_DATA_HOME="${HOME}/.local/share"
-     XDG_STATE_HOME="${HOME}/.local/state"
-     RUNCOMDIR="${HOME}/.runcom"
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  XDG_CACHE_HOME="${HOME}/.cache"
+  XDG_CONFIG_HOME="${HOME}/.config"
+  XDG_DATA_HOME="${HOME}/.local/share"
+  XDG_STATE_HOME="${HOME}/.local/state"
+  RUNCOMDIR="${HOME}/.runcom"
 
-     export XDG_CACHE_HOME
-     export XDG_CONFIG_HOME
-     export XDG_DATA_HOME
-     export XDG_STATE_HOME
-     export RUNCOMDIR
-   #+END_SRC
+  export XDG_CACHE_HOME
+  export XDG_CONFIG_HOME
+  export XDG_DATA_HOME
+  export XDG_STATE_HOME
+  export RUNCOMDIR
+#+END_SRC
 
 ** PATH
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     # shellcheck source="bin"
-     if [ -d "${HOME}/bin" ] ; then
-         if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
-             PATH="${HOME}/bin:${PATH}"
-         fi
-     fi
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  # shellcheck source="bin"
+  if [ -d "${HOME}/bin" ] ; then
+      if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
+          PATH="${HOME}/bin:${PATH}"
+      fi
+  fi
 
-     # shellcheck source=".local/bin"
-     if [ -d "${HOME}/.local/bin" ] ; then
-         if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then
-             PATH="${HOME}/.local/bin:${PATH}"
-         fi
-     fi
-     export PATH;
-   #+END_SRC
+  # shellcheck source=".local/bin"
+  if [ -d "${HOME}/.local/bin" ] ; then
+      if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then
+          PATH="${HOME}/.local/bin:${PATH}"
+      fi
+  fi
+  export PATH;
+#+END_SRC
 
 ** Editor wars
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     while read -r avail; do
-         if builtin command -v "${avail}" >/dev/null 2>&1; then
-             EDITOR="${avail}"
-         fi
-     done << EOF
-     nano
-     vi
-     vim
-     nvim
-     EOF
-     export EDITOR
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  while read -r avail; do
+      if builtin command -v "${avail}" >/dev/null 2>&1; then
+          EDITOR="${avail}"
+      fi
+  done << EOF
+  nano
+  vi
+  vim
+  nvim
+  EOF
+  export EDITOR
 
-     case "$EDITOR" in
-         vim)
-             export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
-             ;;
-         nvim)
-             export MANPAGER="nvim -c ':Man!' -"
-             ;;
-         ,*)
-             if builtin command -v bat; then
-                 export MANPAGER='bat -l man -p'
-             fi
-             ;;
-     esac
-     export MANPAGER
-   #+END_SRC
+  case "$EDITOR" in
+      vim)
+          export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+          ;;
+      nvim)
+          export MANPAGER="nvim -c ':Man!' -"
+          ;;
+      ,*)
+          if builtin command -v bat; then
+              export MANPAGER='bat -l man -p'
+          fi
+          ;;
+  esac
+  export MANPAGER
+#+END_SRC
 
 ** C(++) exports
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
-     C_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
-     CPLUS_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
-     export LD_LIBRARY_PATH
-     export C_INCLUDE_PATH
-     export CPLUS_INCLUDE_PATH
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+  C_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+  CPLUS_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+  export LD_LIBRARY_PATH
+  export C_INCLUDE_PATH
+  export CPLUS_INCLUDE_PATH
+#+END_SRC
 
 ** CARGO (Rust) exports
-   Cargo unnecessarily clutters =${HOME}= with its DATA.
-   It should be in =XDG_DATA_HOME=
-   Also, cargo's binaries should be installed in
-   =${XDG_DATA_HOME}/../bin= like python3.
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     CARGO_HOME="${HOME}/.local/share/cargo"
-     export CARGO_HOME
-   #+END_SRC
+Cargo unnecessarily clutters =${HOME}= with its DATA.
+It should be in =XDG_DATA_HOME=
+Also, cargo's binaries should be installed in
+=${XDG_DATA_HOME}/../bin= like python3.
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  CARGO_HOME="${HOME}/.local/share/cargo"
+  export CARGO_HOME
+#+END_SRC
 
 ** GPU exports
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     PYOPENCL_CTX='0';
-     PYOPENCL_COMPILER_OUTPUT=1;
-     OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
-     export PYOPENCL_CTX
-     export PYOPENCL_COMPILER_OUTPUT
-     export OCL_ICD_VENDORS
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  PYOPENCL_CTX='0';
+  PYOPENCL_COMPILER_OUTPUT=1;
+  OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+  export PYOPENCL_CTX
+  export PYOPENCL_COMPILER_OUTPUT
+  export OCL_ICD_VENDORS
+#+END_SRC
 
 ** Bemenu exports
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     export BEMENU_OPTS='--fn firacode 14 '
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  export BEMENU_OPTS='--fn firacode 14 '
+#+END_SRC
 
 ** GTK+ debugging output
-   Silence debugging output for gtk+
-   #+BEGIN_SRC sh :tangle ../dotfiles/.profile
-     NO_AT_BRIDGE=1
-     export NO_AT_BRIDGE
-   #+END_SRC
+Silence debugging output for gtk+
+#+BEGIN_SRC sh :tangle ../dotfiles/.profile
+  NO_AT_BRIDGE=1
+  export NO_AT_BRIDGE
+#+END_SRC
 
 * Functions
 ** Python
 *** Python version
-    to locate site-packages
+to locate site-packages
 
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      python_ver() {
-          python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
-      }
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  python_ver() {
+      python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
+  }
+#+END_SRC
 
 *** Quickly change to virtualenv
-    Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
-    This may require shell-identification for ksh, csh, fish since they have a different activate
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      to_venv () {
-          test_d="$(readlink -f "${PWD}")"
-          parents=16  # path too long to waste time
-          until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
-              if [ $parents -le 0 ]; then
-                  printf "Too many branch-nodes searched" >&2
+Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
+This may require shell-identification for ksh, csh, fish since they have a different activate
+#+BEGIN_SRC sh :tangle ../env/shrc
+  to_venv () {
+      test_d="$(readlink -f "${PWD}")"
+      parents=16  # path too long to waste time
+      until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
+          if [ $parents -le 0 ]; then
+              printf "Too many branch-nodes searched" >&2
+              unset parents test_d env_d
+              return 126
+          fi
+          for env_d in ".venv" "venv"; do
+              if [ -d "${test_d}/${env_d}" ] \
+                     || [ -L "${test_d}/${env_d}" ]; then
+                  # shellcheck disable=SC1090
+                  . "${test_d}/${env_d}/bin/activate"
+                  printf "Found %s, switching...\n" "${test_d}/${env_d}"
                   unset parents test_d env_d
-                  return 126
+                  return 0
               fi
-              for env_d in ".venv" "venv"; do
-                  if [ -d "${test_d}/${env_d}" ] \
-                         || [ -L "${test_d}/${env_d}" ]; then
-                      # shellcheck disable=SC1090
-                      . "${test_d}/${env_d}/bin/activate"
-                      printf "Found %s, switching...\n" "${test_d}/${env_d}"
-                      unset parents test_d env_d
-                      return 0
-                  fi
-              done
-              test_d="$(dirname "${test_d}")"
-              parents=$((parents - 1))
           done
-          printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
-          unset parents test_d env_d
-          return 126
-      }
-    #+END_SRC
+          test_d="$(dirname "${test_d}")"
+          parents=$((parents - 1))
+      done
+      printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
+      unset parents test_d env_d
+      return 126
+  }
+#+END_SRC
 
 *** Virtualenv in prompt string
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      _show_venv () {
-          # if a virtualenv is active, print it's name
-          if [ -n "${VIRTUAL_ENV}" ]; then
-              base="$(basename "${VIRTUAL_ENV}")"
-              if [ "${base}" = ".venv" ] || [ "${base}" = "venv"  ]; then
-                  printf "/%s" "$(basename "$(dirname "${VIRTUAL_ENV}")")"
-                  unset base
-              else
-                  printf "/%s" "${base}"
-                  unset base
-              fi
+#+BEGIN_SRC sh :tangle ../env/shrc
+  _show_venv () {
+      # if a virtualenv is active, print it's name
+      if [ -n "${VIRTUAL_ENV}" ]; then
+          base="$(basename "${VIRTUAL_ENV}")"
+          if [ "${base}" = ".venv" ] || [ "${base}" = "venv"  ]; then
+              printf "/%s" "$(basename "$(dirname "${VIRTUAL_ENV}")")"
+              unset base
+          else
+              printf "/%s" "${base}"
+              unset base
           fi
-      }
-    #+END_SRC
+      fi
+  }
+#+END_SRC
 ** Git
 *** Status
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      git_status() {
-          _modified=0
-          _cached=0
-          _untracked=0
+#+BEGIN_SRC sh :tangle ../env/shrc
+  git_status() {
+      _modified=0
+      _cached=0
+      _untracked=0
 
-          while read -r _line; do
-              case "${_line}" in
-                  _*_\ _)
-                      _cached=1
-                      ;;
-                  _\ _*_)
-                      _modified=1
-                      ;;
-                  _?_?_)
-                      _untracked=1
-                      ;;
-              esac
-          done << endstat
-      $(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
-      endstat
+      while read -r _line; do
+          case "${_line}" in
+              _*_\ _)
+                  _cached=1
+                  ;;
+              _\ _*_)
+                  _modified=1
+                  ;;
+              _?_?_)
+                  _untracked=1
+                  ;;
+          esac
+      done << endstat
+  $(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+  endstat
 
-          _stat_str=''
-          if [ "$_modified" -ne 0 ]; then
-              _stat_str="${_stat_str}\033[0;31m\ue728"
-          fi
+      _stat_str=''
+      if [ "$_modified" -ne 0 ]; then
+          _stat_str="${_stat_str}\033[0;31m\ue728"
+      fi
 
-          if [ "$_cached" -ne 0 ]; then
-              _stat_str="${_stat_str}\033[0;32m\ue729"
-          fi
+      if [ "$_cached" -ne 0 ]; then
+          _stat_str="${_stat_str}\033[0;32m\ue729"
+      fi
 
-          if [ "$_untracked" -ne 0 ]; then
-              _stat_str="${_stat_str}\033[0;31m\uf476"
-          fi
+      if [ "$_untracked" -ne 0 ]; then
+          _stat_str="${_stat_str}\033[0;31m\uf476"
+      fi
 
-          if [ -n "$(git stash list)" ]; then
-              _stat_str="${_stat_str}\e[0;36m\uf48e"
-          fi
-          if [ -n "${_stat_str}" ]; then
-              # shellcheck disable=SC2059  # I do want escape characters
-              printf "${_stat_str}\e[m"
-          fi
-          unset _modified _cached _untracked _stat_str
-      }
-    #+END_SRC
+      if [ -n "$(git stash list)" ]; then
+          _stat_str="${_stat_str}\e[0;36m\uf48e"
+      fi
+      if [ -n "${_stat_str}" ]; then
+          # shellcheck disable=SC2059  # I do want escape characters
+          printf "${_stat_str}\e[m"
+      fi
+      unset _modified _cached _untracked _stat_str
+  }
+#+END_SRC
 
 *** Branch
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      git_branch() {
-          branch_str=''
-          branch="$(git branch 2>/dev/null | grep '^\*' | sed -e 's/^* //')"
-          if [ -n "${branch}" ]; then
-              case "${branch}" in
-                  feat-*)
-                      branch_str="${branch_str}\033[0;32m"
-                      ;;
-                  bug-*)
-                      branch_str="${branch_str}\033[0;31m"
-                      ;;
-                  act-*)
-                      branch_str="${branch_str}\e[0;36m"
-                      ;;
-                  tmp-*)
-                      branch_str="${branch_str}\e[0;36m"
-                      ;;
-                  ,*HEAD\ detached*|,*rebasing*)
-                      branch_str="${branch_str}\e[0;33m"
-                      ;;
-                  main|master)
-                      unset branch branch_str
-                      return
-                      ;;
-                  ,*)
-                      branch_str="${branch_str}\e[0;35m"
-                      ;;
-              esac
-          fi
-          printf "${branch_str}%s\ue725\e[m" "${branch}"
-          unset branch_str branch
-      }
+#+BEGIN_SRC sh :tangle ../env/shrc
+  git_branch() {
+      branch_str=''
+      branch="$(git branch 2>/dev/null | grep '^\*' | sed -e 's/^* //')"
+      if [ -n "${branch}" ]; then
+          case "${branch}" in
+              feat-*)
+                  branch_str="${branch_str}\033[0;32m"
+                  ;;
+              bug-*)
+                  branch_str="${branch_str}\033[0;31m"
+                  ;;
+              act-*)
+                  branch_str="${branch_str}\e[0;36m"
+                  ;;
+              tmp-*)
+                  branch_str="${branch_str}\e[0;36m"
+                  ;;
+              ,*HEAD\ detached*|,*rebasing*)
+                  branch_str="${branch_str}\e[0;33m"
+                  ;;
+              main|master)
+                  unset branch branch_str
+                  return
+                  ;;
+              ,*)
+                  branch_str="${branch_str}\e[0;35m"
+                  ;;
+          esac
+      fi
+      printf "${branch_str}%s\ue725\e[m" "${branch}"
+      unset branch_str branch
+  }
 
-    #+END_SRC
+#+END_SRC
 *** Hash
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      git_hash() {
-          git log --pretty=format:'%h' -n 1
-      }
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  git_hash() {
+      git log --pretty=format:'%h' -n 1
+  }
+#+END_SRC
 
 *** Prompt string
-    Include git's branch, hash, status in PS1 if in git repository
-    This function is called in PS1 section below
-    #+NAME: Git PS
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      git_ps() {
-          if ! git status --ignore-submodules >/dev/null 2>&1; then
-              return
-          else
-              printf " %s%s%s " "$(git_branch)" "$(git_hash)" "$(git_status)"
-          fi
-      }
-    #+END_SRC
+Include git's branch, hash, status in PS1 if in git repository
+This function is called in PS1 section below
+#+NAME: Git PS
+#+BEGIN_SRC sh :tangle ../env/shrc
+  git_ps() {
+      if ! git status --ignore-submodules >/dev/null 2>&1; then
+          return
+      else
+          printf " %s%s%s " "$(git_branch)" "$(git_hash)" "$(git_status)"
+      fi
+  }
+#+END_SRC
 
 ** Prompt String
 *** Exit_colour
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      last_exit_color () {
-          case "$1" in
-              0)
-                  # success
-                  printf "\e[0;32m"
-                  ;;
-              1)
-                  # general error
-                  printf "\e[0;33m"
-                  ;;
-              2)
-                  # misuse of shell builtins
-                  printf "\e[0;31m"
-                  ;;
-              126)
-                  # cannot execute
-                  printf "\e[0;37m"
-                  ;;
-              127)
-                  # command not found
-                  printf "\e[0;30m"
-                  ;;
-              255)
-                  # exit status limit
-                  printf "\e[0;31m"
-                  ;;
-              ,*)
-                  if [ "$1" -gt "63" ] && [ "$1" -lt "84" ]; then
-                      # syserror.h
-                      printf "\e[0;91m"
+#+BEGIN_SRC sh :tangle ../env/shrc
+  last_exit_color () {
+      case "$1" in
+          0)
+              # success
+              printf "\e[0;32m"
+              ;;
+          1)
+              # general error
+              printf "\e[0;33m"
+              ;;
+          2)
+              # misuse of shell builtins
+              printf "\e[0;31m"
+              ;;
+          126)
+              # cannot execute
+              printf "\e[0;37m"
+              ;;
+          127)
+              # command not found
+              printf "\e[0;30m"
+              ;;
+          255)
+              # exit status limit
+              printf "\e[0;31m"
+              ;;
+          ,*)
+              if [ "$1" -gt "63" ] && [ "$1" -lt "84" ]; then
+                  # syserror.h
+                  printf "\e[0;91m"
 
-                  elif [ "$1" -gt "127" ] && [ "$1" -lt "191" ]; then
-                      # Fatal error
-                      printf "\e[0;41m"
-                  else
-                      printf "\e[0;31m"
-                  fi
-                  unset _err
-                  ;;
-          esac
-      }
-    #+END_SRC
+              elif [ "$1" -gt "127" ] && [ "$1" -lt "191" ]; then
+                  # Fatal error
+                  printf "\e[0;41m"
+              else
+                  printf "\e[0;31m"
+              fi
+              unset _err
+              ;;
+      esac
+  }
+#+END_SRC
 
 *** Elapsed_time
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      _elapsed_time() {
-          # $1 is start time $2 is end time
-          _cmd_start="$1"
-          _cmd_end="$2"
-          if [ -z "$_cmd_end" ] || [ -z "$_cmd_start" ]; then
-              return
-          fi
-          _sec=$(( _cmd_end - _cmd_start ))
-          unset _cmd_start _cmd_end
-          if [ "$_sec" -le 0 ]; then
-              return
-          fi
-          if [ "$_sec" -le 60 ]; then
-              printf "%s" "${_sec}"
-              unset _sec
-              return
-          fi
-          _min=$(( _sec/60 ))
+#+BEGIN_SRC sh :tangle ../env/shrc
+  _elapsed_time() {
+      # $1 is start time $2 is end time
+      _cmd_start="$1"
+      _cmd_end="$2"
+      if [ -z "$_cmd_end" ] || [ -z "$_cmd_start" ]; then
+          return
+      fi
+      _sec=$(( _cmd_end - _cmd_start ))
+      unset _cmd_start _cmd_end
+      if [ "$_sec" -le 0 ]; then
+          return
+      fi
+      if [ "$_sec" -le 60 ]; then
+          printf "%s" "${_sec}"
           unset _sec
-          if [ "$_min" -le 60 ]; then
-              printf "%sm" "${_min}"
-              unset _min
-              return
-          fi
-          _hr=$(( _min/60 ))
+          return
+      fi
+      _min=$(( _sec/60 ))
+      unset _sec
+      if [ "$_min" -le 60 ]; then
+          printf "%sm" "${_min}"
           unset _min
-          if [ "$_hr" -le 24 ]; then
-              printf "%sh" "${_hr}"
-              unset _hr
-              return
-          fi
-          _day=$(( _hr/24 ))
-          printf "%sd" "${_day}"
-          unset _min _day
-      }
-    #+END_SRC
+          return
+      fi
+      _hr=$(( _min/60 ))
+      unset _min
+      if [ "$_hr" -le 24 ]; then
+          printf "%sh" "${_hr}"
+          unset _hr
+          return
+      fi
+      _day=$(( _hr/24 ))
+      printf "%sd" "${_day}"
+      unset _min _day
+  }
+#+END_SRC
 
 *** PROMPT_COMMAND
 **** bash
-     #+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
-       # export PROMPT_COMMAND=__prompt_command
+#+BEGIN_SRC bash :tangle ../dotfiles/.bashrc
+  # export PROMPT_COMMAND=__prompt_command
 
-       preexec() {
-           _cmd_start_t="${SECONDS}"
-       }
+  preexec() {
+      _cmd_start_t="${SECONDS}"
+  }
 
-       precmd () {
-           _exit_color="$(last_exit_color $?)"
+  precmd () {
+      _exit_color="$(last_exit_color $?)"
 
-           _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
-           unset _cmd_start_t
+      _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+      unset _cmd_start_t
 
-           # unset previous
-           PS1=""
-           PS2=""
-           PS3=""
-           PS4=""
-           RPROMPT=""
+      # unset previous
+      PS1=""
+      PS2=""
+      PS3=""
+      PS4=""
+      RPROMPT=""
 
-           PS1+="\[\e[0;32m\]\u\[\e[m\]"
-           PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
-           PS1+="@"
-           PS1+="\[\e[0;34m\]\h\[\e[m\]"
-           PS1+="\$(git_ps)"
-           PS1+="\[\e[0;36m\]:\W"
-           PS1+="\[\e[0;37m\]"
+      PS1+="\[\e[0;32m\]\u\[\e[m\]"
+      PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
+      PS1+="@"
+      PS1+="\[\e[0;34m\]\h\[\e[m\]"
+      PS1+="\$(git_ps)"
+      PS1+="\[\e[0;36m\]:\W"
+      PS1+="\[\e[0;37m\]"
 
-           PS1+="$(date '+%H:%M:%S')"
-           PS1+=" ${_exit_color}-${_elapsed}"
-           PS1+='\[\e[m\]\n» '
+      PS1+="$(date '+%H:%M:%S')"
+      PS1+=" ${_exit_color}-${_elapsed}"
+      PS1+='\[\e[m\]\n» '
 
-           PS2=""
-           PS2+="\[\e[0;36m\]cont..."
-           PS2+="\[\e[m\]"
-           PS2+="» ";
+      PS2=""
+      PS2+="\[\e[0;36m\]cont..."
+      PS2+="\[\e[m\]"
+      PS2+="» ";
 
-           PS3='Selection: ';
-       }
-     #+END_SRC
+      PS3='Selection: ';
+  }
+#+END_SRC
 
 **** zsh
-     #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
-       _pspexec() {
-           _cmd_start_t="${SECONDS}"
-       }
+#+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
+  _pspexec() {
+      _cmd_start_t="${SECONDS}"
+  }
 
-       _pspps () {
-           _exit_color="$(last_exit_color $?)"
+  _pspps () {
+      _exit_color="$(last_exit_color $?)"
 
-           _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
-           unset _cmd_start_t
+      _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+      unset _cmd_start_t
 
-           # unset previous
-           PS1=$''
-           PS2=$''
-           PS3=$''
-           PS4=$''
-           RPROMPT=$''
+      # unset previous
+      PS1=$''
+      PS2=$''
+      PS3=$''
+      PS4=$''
+      RPROMPT=$''
 
-           PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
-           PS1+=$'%{\e[3;35m%}'
-           PS1+="$(_show_venv)"
-           PS1+=$'%{\e[m%}'
-           PS1+=$'@'
-           PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
-           PS1+="$(git_ps)"
-           PS1+=$'%{\e[0;36m%}:%1~'
-           PS1+=$'%{\e[0;37m%}\n%{\e[m%}» '
+      PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+      PS1+=$'%{\e[3;35m%}'
+      PS1+="$(_show_venv)"
+      PS1+=$'%{\e[m%}'
+      PS1+=$'@'
+      PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
+      PS1+="$(git_ps)"
+      PS1+=$'%{\e[0;36m%}:%1~'
+      PS1+=$'%{\e[0;37m%}\n%{\e[m%}» '
 
-           PS2+=$'%{\e[0;36m%}cont...'
-           PS2+=$'%{\e[m%}'
-           PS2+=$'» '
+      PS2+=$'%{\e[0;36m%}cont...'
+      PS2+=$'%{\e[m%}'
+      PS2+=$'» '
 
-           PS3='Selection: '
+      PS3='Selection: '
 
-           RPROMPT+=$'%*'
-           RPROMPT+="%{$_exit_color%}-${_elapsed}"
-           RPROMPT+=$'%{\e[m%}'
-           unset _exit_stat _elapsed
-       }
+      RPROMPT+=$'%*'
+      RPROMPT+="%{$_exit_color%}-${_elapsed}"
+      RPROMPT+=$'%{\e[m%}'
+      unset _exit_stat _elapsed
+  }
 
-       add-zsh-hook precmd _pspps
-       add-zsh-hook preexec _pspexec
+  add-zsh-hook precmd _pspps
+  add-zsh-hook preexec _pspexec
 
-     #+END_SRC
+#+END_SRC
 
 ** Mathematical
 *** In-Line Calculator
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      mathcalc() {
-          echo "$*"| bc -lq
-      }
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  mathcalc() {
+      echo "$*"| bc -lq
+  }
+#+END_SRC
 
 *** Computational
-    #+BEGIN_SRC sh :tangle ../env/shrc
-      dec2hex() {
-          echo "hex:"
-          echo "obase=16; $*"| bc
-          echo "dec:"
-          echo "ibase=16; $*"| bc
-      }
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  dec2hex() {
+      echo "hex:"
+      echo "obase=16; $*"| bc
+      echo "dec:"
+      echo "ibase=16; $*"| bc
+  }
+#+END_SRC
 
 ** Documents compilation
 *** PDF from Latex
+#+BEGIN_SRC sh :tangle ../env/shrc
+  pdfcompile() {
+      if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+          printf "pdftex is not installed\n"
+          return 127
+      fi
+
+      pdflatex "$1"
+      for ext in ".toc" ".log" ".aux"; do
+          [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
+      done
+      if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+          zathura "${1%.tex}.pdf"
+      fi
+  }
+#+END_SRC
+*** Pandoc
+**** Org to Something
+#+BEGIN_SRC sh :tangle ../env/shrc
+  org2export() {
+      # Usage: org2oth [-f] <infile> <othtype>
+      if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+          printf "pandoc is not installed\n"
+          return 127
+      fi
+      proceed=false
+      while test $# -gt 1; do
+          case "$1" in
+              -f|--force)
+                  proceed=true
+                  shift 1
+                  ;;
+              -h|--help)
+                  printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
+                  printf "Optional Arguments:\n"
+                  printf "%s\tshow this help message\n\n" "-h|--help"
+                  printf "%s\tignore extension mismatch\n" "-f|--force"
+                  printf "Positional Arguments:\n"
+                  printf "FILENAME.org\tpath to input filename\n"
+                  printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
+                  return 0
+                  ;;
+              --)
+                  shift 1
+                  ;;
+              ,*)
+                  infile="${1}";
+                  target="${2}";
+                  break
+                  ;;
+          esac
+      done
+      if [ "${target}" = "pdf" ]; then
+          target="latex"
+      fi
+      if [ "${infile%.org}" = "${infile}" ]; then
+          # <infile>
+          printf "Input file should be an org file\n"
+      else
+          # <infile>.org
+          proceed=true
+      fi
+      if $proceed; then
+          pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
+      fi
+      unset proceed target infile
+  }
+#+END_SRC
+
+**** Org to Docx
+#+BEGIN_SRC sh :tangle ../env/shrc
+  org2doc () {
+      org2export "$@" "docx"
+  }
+#+END_SRC
+
+**** Org to PDF
+#+BEGIN_SRC sh :tangle ../env/shrc
+  org2pdf () {
+      org2export "$@" "pdf"
+  }
+#+END_SRC
+
+**** Docx to Org
+#+BEGIN_SRC sh :tangle ../env/shrc
+  doc2org() {
+      if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+          printf "pandoc is not installed\n"
+          return 127
+      fi
+
+      case "${1}" in
+          ,*.docx)
+              pandoc -f docx -t org -o "${1%.docx}.org" "$1"
+              ;;
+          ,*)
+              echo "Input file must be a docx file"
+              ;;
+      esac
+  }
+#+END_SRC
+
+** Mount over ssh
+ssh Cloud mounts
+- see [[./cloud_mount.html][cloud_mount]]
+  #+BEGIN_SRC sh :tangle ../env/shrc
+    mount_cloud_sshfs() {
+        mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+        if [ -f "${mount_script}" ]; then
+            eval "${mount_script}"
+        fi
+    }
+
+    umount_cloud_sshfs() {
+        mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+        if [ -f "${mount_script}" ]; then
+            eval "${mount_script}" "umount"
+        fi
+    }
+
+  #+END_SRC
+
+** Launch GUI
+Launch application and exit terminal window
+Acts like a launcher
+Un-interactive terminal commands may also be called
+Code is tangled in gui.org
+#+BEGIN_SRC sh :tangle ../env/shrc
+  gui () {
+      "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
+      if [ $? = 65 ]; then
+          # if bin/gui.sh returns 65, kill shell, else, maintain
+          exit 0
+      fi
+  }
+#+END_SRC
+
+** Un-Compress by context
+#+BEGIN_SRC sh :tangle ../env/shrc
+  deconvolute() {
+      if builtin command -v "pigz" >/dev/null 2>&1; then
+          _gzip="pigz"
+      else
+          _gzip='gzip'
+      fi
+      if [ ! -f "${1}" ]; then
+          echo "${1}: no such file";
+      else
+          case "${1}" in
+              ,*.tar.bz2) tar -xjf "${1}" ;;
+              ,*.tbz2) tar -xjf "${1}" ;;
+              ,*.tar.gz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+              ,*.tgz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+              ,*.gz) unpigz "${1}" || gunzip "${1}" ;;
+              ,*.rar) unrar -x "${1}" ;;
+              ,*.tar) tar -xf "${1}" ;;
+              ,*.zip) unzip "${1}" ;;
+              ,*.tar.xz) tar -xf "${1}" ;;
+              ,*) echo "Cannot extract ${1}, provide explicit command";;
+          esac
+      fi
+      unset _gzip
+  }
+#+END_SRC
+
+** Navigate
+- When no virtualenv is active, but one is available, switch to it
+  #+BEGIN_SRC sh :tangle ../env/shrc
+    cd () {
+        if [ -z "${1}" ]; then
+            builtin cd "${HOME}" || true
+        else
+            builtin cd "${1}"  || true
+        fi
+        if [ -z "${VIRTUAL_ENV}" ]; then
+            to_venv 2>/dev/null
+        fi
+    }
+  #+END_SRC
+
+  - Inspired by [[https://lukesmith.xyz/]]
     #+BEGIN_SRC sh :tangle ../env/shrc
-      pdfcompile() {
-          if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
-              printf "pdftex is not installed\n"
+      lfcd () {
+          if ! command -v 'lf' >/dev/null 2>/dev/null; then
+              printf "lf is not installed\n"
               return 127
           fi
+          tmp_file="$(mktemp)"
+          lf -last-dir-path="${tmp_file}" "$@"
+          if [ -f "${tmp_file}" ]; then
+              target_dir="$(cat "${tmp_file}")"
+              rm -f "${tmp_file}" >/dev/null
+              if [ -d "${target_dir}" ] && [ "${target_dir}" != "$(pwd)" ]; then
+                  cd "${target_dir}" || return
+              fi
+          fi
+          unset tmp_file target_dir
+      }
 
-          pdflatex "$1"
-          for ext in ".toc" ".log" ".aux"; do
-              [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
-          done
-          if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
-              zathura "${1%.tex}.pdf"
+      fzfcd () {
+          if ! command -v 'fzf' >/dev/null 2>/dev/null; then
+              printf "fzf is not installed\n"
+              return 127
+          fi
+          cd "$(dirname "$(fzf)")" || true
+      }
+    #+END_SRC
+
+** zwc
+- Guess whether target is zipped;
+  if zipped, unzip and count else classical wc
+  #+begin_src sh :tangle ../env/shrc
+    zwc () {
+        args="$*"
+        fname="${args##* }"
+        args="${args% ${fname}}"
+        args="${args%${fname}}"
+
+        if gzip -t "${fname}" > /dev/null 2>&1; then
+            if [ -z "${args}" ]; then
+                zcat -f "${fname}" | wc
+            else
+                # shellcheck disable=SC2086
+                zcat -f "${fname}" | wc $args
+            fi
+            return
+        else
+            wc "$@"
+            return
+        fi
+
+    }
+  #+end_src
+
+** disable auto-venv
+- To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
+  - Calling the function again reverts
+    #+BEGIN_SRC sh :tangle ../env/shrc
+      force_global_venv () {
+          if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+              unset VIRTUAL_ENV
+              to_venv 2>/dev/null
+          else
+              deactivate 2>/dev/null
+              VIRTUAL_ENV="Global_Env"
           fi
       }
     #+END_SRC
-*** Pandoc
-**** Org to Something
-     #+BEGIN_SRC sh :tangle ../env/shrc
-       org2export() {
-           # Usage: org2oth [-f] <infile> <othtype>
-           if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
-               printf "pandoc is not installed\n"
-               return 127
-           fi
-           proceed=false
-           while test $# -gt 1; do
-               case "$1" in
-                   -f|--force)
-                       proceed=true
-                       shift 1
-                       ;;
-                   -h|--help)
-                       printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
-                       printf "Optional Arguments:\n"
-                       printf "%s\tshow this help message\n\n" "-h|--help"
-                       printf "%s\tignore extension mismatch\n" "-f|--force"
-                       printf "Positional Arguments:\n"
-                       printf "FILENAME.org\tpath to input filename\n"
-                       printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
-                       return 0
-                       ;;
-                   --)
-                       shift 1
-                       ;;
-                   ,*)
-                       infile="${1}";
-                       target="${2}";
-                       break
-                       ;;
-               esac
-           done
-           if [ "${target}" = "pdf" ]; then
-               target="latex"
-           fi
-           if [ "${infile%.org}" = "${infile}" ]; then
-               # <infile>
-               printf "Input file should be an org file\n"
-           else
-               # <infile>.org
-               proceed=true
-           fi
-           if $proceed; then
-               pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
-           fi
-           unset proceed target infile
-       }
-     #+END_SRC
-
-**** Org to Docx
-     #+BEGIN_SRC sh :tangle ../env/shrc
-       org2doc () {
-           org2export "$@" "docx"
-       }
-     #+END_SRC
-
-**** Org to PDF
-     #+BEGIN_SRC sh :tangle ../env/shrc
-       org2pdf () {
-           org2export "$@" "pdf"
-       }
-     #+END_SRC
-
-**** Docx to Org
-     #+BEGIN_SRC sh :tangle ../env/shrc
-       doc2org() {
-           if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
-               printf "pandoc is not installed\n"
-               return 127
-           fi
-
-           case "${1}" in
-               ,*.docx)
-                   pandoc -f docx -t org -o "${1%.docx}.org" "$1"
-                   ;;
-               ,*)
-                   echo "Input file must be a docx file"
-                   ;;
-           esac
-       }
-     #+END_SRC
-
-** Mount over ssh
-   ssh Cloud mounts
-   - see [[./cloud_mount.html][cloud_mount]]
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     mount_cloud_sshfs() {
-         mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
-         if [ -f "${mount_script}" ]; then
-             eval "${mount_script}"
-         fi
-     }
-
-     umount_cloud_sshfs() {
-         mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
-         if [ -f "${mount_script}" ]; then
-             eval "${mount_script}" "umount"
-         fi
-     }
-
-   #+END_SRC
-
-** Launch GUI
-   Launch application and exit terminal window
-   Acts like a launcher
-   Un-interactive terminal commands may also be called
-   Code is tangled in gui.org
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     gui () {
-         "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
-         if [ $? = 65 ]; then
-             # if bin/gui.sh returns 65, kill shell, else, maintain
-             exit 0
-         fi
-     }
-   #+END_SRC
-
-** Un-Compress by context
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     deconvolute() {
-         if builtin command -v "pigz" >/dev/null 2>&1; then
-             _gzip="pigz"
-         else
-             _gzip='gzip'
-         fi
-         if [ ! -f "${1}" ]; then
-             echo "${1}: no such file";
-         else
-             case "${1}" in
-                 ,*.tar.bz2) tar -xjf "${1}" ;;
-                 ,*.tbz2) tar -xjf "${1}" ;;
-                 ,*.tar.gz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
-                 ,*.tgz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
-                 ,*.gz) unpigz "${1}" || gunzip "${1}" ;;
-                 ,*.rar) unrar -x "${1}" ;;
-                 ,*.tar) tar -xf "${1}" ;;
-                 ,*.zip) unzip "${1}" ;;
-                 ,*.tar.xz) tar -xf "${1}" ;;
-                 ,*) echo "Cannot extract ${1}, provide explicit command";;
-             esac
-         fi
-         unset _gzip
-     }
-   #+END_SRC
-
-** Navigate
-   - When no virtualenv is active, but one is available, switch to it
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     cd () {
-         if [ -z "${1}" ]; then
-             builtin cd "${HOME}" || true
-         else
-             builtin cd "${1}"  || true
-         fi
-         if [ -z "${VIRTUAL_ENV}" ]; then
-             to_venv 2>/dev/null
-         fi
-     }
-   #+END_SRC
-
-   - Inspired by [[https://lukesmith.xyz/]]
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     lfcd () {
-         if ! command -v 'lf' >/dev/null 2>/dev/null; then
-             printf "lf is not installed\n"
-             return 127
-         fi
-         tmp_file="$(mktemp)"
-         lf -last-dir-path="${tmp_file}" "$@"
-         if [ -f "${tmp_file}" ]; then
-             target_dir="$(cat "${tmp_file}")"
-             rm -f "${tmp_file}" >/dev/null
-             if [ -d "${target_dir}" ] && [ "${target_dir}" != "$(pwd)" ]; then
-                 cd "${target_dir}" || return
-             fi
-         fi
-         unset tmp_file target_dir
-     }
-
-     fzfcd () {
-         if ! command -v 'fzf' >/dev/null 2>/dev/null; then
-             printf "fzf is not installed\n"
-             return 127
-         fi
-         cd "$(dirname "$(fzf)")" || true
-     }
-   #+END_SRC
-
-** zwc
-   - Guess whether target is zipped;
-     if zipped, unzip and count else classical wc
-   #+begin_src sh :tangle ../env/shrc
-     zwc () {
-         args="$*"
-         fname="${args##* }"
-         args="${args% ${fname}}"
-         args="${args%${fname}}"
-
-         if gzip -t "${fname}" > /dev/null 2>&1; then
-             if [ -z "${args}" ]; then
-                 zcat -f "${fname}" | wc
-             else
-                 # shellcheck disable=SC2086
-                 zcat -f "${fname}" | wc $args
-             fi
-             return
-         else
-             wc "$@"
-             return
-         fi
-
-     }
-   #+end_src
-
-** disable auto-venv
-   - To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
-     - Calling the function again reverts
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     force_global_venv () {
-         if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
-             unset VIRTUAL_ENV
-             to_venv 2>/dev/null
-         else
-             deactivate 2>/dev/null
-             VIRTUAL_ENV="Global_Env"
-         fi
-     }
-   #+END_SRC
 
 ** lszcat
-   #+begin_src sh :tangle ../env/shrc
-     lszcat () {
-         args="$*"
-         fname="${args##* }"
-         args="${args%% ${fname}}"
-         args="${args%%${fname}}"
+#+begin_src sh :tangle ../env/shrc
+  lszcat () {
+      args="$*"
+      fname="${args##* }"
+      args="${args%% ${fname}}"
+      args="${args%%${fname}}"
 
-         if builtin command -v bat >/dev/null 2>&1; then
-             betcat="$(which bat)"
-         else
-             betcat="$(which cat)"
-         fi
+      if builtin command -v bat >/dev/null 2>&1; then
+          betcat="$(which bat)"
+      else
+          betcat="$(which cat)"
+      fi
 
-         if builtin command -v exa >/dev/null 2>&1; then
-             betls="$(which exa)"
-         else
-             betls="$(which ls)"
-         fi
+      if builtin command -v exa >/dev/null 2>&1; then
+          betls="$(which exa)"
+      else
+          betls="$(which ls)"
+      fi
 
-         if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
-             if [ -z "${args}" ]; then
-                 args="${fname}"
-             else
-                 args="${args} ${fname}"
-             fi
-             fname="$(readlink -f ".")"
-             echo "${fname}"
-         fi
+      if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
+          if [ -z "${args}" ]; then
+              args="${fname}"
+          else
+              args="${args} ${fname}"
+          fi
+          fname="$(readlink -f ".")"
+          echo "${fname}"
+      fi
 
-         if [ -d "${fname}" ]; then
-             # shellcheck disable=SC2086
-             "${betls}" ${args} "${fname}"
-         elif gzip -t "${fname}" >/dev/null 2>&1; then
-             # shellcheck disable=SC2086
-             zcat -f ${args} "${fname}" | "${betcat}"
-         else
-             # shellcheck disable=SC2086
-             "${betcat}" ${args} "${fname}"
-         fi
-     }
-   #+end_src
+      if [ -d "${fname}" ]; then
+          # shellcheck disable=SC2086
+          "${betls}" ${args} "${fname}"
+      elif gzip -t "${fname}" >/dev/null 2>&1; then
+          # shellcheck disable=SC2086
+          zcat -f ${args} "${fname}" | "${betcat}"
+      else
+          # shellcheck disable=SC2086
+          "${betcat}" ${args} "${fname}"
+      fi
+  }
+#+end_src
 
 ** Manual pages
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     man_help () {
-         if man "$@"; then
-             return 0
-         elif tldr "$@"; then
-             return 0
-         elif builtin command -v "$1" >/dev/null 2>/dev/null; then
-             printf "trying to display %s --help output\n" "${1}"
-             if builtin command -v 'bat' >/dev/null 2>/dev/null; then
-                 $1 --help 2>&1 | bat
-             else
-                 $1 --help 2>&1 | less -RF
-             fi
-             return 0
-         else
-             return 16
-         fi
-     }
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  man_help () {
+      if man "$@"; then
+          return 0
+      elif tldr "$@"; then
+          return 0
+      elif builtin command -v "$1" >/dev/null 2>/dev/null; then
+          printf "trying to display %s --help output\n" "${1}"
+          if builtin command -v 'bat' >/dev/null 2>/dev/null; then
+              $1 --help 2>&1 | bat
+          else
+              $1 --help 2>&1 | less -RF
+          fi
+          return 0
+      else
+          return 16
+      fi
+  }
+#+END_SRC
 
 ** Selection menu
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     posix_select () {
-         # select implementation for POSIX
-         word_l=""
-         count=0
-         for word in "${@}"; do
-             if [ -z "${word_l}" ]; then
-                 word_l="${word}"
-             else
-                 word_l="${word_l} ${word}"
-             fi
-             count=$((count + 1))
-             echo "${count}: ${word}" >&2
-         done
-         printf "Selection: " >&2
-         read -r select_num
-         echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
-         unset word word_l
-     }
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  posix_select () {
+      # select implementation for POSIX
+      word_l=""
+      count=0
+      for word in "${@}"; do
+          if [ -z "${word_l}" ]; then
+              word_l="${word}"
+          else
+              word_l="${word_l} ${word}"
+          fi
+          count=$((count + 1))
+          echo "${count}: ${word}" >&2
+      done
+      printf "Selection: " >&2
+      read -r select_num
+      echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
+      unset word word_l
+  }
+#+END_SRC
 
 * Aliases
 ** Disk Usage
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     alias du='du -hc';
-     alias df='df -h';
-     alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  alias du='du -hc';
+  alias df='df -h';
+  alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+#+END_SRC
 
 ** manual page help
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     alias man="man_help";
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  alias man="man_help";
+#+END_SRC
 ** Network
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
-     alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
-     alias ping="ping -c 4 ";
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
+  alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+  alias ping="ping -c 4 ";
+#+END_SRC
 
 ** Monitor Job queues
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     alias watch="watch -n 10 --color";
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  alias watch="watch -n 10 --color";
+#+END_SRC
 
 ** Lazy single-handed exit
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     alias qqqq="exit";
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  alias qqqq="exit";
+#+END_SRC
 
 ** [z]wc
-   #+begin_src sh :tangle ../env/shrc
-     alias wc="zwc";
-   #+end_src
+#+begin_src sh :tangle ../env/shrc
+  alias wc="zwc";
+#+end_src
 
 * Networking
 ** State
-   The *OLDEST* part of prady_runcom...
-   - ... although, amended many times
-   - see [[./netcheck.html][netcheck]]
-   #+BEGIN_SRC sh :tangle ../env/shrc
-     # shellcheck source=./bin/netcheck.sh
-     net_out="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"
-     # fish first arg as ip_addr and last arg as netstat
-     ip_addr="$(echo "${net_out}" | awk '{print $1}')"
-     netstate="$(echo "${net_out}" | rev | awk '{print $1}' | rev)"
-     unset net_out
-     if [ $(( netstate & 8)) = 8 ]; then
-         printf "\e[1;34mInternet (GOOGLE) Connected\e[m\n"
-         if [ ! $(( netstate & 16 )) = 16 ]; then
-             printf "\e[1;35mProblem with DNS\e[m\n"
-         fi
-         printf "\033[0;32m%s \e[m is current wireless ip address\n" "$ip_addr"
-     else
-         printf "\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"
-         if [ $(( netstate & 4 )) = 4 ]; then  # Intranet is connected
-             printf "\033[0;31mInternet Down\e[m\n"
-             if [ $(( netstate & 2 )) = 2 ]; then
-                 printf "Home network connected,\n"
-             elif [ $(( netstate & 1 )) = 1 ]; then
-                 printf "OFFICE network connected,\n"
-             else
-                 printf "HOTSPOT connected\n"
-             fi
-         else
-             printf "\e[1;33mNetwork connection Disconnected\e[m\n"
-         fi
-     fi
-     # shellcheck source=./bin/proxy_send.sh
-     if [ -n "${http_proxy}" ] \
-            && ! curl "https://duckduckgo.com/" > /dev/null 2>&1 \
-            && [ $(( netstate & 1 )) = 1 ]; then
-         # shellcheck source=./proxy_send.sh
-         eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh" && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
-         unset auto_proxy
-     fi
-     unset o_ifs ip_addr
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/shrc
+  "${RUNCOMDIR}/bin/timeout.sh"
+#+END_SRC
 
 ** SSH Agent
-   Reuse ssh agent for all logins
-   #+BEGIN_SRC sh :tangle ../env/ui
-     if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
-         eval "$(ssh-agent)"
-         ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-     fi
-     SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-     export SSH_AUTH_SOCK
-     ssh-add -l > /dev/null || ssh-add
-   #+END_SRC
+Reuse ssh agent for all logins
+#+BEGIN_SRC sh :tangle ../env/ui
+  if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
+      eval "$(ssh-agent)"
+      ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  fi
+  SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  export SSH_AUTH_SOCK
+  ssh-add -l > /dev/null || ssh-add
+#+END_SRC
 
 * Window Manager settings
 ** Terminal
-   #+BEGIN_SRC sh :tangle ../env/ui
-     for term in foot alacritty termite tilix urxvt xterm; do
-         if [ -n "$(command -v $term)" ]; then
-             defterm="$term";
-             export defterm
-             break;
-         fi;
-     done
-   #+END_SRC
+#+BEGIN_SRC sh :tangle ../env/ui
+  for term in foot alacritty termite tilix urxvt xterm; do
+      if [ -n "$(command -v $term)" ]; then
+          defterm="$term";
+          export defterm
+          break;
+      fi;
+  done
+#+END_SRC
 
 ** Sway exports
-   Don't really remember why these were made
-   Not using currently. Preserved for future
-   tangle to bash_login
-   export WLR_BACKENDS="headless";
-   export WLR_LIBINPUT_NO_DEVICES=1;
+Don't really remember why these were made
+Not using currently. Preserved for future
+tangle to bash_login
+export WLR_BACKENDS="headless";
+export WLR_LIBINPUT_NO_DEVICES=1;
 
 ** User Interface (GUI/CLI)
-   If running from tty1 offer to launch a graphical session
+If running from tty1 offer to launch a graphical session
 *** Graphical exports preparations
-    Exports to be made according to selected graphical environment
-    #+BEGIN_SRC sh :tangle ../env/ui
-      _common_exports() {
-          if [ -z "$XDG_RUNTIME_DIR" ]; then
-              XDG_RUNTIME_DIR="/run/user/$(id -u)"
-          fi
-          QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
-          QT_AUTO_SCREEN_SCALE_FACTOR=0
-          QT_QPA_PLATFORMTHEME="qt5ct"
-          _JAVA_AWT_WM_NONREPARENTING=1
+Exports to be made according to selected graphical environment
+#+BEGIN_SRC sh :tangle ../env/ui
+  _common_exports() {
+      if [ -z "$XDG_RUNTIME_DIR" ]; then
+          XDG_RUNTIME_DIR="/run/user/$(id -u)"
+      fi
+      QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
+      QT_AUTO_SCREEN_SCALE_FACTOR=0
+      QT_QPA_PLATFORMTHEME="qt5ct"
+      _JAVA_AWT_WM_NONREPARENTING=1
 
-          export XDG_RUNTIME_DIR
-          export QT_PLUGIN_PATH
-          export QT_AUTO_SCREEN_SCALE_FACTOR
-          export QT_QPA_PLATFORMTHEME
-          export _JAVA_AWT_WM_NONREPARENTING
-      }
+      export XDG_RUNTIME_DIR
+      export QT_PLUGIN_PATH
+      export QT_AUTO_SCREEN_SCALE_FACTOR
+      export QT_QPA_PLATFORMTHEME
+      export _JAVA_AWT_WM_NONREPARENTING
+  }
 
-      _exports_for_wayland () {
-          # export DISPLAY=":0"
-          # export WAYLAND_DISPLAY=wayland-0
-          # export GDK_BACKEND=wayland,x11
-          _common_exports
+  _exports_for_wayland () {
+      # export DISPLAY=":0"
+      # export WAYLAND_DISPLAY=wayland-0
+      # export GDK_BACKEND=wayland,x11
+      _common_exports
 
-          XDG_SESSION_TYPE="wayland"
-          SDL_VIDEODRIVER="wayland"
-          ECORE_EVAS_ENGINE="wayland_egl"
-          ELM_DISPLAY="wl"
-          ELM_ENGINE="wayland_egl"
-          ELM_ACCEL="opengl"
-          QT_QPA_PLATFORM="wayland-egl;xcb"
-          QT_WAYLAND_FORCE_DPI=100
-          QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-          MOZ_ENABLE_WAYLAND=1
-          SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
+      XDG_SESSION_TYPE="wayland"
+      SDL_VIDEODRIVER="wayland"
+      ECORE_EVAS_ENGINE="wayland_egl"
+      ELM_DISPLAY="wl"
+      ELM_ENGINE="wayland_egl"
+      ELM_ACCEL="opengl"
+      QT_QPA_PLATFORM="wayland-egl;xcb"
+      QT_WAYLAND_FORCE_DPI=100
+      QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      MOZ_ENABLE_WAYLAND=1
+      SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
 
-          export XDG_SESSION_TYPE
-          export SDL_VIDEODRIVER
-          export ECORE_EVAS_ENGINE
-          export ELM_DISPLAY
-          export ELM_ENGINE
-          export ELM_ACCEL
-          export QT_QPA_PLATFORM
-          export QT_WAYLAND_FORCE_DPI
-          export QT_WAYLAND_DISABLE_WINDOWDECORATION
-          export MOZ_ENABLE_WAYLAND
-          export SWAYROOT
-      }
+      export XDG_SESSION_TYPE
+      export SDL_VIDEODRIVER
+      export ECORE_EVAS_ENGINE
+      export ELM_DISPLAY
+      export ELM_ENGINE
+      export ELM_ACCEL
+      export QT_QPA_PLATFORM
+      export QT_WAYLAND_FORCE_DPI
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION
+      export MOZ_ENABLE_WAYLAND
+      export SWAYROOT
+  }
 
-      _exports_for_x11 () {
-          _common_exports
+  _exports_for_x11 () {
+      _common_exports
 
-          XDG_SESSION_TYPE="x11"
-          SDL_VIDEODRIVER="x11"
-          I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
+      XDG_SESSION_TYPE="x11"
+      SDL_VIDEODRIVER="x11"
+      I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
 
-          export XDG_SESSION_TYPE
-          export SDL_VIDEODRIVER
-          export I3ROOT
+      export XDG_SESSION_TYPE
+      export SDL_VIDEODRIVER
+      export I3ROOT
 
-          unset ECORE_EVAS_ENGINE
-          unset ELM_DISPLAY
-          unset ELM_ENGINE
-          unset ELM_ACCEL
-          unset QT_QPA_PLATFORM
-          unset QT_WAYLAND_FORCE_DPI
-          unset QT_WAYLAND_DISABLE_WINDOWDECORATION
-          unset MOZ_ENABLE_WAYLAND
-      }
+      unset ECORE_EVAS_ENGINE
+      unset ELM_DISPLAY
+      unset ELM_ENGINE
+      unset ELM_ACCEL
+      unset QT_QPA_PLATFORM
+      unset QT_WAYLAND_FORCE_DPI
+      unset QT_WAYLAND_DISABLE_WINDOWDECORATION
+      unset MOZ_ENABLE_WAYLAND
+  }
 
-      _exports_for_proxies () {
-          if [ -z "${export_proxies}" ]; then
-              printf "Export proxies?[y/N]:\t"
-              read -r export_proxies
-          fi
-          case "${export_proxies}}" in
-              Y*|y*)
-                  all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
-                  http_proxy="${all_proxy}"
-                  https_proxy="${all_proxy}"
-                  ftp_proxy="${all_proxy}"
-                  ftps_proxy="${all_proxy}"
+  _exports_for_proxies () {
+      if [ -z "${export_proxies}" ]; then
+          printf "Export proxies?[y/N]:\t"
+          read -r export_proxies
+      fi
+      case "${export_proxies}}" in
+          Y*|y*)
+              all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
+              http_proxy="${all_proxy}"
+              https_proxy="${all_proxy}"
+              ftp_proxy="${all_proxy}"
+              ftps_proxy="${all_proxy}"
 
-                  export all_proxy
-                  export http_proxy
-                  export https_proxy
-                  export ftp_proxy
-                  export ftps_proxy
-                  ;;
-              ,*)
-                  ;;
-          esac
+              export all_proxy
+              export http_proxy
+              export https_proxy
+              export ftp_proxy
+              export ftps_proxy
+              ;;
+          ,*)
+              ;;
+      esac
 
-      }
-    #+END_SRC
+  }
+#+END_SRC
 
 *** Graphical selections
-    Display protocol and session selection
-    #+BEGIN_SRC sh :tangle ../env/ui
-      _clean_up_tty() {
-          _common_exports
-          if [ "$TERM" = "linux" ]; then
-              printf "\e]P0000000" #black
-              printf "\e]P83f3f3f" #darkgrey
-              printf "\e]P19f3f3f" #darkred
-              printf "\e]P9ff9f9f" #red
-              printf "\e]P23f9f3f" #darkgreen
-              printf "\e]PAbfefbf" #green
-              printf "\e]P3bf9f3f" #brown
-              printf "\e]PB9fff9f" #yellow
-              printf "\e]P45f5f9f" #darkblue
-              printf "\e]PC9f9fff" #blue
-              printf "\e]P59f3f9f" #darkmagenta
-              printf "\e]PDff9fff" #magenta
-              printf "\e]P63f9f9f" #darkcyan
-              printf "\e]PE9fffff" #cyan
-              printf "\e]P7afafaf" #lightgrey
-              printf "\e]PFffffff" #white
-              clear #for background artifacting
-          fi
-      }
+Display protocol and session selection
+#+BEGIN_SRC sh :tangle ../env/ui
+  _clean_up_tty() {
+      _common_exports
+      if [ "$TERM" = "linux" ]; then
+          printf "\e]P0000000" #black
+          printf "\e]P83f3f3f" #darkgrey
+          printf "\e]P19f3f3f" #darkred
+          printf "\e]P9ff9f9f" #red
+          printf "\e]P23f9f3f" #darkgreen
+          printf "\e]PAbfefbf" #green
+          printf "\e]P3bf9f3f" #brown
+          printf "\e]PB9fff9f" #yellow
+          printf "\e]P45f5f9f" #darkblue
+          printf "\e]PC9f9fff" #blue
+          printf "\e]P59f3f9f" #darkmagenta
+          printf "\e]PDff9fff" #magenta
+          printf "\e]P63f9f9f" #darkcyan
+          printf "\e]PE9fffff" #cyan
+          printf "\e]P7afafaf" #lightgrey
+          printf "\e]PFffffff" #white
+          clear #for background artifacting
+      fi
+  }
 
-      _select_display_protocol () {
-          mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
-          default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
-          if [ -z "${default_proto}" ]; then
-              default_proto="non-graphical"
-          fi
-          echo ""
-          echo "Display protocols [${default_proto}]"
-          graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
-          if [ -n "${graph_proto}" ]; then
-              echo "${graph_proto}" \
-                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
-          else
-              graph_proto="${default_proto}"
-          fi
-          unset default_proto
-      }
+  _select_display_protocol () {
+      mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
+      default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
+      if [ -z "${default_proto}" ]; then
+          default_proto="non-graphical"
+      fi
+      echo ""
+      echo "Display protocols [${default_proto}]"
+      graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+      if [ -n "${graph_proto}" ]; then
+          echo "${graph_proto}" \
+               > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
+      else
+          graph_proto="${default_proto}"
+      fi
+      unset default_proto
+  }
 
-      _select_wayland_session () {
-          default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
-          if [ -z "${default_session}" ]; then
-              default_session=".wayinitrc"
-          fi
-          echo ""
-          echo "Wayland sessions [${default_session}]"
+  _select_wayland_session () {
+      default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+      if [ -z "${default_session}" ]; then
+          default_session=".wayinitrc"
+      fi
+      echo ""
+      echo "Wayland sessions [${default_session}]"
 
-          # shellcheck disable=SC2046
-          exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
-          if [ -n "${exec_session}" ]; then
-              echo "${exec_session}" \
-                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
-          else
-              exec_session="${default_session}"
-          fi
-          unset default_session
-      }
+      # shellcheck disable=SC2046
+      exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+      if [ -n "${exec_session}" ]; then
+          echo "${exec_session}" \
+               > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+      else
+          exec_session="${default_session}"
+      fi
+      unset default_session
+  }
 
 
-      _select_x11_session () {
-          default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
-          if [ -z "${default_session}" ]; then
-              default_session=".xinitrc"
-          fi
-          echo "X11 sessions [${default_session}]"
-          # shellcheck disable=SC2046
-          exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
-          if [ -n "${exec_session}" ]; then
-              echo "${exec_session}" \
-                   > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
-          else
-              exec_session="${default_session}"
-          fi
-          unset default_session
-      }
+  _select_x11_session () {
+      default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
+      if [ -z "${default_session}" ]; then
+          default_session=".xinitrc"
+      fi
+      echo "X11 sessions [${default_session}]"
+      # shellcheck disable=SC2046
+      exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
+      if [ -n "${exec_session}" ]; then
+          echo "${exec_session}" \
+               > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
+      else
+          exec_session="${default_session}"
+      fi
+      unset default_session
+  }
 
-    #+END_SRC
+#+END_SRC
 
 *** Interaction
-    #+BEGIN_SRC sh :tangle ../env/ui
-      main () {
-          nowtty="$(tty)"
-          if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
-              _exports_for_proxies
-              if ${RUNCOM_LAUNCH_UI}; then
-                  if [ -z "${RUNCOM_SESSION}" ]; then
-                      _select_display_protocol
-                      if [ "${graph_proto}" = "x11" ]; then
-                          _exports_for_x11
-                          _select_x11_session
-                          export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
-                          exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
-                      elif [ "${graph_proto}" = "wayland" ]; then
-                          _exports_for_wayland
-                          _select_wayland_session
-                          export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
-                          exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
-                      fi
+#+BEGIN_SRC sh :tangle ../env/ui
+  main () {
+      nowtty="$(tty)"
+      if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+          _exports_for_proxies
+          if ${RUNCOM_LAUNCH_UI}; then
+              if [ -z "${RUNCOM_SESSION}" ]; then
+                  _select_display_protocol
+                  if [ "${graph_proto}" = "x11" ]; then
+                      _exports_for_x11
+                      _select_x11_session
+                      export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                      exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
+                  elif [ "${graph_proto}" = "wayland" ]; then
+                      _exports_for_wayland
+                      _select_wayland_session
+                      export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                      exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
                   fi
               fi
           fi
-          unset nowtty graph_proto exec_session RUNCOM_SESSION
-          _clean_up_tty
-      }
+      fi
+      unset nowtty graph_proto exec_session RUNCOM_SESSION
+      _clean_up_tty
+  }
 
-      main "$@"
+  main "$@"
 
-    #+END_SRC
+#+END_SRC
 
 * Calls
 ** bash
-   #+BEGIN_SRC bash :tangle ../dotfiles/.bash_login
-     # netcheck source=.local/share/pspman/src/runcom/env/ui
-     . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
-   #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.bash_login
+  # netcheck source=.local/share/pspman/src/runcom/env/ui
+  . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
+#+END_SRC
 
 ** zsh
-   #+BEGIN_SRC bash :tangle ../dotfiles/.zlogin
-     # netcheck source=.local/share/pspman/src/runcom/env/ui
-     . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
-   #+END_SRC
+#+BEGIN_SRC bash :tangle ../dotfiles/.zlogin
+  # netcheck source=.local/share/pspman/src/runcom/env/ui
+  . "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
+#+END_SRC
 
 
 
-   #  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
-   #  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
-   #  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV
-   #  LocalWords:  coreutils
+#  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
+#  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
+#  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV
+#  LocalWords:  coreutils

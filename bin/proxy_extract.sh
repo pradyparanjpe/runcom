@@ -139,8 +139,7 @@ extract_key () {
             true
             ;;
     esac
-    unset key
-    unset value
+    unset key value
 }
 
 extract_secret () {
@@ -170,8 +169,7 @@ extract_secret () {
         extract_key "${line}"
     done
     IFS="${o_ifs}"
-    unset o_ifs
-    unset line
+    unset o_ifs line
 }
 
 get_pass_proxy () {

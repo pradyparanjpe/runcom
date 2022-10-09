@@ -3,196 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-29 Fri 23:04 -->
+<!-- 2022-10-09 Sun 09:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proxy_send - send proxy authentication</title>
 <meta name="author" content="Pradyumna Paranjape" />
 <meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-</style>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -207,31 +23,31 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga56b57a">Description</a></li>
-<li><a href="#orgf3cbfe4">Setup</a>
+<li><a href="#org0a34e9d">Description</a></li>
+<li><a href="#org93b243d">Setup</a>
 <ul>
-<li><a href="#orge4a24e2">Password store</a></li>
-<li><a href="#org632ebf3">Environment declaration</a></li>
+<li><a href="#org0bfcc3f">Password store</a></li>
+<li><a href="#org4053704">Environment declaration</a></li>
 </ul>
 </li>
-<li><a href="#orge908079">Code</a>
+<li><a href="#org5a5336b">Code</a>
 <ul>
-<li><a href="#org9e74324">Check availability</a></li>
-<li><a href="#orgae74b95">Handle global variables and exits</a></li>
-<li><a href="#org0989795">Parse command</a></li>
-<li><a href="#orga9e2b7e">Extract proxy information from environment variable</a></li>
-<li><a href="#org9d71943">Compile proxy information</a></li>
-<li><a href="#org9d7bc27">Html handling</a></li>
-<li><a href="#org68c142a">Main routine call</a></li>
+<li><a href="#org2229570">Check availability</a></li>
+<li><a href="#orge946a85">Handle global variables and exits</a></li>
+<li><a href="#org79ef794">Parse command</a></li>
+<li><a href="#orgf18eca8">Extract proxy information from environment variable</a></li>
+<li><a href="#orge802d59">Compile proxy information</a></li>
+<li><a href="#orgde80c17">Html handling</a></li>
+<li><a href="#orgb4ac701">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga56b57a" class="outline-2">
-<h2 id="orga56b57a">Description</h2>
-<div class="outline-text-2" id="text-orga56b57a">
+<div id="outline-container-org0a34e9d" class="outline-2">
+<h2 id="org0a34e9d">Description</h2>
+<div class="outline-text-2" id="text-org0a34e9d">
 <ul class="org-ul">
 <li>This script is automatically called by prady_runcom's profile scripts when network is inferred as <i>office</i>.</li>
 <li>We try to open <a href="https://www.duckduckgo.com/">duckduckgo</a> and send proxy authentication secret.</li>
@@ -241,14 +57,14 @@ does not demand proxy authentication again.</li>
 </div>
 </div>
 
-<div id="outline-container-orgf3cbfe4" class="outline-2">
-<h2 id="orgf3cbfe4">Setup</h2>
-<div class="outline-text-2" id="text-orgf3cbfe4">
+<div id="outline-container-org93b243d" class="outline-2">
+<h2 id="org93b243d">Setup</h2>
+<div class="outline-text-2" id="text-org93b243d">
 <p>
 Proxy secret may be provided through any of the tools explained in following sections.
 </p>
 
-<div class="note" id="org78781a3">
+<div class="note" id="org8fb4786">
 <ul class="org-ul">
 <li>If information is available at both locations, it is loaded in order.</li>
 <li>Information available from the latter supersedes the former.</li>
@@ -257,9 +73,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </div>
 </div>
 
-<div id="outline-container-orge4a24e2" class="outline-3">
-<h3 id="orge4a24e2">Password store</h3>
-<div class="outline-text-3" id="text-orge4a24e2">
+<div id="outline-container-org0bfcc3f" class="outline-3">
+<h3 id="org0bfcc3f">Password store</h3>
+<div class="outline-text-3" id="text-org0bfcc3f">
 <ul class="org-ul">
 <li><a href="https://www.passwordstore.org">Password manager</a> may hold the proxy-secret.</li>
 <li>Pass-name to the secret <b>MUST</b> be stored in an environment variable <code>${proxy_auth}</code>.</li>
@@ -270,9 +86,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 <i>pass-name</i> can be declared by adding following lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
 </p>
-<div class="seealso" id="org1bd392b">
+<div class="seealso" id="org79ffc88">
 <ul class="org-ul">
-<li><a href="setup.html#orgc6747a1">Personalization</a></li>
+<li><a href="setup.html#org087091f">Personalization</a></li>
 </ul>
 
 </div>
@@ -288,9 +104,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </ul>
 </div>
 
-<div id="outline-container-orgf91b124" class="outline-5">
-<h5 id="orgf91b124">plain password</h5>
-<div class="outline-text-5" id="text-orgf91b124">
+<div id="outline-container-orgda48cab" class="outline-5">
+<h5 id="orgda48cab">plain password</h5>
+<div class="outline-text-5" id="text-orgda48cab">
 <p>
 Password store stores just the &lt;password&gt;.
 &lt;password&gt; may be stored in password manager using a command such as:
@@ -302,9 +118,9 @@ Password store stores just the &lt;password&gt;.
 </div>
 </div>
 
-<div id="outline-container-org5fc212f" class="outline-5">
-<h5 id="org5fc212f">multi-field</h5>
-<div class="outline-text-5" id="text-org5fc212f">
+<div id="outline-container-orgb9ac82b" class="outline-5">
+<h5 id="orgb9ac82b">multi-field</h5>
+<div class="outline-text-5" id="text-orgb9ac82b">
 <p>
 Information about <i>any</i> or <i>all</i> of following fields may be provided.
 </p>
@@ -333,9 +149,9 @@ Fields may be stored in password manager using a command such as:
 </div>
 </div>
 
-<div id="outline-container-org632ebf3" class="outline-3">
-<h3 id="org632ebf3">Environment declaration</h3>
-<div class="outline-text-3" id="text-org632ebf3">
+<div id="outline-container-org4053704" class="outline-3">
+<h3 id="org4053704">Environment declaration</h3>
+<div class="outline-text-3" id="text-org4053704">
 <ul class="org-ul">
 <li><p>
 A <code>${proxy_protocol}</code> environment variable <b>may</b> be declared.
@@ -367,7 +183,7 @@ It can be declared by adding following lines to
 <li><p>
 Its value must be of the form:
 </p>
-<pre class="example" id="org57a5d3a">
+<pre class="example" id="org18571a5">
 &lt;p_type&gt;_proxy="&lt;protocol&gt;://[&lt;encoded_username&gt;[:&lt;encoded_password&gt;]]@&lt;address&gt;[:&lt;port&gt;]/"
 </pre></li>
 
@@ -379,7 +195,7 @@ Its value must be of the form:
 </pre>
 </div>
 
-<div class="danger" id="org21b380d">
+<div class="danger" id="orga9404c4">
 <p>
 Storing password in environment is strongly <b>discouraged</b>.
 </p>
@@ -390,16 +206,16 @@ Storing password in environment is strongly <b>discouraged</b>.
 </div>
 </div>
 
-<div id="outline-container-orge908079" class="outline-2">
-<h2 id="orge908079">Code</h2>
-<div class="outline-text-2" id="text-orge908079">
+<div id="outline-container-org5a5336b" class="outline-2">
+<h2 id="org5a5336b">Code</h2>
+<div class="outline-text-2" id="text-org5a5336b">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-org9e74324" class="outline-3">
-<h3 id="org9e74324">Check availability</h3>
-<div class="outline-text-3" id="text-org9e74324">
+<div id="outline-container-org2229570" class="outline-3">
+<h3 id="org2229570">Check availability</h3>
+<div class="outline-text-3" id="text-org2229570">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> curl printenv grep tr; <span style="color: #51afef;">do</span>
@@ -416,9 +232,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgae74b95" class="outline-3">
-<h3 id="orgae74b95">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-orgae74b95">
+<div id="outline-container-orge946a85" class="outline-3">
+<h3 id="orge946a85">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-orge946a85">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">show</span>=false
@@ -485,9 +301,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org0989795" class="outline-3">
-<h3 id="org0989795">Parse command</h3>
-<div class="outline-text-3" id="text-org0989795">
+<div id="outline-container-org79ef794" class="outline-3">
+<h3 id="org79ef794">Parse command</h3>
+<div class="outline-text-3" id="text-org79ef794">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
@@ -515,9 +331,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orga9e2b7e" class="outline-3">
-<h3 id="orga9e2b7e">Extract proxy information from environment variable</h3>
-<div class="outline-text-3" id="text-orga9e2b7e">
+<div id="outline-container-orgf18eca8" class="outline-3">
+<h3 id="orgf18eca8">Extract proxy information from environment variable</h3>
+<div class="outline-text-3" id="text-orgf18eca8">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">extract_env</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">url</span>=<span style="color: #98be65;">"${1}"</span>
@@ -568,9 +384,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org9d71943" class="outline-3">
-<h3 id="org9d71943">Compile proxy information</h3>
-<div class="outline-text-3" id="text-org9d71943">
+<div id="outline-container-orge802d59" class="outline-3">
+<h3 id="orge802d59">Compile proxy information</h3>
+<div class="outline-text-3" id="text-orge802d59">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">build</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">all_proxy</span>=<span style="color: #98be65;">"$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"</span>
@@ -609,9 +425,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org9d7bc27" class="outline-3">
-<h3 id="org9d7bc27">Html handling</h3>
-<div class="outline-text-3" id="text-org9d7bc27">
+<div id="outline-container-orgde80c17" class="outline-3">
+<h3 id="orgde80c17">Html handling</h3>
+<div class="outline-text-3" id="text-orgde80c17">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">quote</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     printf <span style="color: #98be65;">"%s"</span> <span style="color: #98be65;">"$1"</span> <span style="color: #98be65;">\</span>
@@ -646,9 +462,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org68c142a" class="outline-3">
-<h3 id="org68c142a">Main routine call</h3>
-<div class="outline-text-3" id="text-org68c142a">
+<div id="outline-container-orgb4ac701" class="outline-3">
+<h3 id="orgb4ac701">Main routine call</h3>
+<div class="outline-text-3" id="text-orgb4ac701">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Main routine call</span>

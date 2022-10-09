@@ -95,8 +95,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle ../bin/proxy_send.sh :exports none :tangle-mode (identity #o755)
-    #!/usr/bin/env sh
+  #+begin_src sh :tangle ../bin/proxy_send.sh :exports none :shebang #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
     # Copyright 2020, 2021 Pradyumna Paranjape

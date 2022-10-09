@@ -1,24 +1,150 @@
-#!/usr/bin/env sh
-# -*- coding:utf-8; mode:shell-script -*-
-#
-# Copyright 2020, 2021 Pradyumna Paranjape
-#
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+.TH "Proxy_send - send proxy authentication" "1" 
 
-affirm_availability () {
+.SH "Description"
+.IP \(em 4
+This script is automatically called by prady_runcom's profile scripts when network is inferred as \fIoffice\fP.
+.IP \(em 4
+We try to open https://www.duckduckgo.com/ \fBat\fP \fIduckduckgo\fP and send proxy authentication secret.
+.IP \(em 4
+The proxy server generally 'remembers' that our machine was authenticated and
+does not demand proxy authentication again.
+
+.SH "Setup"
+.PP
+Proxy secret may be provided through any of the tools explained in following sections.
+
+.IP \(em 4
+If information is available at both locations, it is loaded in order.
+.IP \(em 4
+Information available from the latter supersedes the former.
+
+.SS "Password store"
+.IP \(em 4
+https://www.passwordstore.org \fBat\fP \fIPassword manager\fP may hold the proxy-secret.
+.IP \(em 4
+Pass-name to the secret \fBMUST\fP be stored in an environment variable \fI${proxy_auth}\fP.
+.IP \(em 4
+Secret MUST \fBNOT\fP be url-encoded.
+
+.IP \(em 4
+\fIpass-name\fP can be declared by adding following lines to
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP
+.IP \(em 4
+setup.org \fBat\fP \fIPersonalization\fP
+
+.RS
+.nf
+\fCproxy_auth="office/proxy_server.example.com/best_employee"
+export proxy_auth
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Secret \fBMUST\fP be stored in either of following formats.
+
+.RS
+.TP
+.ft I
+plain password
+.ft
+.PP
+Password store stores just the <password>.
+<password> may be stored in password manager using a command such as:
+.RS
+.nf
+\fCpass insert office/proxy_server.example.com/best_employee
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+multi-field
+.ft
+.PP
+Information about \fIany\fP or \fIall\fP of following fields may be provided.
+.IP \(em 4
+Order is not strict.
+
+.RS
+.nf
+\fCprotocol: <proxy protocol>
+username: <username in plain text>
+password: <password in plain text>
+address: <proxy server address>
+port: <proxy port>
+
+\fP
+.fi
+.RE
+
+.PP
+Fields may be stored in password manager using a command such as:
+.RS
+.nf
+\fCpass insert -m office/proxy_server.example.com/best_employee
+\fP
+.fi
+.RE
+.RE
+
+.SS "Environment declaration"
+.IP \(em 4
+A \fI${proxy_protocol}\fP environment variable \fBmay\fP be declared.
+It can be declared by adding following lines to
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP
+
+.RS
+.nf
+\fCproxy_protocol="http"
+export proxy_protocol
+
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Proxy information extraction attempt is made from \fI${proxy_protocol}_proxy\fP environment variable
+.IP \(em 4
+e.g. \fIhttp_proxy\fP, \fIsocks_proxy\fP, etc.
+.IP \(em 4
+If \fIproxy_protocol\fP remains unset, extraction is attempted from \fIall_proxy\fP and \fIhttp\fP is used as default.
+
+.IP \(em 4
+\fI${<proxy_protocol>_proxy}\fP should be declared in
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP.
+.IP \(em 4
+Special characters (symbols) in username and password \fBMUST\fP be https://en.wikipedia.org/wiki/Percent-encoding \fBat\fP \fIurl-encoded\fP.
+.IP \(em 4
+Its value must be of the form:
+.RS
+.nf
+<p_type>_proxy="<protocol>://[<encoded_username>[:<encoded_password>]]@<address>[:<port>]/"
+
+.fi
+.RE
+
+.IP \(em 4
+example for \fIall_proxy\fP
+.RS
+.nf
+\fCall_proxy="http://best_employee:secure%21secret@192.168.1.1:1080/"
+export all_proxy
+\fP
+.fi
+.RE
+
+Storing password in environment is strongly \fBdiscouraged\fP.
+
+.SH "Code"
+.PP
+This section tangles the code (POSIX)
+.SS "Check availability"
+.RS
+.nf
+\fCaffirm_availability () {
     for _import in curl printenv grep tr; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
             unset _import
@@ -28,7 +154,14 @@ affirm_availability () {
     unset _import
 }
 
-set_vars () {
+\fP
+.fi
+.RE
+
+.SS "Handle global variables and exits"
+.RS
+.nf
+\fCset_vars () {
     show=false
     pass_keys="protocol username password host port"
     proxy_header=
@@ -88,7 +221,14 @@ clean_exit() {
     exit 0
 }
 
-cli () {
+\fP
+.fi
+.RE
+
+.SS "Parse command"
+.RS
+.nf
+\fCcli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
             -h)
@@ -109,7 +249,14 @@ cli () {
     done
 }
 
-extract_env () {
+\fP
+.fi
+.RE
+
+.SS "Extract proxy information from environment variable"
+.RS
+.nf
+\fCextract_env () {
     url="${1}"
     # keep consuming URL like $@ is consumed from command line
     _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
@@ -153,7 +300,14 @@ get_env_proxy () {
     unset proxy_str
 }
 
-build () {
+\fP
+.fi
+.RE
+
+.SS "Compile proxy information"
+.RS
+.nf
+\fCbuild () {
     all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
     extract_env "${all_proxy}"
     get_env_proxy
@@ -185,7 +339,14 @@ compile_proxy () {
     unset scrt
 }
 
-quote () {
+\fP
+.fi
+.RE
+
+.SS "Html handling"
+.RS
+.nf
+\fCquote () {
     printf "%s" "$1" \
         | tr -d '\n' \
         | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
@@ -213,7 +374,14 @@ send_request () {
     esac
 }
 
-main() {
+\fP
+.fi
+.RE
+
+.SS "Main routine call"
+.RS
+.nf
+\fCmain() {
     # Main routine call
     affirm_availability
     set_vars
@@ -230,3 +398,6 @@ main() {
 
 
 main "$@"
+\fP
+.fi
+.RE

@@ -1,25 +1,64 @@
-#!/usr/bin/env sh
-#-*- coding:utf-8; mode:shell-script -*-
-#
-# Copyright 2020, 2021, 2022 Pradyumna Paranjape
-#
-## Check for network connectivity at the beginning
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+.TH "netcheck - identify connected network" "1" 
 
-set_vars() {
+.SH "Description"
+.PP
+Identify connected network.
+Print the following string
+.RS
+.nf
+<IP-ADDRESS>\t<AP-ADDRESS>\t<Net-State-Code>
+
+.fi
+.RE
+.SS "IP-ADDRESS"
+.PP
+Output of \fIhostname \-I\fP
+
+.SS "AP-ADDRESS"
+.PP
+Access-Point address. Default route to which packets are sent.
+
+.SS "Net-State-Code"
+.PP
+5-bit number representing inferred state of network
+.IP \(em 4
+bit 1: (1) Work-network connected
+.IP \(em 4
+bit 2: (2) Home-network connected
+.IP \(em 4
+bit 3: (4) AP responds to \fIping\fP
+.IP \(em 4
+bit 4: (8) Google's DNS server 8.8.8.8 responds to \fIping\fP
+.IP \(em 4
+bit 5: (16) Google's address (gets resolved) and responds to \fIping\fP
+
+.SH "Setup"
+.PP
+Following variables should be declared by adding lines to
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP
+.IP \(em 4
+home_ap: ip addresses that imply presence at home (separator: <space>)
+.IP \(em 4
+work_ap: ip addresses that imply presence at work (separator: <space>)
+
+.RS
+.nf
+\fChome_ap="10.0.0.1 10.0.0.2"
+work_ap="192.168.0.1 192.168.1.1"
+export home_ap
+export work_ap
+
+\fP
+.fi
+.RE
+
+.SH "Code"
+.PP
+This section tangles source code
+.SS "Handle global variables and exits"
+.RS
+.nf
+\fCset_vars() {
     google_ip="8.8.8.8"
     google_dn="www.google.com"
     if ! ip_addr="$(hostname -I 2>/dev/null)"; then
@@ -65,7 +104,14 @@ clean_exit() {
     exit 0
 }
 
-at_home() {
+\fP
+.fi
+.RE
+
+.SS "Identify intranet"
+.RS
+.nf
+\fCat_home() {
     # shellcheck disable=SC2154
     for ap in ${home_ap}; do
         if [ "${ap}" = "${ap_addr}"  ]; then
@@ -75,8 +121,14 @@ at_home() {
     done
     unset ap
 }
+\fP
+.fi
+.RE
 
-ping_target () {
+.SS "ping"
+.RS
+.nf
+\fCping_target () {
     if [ -z "${1}" ]; then
         return 1
     fi
@@ -113,7 +165,14 @@ check_ping() {
     unset ap
 }
 
-main() {
+\fP
+.fi
+.RE
+
+.SS "Main routine call"
+.RS
+.nf
+\fCmain() {
     set_vars
     at_home
     check_ping
@@ -122,3 +181,6 @@ main() {
 }
 
 main
+\fP
+.fi
+.RE

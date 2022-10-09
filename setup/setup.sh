@@ -53,8 +53,7 @@ for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
         fi
     fi
 done
-unset hard_directory
-unset non_mt_msg
+unset hard_directory non_mt_msg
 
 move_cargo () {
     CARGO_HOME="${HOME}/.local/share/cargo"
@@ -70,9 +69,7 @@ move_cargo () {
             ln -s "${LOCAL_BIN}" "${CARGO_HOME}/bin"
     fi
     export CARGO_HOME
-    unset LOCAL_BIN
-    unset BAD_CARGO_HOME
-    unset BAD_CARGO_BIN
+    unset LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
 }
 
 }

@@ -3,196 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-29 Fri 23:04 -->
+<!-- 2022-10-09 Sun 09:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setup runcom</title>
 <meta name="author" content="Pradyumna Paranjape" />
 <meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-</style>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -207,47 +23,47 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc5d52a1">Legend</a>
+<li><a href="#org42fad0b">Legend</a>
 <ul>
-<li><a href="#org29d35e9">Brackets</a></li>
+<li><a href="#org88d77c4">Brackets</a></li>
 </ul>
 </li>
-<li><a href="#org66a27e6">Requirements</a>
+<li><a href="#org8d72b84">Requirements</a>
 <ul>
-<li><a href="#orgf5a683d">Knowledge</a></li>
-<li><a href="#org997ead7">Dependencies</a></li>
+<li><a href="#orgb6facd9">Knowledge</a></li>
+<li><a href="#org30643dc">Dependencies</a></li>
 </ul>
 </li>
-<li><a href="#org1bd2ae8">Set-up</a>
+<li><a href="#orgfe02b4a">Set-up</a>
 <ul>
-<li><a href="#orgb85f4eb">Bootstrap set-up using script</a></li>
-<li><a href="#orgbfb9416">Guide for manual set-up.</a></li>
+<li><a href="#org6de1006">Bootstrap set-up using script</a></li>
+<li><a href="#org36312b6">Guide for manual set-up.</a></li>
 </ul>
 </li>
-<li><a href="#orge27b83c">Undo Set-up</a>
+<li><a href="#org1756735">Undo Set-up</a>
 <ul>
-<li><a href="#orgac4f95e">Bootstrap unset using script</a></li>
-<li><a href="#orgf226da1">Guide to manually undo set-up.</a></li>
+<li><a href="#orgfd4edcc">Bootstrap unset using script</a></li>
+<li><a href="#org9d265bf">Guide to manually undo set-up.</a></li>
 </ul>
 </li>
-<li><a href="#orgc6747a1">Personalization</a>
+<li><a href="#org087091f">Personalization</a>
 <ul>
-<li><a href="#orgb933d13">Local</a></li>
-<li><a href="#orgaa65c21">Synchronized</a></li>
-<li><a href="#org09439f9">Proxy settings</a></li>
+<li><a href="#orgb24753a">Local</a></li>
+<li><a href="#orga46ceb3">Synchronized</a></li>
+<li><a href="#org7e89a1a">Proxy settings</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc5d52a1" class="outline-2">
-<h2 id="orgc5d52a1">Legend</h2>
-<div class="outline-text-2" id="text-orgc5d52a1">
+<div id="outline-container-org42fad0b" class="outline-2">
+<h2 id="org42fad0b">Legend</h2>
+<div class="outline-text-2" id="text-org42fad0b">
 </div>
-<div id="outline-container-org29d35e9" class="outline-3">
-<h3 id="org29d35e9">Brackets</h3>
-<div class="outline-text-3" id="text-org29d35e9">
+<div id="outline-container-org88d77c4" class="outline-3">
+<h3 id="org88d77c4">Brackets</h3>
+<div class="outline-text-3" id="text-org88d77c4">
 <ul class="org-ul">
 <li><b>Square</b> <code>[]</code>: optional parts: <code>W[orld]H[ealth]O[rganisation]</code></li>
 <li><b>Angular</b> <code>&lt;&gt;</code>: instructions to fill: <code>&lt;a global organisation&gt;</code></li>
@@ -258,20 +74,20 @@
 </div>
 </div>
 
-<div id="outline-container-org66a27e6" class="outline-2">
-<h2 id="org66a27e6">Requirements</h2>
-<div class="outline-text-2" id="text-org66a27e6">
+<div id="outline-container-org8d72b84" class="outline-2">
+<h2 id="org8d72b84">Requirements</h2>
+<div class="outline-text-2" id="text-org8d72b84">
 </div>
-<div id="outline-container-orgf5a683d" class="outline-3">
-<h3 id="orgf5a683d">Knowledge</h3>
-<div class="outline-text-3" id="text-orgf5a683d">
+<div id="outline-container-orgb6facd9" class="outline-3">
+<h3 id="orgb6facd9">Knowledge</h3>
+<div class="outline-text-3" id="text-orgb6facd9">
 <ul class="org-ul">
 <li>Linux shell commands. We shall try to be POSIX-compliant.</li>
 <li>Knowledge of Linux, "dot-files".</li>
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="org6c85968">
+<div class="warning" id="orga2c0f5a">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -281,9 +97,9 @@ Avoid use of <b>sudo</b> as much as possible.
 </div>
 </div>
 
-<div id="outline-container-org997ead7" class="outline-3">
-<h3 id="org997ead7">Dependencies</h3>
-<div class="outline-text-3" id="text-org997ead7">
+<div id="outline-container-org30643dc" class="outline-3">
+<h3 id="org30643dc">Dependencies</h3>
+<div class="outline-text-3" id="text-org30643dc">
 <ul class="org-ul">
 <li>A GNU/Linux distribution. I use <a href="https://fedoraproject.org">Fedora</a>.</li>
 <li>GNU <a href="https://www.gnu.org/software/coreutils/coreutils.html">coreutils</a>: Basic OS utilities.</li>
@@ -292,7 +108,7 @@ Avoid use of <b>sudo</b> as much as possible.
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="org26a5558">
+<div class="important" id="org265254b">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -303,9 +119,9 @@ For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href=
 </div>
 </div>
 
-<div id="outline-container-orga01c319" class="outline-4">
-<h4 id="orga01c319">Bootstrap installation of dependencies</h4>
-<div class="outline-text-4" id="text-orga01c319">
+<div id="outline-container-org5710aa4" class="outline-4">
+<h4 id="org5710aa4">Bootstrap installation of dependencies</h4>
+<div class="outline-text-4" id="text-org5710aa4">
 <p>
 For automated installation of dependencies,
 run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
@@ -315,7 +131,7 @@ run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated 
 </pre>
 </div>
 
-<div class="note" id="orgcf258f1">
+<div class="note" id="org1b36730">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
@@ -327,9 +143,9 @@ install dependencies manually instead, that's all it does.
 </div>
 </div>
 
-<div id="outline-container-org4678334" class="outline-4">
-<h4 id="org4678334">Guide for manual installation of dependencies.</h4>
-<div class="outline-text-4" id="text-org4678334">
+<div id="outline-container-orgede952b" class="outline-4">
+<h4 id="orgede952b">Guide for manual installation of dependencies.</h4>
+<div class="outline-text-4" id="text-orgede952b">
 <p>
 Use suitable package manager (<a href="https://wiki.debian.org/Apt">apt</a>|<a href="https://pkgs.alpinelinux.org/packages">apk</a>|<a href="https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/">dnf</a>|<a href="https://archlinux.org/pacman/">pacman</a>|<a href="https://documentation.suse.com/smart/linux/html/concept-zypper/index.html">zypper</a>)
 to install coreutils, curl, git, stow.
@@ -387,22 +203,22 @@ pacman: Arch, Manjaro
 </div>
 </div>
 
-<div id="outline-container-org1bd2ae8" class="outline-2">
-<h2 id="org1bd2ae8">Set-up</h2>
-<div class="outline-text-2" id="text-org1bd2ae8">
+<div id="outline-container-orgfe02b4a" class="outline-2">
+<h2 id="orgfe02b4a">Set-up</h2>
+<div class="outline-text-2" id="text-orgfe02b4a">
 <ul class="org-ul">
-<li>Affirm <a href="#org66a27e6">requirements</a>.</li>
+<li>Affirm <a href="#org8d72b84">requirements</a>.</li>
 </ul>
-<div class="warning" id="orge3d4fee">
+<div class="warning" id="org55748a8">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="org58f2fd3">
+<div class="warning" id="orgff89fcc">
 <ul class="org-ul">
-<li>The next steps require you to delete all <a href="index.html#org2a4b5c7">stowed dotfiles</a>.</li>
+<li>The next steps require you to delete all <a href="index.html#org89679f1">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
 <li>Preserve this backup, you will need this during undoing set-up.</li>
 <li>You HAVE BEEN warned.</li>
@@ -411,9 +227,9 @@ Do <b>NOT</b> use <code>sudo</code> during set-up.
 </div>
 </div>
 
-<div id="outline-container-orgb85f4eb" class="outline-3">
-<h3 id="orgb85f4eb">Bootstrap set-up using script</h3>
-<div class="outline-text-3" id="text-orgb85f4eb">
+<div id="outline-container-org6de1006" class="outline-3">
+<h3 id="org6de1006">Bootstrap set-up using script</h3>
+<div class="outline-text-3" id="text-org6de1006">
 <ul class="org-ul">
 <li><p>
 Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
@@ -425,7 +241,7 @@ Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> s
 </pre>
 </div>
 
-<div class="note" id="org15d7278">
+<div class="note" id="org12773f7">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
@@ -438,13 +254,13 @@ follow manual set-up instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgbfb9416" class="outline-3">
-<h3 id="orgbfb9416">Guide for manual set-up.</h3>
-<div class="outline-text-3" id="text-orgbfb9416">
+<div id="outline-container-org36312b6" class="outline-3">
+<h3 id="org36312b6">Guide for manual set-up.</h3>
+<div class="outline-text-3" id="text-org36312b6">
 </div>
-<div id="outline-container-org30ad820" class="outline-4">
-<h4 id="org30ad820">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
-<div class="outline-text-4" id="text-org30ad820">
+<div id="outline-container-orgdd62d49" class="outline-4">
+<h4 id="orgdd62d49">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
+<div class="outline-text-4" id="text-orgdd62d49">
 <div class="org-src-container">
 <pre class="src src-sh">git clone --recurse-submodules <span style="color: #98be65;">"https://github.com/pradyparanjpe/runcom"</span> <span style="color: #98be65;">"${HOME}/.runcom"</span> || <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">1</span>
 </pre>
@@ -452,18 +268,18 @@ follow manual set-up instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgd60a05c" class="outline-4">
-<h4 id="orgd60a05c">Stow dot-files</h4>
-<div class="outline-text-4" id="text-orgd60a05c">
+<div id="outline-container-org8592d30" class="outline-4">
+<h4 id="org8592d30">Stow dot-files</h4>
+<div class="outline-text-4" id="text-org8592d30">
 <ul class="org-ul">
 <li><code>GNU stow</code> will create symlinked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> in <code>${HOME}</code>.</li>
 <li>If <code>stow</code> finds a pre-existing directory, symlinks are created inside that directory.</li>
 <li>If <code>stow</code> finds a pre-existing file (non-directory), it throws error.</li>
 </ul>
 </div>
-<div id="outline-container-orgc0ecd49" class="outline-5">
-<h5 id="orgc0ecd49">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
-<div class="outline-text-5" id="text-orgc0ecd49">
+<div id="outline-container-org90bc896" class="outline-5">
+<h5 id="org90bc896">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
+<div class="outline-text-5" id="text-org90bc896">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">presence</span>=<span style="color: #98be65;">"${HOME}/OLD_CONFIG"</span>
 mkdir -p <span style="color: #98be65;">"${presence}"</span>
@@ -479,9 +295,9 @@ cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"<
 </div>
 </div>
 
-<div id="outline-container-org5234d52" class="outline-5">
-<h5 id="org5234d52">Create directories, so that symlinks are made <i>inside</i> them.</h5>
-<div class="outline-text-5" id="text-org5234d52">
+<div id="outline-container-orgaeeaf88" class="outline-5">
+<h5 id="orgaeeaf88">Create directories, so that symlinks are made <i>inside</i> them.</h5>
+<div class="outline-text-5" id="text-orgaeeaf88">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> conf_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -518,9 +334,9 @@ mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
 </div>
 </div>
 
-<div id="outline-container-org5fed2b3" class="outline-5">
-<h5 id="org5fed2b3">Stow</h5>
-<div class="outline-text-5" id="text-org5fed2b3">
+<div id="outline-container-orgf3cf0ea" class="outline-5">
+<h5 id="orgf3cf0ea">Stow</h5>
+<div class="outline-text-5" id="text-orgf3cf0ea">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vS -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> dotfiles
 </pre>
@@ -529,9 +345,9 @@ mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
 </div>
 </div>
 
-<div id="outline-container-orge1c84e5" class="outline-4">
-<h4 id="orge1c84e5">Set up Cargo (RUST) HOME</h4>
-<div class="outline-text-4" id="text-orge1c84e5">
+<div id="outline-container-org814c3b2" class="outline-4">
+<h4 id="org814c3b2">Set up Cargo (RUST) HOME</h4>
+<div class="outline-text-4" id="text-org814c3b2">
 <p>
 Cargo (RUST) clutters <code>${HOME}</code> with its <i>data</i>. Put it at the right place.
 Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> like python3.
@@ -563,17 +379,17 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
 </div>
 
 
-<div id="outline-container-orge27b83c" class="outline-2">
-<h2 id="orge27b83c">Undo Set-up</h2>
-<div class="outline-text-2" id="text-orge27b83c">
-<div class="warning" id="org2a101eb">
+<div id="outline-container-org1756735" class="outline-2">
+<h2 id="org1756735">Undo Set-up</h2>
+<div class="outline-text-2" id="text-org1756735">
+<div class="warning" id="org9d2d5a5">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="org29790a9">
+<div class="note" id="orgaf3d25b">
 <ul class="org-ul">
 <li>The next steps will require a directory containing 'old configuration files'.</li>
 <li>You HAD BEEN warned against deleting it during the set-up.</li>
@@ -582,9 +398,9 @@ Do <b>NOT</b> use <code>sudo</code> during unset.
 </div>
 </div>
 
-<div id="outline-container-orgac4f95e" class="outline-3">
-<h3 id="orgac4f95e">Bootstrap unset using script</h3>
-<div class="outline-text-3" id="text-orgac4f95e">
+<div id="outline-container-orgfd4edcc" class="outline-3">
+<h3 id="orgfd4edcc">Bootstrap unset using script</h3>
+<div class="outline-text-3" id="text-orgfd4edcc">
 <ul class="org-ul">
 <li><p>
 Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.
@@ -596,7 +412,7 @@ Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> sc
 </pre>
 </div>
 
-<div class="note" id="org02f9e8d">
+<div class="note" id="org5aea33d">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -609,20 +425,20 @@ follow manual unset instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgf226da1" class="outline-3">
-<h3 id="orgf226da1">Guide to manually undo set-up.</h3>
-<div class="outline-text-3" id="text-orgf226da1">
+<div id="outline-container-org9d265bf" class="outline-3">
+<h3 id="org9d265bf">Guide to manually undo set-up.</h3>
+<div class="outline-text-3" id="text-org9d265bf">
 </div>
-<div id="outline-container-orgf3647e7" class="outline-4">
-<h4 id="orgf3647e7">UnStow dot-files</h4>
-<div class="outline-text-4" id="text-orgf3647e7">
+<div id="outline-container-orgbcd6f91" class="outline-4">
+<h4 id="orgbcd6f91">UnStow dot-files</h4>
+<div class="outline-text-4" id="text-orgbcd6f91">
 <ul class="org-ul">
 <li>Use <code>GNU stow</code> to unstow to un-linked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> from <code>${HOME}</code>.</li>
 </ul>
 </div>
-<div id="outline-container-orge4d8584" class="outline-5">
-<h5 id="orge4d8584">UnStow</h5>
-<div class="outline-text-5" id="text-orge4d8584">
+<div id="outline-container-org4b4588e" class="outline-5">
+<h5 id="org4b4588e">UnStow</h5>
+<div class="outline-text-5" id="text-org4b4588e">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vp -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> -D dotfiles
 
@@ -631,9 +447,9 @@ follow manual unset instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgc26ce55" class="outline-5">
-<h5 id="orgc26ce55">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
-<div class="outline-text-5" id="text-orgc26ce55">
+<div id="outline-container-orgfc12207" class="outline-5">
+<h5 id="orgfc12207">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
+<div class="outline-text-5" id="text-orgfc12207">
 <p>
 Replace the target directory <code>${1:-${HOME}/OLD_CONFIG}</code> in following code block
 with &lt;path/to/old/config/directory&gt;.
@@ -655,9 +471,9 @@ with &lt;path/to/old/config/directory&gt;.
 </div>
 </div>
 
-<div id="outline-container-org8339d69" class="outline-4">
-<h4 id="org8339d69">Restore CARGO_HOME</h4>
-<div class="outline-text-4" id="text-org8339d69">
+<div id="outline-container-org8d11ae9" class="outline-4">
+<h4 id="org8d11ae9">Restore CARGO_HOME</h4>
+<div class="outline-text-4" id="text-org8d11ae9">
 <p>
 move <code>${XDG_DATA_HOME}/cargo</code> to "${HOME}/.cargo"
 </p>
@@ -668,9 +484,9 @@ move <code>${XDG_DATA_HOME}/cargo</code> to "${HOME}/.cargo"
 </div>
 </div>
 
-<div id="outline-container-org2686f6d" class="outline-4">
-<h4 id="org2686f6d">Delete runcom</h4>
-<div class="outline-text-4" id="text-org2686f6d">
+<div id="outline-container-org74513a9" class="outline-4">
+<h4 id="org74513a9">Delete runcom</h4>
+<div class="outline-text-4" id="text-org74513a9">
 <p>
 Goodbye
 </p>
@@ -684,13 +500,13 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-orgc6747a1" class="outline-2">
-<h2 id="orgc6747a1">Personalization</h2>
-<div class="outline-text-2" id="text-orgc6747a1">
+<div id="outline-container-org087091f" class="outline-2">
+<h2 id="org087091f">Personalization</h2>
+<div class="outline-text-2" id="text-org087091f">
 </div>
-<div id="outline-container-orgb933d13" class="outline-3">
-<h3 id="orgb933d13">Local</h3>
-<div class="outline-text-3" id="text-orgb933d13">
+<div id="outline-container-orgb24753a" class="outline-3">
+<h3 id="orgb24753a">Local</h3>
+<div class="outline-text-3" id="text-orgb24753a">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc</code> are sourced.</li>
 <li>Do not synchronize this directory. This directory is only for the machine.</li>
@@ -699,16 +515,16 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-orgaa65c21" class="outline-3">
-<h3 id="orgaa65c21">Synchronized</h3>
-<div class="outline-text-3" id="text-orgaa65c21">
+<div id="outline-container-orga46ceb3" class="outline-3">
+<h3 id="orga46ceb3">Synchronized</h3>
+<div class="outline-text-3" id="text-orga46ceb3">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc</code> are sourced.</li>
 <li><p>
 Synchronize (stow) that directory using a local repository or by simply copying contents.
 </p>
 
-<div class="danger" id="orgfeee12e">
+<div class="danger" id="org6834178">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
@@ -718,7 +534,7 @@ Synchronize (stow) that directory using a local repository or by simply copying 
 </div></li>
 </ul>
 
-<div class="tip" id="orgdbf73e7">
+<div class="tip" id="org78eed6a">
 <ul class="org-ul">
 <li><p>
 Remember to keep the repository updated.
@@ -734,9 +550,9 @@ Remember to keep the repository updated.
 </div>
 </div>
 
-<div id="outline-container-org09439f9" class="outline-3">
-<h3 id="org09439f9">Proxy settings</h3>
-<div class="outline-text-3" id="text-org09439f9">
+<div id="outline-container-org7e89a1a" class="outline-3">
+<h3 id="org7e89a1a">Proxy settings</h3>
+<div class="outline-text-3" id="text-org7e89a1a">
 <p>
 Read set up for <a href="./proxy_send.html">proxy_send</a>.
 </p>

@@ -1,0 +1,384 @@
+.TH "Setup runcom" "1" 
+
+.SH "Legend"
+.SS "Brackets"
+.IP \(em 4
+\fBSquare\fP \fI[]\fP: optional parts: \fIW[orld]H[ealth]O[rganisation]\fP
+.IP \(em 4
+\fBAngular\fP \fI<>\fP: instructions to fill: \fI<a global organisation>\fP
+.IP \(em 4
+\fBCurly\fP, following a dollar \fI${}\fP: environment variable \fI${HOME}\fP
+.IP \(em 4
+\fBRound\fP, with bar separator: \fI(WHO|UNO)\fP = \fIWHO or UNO\fP
+
+.SH "Requirements"
+.SS "Knowledge"
+.IP \(em 4
+Linux shell commands. We shall try to be POSIX-compliant.
+.IP \(em 4
+Knowledge of Linux, "dot-files".
+.IP \(em 4
+super user (sudo) permissions (only for package installation)
+Avoid use of \fBsudo\fP as much as possible.
+
+.SS "Dependencies"
+.IP \(em 4
+A GNU/Linux distribution. I use https://fedoraproject.org \fBat\fP \fIFedora\fP.
+.IP \(em 4
+GNU https://www.gnu.org/software/coreutils/coreutils.html \fBat\fP \fIcoreutils\fP: Basic OS utilities.
+.IP \(em 4
+https://curl.se/ \fBat\fP \fIcurl\fP for proxy authentication.
+.IP \(em 4
+GNU https://www.gnu.org/software/stow/ \fBat\fP \fIstow\fP: dot-file management
+.IP \(em 4
+https://git-scm.com/ \fBat\fP \fIgit\fP: git it
+
+For Alpine Linux, file:///etc/apk/repositories \fBat\fP \fIenable\fP the https://<mirror-server>/alpine/<version>/community \fBat\fP \fIcommunity repository\fP.
+.IP \(em 4
+If you are using Alpine, you \fBMUST\fP know how.
+
+.SS "Bootstrap installation of dependencies"
+.PP
+For automated installation of dependencies,
+run the ./setup/dependencies.sh \fBat\fP \fIdependencies script\fP with elevated privileges.
+.RS
+.nf
+\fCcurl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
+\fP
+.fi
+.RE
+
+Inspecting scripts before running them (especially with \fIsudo\fP) is always a good idea.
+The \fIdependencies\fP script is tangled (with automation wrappers) from the code below.
+If you feel an urge to inspect it or if it fails,
+install dependencies manually instead, that's all it does.
+
+.SS "Guide for manual installation of dependencies."
+.PP
+Use suitable package manager (https://wiki.debian.org/Apt \fBat\fP \fIapt\fP|https://pkgs.alpinelinux.org/packages \fBat\fP \fIapk\fP|https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/ \fBat\fP \fIdnf\fP|https://archlinux.org/pacman/ \fBat\fP \fIpacman\fP|https://documentation.suse.com/smart/linux/html/concept-zypper/index.html \fBat\fP \fIzypper\fP)
+to install coreutils, curl, git, stow.
+It may be useful to update existing packages
+and repository database before installing packages.
+
+.IP \(em 4
+dnf: Fedora, RockyLinux, RHEL, CentOS
+.RS
+.nf
+\fCdnf -y update || return 65
+dnf -y install coreutils curl git stow || return 66
+\fP
+.fi
+.RE
+
+.IP \(em 4
+apk: Alpine Linux
+.RS
+.nf
+\fCapk update || return 65
+apk --virtual runcom add coreutils curl git stow || return 66
+\fP
+.fi
+.RE
+
+.IP \(em 4
+apt: Debian, Ubuntu
+.RS
+.nf
+\fCapt update || return 65
+apt install -y coreutils curl git stow || return 66
+\fP
+.fi
+.RE
+
+.IP \(em 4
+zypper: OpenSuSE, SuSE
+.RS
+.nf
+\fCzypper ref || return 65
+zypper -n install coreutils curl git stow || return 66
+\fP
+.fi
+.RE
+
+.IP \(em 4
+pacman: Arch, Manjaro
+.RS
+.nf
+\fCpacman --noconfirm -Syu coreutils curl git stow || return 65
+\fP
+.fi
+.RE
+
+.SH "Set-up"
+.IP \(em 4
+Affirm *Requirements \fBat\fP \fIrequirements\fP.
+Do \fBNOT\fP use \fIsudo\fP during set-up.
+
+.IP \(em 4
+The next steps require you to delete all index.org \fBat\fP \fIstowed dotfiles\fP.
+.IP \(em 4
+We shall copy them in a directory named \fI${HOME}/OLD_CONFIG\fP before proceeding.
+.IP \(em 4
+Preserve this backup, you will need this during undoing set-up.
+.IP \(em 4
+You HAVE BEEN warned.
+
+.SS "Bootstrap set-up using script"
+.IP \(em 4
+Set-up may be bootstrapped by running the ./setup/setup.sh \fBat\fP \fIsetup\fP script.
+
+.RS
+.nf
+\fCcurl -sLf "https://pradyparanjpe.github.io/runcom/setup/setup.sh" | sh
+
+\fP
+.fi
+.RE
+
+Inspecting scripts before running them is generally a good idea.
+The \fIset-up\fP script is tangled (with automation wrappers) from the code below.
+If you feel an urge to inspect it or if it fails,
+follow manual set-up instructions with modifications instead.
+
+.SS "Guide for manual set-up."
+.SS "Clone the repository and place at \fI${HOME}/.runcom\fP"
+.RS
+.nf
+\fCgit clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
+\fP
+.fi
+.RE
+
+.SS "Stow dot-files"
+.IP \(em 4
+\fIGNU stow\fP will create symlinked structure for all contents in \fI${HOME}/.runcom/dotfiles\fP in \fI${HOME}\fP.
+.IP \(em 4
+If \fIstow\fP finds a pre-existing directory, symlinks are created inside that directory.
+.IP \(em 4
+If \fIstow\fP finds a pre-existing file (non-directory), it throws error.
+.RS
+.TP
+.ft I
+Preserve 'current' configuration in a \fBvisible\fP folder in \fI${HOME}\fP
+.ft
+.RS
+.nf
+\fCpresence="${HOME}/OLD_CONFIG"
+mkdir -p "${presence}"
+cat << EOR >> "${presence}/README.md"
+# RUNCOM backup
+  This directory contains a backup of configuration that existed before runcom setup.
+  Files in this directory may be merged to their respective place after inspection.
+  I recommend that this directory should **NOT** be deleted.
+  It will be required during un-doing the setup.
+EOR
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Create directories, so that symlinks are made \fIinside\fP them.
+.ft
+.RS
+.nf
+\fCfor conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
+    if [ -d "${conf_mask}" ]; then
+        hard_directory="${HOME}/.config/${conf_mask##*/}"
+        if ! mkdir "${hard_directory}" 2>/dev/null; then
+            mv "${hard_directory}" "${presence}/${hard_directory}"
+            if ! mkdir "${hard_directory}" 2>/dev/null; then
+                # still no luck
+                printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
+                printf "This *shall* cause stow error\n"
+            fi
+        fi
+    fi
+done
+mkdir -p "${HOME}/.config/pvt.d"
+mkdir -p "${HOME}/.config/local.d"
+
+for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
+    if [ -d "${conf_mask}" ]; then
+        hard_directory="${HOME}/.local/share/${data_mask##*/}"
+        if ! mkdir "${hard_directory}" 2>/dev/null; then
+            mv "${hard_directory}" "${presence}/${hard_directory}"
+            if ! mkdir "${hard_directory}" 2>/dev/null; then
+                # still no luck
+                printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
+                printf "This *shall* cause stow error\n"
+            fi
+        fi
+    fi
+done
+unset hard_directory non_mt_msg
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Stow
+.ft
+.RS
+.nf
+\fCstow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
+\fP
+.fi
+.RE
+.RE
+
+.SS "Set up Cargo (RUST) HOME"
+.PP
+Cargo (RUST) clutters \fI${HOME}\fP with its \fIdata\fP. Put it at the right place.
+Cargo's binaries should be installed in \fI${XDG_DATA_HOME}/../bin\fP like python3.
+
+.RS
+.nf
+\fCmove_cargo () {
+    CARGO_HOME="${HOME}/.local/share/cargo"
+    LOCAL_BIN="${HOME}/.local/bin"
+    BAD_CARGO_HOME="${HOME}/.cargo"
+    BAD_CARGO_BIN="${HOME}/.cargo/bin"
+    if [ -d "${BAD_CARGO_HOME}" ] && [ ! -L "${BAD_CARGO_HOME}" ]; then
+        mv -t "${CARGO_HOME}" "${BAD_CARGO_HOME}"
+    fi
+    if [ ! "$(readlink -f "${CARGO_HOME}/bin")" = "${LOCAL_BIN}" ]; then
+        mv -t "${LOCAL_BIN}" "${CARGO_HOME}/bin"/* && \
+            rmdir "${CARGO_HOME}/bin" && \
+            ln -s "${LOCAL_BIN}" "${CARGO_HOME}/bin"
+    fi
+    export CARGO_HOME
+    unset LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
+}
+
+\fP
+.fi
+.RE
+
+
+.SH "Undo Set-up"
+Do \fBNOT\fP use \fIsudo\fP during unset.
+
+.IP \(em 4
+The next steps will require a directory containing 'old configuration files'.
+.IP \(em 4
+You HAD BEEN warned against deleting it during the set-up.
+
+.SS "Bootstrap unset using script"
+.IP \(em 4
+Unset may be bootstrapped by running the ./setup/unset.sh \fBat\fP \fIunset\fP script.
+
+.RS
+.nf
+\fCcurl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
+
+\fP
+.fi
+.RE
+
+Inspecting scripts before running them is generally a good idea.
+The \fIunset\fP script is tangled (with automation wrappers) from the code below.
+If you feel an urge to inspect it or if it fails,
+follow manual unset instructions with modifications instead.
+
+.SS "Guide to manually undo set-up."
+.SS "UnStow dot-files"
+.IP \(em 4
+Use \fIGNU stow\fP to unstow to un-linked structure for all contents in \fI${HOME}/.runcom/dotfiles\fP from \fI${HOME}\fP.
+.RS
+.TP
+.ft I
+UnStow
+.ft
+.RS
+.nf
+\fCstow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
+
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Restore directories form \fI${HOME}/OLD_CONFIG\fP
+.ft
+.PP
+Replace the target directory \fI${1:\-${HOME}/OLD_CONFIG}\fP in following code block
+with <path/to/old/config/directory>.
+.RS
+.nf
+\fCfor conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
+    cp -r "${conf_dir}" "${HOME}"/. || break
+done
+
+# shellcheck disable=SC2181
+if [ $? -ne 0 ]; then
+    printf "Restoration unsuccessful, copy backup files manually.\n"
+else
+    printf "Restoration successful, backup directory may be deleted.\n"
+fi
+\fP
+.fi
+.RE
+.RE
+
+.SS "Restore CARGO_HOME"
+.PP
+move \fI${XDG_DATA_HOME}/cargo\fP to "${HOME}/.cargo"
+.RS
+.nf
+\fCmv "${XDG_DATA_HOME}/cargo" "${HOME}/.cargo"
+\fP
+.fi
+.RE
+
+.SS "Delete runcom"
+.PP
+Goodbye
+
+.RS
+.nf
+\fCrm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
+\fP
+.fi
+.RE
+
+.SH "Personalization"
+.SS "Local"
+.IP \(em 4
+All files that match the glob \fI${XDG_CONFIG_HOME:\-${HOME}/.config}/local.d/.*rc\fP are sourced.
+.IP \(em 4
+Do not synchronize this directory. This directory is only for the machine.
+.IP \(em 4
+To disable ui launch from \fI/dev/tty*\fP, set export environment variable \fIRUNCOM_LAUNCH_UI=false\fP
+
+.SS "Synchronized"
+.IP \(em 4
+All files that match the glob \fI${XDG_CONFIG_HOME:\-${HOME}/.config}/pvt.d/.*rc\fP are sourced.
+.IP \(em 4
+Synchronize (stow) that directory using a local repository or by simply copying contents.
+
+.IP \(em 4
+\fBDO NOT\fP create this directory inside \fI${RUNCOMDIR}:\-${HOME}/.runcom}/.config\fP.
+.IP \(em 4
+\fBDO NOT\fP synchronize this directory using a public repository.
+.IP \(em 4
+\fBDO NOT\fP store passwords in this directory. For password management, use https://passwordstore.org \fBat\fP \fIpass\fP
+
+.IP \(em 4
+Remember to keep the repository updated.
+
+.RS
+.nf
+\fCgit pull --recurse-submodules
+\fP
+.fi
+.RE
+
+.SS "Proxy settings"
+.PP
+Read set up for ./proxy_send.html \fBat\fP \fIproxy_send\fP.

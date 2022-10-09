@@ -2,11 +2,13 @@
 #+TITLE: Wayland start graphics ui
 #+SETUPFILE: header.org
 
+* Description
+Start wayland similar to startx.
+
 * Code
 ** Header
    This section tangles the code (POSIX)
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
-     #!/usr/bin/env sh
+   #+begin_src sh :tangle ../bin/waystart :exports none :shebang #!/usr/bin/env sh
      # -*- coding:utf-8; mode:shell-script -*-
      #
      # Copyright 2020, 2021, 2022 Pradyumna Paranjape
@@ -30,7 +32,7 @@
 
 ** Variables
    With dbus-run-session under wayland, we don't define DISPLAY
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/waystart :exports none
      set_vars() {
          unset DBUS_SESSION_BUS_ADDRESS
          unset SESSION_MANAGER
@@ -45,7 +47,7 @@
    #+end_src
 
 ** Parse command line arguments
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/waystart :exports none
      cli_args () {
          while [ -n "$1" ]; do
              case "$1" in
@@ -82,7 +84,7 @@
    #+end_src
 
 ** Parse files
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/waystart :exports none
      parse_desktop_entry () {
          client="${1}"
          if [ ! -f "${client}" ]; then
@@ -118,7 +120,7 @@
    #+end_src
 
 ** Launch
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/waystart :exports none
      parse_client () {
          if builtin command -v "${client}" >/dev/null 2>&1 \
                 || [ -x "${client}" ]; then
@@ -149,7 +151,7 @@
    #+end_src
 
 ** Entry-Point
-   #+begin_src sh :tangle ../bin/waystart :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :tangle ../bin/waystart :exports none
      main () {
          set_vars
          cli_args "$@"

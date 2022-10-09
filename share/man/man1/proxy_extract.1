@@ -1,0 +1,250 @@
+.TH "Proxy_extract - extract proxy authentication from password store" "1" 
+
+.SH "Description"
+.IP \(em 4
+This script is automatically called by \fIbin/proxy_extract.sh\fP.
+.IP \(em 4
+This may be used in \fI${XDG_CONFIG_HOME:\-${HOME}/.config}/pvt.d/.proxyrc\fP
+to extract proxy settings from the password store.
+.RS
+.nf
+\fCall_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
+http_proxy="${all_proxy}"
+https_proxy="${all_proxy}"
+ftp_proxy="${all_proxy}"
+ftps_proxy="${all_proxy}"
+
+export all_proxy
+export http_proxy
+export https_proxy
+export ftp_proxy
+export ftps_proxy
+\fP
+.fi
+.RE
+
+.IP \(em 4
+https://www.passwordstore.org \fBat\fP \fIPassword manager\fP may hold the proxy-secret.
+.IP \(em 4
+Pass-name to the secret \fBMUST\fP be stored in an environment variable \fI${proxy_auth}\fP.
+.IP \(em 4
+Secret MUST \fBNOT\fP be url-encoded.
+
+.IP \(em 4
+\fIpass-name\fP can be declared by adding following lines to
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP
+.IP \(em 4
+setup.org \fBat\fP \fIPersonalization\fP
+
+.RS
+.nf
+\fCproxy_auth="office/proxy_server.example.com/best_employee"
+export proxy_auth
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Secret \fBMUST\fP be stored in either of following formats.
+
+.SS "plain password"
+.PP
+Password store stores just the <password>.
+<password> may be stored in password manager using a command such as:
+.RS
+.nf
+\fCpass insert office/proxy_server.example.com/best_employee
+\fP
+.fi
+.RE
+
+.SS "multi-field"
+.PP
+Information about \fIany\fP or \fIall\fP of following fields may be provided.
+.IP \(em 4
+Order is not strict.
+
+.RS
+.nf
+\fCprotocol: <proxy protocol>
+username: <username in plain text>
+password: <password in plain text>
+address: <proxy server address>
+port: <proxy port>
+
+\fP
+.fi
+.RE
+
+Fields may be stored in password manager using a command such as:
+.RS
+.nf
+\fCpass insert -m office/proxy_server.example.com/best_employee
+\fP
+.fi
+.RE
+
+.SH "Code"
+.PP
+This section tangles the code (POSIX)
+.SS "Check availability"
+.RS
+.nf
+\fCaffirm_availability () {
+    for _import in pass curl; do
+        if ! command -v "${_import}" >/dev/null 2>&1; then
+            unset _import
+            clean_exit 127 "${_import} is not installed\n"
+        fi
+    done
+    unset _import
+}
+
+\fP
+.fi
+.RE
+
+.SS "Handle global variables and exits"
+.RS
+.nf
+\fCset_vars () {
+    show=false
+    proxy_header=
+    pass_keys=
+    if [ -z "${proxy_protocol}" ]; then
+        proxy_protocol='all'
+    fi
+    proxy_username=
+    proxy_password=
+    proxy_host=
+    proxy_port=
+    usage="
+    usage: ${0} -h
+    usage: ${0} --help
+    usage: ${0}
+"
+    help_msg="${usage}
+
+    DESCRIPTION: |
+      extract proxy authentication from password store
+
+
+    Optional Arguments: |
+      -h\t\t\tprint usage message and exit
+      --help\t\t\tprint this help message and exit
+
+"
+}
+
+unset_vars() {
+    unset help_msg
+    unset usage
+    unset proxy_port
+    unset proxy_host
+    unset proxy_password
+    unset proxy_username
+    unset pass_keys
+    unset proxy_header
+}
+
+
+clean_exit() {
+    unset_vars
+    if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
+        if [ -n "${2}" ]; then
+            # shellcheck disable=SC2059
+            printf "${2}\n" >&2
+        fi
+        # shellcheck disable=SC2086
+        exit ${1}
+    fi
+    if [ -n "${2}" ]; then
+        # shellcheck disable=SC2059
+        printf "${2}\n"
+    fi
+    exit 0
+}
+
+\fP
+.fi
+.RE
+
+.SS "Parse command"
+.RS
+.nf
+\fCcli () {
+    while [ $# -gt 0 ]; do
+        case "${1}" in
+            -h)
+                # shellcheck disable=SC2059
+                clean_exit 0 "${usage}"
+                ;;
+            --help)
+                # shellcheck disable=SC2059
+                clean_exit 0 "${help_msg}"
+                ;;
+            -s|--show)
+                show=true
+                shift
+                ;;
+            *)
+                clean_exit 1 "${usage}"
+        esac
+    done
+}
+
+\fP
+.fi
+.RE
+
+.SS "Extractor"
+nil
+.SS "Compiler"
+.RS
+.nf
+\fCcompile_proxy () {
+    if [ -z "${proxy_host}" ]; then
+        return
+    fi
+    if [ -n "${proxy_protocol}" ]; then
+        if [ "${proxy_protocol}" = "all" ]; then
+            proxy_header="http://"
+        else
+            proxy_header="${proxy_protocol}://"
+        fi
+    fi
+    if [ -n "${proxy_username}" ]; then
+        scrt="${proxy_username}"
+        if [ -n "${proxy_password}" ]; then
+            scrt="${proxy_username}:${proxy_password}"
+        fi
+        proxy_header="${proxy_header}${scrt}@"
+    fi
+    proxy_header="${proxy_header}${proxy_host}"
+    if [ -n "${proxy_port}" ]; then
+        proxy_header="${proxy_header}:${proxy_port}"
+    fi
+    proxy_header="${proxy_header}/"
+    unset scrt
+}
+\fP
+.fi
+.RE
+
+.SS "Main routine call"
+.RS
+.nf
+\fCmain() {
+    # Main routine call
+    set_vars
+    cli "$@"
+    get_pass_proxy
+    compile_proxy
+    printf "%s\n" "${proxy_header}"
+    clean_exit
+}
+
+main "$@"
+\fP
+.fi
+.RE

@@ -1,0 +1,1873 @@
+.TH "Prady runcom" "1" 
+
+.SH "Prady_runcom"
+.SS "What's this?"
+.IP \(em 4
+A compilation of dot-files: default variables, custom functions, aliases.
+.IP \(em 4
+\fBMy\fP configuration backup, "https://git-scm.com/docs/git-push \fBat\fP \fIpush\fP"ed to work as a template for yours.
+
+.SS "Aim"
+.IP \(em 4
+Cross-machine synchronization (hence, git)
+.IP \(em 4
+Modularity (hence, not a single file)
+.IP \(em 4
+Self-documenting (hence, a 😉 org files)
+.IP \(em 4
+Work-flow speed (obviously)
+.IP \(em 4
+"Pretty" low resource load (hence, not GNOME/KDE)
+
+.SS "Non-aim"
+.IP \(em 4
+Ease
+
+.SS "Will you be able to set this up?"
+.PP
+Probably setup.org \fBat\fP \fI\fBNOT\fP\fP.
+If you insist, check setup.org \fBat\fP \fIsetup\fP instructions.
+Read till the end before you decide to set this up.
+
+.SH "Copyright/License Header"
+.PP
+Copyright 2020, 2021, 2022 Pradyumna Paranjape
+
+.PP
+This file is part of Prady_runcom.
+
+.PP
+Prady_runcom is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+.PP
+Prady_runcom is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+.PP
+You should have received a copy of the GNU General Public License
+along with Prady_runcom.  If not, see \fIhttps://www.gnu.org/licenses/\fP.
+
+.SH "Structure"
+.PP
+Following configuration files are available. This literate configuration tangles their contents.
+.TS
+ center,box;
+
+l l l l .
+_
+Configuration File Path	POSIX	Stowed	Owner
+_
+\fI/etc/profile\fP	yes	no	root
+\fI/etc/bashrc\fP	yes	no	root
+\fI/etc/zshrc\fP	yes	no	root
+\fI/etc/profile.d/*\fP	yes	no	root
+\fI${HOME}/.bashrc\fP	no	yes	\fI${USER}\fP
+\fI${HOME}/.zshrc\fP	no	yes	\fI${USER}\fP
+\fI${HOME}/.bash_profile\fP	yes	yes	\fI${USER}\fP
+\fI${HOME}/.bash_login\fP	yes	yes	\fI${USER}\fP
+\fI${HOME}/.profile\fP	yes	yes	\fI${USER}\fP
+\fI${HOME}/.zprofile\fP	yes	yes	\fI${USER}\fP
+\fI${HOME}/.zshenv\fP	yes	yes	\fI${USER}\fP
+\fI${HOME}/.zlogin\fP	yes	yes	\fI${USER}\fP
+\fI${RUNCOMDIR}/env/shrc\fP	yes	no	RUNCOM
+\fI${RUNCOMDIR}/env/ui\fP	yes	no	RUNCOM
+\fI${XDG_DATA_HOME}/bash\-completion/completions/*\fP	no	yes	\fI${USER}\fP
+\fI${XDG_CONFIG_DIR}\fP	no	yes	\fI${USER}\fP
+\fI${XDG_CONFIG_HOME}/local.d/.*rc\fP	yes	no	\fI${USER}\fP
+\fI${XDG_CONFIG_HOME}/pvt.d/.*rc\fP	yes	pvt	\fI${USER}\fP
+_
+.TE
+.TB ""
+.PP
+They are loaded in following order.
+
+.SS "Bash"
+.SS "/etc/profile"
+.RS
+.TP
+.ft I
+/etc/bashrc
+.ft
+.RS
+.TP
+.ft I
+/etc/profile.d/*
+.ft
+.RE
+.RE
+
+.SS "${HOME}/.bash_profile"
+.RS
+.TP
+.ft I
+${HOME}/.profile
+.ft
+.RE
+
+.TP
+.ft I
+${HOME}/.bashrc
+.ft
+.RS
+.TP
+.ft I
+${RUNCOMDIR}/env/shrc
+.ft
+.RS
+.TP
+.ft I
+${XDG_CONFIG_HOME}/local.d/*
+.ft
+.RE
+.TP
+.ft I
+${XDG_CONFIG_HOME}/pvt.d/*
+.ft
+.RE
+.RE
+.RE
+
+.TP
+.ft I
+${HOME}/.bash_login
+.ft
+.RS
+.TP
+.ft I
+${RUNCOMDIR}/env/ui
+.ft
+.RE
+.RE
+
+.SS "Zsh"
+.SS "/etc/profile"
+.RS
+.TP
+.ft I
+/etc/zshrc
+.ft
+.RS
+.TP
+.ft I
+/etc/profile.d/*
+.ft
+.RE
+.RE
+
+.SS "${HOME}/.zshenv"
+nil
+
+.SS "${HOME}/.zprofile"
+.RS
+.TP
+.ft I
+${HOME}/.profile
+.ft
+.RE
+
+.SS "${HOME}/.zshrc"
+.RS
+.TP
+.ft I
+${RUNCOMDIR}/env/shrc
+.ft
+.RS
+.TP
+.ft I
+${XDG_CONFIG_HOME}/local.d/*
+.ft
+.RE
+.TP
+.ft I
+${XDG_CONFIG_HOME}/pvt.d/*
+.ft
+.RE
+.RE
+
+.SS "${HOME}/.zlogin"
+.RS
+.TP
+.ft I
+${RUNCOMDIR}/env/ui
+.ft
+.RE
+
+.SH "Headers"
+.PP
+Copyright, License banners
+.SH "Profiles"
+.RS
+.nf
+\fCif [ -f "${HOME}/.profile" ]; then
+    # shellcheck disable=SC1091
+    . "${HOME}/.profile"
+fi
+
+if [ -f "${HOME}/.bashrc" ]; then
+    # shellcheck disable=SC1091
+    . "${HOME}/.bashrc"
+fi
+
+if [ -f "${HOME}/.bash_login" ]; then
+    # shellcheck disable=SC1091
+    . "${HOME}/.bash_login"
+fi
+
+\fP
+.fi
+.RE
+
+.RS
+.nf
+\fC# shellcheck source=".profile"
+if [ -f "${HOME}/.profile" ]; then
+    # shellcheck disable=SC1091
+    . "${HOME}/.profile"
+fi
+\fP
+.fi
+.RE
+
+.RS
+.nf
+\fC# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' matcher-list ''
+zstyle ':completion:*' max-errors 2
+zstyle ':completion:*' menu select=3
+zstyle ':completion:*' select-prompt %SScrolling \
+       active: current selection at %p%s
+zstyle :compinstall filename "${HOME}/.zshrc"
+
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+
+\fP
+.fi
+.RE
+
+.SH "Init"
+.SS "profile"
+.RS
+.nf
+\fCLC_ALL=en_IN.UTF-8
+LANG=en_IN.UTF-8
+
+export LC_ALL
+export LANG
+\fP
+.fi
+.RE
+.SS "bash"
+.IP \(em 4
+Prevent bashrc from running outside non-interactive mode
+.RS
+.nf
+\fCcase $- in
+    *i*)
+    ;;
+    *)
+        return
+        ;;
+esac
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Option settings
+.RS
+.nf
+\fCshopt -s autocd
+shopt -s checkwinsize
+shopt -s extglob
+shopt -s globstar
+shopt -s histappend
+shopt -s histverify
+\fP
+.fi
+.RE
+
+.IP \(em 4
+History
+.RS
+.nf
+\fCshopt -s histappend
+HISTCONTROL=ignoreboth
+HISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"
+HISTFILESIZE=10000
+HISTSIZE=10000
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Coloured terminals
+.RS
+.nf
+\fCcase "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Key-bindings
+.RS
+.nf
+\fCset -o vi
+bind '"jk":vi-movement-mode'
+\fP
+.fi
+.RE
+
+.SS "zsh"
+.PP
+Settings
+.IP \(em 4
+History
+.RS
+.nf
+\fCHISTFILE="${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"
+HISTSIZE=10000
+SAVEHIST=10000
+\fP
+.fi
+.RE
+.IP \(em 4
+cache files
+.RS
+.nf
+\fCZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"
+\fP
+.fi
+.RE
+
+
+.IP \(em 4
+Options
+.RS
+.nf
+\fCZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5f6f7f,bg=#172737"
+ZSH_AUTOSUGGEST_STRATEGY=("history" "completion")
+setopt autocd
+setopt interactive_comments
+setopt appendhistory extendedglob notify
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+unsetopt beep
+autoload colors && colors
+autoload add-zsh-hook
+autoload -Uz compinit
+autoload -Uz bashcompinit
+compinit
+bashcompinit
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Key-bindings
+.RS
+.nf
+\fCterm_key_source="${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"
+if [ -f "${term_key_source}" ]; then
+    . "${term_key_source}"
+fi
+# keybindings
+bindkey -v
+bindkey -s '^o' 'lfcd\n'
+bindkey -s '^f' 'fzfcd\n'
+bindkey -s '^E' 'deactivate 2>/dev/null || true\n'
+bindkey -s '^N' 'force_global_venv\n'
+bindkey '^[[P' delete-char  # backspace key
+bindkey '^[[1;5D' vi-backward-word  # ctrl <-
+bindkey '^[[1;5C' vi-forward-word  # ctrl ->
+bindkey '^[[3~' vi-delete-char  # delete key
+bindkey '^[[F' vi-end-of-line  # end key
+bindkey '^[[H' vi-beginning-of-line  # home key
+bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
+export KEYTIMEOUT=10
+
+# Use beam shape cursor for each new prompt.
+_fix_cursor () {
+    echo -ne '\e[6 q'
+}
+add-zsh-hook precmd _fix_cursor
+
+# Change cursor shape for different vi modes.
+zle-keymap-select () {
+    if [ "${KEYMAP}" = "vicmd" ] ||
+           [ "${1}" = 'block' ]; then
+        printf '\e[2 q'
+
+    elif [ "${KEYMAP}" = "main" ] ||
+             [ "${KEYMAP}" = "viins" ] ||
+             [ "${KEYMAP}" = '' ] ||
+             [ "${1}" = 'beam' ]; then
+        printf '\e[6 q'
+    elif [ "${KEYMAP}" = "visual" ]; then
+        printf '\e[4 q'
+    fi
+}
+# Use vim keys in tab complete menu:
+zmodload zsh/complist
+zmodload zsh/mapfile
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey '^r' history-incremental-search-backward
+
+zle -N zle-keymap-select
+
+\fP
+.fi
+.RE
+.IP \(em 4
+Unset options:
+.IP \(em 4
+setopt SHARE_HISTORY             # Share history between all sessions.
+.IP \(em 4
+setopt HIST_BEEP                 # Beep when accessing non-existent history.
+
+.SH "Inherit"
+.SS "bash"
+.RS
+.nf
+\fC# shellcheck source=".runcom/env/shrc"
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
+fi
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh" ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"
+fi
+\fP
+.fi
+.RE
+
+.SS "zsh"
+.RS
+.nf
+\fC# shellcheck source=".runcom/env/shrc"
+if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
+    . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
+fi
+while read -r addition; do
+    while read -r share_dir; do
+        add_dir="${share_dir}/zsh-${addition}"
+        if [ -d "${add_dir}" ]; then
+            # shellcheck disable=SC1090
+            . "${add_dir}/zsh-${addition}.zsh"
+            break
+        fi
+    done << data_dir
+/usr/local/share
+/usr/share
+/usr/share/zsh/plugins
+${XDG_DATA_HOME:-${HOME}/.local/share}
+${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share
+${HOME}/local/share
+${HOME}/share
+data_dir
+done << addlist
+syntax-highlighting
+autosuggestions
+addlist
+
+unset addition share_dir add_dir
+
+\fP
+.fi
+.RE
+
+.SS "shrc"
+.SS "Local un-synced changes"
+.PP
+All files \fI${XDG_CONFIG_HOME:\-${HOME}/.config}/{local,pvt}.d/.*rc\fP
+.RS
+.nf
+\fC# shellcheck disable=SC1090
+for unsync_d in "local.d" "pvt.d"; do
+    for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
+        . "${rcfile}"
+    done 2>/dev/null
+done 2>/dev/null
+
+unset rcfile unsync_d
+\fP
+.fi
+.RE
+
+.SH "Better alternatives"
+.SS "cat"
+.RS
+.nf
+\fCif builtin command -v 'bat' >/dev/null 2>&1; then
+    alias cat="bat --color=auto";
+fi
+\fP
+.fi
+.RE
+
+.SS "g/re/p"
+.RS
+.nf
+\fCfor sc in "ack" "pt" "ag" "rg"; do
+    if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
+        # shellcheck disable=SC2139
+        alias grep="${sc} --color=auto";
+    fi
+done
+\fP
+.fi
+.RE
+
+.SS "List Contents"
+.RS
+.nf
+\fCif builtin command -v "exa" >/dev/null 2>&1; then
+    alias ls="exa -Fh --color=auto";
+    alias la='exa -a --color=auto';
+    alias ll='exa -lr -s size';
+    alias lla='exa -a';
+    alias l.='exa -a --color=auto |grep "^\."';
+    alias sl="ls";
+fi
+\fP
+.fi
+.RE
+
+.SS "neo visual editor improved"
+.RS
+.nf
+\fCif builtin command -v nvim >/dev/null 2>&1; then
+    alias ex="nvim"; # always open vim in normal mode
+    alias vim="nvim"; # always use neo
+fi
+\fP
+.fi
+.RE
+
+.SS "Container"
+.RS
+.nf
+\fCif builtin command -v podman >/dev/null 2>&1; then
+    alias docker="podman";  # Podman is drop-in replacement for docker
+    alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
+fi
+\fP
+.fi
+.RE
+
+.SH "Variables"
+.SS "XDG"
+.PP
+XDG standard locations specifications these can be redefined in
+\fI${XDG_CONFIG_HOME:\-${HOME}/.config}/pvt.d/.<some name>rc\fP
+
+.RS
+.nf
+\fCXDG_CACHE_HOME="${HOME}/.cache"
+XDG_CONFIG_HOME="${HOME}/.config"
+XDG_DATA_HOME="${HOME}/.local/share"
+XDG_STATE_HOME="${HOME}/.local/state"
+RUNCOMDIR="${HOME}/.runcom"
+
+export XDG_CACHE_HOME
+export XDG_CONFIG_HOME
+export XDG_DATA_HOME
+export XDG_STATE_HOME
+export RUNCOMDIR
+\fP
+.fi
+.RE
+
+.SS "PATH"
+.RS
+.nf
+\fC# shellcheck source="bin"
+if [ -d "${HOME}/bin" ] ; then
+    if [ "${PATH#*${HOME}/bin}" = "${PATH}" ]; then
+        PATH="${HOME}/bin:${PATH}"
+    fi
+fi
+
+# shellcheck source=".local/bin"
+if [ -d "${HOME}/.local/bin" ] ; then
+    if [ "${PATH#*${HOME}/.local/bin}" = "${PATH}" ]; then
+        PATH="${HOME}/.local/bin:${PATH}"
+    fi
+fi
+export PATH;
+\fP
+.fi
+.RE
+
+.SS "Editor wars"
+.RS
+.nf
+\fCwhile read -r avail; do
+    if builtin command -v "${avail}" >/dev/null 2>&1; then
+        EDITOR="${avail}"
+    fi
+done << EOF
+nano
+vi
+vim
+nvim
+EOF
+export EDITOR
+
+case "$EDITOR" in
+    vim)
+        export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+        ;;
+    nvim)
+        export MANPAGER="nvim -c ':Man!' -"
+        ;;
+    *)
+        if builtin command -v bat; then
+            export MANPAGER='bat -l man -p'
+        fi
+        ;;
+esac
+export MANPAGER
+\fP
+.fi
+.RE
+
+.SS "C(++) exports"
+.RS
+.nf
+\fCLD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+C_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+CPLUS_INCLUDE_PATH="${XDG_DATA_HOME}/pspman/include/"
+export LD_LIBRARY_PATH
+export C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH
+\fP
+.fi
+.RE
+
+.SS "CARGO (Rust) exports"
+.PP
+Cargo unnecessarily clutters \fI${HOME}\fP with its DATA.
+It should be in \fIXDG_DATA_HOME\fP
+Also, cargo's binaries should be installed in
+\fI${XDG_DATA_HOME}/../bin\fP like python3.
+.RS
+.nf
+\fCCARGO_HOME="${HOME}/.local/share/cargo"
+export CARGO_HOME
+\fP
+.fi
+.RE
+
+.SS "GPU exports"
+.RS
+.nf
+\fCPYOPENCL_CTX='0';
+PYOPENCL_COMPILER_OUTPUT=1;
+OCL_ICD_VENDORS="/etc/OpenCL/vendors/";
+export PYOPENCL_CTX
+export PYOPENCL_COMPILER_OUTPUT
+export OCL_ICD_VENDORS
+\fP
+.fi
+.RE
+
+.SS "Bemenu exports"
+.RS
+.nf
+\fCexport BEMENU_OPTS='--fn firacode 14 '
+\fP
+.fi
+.RE
+
+.SS "GTK+ debugging output"
+.PP
+Silence debugging output for gtk+
+.RS
+.nf
+\fCNO_AT_BRIDGE=1
+export NO_AT_BRIDGE
+\fP
+.fi
+.RE
+
+.SH "Functions"
+.SS "Python"
+.SS "Python version"
+.PP
+to locate site-packages
+
+.RS
+.nf
+\fCpython_ver() {
+    python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
+}
+\fP
+.fi
+.RE
+
+.SS "Quickly change to virtualenv"
+.PP
+Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
+This may require shell-identification for ksh, csh, fish since they have a different activate
+.RS
+.nf
+\fCto_venv () {
+    test_d="$(readlink -f "${PWD}")"
+    parents=16  # path too long to waste time
+    until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
+        if [ $parents -le 0 ]; then
+            printf "Too many branch-nodes searched" >&2
+            unset parents test_d env_d
+            return 126
+        fi
+        for env_d in ".venv" "venv"; do
+            if [ -d "${test_d}/${env_d}" ] \
+                   || [ -L "${test_d}/${env_d}" ]; then
+                # shellcheck disable=SC1090
+                . "${test_d}/${env_d}/bin/activate"
+                printf "Found %s, switching...\n" "${test_d}/${env_d}"
+                unset parents test_d env_d
+                return 0
+            fi
+        done
+        test_d="$(dirname "${test_d}")"
+        parents=$((parents - 1))
+    done
+    printf "Couldn't find .venv upto mountpoint %s\n" "${test_d}" >&2
+    unset parents test_d env_d
+    return 126
+}
+\fP
+.fi
+.RE
+
+.SS "Virtualenv in prompt string"
+.RS
+.nf
+\fC_show_venv () {
+    # if a virtualenv is active, print it's name
+    if [ -n "${VIRTUAL_ENV}" ]; then
+        base="$(basename "${VIRTUAL_ENV}")"
+        if [ "${base}" = ".venv" ] || [ "${base}" = "venv"  ]; then
+            printf "/%s" "$(basename "$(dirname "${VIRTUAL_ENV}")")"
+            unset base
+        else
+            printf "/%s" "${base}"
+            unset base
+        fi
+    fi
+}
+\fP
+.fi
+.RE
+.SS "Git"
+.SS "Status"
+.RS
+.nf
+\fCgit_status() {
+    _modified=0
+    _cached=0
+    _untracked=0
+
+    while read -r _line; do
+        case "${_line}" in
+            _*_\ _)
+                _cached=1
+                ;;
+            _\ _*_)
+                _modified=1
+                ;;
+            _?_?_)
+                _untracked=1
+                ;;
+        esac
+    done << endstat
+$(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+endstat
+
+    _stat_str=''
+    if [ "$_modified" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\ue728"
+    fi
+
+    if [ "$_cached" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;32m\ue729"
+    fi
+
+    if [ "$_untracked" -ne 0 ]; then
+        _stat_str="${_stat_str}\033[0;31m\uf476"
+    fi
+
+    if [ -n "$(git stash list)" ]; then
+        _stat_str="${_stat_str}\e[0;36m\uf48e"
+    fi
+    if [ -n "${_stat_str}" ]; then
+        # shellcheck disable=SC2059  # I do want escape characters
+        printf "${_stat_str}\e[m"
+    fi
+    unset _modified _cached _untracked _stat_str
+}
+\fP
+.fi
+.RE
+
+.SS "Branch"
+.RS
+.nf
+\fCgit_branch() {
+    branch_str=''
+    branch="$(git branch 2>/dev/null | grep '^\*' | sed -e 's/^* //')"
+    if [ -n "${branch}" ]; then
+        case "${branch}" in
+            feat-*)
+                branch_str="${branch_str}\033[0;32m"
+                ;;
+            bug-*)
+                branch_str="${branch_str}\033[0;31m"
+                ;;
+            act-*)
+                branch_str="${branch_str}\e[0;36m"
+                ;;
+            tmp-*)
+                branch_str="${branch_str}\e[0;36m"
+                ;;
+            *HEAD\ detached*|,*rebasing*)
+                branch_str="${branch_str}\e[0;33m"
+                ;;
+            main|master)
+                unset branch branch_str
+                return
+                ;;
+            *)
+                branch_str="${branch_str}\e[0;35m"
+                ;;
+        esac
+    fi
+    printf "${branch_str}%s\ue725\e[m" "${branch}"
+    unset branch_str branch
+}
+
+\fP
+.fi
+.RE
+.SS "Hash"
+.RS
+.nf
+\fCgit_hash() {
+    git log --pretty=format:'%h' -n 1
+}
+\fP
+.fi
+.RE
+
+.SS "Prompt string"
+.PP
+Include git's branch, hash, status in PS1 if in git repository
+This function is called in PS1 section below
+.RS
+.nf
+\fCgit_ps() {
+    if ! git status --ignore-submodules >/dev/null 2>&1; then
+        return
+    else
+        printf " %s%s%s " "$(git_branch)" "$(git_hash)" "$(git_status)"
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "Prompt String"
+.SS "Exit_colour"
+.RS
+.nf
+\fClast_exit_color () {
+    case "$1" in
+        0)
+            # success
+            printf "\e[0;32m"
+            ;;
+        1)
+            # general error
+            printf "\e[0;33m"
+            ;;
+        2)
+            # misuse of shell builtins
+            printf "\e[0;31m"
+            ;;
+        126)
+            # cannot execute
+            printf "\e[0;37m"
+            ;;
+        127)
+            # command not found
+            printf "\e[0;30m"
+            ;;
+        255)
+            # exit status limit
+            printf "\e[0;31m"
+            ;;
+        *)
+            if [ "$1" -gt "63" ] && [ "$1" -lt "84" ]; then
+                # syserror.h
+                printf "\e[0;91m"
+
+            elif [ "$1" -gt "127" ] && [ "$1" -lt "191" ]; then
+                # Fatal error
+                printf "\e[0;41m"
+            else
+                printf "\e[0;31m"
+            fi
+            unset _err
+            ;;
+    esac
+}
+\fP
+.fi
+.RE
+
+.SS "Elapsed_time"
+.RS
+.nf
+\fC_elapsed_time() {
+    # $1 is start time $2 is end time
+    _cmd_start="$1"
+    _cmd_end="$2"
+    if [ -z "$_cmd_end" ] || [ -z "$_cmd_start" ]; then
+        return
+    fi
+    _sec=$(( _cmd_end - _cmd_start ))
+    unset _cmd_start _cmd_end
+    if [ "$_sec" -le 0 ]; then
+        return
+    fi
+    if [ "$_sec" -le 60 ]; then
+        printf "%s" "${_sec}"
+        unset _sec
+        return
+    fi
+    _min=$(( _sec/60 ))
+    unset _sec
+    if [ "$_min" -le 60 ]; then
+        printf "%sm" "${_min}"
+        unset _min
+        return
+    fi
+    _hr=$(( _min/60 ))
+    unset _min
+    if [ "$_hr" -le 24 ]; then
+        printf "%sh" "${_hr}"
+        unset _hr
+        return
+    fi
+    _day=$(( _hr/24 ))
+    printf "%sd" "${_day}"
+    unset _min _day
+}
+\fP
+.fi
+.RE
+
+.SS "PROMPT_COMMAND"
+.RS
+.TP
+.ft I
+bash
+.ft
+.RS
+.nf
+\fC# export PROMPT_COMMAND=__prompt_command
+
+preexec() {
+    _cmd_start_t="${SECONDS}"
+}
+
+precmd () {
+    _exit_color="$(last_exit_color $?)"
+
+    _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+    unset _cmd_start_t
+
+    # unset previous
+    PS1=""
+    PS2=""
+    PS3=""
+    PS4=""
+    RPROMPT=""
+
+    PS1+="\[\e[0;32m\]\u\[\e[m\]"
+    PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
+    PS1+="@"
+    PS1+="\[\e[0;34m\]\h\[\e[m\]"
+    PS1+="\$(git_ps)"
+    PS1+="\[\e[0;36m\]:\W"
+    PS1+="\[\e[0;37m\]"
+
+    PS1+="$(date '+%H:%M:%S')"
+    PS1+=" ${_exit_color}-${_elapsed}"
+    PS1+='\[\e[m\]\n» '
+
+    PS2=""
+    PS2+="\[\e[0;36m\]cont..."
+    PS2+="\[\e[m\]"
+    PS2+="» ";
+
+    PS3='Selection: ';
+}
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+zsh
+.ft
+.RS
+.nf
+\fC_pspexec() {
+    _cmd_start_t="${SECONDS}"
+}
+
+_pspps () {
+    _exit_color="$(last_exit_color $?)"
+
+    _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
+    unset _cmd_start_t
+
+    # unset previous
+    PS1=$''
+    PS2=$''
+    PS3=$''
+    PS4=$''
+    RPROMPT=$''
+
+    PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
+    PS1+=$'%{\e[3;35m%}'
+    PS1+="$(_show_venv)"
+    PS1+=$'%{\e[m%}'
+    PS1+=$'@'
+    PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
+    PS1+="$(git_ps)"
+    PS1+=$'%{\e[0;36m%}:%1~'
+    PS1+=$'%{\e[0;37m%}\n%{\e[m%}» '
+
+    PS2+=$'%{\e[0;36m%}cont...'
+    PS2+=$'%{\e[m%}'
+    PS2+=$'» '
+
+    PS3='Selection: '
+
+    RPROMPT+=$'%*'
+    RPROMPT+="%{$_exit_color%}-${_elapsed}"
+    RPROMPT+=$'%{\e[m%}'
+    unset _exit_stat _elapsed
+}
+
+add-zsh-hook precmd _pspps
+add-zsh-hook preexec _pspexec
+
+\fP
+.fi
+.RE
+.RE
+
+.SS "Mathematical"
+.SS "In-Line Calculator"
+.RS
+.nf
+\fCmathcalc() {
+    echo "$*"| bc -lq
+}
+\fP
+.fi
+.RE
+
+.SS "Computational"
+.RS
+.nf
+\fCdec2hex() {
+    echo "hex:"
+    echo "obase=16; $*"| bc
+    echo "dec:"
+    echo "ibase=16; $*"| bc
+}
+\fP
+.fi
+.RE
+
+.SS "Documents compilation"
+.SS "PDF from Latex"
+.RS
+.nf
+\fCpdfcompile() {
+    if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        printf "pdftex is not installed\n"
+        return 127
+    fi
+
+    pdflatex "$1"
+    for ext in ".toc" ".log" ".aux"; do
+        [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
+    done
+    if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        zathura "${1%.tex}.pdf"
+    fi
+}
+\fP
+.fi
+.RE
+.SS "Pandoc"
+.RS
+.TP
+.ft I
+Org to Something
+.ft
+.RS
+.nf
+\fCorg2export() {
+    # Usage: org2oth [-f] <infile> <othtype>
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
+    proceed=false
+    while test $# -gt 1; do
+        case "$1" in
+            -f|--force)
+                proceed=true
+                shift 1
+                ;;
+            -h|--help)
+                printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
+                printf "Optional Arguments:\n"
+                printf "%s\tshow this help message\n\n" "-h|--help"
+                printf "%s\tignore extension mismatch\n" "-f|--force"
+                printf "Positional Arguments:\n"
+                printf "FILENAME.org\tpath to input filename\n"
+                printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
+                return 0
+                ;;
+            --)
+                shift 1
+                ;;
+            *)
+                infile="${1}";
+                target="${2}";
+                break
+                ;;
+        esac
+    done
+    if [ "${target}" = "pdf" ]; then
+        target="latex"
+    fi
+    if [ "${infile%.org}" = "${infile}" ]; then
+        # <infile>
+        printf "Input file should be an org file\n"
+    else
+        # <infile>.org
+        proceed=true
+    fi
+    if $proceed; then
+        pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
+    fi
+    unset proceed target infile
+}
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Org to Docx
+.ft
+.RS
+.nf
+\fCorg2doc () {
+    org2export "$@" "docx"
+}
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Org to PDF
+.ft
+.RS
+.nf
+\fCorg2pdf () {
+    org2export "$@" "pdf"
+}
+\fP
+.fi
+.RE
+.RE
+
+.TP
+.ft I
+Docx to Org
+.ft
+.RS
+.nf
+\fCdoc2org() {
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
+
+    case "${1}" in
+        *.docx)
+            pandoc -f docx -t org -o "${1%.docx}.org" "$1"
+            ;;
+        *)
+            echo "Input file must be a docx file"
+            ;;
+    esac
+}
+\fP
+.fi
+.RE
+.RE
+
+.SS "Mount over ssh"
+.PP
+ssh Cloud mounts
+.IP \(em 4
+see ./cloud_mount.html \fBat\fP \fIcloud_mount\fP
+.RS
+.nf
+\fCmount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}"
+    fi
+}
+
+umount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}" "umount"
+    fi
+}
+
+\fP
+.fi
+.RE
+
+.SS "Launch GUI"
+.PP
+Launch application and exit terminal window
+Acts like a launcher
+Un-interactive terminal commands may also be called
+Code is tangled in gui.org
+.RS
+.nf
+\fCgui () {
+    "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
+    if [ $? = 65 ]; then
+        # if bin/gui.sh returns 65, kill shell, else, maintain
+        exit 0
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "Un-Compress by context"
+.RS
+.nf
+\fCdeconvolute() {
+    if builtin command -v "pigz" >/dev/null 2>&1; then
+        _gzip="pigz"
+    else
+        _gzip='gzip'
+    fi
+    if [ ! -f "${1}" ]; then
+        echo "${1}: no such file";
+    else
+        case "${1}" in
+            *.tar.bz2) tar -xjf "${1}" ;;
+            *.tbz2) tar -xjf "${1}" ;;
+            *.tar.gz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.tgz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.gz) unpigz "${1}" || gunzip "${1}" ;;
+            *.rar) unrar -x "${1}" ;;
+            *.tar) tar -xf "${1}" ;;
+            *.zip) unzip "${1}" ;;
+            *.tar.xz) tar -xf "${1}" ;;
+            *) echo "Cannot extract ${1}, provide explicit command";;
+        esac
+    fi
+    unset _gzip
+}
+\fP
+.fi
+.RE
+
+.SS "Navigate"
+.IP \(em 4
+When no virtualenv is active, but one is available, switch to it
+.RS
+.nf
+\fCcd () {
+    if [ -z "${1}" ]; then
+        builtin cd "${HOME}" || true
+    else
+        builtin cd "${1}"  || true
+    fi
+    if [ -z "${VIRTUAL_ENV}" ]; then
+        to_venv 2>/dev/null
+    fi
+}
+\fP
+.fi
+.RE
+
+.IP \(em 4
+Inspired by \fIhttps://lukesmith.xyz/\fP
+.RS
+.nf
+\fClfcd () {
+    if ! command -v 'lf' >/dev/null 2>/dev/null; then
+        printf "lf is not installed\n"
+        return 127
+    fi
+    tmp_file="$(mktemp)"
+    lf -last-dir-path="${tmp_file}" "$@"
+    if [ -f "${tmp_file}" ]; then
+        target_dir="$(cat "${tmp_file}")"
+        rm -f "${tmp_file}" >/dev/null
+        if [ -d "${target_dir}" ] && [ "${target_dir}" != "$(pwd)" ]; then
+            cd "${target_dir}" || return
+        fi
+    fi
+    unset tmp_file target_dir
+}
+
+fzfcd () {
+    if ! command -v 'fzf' >/dev/null 2>/dev/null; then
+        printf "fzf is not installed\n"
+        return 127
+    fi
+    cd "$(dirname "$(fzf)")" || true
+}
+\fP
+.fi
+.RE
+
+.SS "zwc"
+.IP \(em 4
+Guess whether target is zipped;
+if zipped, unzip and count else classical wc
+.RS
+.nf
+\fCzwc () {
+    args="$*"
+    fname="${args##* }"
+    args="${args% ${fname}}"
+    args="${args%${fname}}"
+
+    if gzip -t "${fname}" > /dev/null 2>&1; then
+        if [ -z "${args}" ]; then
+            zcat -f "${fname}" | wc
+        else
+            # shellcheck disable=SC2086
+            zcat -f "${fname}" | wc $args
+        fi
+        return
+    else
+        wc "$@"
+        return
+    fi
+
+}
+\fP
+.fi
+.RE
+
+.SS "disable auto-venv"
+.IP \(em 4
+To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
+.IP \(em 4
+Calling the function again reverts
+.RS
+.nf
+\fCforce_global_venv () {
+    if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
+        unset VIRTUAL_ENV
+        to_venv 2>/dev/null
+    else
+        deactivate 2>/dev/null
+        VIRTUAL_ENV="Global_Env"
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "lszcat"
+.RS
+.nf
+\fClszcat () {
+    args="$*"
+    fname="${args##* }"
+    args="${args%% ${fname}}"
+    args="${args%%${fname}}"
+
+    if builtin command -v bat >/dev/null 2>&1; then
+        betcat="$(which bat)"
+    else
+        betcat="$(which cat)"
+    fi
+
+    if builtin command -v exa >/dev/null 2>&1; then
+        betls="$(which exa)"
+    else
+        betls="$(which ls)"
+    fi
+
+    if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
+        if [ -z "${args}" ]; then
+            args="${fname}"
+        else
+            args="${args} ${fname}"
+        fi
+        fname="$(readlink -f ".")"
+        echo "${fname}"
+    fi
+
+    if [ -d "${fname}" ]; then
+        # shellcheck disable=SC2086
+        "${betls}" ${args} "${fname}"
+    elif gzip -t "${fname}" >/dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        zcat -f ${args} "${fname}" | "${betcat}"
+    else
+        # shellcheck disable=SC2086
+        "${betcat}" ${args} "${fname}"
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "Manual pages"
+.RS
+.nf
+\fCman_help () {
+    if man "$@"; then
+        return 0
+    elif tldr "$@"; then
+        return 0
+    elif builtin command -v "$1" >/dev/null 2>/dev/null; then
+        printf "trying to display %s --help output\n" "${1}"
+        if builtin command -v 'bat' >/dev/null 2>/dev/null; then
+            $1 --help 2>&1 | bat
+        else
+            $1 --help 2>&1 | less -RF
+        fi
+        return 0
+    else
+        return 16
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "Selection menu"
+.RS
+.nf
+\fCposix_select () {
+    # select implementation for POSIX
+    word_l=""
+    count=0
+    for word in "${@}"; do
+        if [ -z "${word_l}" ]; then
+            word_l="${word}"
+        else
+            word_l="${word_l} ${word}"
+        fi
+        count=$((count + 1))
+        echo "${count}: ${word}" >&2
+    done
+    printf "Selection: " >&2
+    read -r select_num
+    echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
+    unset word word_l
+}
+\fP
+.fi
+.RE
+
+.SH "Aliases"
+.SS "Disk Usage"
+.RS
+.nf
+\fCalias du='du -hc';
+alias df='df -h';
+alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
+\fP
+.fi
+.RE
+
+.SS "manual page help"
+.RS
+.nf
+\fCalias man="man_help";
+\fP
+.fi
+.RE
+.SS "Network"
+.RS
+.nf
+\fCalias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
+alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+alias ping="ping -c 4 ";
+\fP
+.fi
+.RE
+
+.SS "Monitor Job queues"
+.RS
+.nf
+\fCalias watch="watch -n 10 --color";
+\fP
+.fi
+.RE
+
+.SS "Lazy single-handed exit"
+.RS
+.nf
+\fCalias qqqq="exit";
+\fP
+.fi
+.RE
+
+.SS "[z]wc"
+.RS
+.nf
+\fCalias wc="zwc";
+\fP
+.fi
+.RE
+
+.SH "Networking"
+.SS "State"
+.RS
+.nf
+\fC"${RUNCOMDIR}/bin/timeout.sh"
+\fP
+.fi
+.RE
+
+.SS "SSH Agent"
+.PP
+Reuse ssh agent for all logins
+.RS
+.nf
+\fCif [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
+    eval "$(ssh-agent)"
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+export SSH_AUTH_SOCK
+ssh-add -l > /dev/null || ssh-add
+\fP
+.fi
+.RE
+
+.SH "Window Manager settings"
+.SS "Terminal"
+.RS
+.nf
+\fCfor term in foot alacritty termite tilix urxvt xterm; do
+    if [ -n "$(command -v $term)" ]; then
+        defterm="$term";
+        export defterm
+        break;
+    fi;
+done
+\fP
+.fi
+.RE
+
+.SS "Sway exports"
+.PP
+Don't really remember why these were made
+Not using currently. Preserved for future
+tangle to bash_login
+export WLR_BACKENDS="headless";
+export WLR_LIBINPUT_NO_DEVICES=1;
+
+.SS "User Interface (GUI/CLI)"
+.PP
+If running from tty1 offer to launch a graphical session
+.SS "Graphical exports preparations"
+.PP
+Exports to be made according to selected graphical environment
+.RS
+.nf
+\fC_common_exports() {
+    if [ -z "$XDG_RUNTIME_DIR" ]; then
+        XDG_RUNTIME_DIR="/run/user/$(id -u)"
+    fi
+    QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
+    QT_AUTO_SCREEN_SCALE_FACTOR=0
+    QT_QPA_PLATFORMTHEME="qt5ct"
+    _JAVA_AWT_WM_NONREPARENTING=1
+
+    export XDG_RUNTIME_DIR
+    export QT_PLUGIN_PATH
+    export QT_AUTO_SCREEN_SCALE_FACTOR
+    export QT_QPA_PLATFORMTHEME
+    export _JAVA_AWT_WM_NONREPARENTING
+}
+
+_exports_for_wayland () {
+    # export DISPLAY=":0"
+    # export WAYLAND_DISPLAY=wayland-0
+    # export GDK_BACKEND=wayland,x11
+    _common_exports
+
+    XDG_SESSION_TYPE="wayland"
+    SDL_VIDEODRIVER="wayland"
+    ECORE_EVAS_ENGINE="wayland_egl"
+    ELM_DISPLAY="wl"
+    ELM_ENGINE="wayland_egl"
+    ELM_ACCEL="opengl"
+    QT_QPA_PLATFORM="wayland-egl;xcb"
+    QT_WAYLAND_FORCE_DPI=100
+    QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    MOZ_ENABLE_WAYLAND=1
+    SWAYROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/sway"
+
+    export XDG_SESSION_TYPE
+    export SDL_VIDEODRIVER
+    export ECORE_EVAS_ENGINE
+    export ELM_DISPLAY
+    export ELM_ENGINE
+    export ELM_ACCEL
+    export QT_QPA_PLATFORM
+    export QT_WAYLAND_FORCE_DPI
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION
+    export MOZ_ENABLE_WAYLAND
+    export SWAYROOT
+}
+
+_exports_for_x11 () {
+    _common_exports
+
+    XDG_SESSION_TYPE="x11"
+    SDL_VIDEODRIVER="x11"
+    I3ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/i3"
+
+    export XDG_SESSION_TYPE
+    export SDL_VIDEODRIVER
+    export I3ROOT
+
+    unset ECORE_EVAS_ENGINE
+    unset ELM_DISPLAY
+    unset ELM_ENGINE
+    unset ELM_ACCEL
+    unset QT_QPA_PLATFORM
+    unset QT_WAYLAND_FORCE_DPI
+    unset QT_WAYLAND_DISABLE_WINDOWDECORATION
+    unset MOZ_ENABLE_WAYLAND
+}
+
+_exports_for_proxies () {
+    if [ -z "${export_proxies}" ]; then
+        printf "Export proxies?[y/N]:\t"
+        read -r export_proxies
+    fi
+    case "${export_proxies}}" in
+        Y*|y*)
+            all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
+            http_proxy="${all_proxy}"
+            https_proxy="${all_proxy}"
+            ftp_proxy="${all_proxy}"
+            ftps_proxy="${all_proxy}"
+
+            export all_proxy
+            export http_proxy
+            export https_proxy
+            export ftp_proxy
+            export ftps_proxy
+            ;;
+        *)
+            ;;
+    esac
+
+}
+\fP
+.fi
+.RE
+
+.SS "Graphical selections"
+.PP
+Display protocol and session selection
+.RS
+.nf
+\fC_clean_up_tty() {
+    _common_exports
+    if [ "$TERM" = "linux" ]; then
+        printf "\e]P0000000" #black
+        printf "\e]P83f3f3f" #darkgrey
+        printf "\e]P19f3f3f" #darkred
+        printf "\e]P9ff9f9f" #red
+        printf "\e]P23f9f3f" #darkgreen
+        printf "\e]PAbfefbf" #green
+        printf "\e]P3bf9f3f" #brown
+        printf "\e]PB9fff9f" #yellow
+        printf "\e]P45f5f9f" #darkblue
+        printf "\e]PC9f9fff" #blue
+        printf "\e]P59f3f9f" #darkmagenta
+        printf "\e]PDff9fff" #magenta
+        printf "\e]P63f9f9f" #darkcyan
+        printf "\e]PE9fffff" #cyan
+        printf "\e]P7afafaf" #lightgrey
+        printf "\e]PFffffff" #white
+        clear #for background artifacting
+    fi
+}
+
+_select_display_protocol () {
+    mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
+    default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
+    if [ -z "${default_proto}" ]; then
+        default_proto="non-graphical"
+    fi
+    echo ""
+    echo "Display protocols [${default_proto}]"
+    graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+    if [ -n "${graph_proto}" ]; then
+        echo "${graph_proto}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
+    else
+        graph_proto="${default_proto}"
+    fi
+    unset default_proto
+}
+
+_select_wayland_session () {
+    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+    if [ -z "${default_session}" ]; then
+        default_session=".wayinitrc"
+    fi
+    echo ""
+    echo "Wayland sessions [${default_session}]"
+
+    # shellcheck disable=SC2046
+    exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+    if [ -n "${exec_session}" ]; then
+        echo "${exec_session}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+    else
+        exec_session="${default_session}"
+    fi
+    unset default_session
+}
+
+
+_select_x11_session () {
+    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
+    if [ -z "${default_session}" ]; then
+        default_session=".xinitrc"
+    fi
+    echo "X11 sessions [${default_session}]"
+    # shellcheck disable=SC2046
+    exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
+    if [ -n "${exec_session}" ]; then
+        echo "${exec_session}" \
+             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
+    else
+        exec_session="${default_session}"
+    fi
+    unset default_session
+}
+
+\fP
+.fi
+.RE
+
+.SS "Interaction"
+.RS
+.nf
+\fCmain () {
+    nowtty="$(tty)"
+    if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
+        _exports_for_proxies
+        if ${RUNCOM_LAUNCH_UI}; then
+            if [ -z "${RUNCOM_SESSION}" ]; then
+                _select_display_protocol
+                if [ "${graph_proto}" = "x11" ]; then
+                    _exports_for_x11
+                    _select_x11_session
+                    export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                    exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
+                elif [ "${graph_proto}" = "wayland" ]; then
+                    _exports_for_wayland
+                    _select_wayland_session
+                    export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
+                    exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
+                fi
+            fi
+        fi
+    fi
+    unset nowtty graph_proto exec_session RUNCOM_SESSION
+    _clean_up_tty
+}
+
+main "$@"
+
+\fP
+.fi
+.RE
+
+.SH "Calls"
+.SS "bash"
+.RS
+.nf
+\fC# netcheck source=.local/share/pspman/src/runcom/env/ui
+. "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
+\fP
+.fi
+.RE
+
+.SS "zsh"
+.RS
+.nf
+\fC# netcheck source=.local/share/pspman/src/runcom/env/ui
+. "${RUNCOMDIR:-${HOME}/.runcom}/env/ui"
+\fP
+.fi
+.RE

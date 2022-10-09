@@ -1,24 +1,20 @@
-#!/usr/bin/env sh
-# -*- coding:utf-8; mode:shell-script -*-
-#
-# Copyright 2020, 2021, 2022 Pradyumna Paranjape
-#
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+.TH "Gui - launch gui" "1" 
 
-set_vars () {
+.SH "Description"
+.IP \(em 4
+Launch gui apps from command line and kill terminal.
+.IP \(em 4
+TODO: Grab ui properties of the launching frame to launch \fBthis\fP app
+.IP \(em 4
+Popularly known now as 'swallow window' \fIvide\fP https://github.com/salman-abedin/devour \fBat\fP \fIdevour\fP.
+
+.SH "Code"
+.PP
+This section tangles the code (POSIX)
+.SS "Handle global variables and exits"
+.RS
+.nf
+\fCset_vars () {
     args=
     call=
     cmd=
@@ -69,7 +65,14 @@ clean_exit() {
     exit 0
 }
 
-cli () {
+\fP
+.fi
+.RE
+
+.SS "Parse command"
+.RS
+.nf
+\fCcli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
             -h)
@@ -105,7 +108,14 @@ cli () {
     done
 }
 
-launch_gui() {
+\fP
+.fi
+.RE
+
+.SS "Launch"
+.RS
+.nf
+\fClaunch_gui() {
     call="$(echo "${cmd}" | cut -d " " -f 1)"
     args="${cmd#${call}}"
     if [ -z "${call}" ]; then
@@ -123,7 +133,13 @@ launch_gui() {
     exit 65
 }
 
-main() {
+\fP
+.fi
+.RE
+.SS "Main routine call"
+.RS
+.nf
+\fCmain() {
     # Main routine call
     set_vars
     cli "$@"
@@ -133,3 +149,6 @@ main() {
 
 
 main "$@"
+\fP
+.fi
+.RE

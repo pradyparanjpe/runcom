@@ -1,25 +1,52 @@
-#!/usr/bin/env sh
-#-*- coding:utf-8; mode:shell-script -*-
-#
-# Copyright 2020, 2021, 2022 Pradyumna Paranjape
-#
-## Check for network connectivity at the beginning
-# This file is part of Prady_runcom.
-#
-# Prady_runcom is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Prady_runcom is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+.TH "Cloud mount" "1" 
 
-affirm_availability () {
+.SH "Description"
+.PP
+mount (unmount) cloud-media using sshfs
+
+.SH "Setup"
+.PP
+Following variables should be declared by adding lines to
+\fI${XDG_CONFIG_HOME:\-${HOME/.config}/(pvt|local).d/.<some_name>rc\fP
+.IP \(em 4
+cloud_sship: address (ip/domain name) for ssh
+.IP \(em 4
+cloud_locs: absolute paths on \fIcloud_sship\fP to mount (space-separated)
+.IP \(em 4
+cloud_user: user name for ssh
+.IP \(em 4
+mount_net: network code necessary for \fIcloud_sship\fP to be accessible
+.IP \(em 4
+1: home
+.IP \(em 4
+2: work
+.IP \(em 4
+4: (any) intranet
+.IP \(em 4
+8: internet
+
+.RS
+.nf
+\fCcloud_sship="10.0.0.10"
+cloud_user="weatherman"
+cloud_locs="/media/shared /home/weatherman"
+mount_net=2
+export cloud_sship
+export cloud_user
+export cloud_locs
+export mount_net
+
+\fP
+.fi
+.RE
+
+.SH "Code"
+.PP
+This section tangles source code
+.SS "Check availability"
+.RS
+.nf
+\fCaffirm_availability () {
     for _import in sshfs grep; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
             unset _import
@@ -28,8 +55,14 @@ affirm_availability () {
     done
     unset _import
 }
+\fP
+.fi
+.RE
 
-set_vars() {
+.SS "Handle global variables and exits"
+.RS
+.nf
+\fCset_vars() {
     # shellcheck disable=SC2154
     if [ -z "${cloud_sship}" ] || [ -z "${cloud_user}" ]; then
         clean_exit 127 "\$cloud_sship AND/OR \$cloud_user is unset\n"
@@ -79,6 +112,14 @@ clean_exit() {
     exit 0
 }
 
+\fP
+.fi
+.RE
+
+.SS "Parse command"
+.RS
+.nf
+\fC
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -100,7 +141,14 @@ cli () {
     done
 }
 
-discover () {
+\fP
+.fi
+.RE
+
+.SS "Mount/Unmount"
+.RS
+.nf
+\fCdiscover () {
     IFS="$(printf '\t')" read -r _ _ netstate << netcheck
 $(eval "${RUNCOMDIR:-${HOME}/.runcom}/netcheck.sh")
 netcheck
@@ -137,8 +185,14 @@ umountssh () {
         done
     fi
 }
+\fP
+.fi
+.RE
 
-main () {
+.SS "Main routine call"
+.RS
+.nf
+\fCmain () {
     affirm_availability
     set_vars
     cli "$@"
@@ -152,3 +206,6 @@ main () {
 }
 
 main "$@"
+\fP
+.fi
+.RE
