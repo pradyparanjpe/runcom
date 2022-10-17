@@ -10,7 +10,7 @@
 *** Aim
 - Cross-machine synchronization (hence, git)
 - Modularity (hence, not a single file)
-- Self-documenting (hence, a 😉 org files)
+- Self-documenting (hence org files)
 - Work-flow speed (obviously)
 - "Pretty" low resource load (hence, not GNOME/KDE)
 
@@ -336,10 +336,10 @@ Settings
        export KEYTIMEOUT=10
 
        # Use beam shape cursor for each new prompt.
-       _fix_cursor () {
+       _rc_fix_cursor () {
            echo -ne '\e[6 q'
        }
-       add-zsh-hook precmd _fix_cursor
+       add-zsh-hook precmd _rc_fix_cursor
 
        # Change cursor shape for different vi modes.
        zle-keymap-select () {
@@ -632,7 +632,7 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 
 *** Virtualenv in prompt string
 #+BEGIN_SRC sh :tangle ../env/shrc
-  _show_venv () {
+  _rc_show_venv () {
       # if a virtualenv is active, print it's name
       if [ -n "${VIRTUAL_ENV}" ]; then
           base="$(basename "${VIRTUAL_ENV}")"
@@ -754,7 +754,7 @@ This function is called in PS1 section below
 ** Prompt String
 *** Exit_colour
 #+BEGIN_SRC sh :tangle ../env/shrc
-  last_exit_color () {
+  _rc_last_exit_color () {
       case "$1" in
           0)
               # success
@@ -846,7 +846,7 @@ This function is called in PS1 section below
   }
 
   precmd () {
-      _exit_color="$(last_exit_color $?)"
+      _exit_color="$(_rc_last_exit_color $?)"
 
       _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
       unset _cmd_start_t
@@ -859,7 +859,7 @@ This function is called in PS1 section below
       RPROMPT=""
 
       PS1+="\[\e[0;32m\]\u\[\e[m\]"
-      PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
+      PS1+="\[\e[3;35m\]\$(_rc_show_venv)\[\e[m\]"
       PS1+="@"
       PS1+="\[\e[0;34m\]\h\[\e[m\]"
       PS1+="\$(git_ps)"
@@ -881,12 +881,12 @@ This function is called in PS1 section below
 
 **** zsh
 #+BEGIN_SRC bash :tangle ../dotfiles/.zshrc
-  _pspexec() {
+  _rc_pspexec() {
       _cmd_start_t="${SECONDS}"
   }
 
-  _pspps () {
-      _exit_color="$(last_exit_color $?)"
+  _rc_pspps () {
+      _exit_color="$(_rc_last_exit_color $?)"
 
       _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
       unset _cmd_start_t
@@ -900,7 +900,7 @@ This function is called in PS1 section below
 
       PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
       PS1+=$'%{\e[3;35m%}'
-      PS1+="$(_show_venv)"
+      PS1+="$(_rc_show_venv)"
       PS1+=$'%{\e[m%}'
       PS1+=$'@'
       PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
@@ -920,8 +920,8 @@ This function is called in PS1 section below
       unset _exit_stat _elapsed
   }
 
-  add-zsh-hook precmd _pspps
-  add-zsh-hook preexec _pspexec
+  add-zsh-hook precmd _rc_pspps
+  add-zsh-hook preexec _rc_pspexec
 
 #+END_SRC
 
@@ -1239,7 +1239,7 @@ Code is tangled in gui.org
 
 ** Manual pages
 #+BEGIN_SRC sh :tangle ../env/shrc
-  man_help () {
+  _rc_man_help () {
       if man "$@"; then
           return 0
       elif tldr "$@"; then
@@ -1260,7 +1260,7 @@ Code is tangled in gui.org
 
 ** Selection menu
 #+BEGIN_SRC sh :tangle ../env/shrc
-  posix_select () {
+  _rc_posix_select () {
       # select implementation for POSIX
       word_l=""
       count=0
@@ -1290,7 +1290,7 @@ Code is tangled in gui.org
 
 ** manual page help
 #+BEGIN_SRC sh :tangle ../env/shrc
-  alias man="man_help";
+  alias man="_rc_man_help";
 #+END_SRC
 ** Network
 #+BEGIN_SRC sh :tangle ../env/shrc
@@ -1314,6 +1314,14 @@ Code is tangled in gui.org
   alias wc="zwc";
 #+end_src
 
+** Encrypted cURL
+- With look for =${HOME}/.netrc.gpg=.
+   If it exists, decrypt it and use the contents.
+#+begin_src sh :tangle ../env/shrc
+  _rc_decrypt_netrc () {
+      }
+  alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
+#+end_src
 * Networking
 ** State
 #+BEGIN_SRC sh :tangle ../env/shrc
@@ -1335,7 +1343,7 @@ Reuse ssh agent for all logins
 * Window Manager settings
 ** Terminal
 #+BEGIN_SRC sh :tangle ../env/ui
-  for term in foot alacritty termite tilix urxvt xterm; do
+  for term in alacritty foot termite tilix urxvt xterm; do
       if [ -n "$(command -v $term)" ]; then
           defterm="$term";
           export defterm
@@ -1356,7 +1364,7 @@ If running from tty1 offer to launch a graphical session
 *** Graphical exports preparations
 Exports to be made according to selected graphical environment
 #+BEGIN_SRC sh :tangle ../env/ui
-  _common_exports() {
+  _rc_common_exports() {
       if [ -z "$XDG_RUNTIME_DIR" ]; then
           XDG_RUNTIME_DIR="/run/user/$(id -u)"
       fi
@@ -1372,11 +1380,11 @@ Exports to be made according to selected graphical environment
       export _JAVA_AWT_WM_NONREPARENTING
   }
 
-  _exports_for_wayland () {
+  _rc_exports_for_wayland () {
       # export DISPLAY=":0"
       # export WAYLAND_DISPLAY=wayland-0
       # export GDK_BACKEND=wayland,x11
-      _common_exports
+      _rc_common_exports
 
       XDG_SESSION_TYPE="wayland"
       SDL_VIDEODRIVER="wayland"
@@ -1403,8 +1411,8 @@ Exports to be made according to selected graphical environment
       export SWAYROOT
   }
 
-  _exports_for_x11 () {
-      _common_exports
+  _rc_exports_for_x11 () {
+      _rc_common_exports
 
       XDG_SESSION_TYPE="x11"
       SDL_VIDEODRIVER="x11"
@@ -1424,7 +1432,7 @@ Exports to be made according to selected graphical environment
       unset MOZ_ENABLE_WAYLAND
   }
 
-  _exports_for_proxies () {
+  _rc_exports_for_proxies () {
       if [ -z "${export_proxies}" ]; then
           printf "Export proxies?[y/N]:\t"
           read -r export_proxies
@@ -1453,8 +1461,8 @@ Exports to be made according to selected graphical environment
 *** Graphical selections
 Display protocol and session selection
 #+BEGIN_SRC sh :tangle ../env/ui
-  _clean_up_tty() {
-      _common_exports
+  _rc_clean_up_tty() {
+      _rc_common_exports
       if [ "$TERM" = "linux" ]; then
           printf "\e]P0000000" #black
           printf "\e]P83f3f3f" #darkgrey
@@ -1476,7 +1484,7 @@ Display protocol and session selection
       fi
   }
 
-  _select_display_protocol () {
+  _rc_select_display_protocol () {
       mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
       default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
       if [ -z "${default_proto}" ]; then
@@ -1484,7 +1492,7 @@ Display protocol and session selection
       fi
       echo ""
       echo "Display protocols [${default_proto}]"
-      graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+      graph_proto="$(_rc_posix_select "wayland" "x11" "non-graphical")"
       if [ -n "${graph_proto}" ]; then
           echo "${graph_proto}" \
                > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
@@ -1494,41 +1502,38 @@ Display protocol and session selection
       unset default_proto
   }
 
-  _select_wayland_session () {
-      default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+  # $1: protocol name
+  # $3: initrc file
+  _rc_select_proto_session () {
+      proto_name="${1}"
+      sessions_mem="${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"
+
+      protoinitc=".xinitrc"
+      sessions_dir="/usr/share/xsessions/"
+      if [ "${proto_name}" = "wayland" ]; then
+          protoinitc=".wayinitrc"
+          sessions_dir="/usr/share/wayland-sessions/"
+      fi
+
+      default_session="$(cat "${sessions_mem}")" 2>/dev/null
       if [ -z "${default_session}" ]; then
-          default_session=".wayinitrc"
+          default_session="${protoinitrc}"
       fi
       echo ""
-      echo "Wayland sessions [${default_session}]"
+      echo "${proto_name} sessions [${default_session}]"
 
       # shellcheck disable=SC2046
-      exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+      exec_session="$(_rc_posix_select $(ls "${sessions_dir}"))"
       if [ -n "${exec_session}" ]; then
           echo "${exec_session}" \
-               > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+               > "${sessions_mem}"
       else
           exec_session="${default_session}"
       fi
       unset default_session
-  }
-
-
-  _select_x11_session () {
-      default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
-      if [ -z "${default_session}" ]; then
-          default_session=".xinitrc"
-      fi
-      echo "X11 sessions [${default_session}]"
-      # shellcheck disable=SC2046
-      exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
-      if [ -n "${exec_session}" ]; then
-          echo "${exec_session}" \
-               > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
-      else
-          exec_session="${default_session}"
-      fi
-      unset default_session
+      unset protoinitc
+      unset sessions_dir
+      unset proto_name
   }
 
 #+END_SRC
@@ -1538,18 +1543,18 @@ Display protocol and session selection
   main () {
       nowtty="$(tty)"
       if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
-          _exports_for_proxies
+          _rc_exports_for_proxies
           if ${RUNCOM_LAUNCH_UI}; then
               if [ -z "${RUNCOM_SESSION}" ]; then
-                  _select_display_protocol
+                  _rc_select_display_protocol
                   if [ "${graph_proto}" = "x11" ]; then
-                      _exports_for_x11
-                      _select_x11_session
+                      _rc_exports_for_x11
+                      _rc_select_proto_session "${graph_proto}"
                       export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                       exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
                   elif [ "${graph_proto}" = "wayland" ]; then
-                      _exports_for_wayland
-                      _select_wayland_session
+                      _rc_exports_for_wayland
+                      _rc_select_proto_session "${graph_proto}"
                       export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                       exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
                   fi
@@ -1557,7 +1562,7 @@ Display protocol and session selection
           fi
       fi
       unset nowtty graph_proto exec_session RUNCOM_SESSION
-      _clean_up_tty
+      _rc_clean_up_tty
   }
 
   main "$@"
@@ -1582,4 +1587,6 @@ Display protocol and session selection
 #  LocalWords:  runcom org dnf RockyLinux RHEL CentOS apk Debian Ubuntu SuSE
 #  LocalWords:  OpenSuSE zypper pacman Manjaro UNO symlinked symlinks UnStow
 #  LocalWords:  unstow neo XDG virtualenv Virtualenv PDF Pandoc Org Docx ENV
-#  LocalWords:  coreutils
+#  LocalWords:  coreutils zsh utf LocalWords shrc bashrc zshrc RUNCOM gui venv
+#  LocalWords:  RUNCOMDIR config ui env CONFIG zshrc zshprofile zlogin Init
+#  LocalWords:  setopt bemenu gtk venv ksh csh

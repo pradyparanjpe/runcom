@@ -34,7 +34,7 @@ SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK
 ssh-add -l > /dev/null || ssh-add
 
-for term in foot alacritty termite tilix urxvt xterm; do
+for term in alacritty foot termite tilix urxvt xterm; do
     if [ -n "$(command -v $term)" ]; then
         defterm="$term";
         export defterm
@@ -42,7 +42,7 @@ for term in foot alacritty termite tilix urxvt xterm; do
     fi;
 done
 
-_common_exports() {
+_rc_common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
         XDG_RUNTIME_DIR="/run/user/$(id -u)"
     fi
@@ -58,11 +58,11 @@ _common_exports() {
     export _JAVA_AWT_WM_NONREPARENTING
 }
 
-_exports_for_wayland () {
+_rc_exports_for_wayland () {
     # export DISPLAY=":0"
     # export WAYLAND_DISPLAY=wayland-0
     # export GDK_BACKEND=wayland,x11
-    _common_exports
+    _rc_common_exports
 
     XDG_SESSION_TYPE="wayland"
     SDL_VIDEODRIVER="wayland"
@@ -89,8 +89,8 @@ _exports_for_wayland () {
     export SWAYROOT
 }
 
-_exports_for_x11 () {
-    _common_exports
+_rc_exports_for_x11 () {
+    _rc_common_exports
 
     XDG_SESSION_TYPE="x11"
     SDL_VIDEODRIVER="x11"
@@ -110,7 +110,7 @@ _exports_for_x11 () {
     unset MOZ_ENABLE_WAYLAND
 }
 
-_exports_for_proxies () {
+_rc_exports_for_proxies () {
     if [ -z "${export_proxies}" ]; then
         printf "Export proxies?[y/N]:\t"
         read -r export_proxies
@@ -135,8 +135,8 @@ _exports_for_proxies () {
 
 }
 
-_clean_up_tty() {
-    _common_exports
+_rc_clean_up_tty() {
+    _rc_common_exports
     if [ "$TERM" = "linux" ]; then
         printf "\e]P0000000" #black
         printf "\e]P83f3f3f" #darkgrey
@@ -158,7 +158,7 @@ _clean_up_tty() {
     fi
 }
 
-_select_display_protocol () {
+_rc_select_display_protocol () {
     mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
     default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
     if [ -z "${default_proto}" ]; then
@@ -166,7 +166,7 @@ _select_display_protocol () {
     fi
     echo ""
     echo "Display protocols [${default_proto}]"
-    graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+    graph_proto="$(_rc_posix_select "wayland" "x11" "non-graphical")"
     if [ -n "${graph_proto}" ]; then
         echo "${graph_proto}" \
              > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
@@ -176,58 +176,55 @@ _select_display_protocol () {
     unset default_proto
 }
 
-_select_wayland_session () {
-    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+# $1: protocol name
+# $3: initrc file
+_rc_select_proto_session () {
+    proto_name="${1}"
+    sessions_mem="${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"
+
+    protoinitc=".xinitrc"
+    sessions_dir="/usr/share/xsessions/"
+    if [ "${proto_name}" = "wayland" ]; then
+        protoinitc=".wayinitrc"
+        sessions_dir="/usr/share/wayland-sessions/"
+    fi
+
+    default_session="$(cat "${sessions_mem}")" 2>/dev/null
     if [ -z "${default_session}" ]; then
-        default_session=".wayinitrc"
+        default_session="${protoinitrc}"
     fi
     echo ""
-    echo "Wayland sessions [${default_session}]"
+    echo "${proto_name} sessions [${default_session}]"
 
     # shellcheck disable=SC2046
-    exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+    exec_session="$(_rc_posix_select $(ls "${sessions_dir}"))"
     if [ -n "${exec_session}" ]; then
         echo "${exec_session}" \
-             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+             > "${sessions_mem}"
     else
         exec_session="${default_session}"
     fi
     unset default_session
-}
-
-
-_select_x11_session () {
-    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
-    if [ -z "${default_session}" ]; then
-        default_session=".xinitrc"
-    fi
-    echo "X11 sessions [${default_session}]"
-    # shellcheck disable=SC2046
-    exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
-    if [ -n "${exec_session}" ]; then
-        echo "${exec_session}" \
-             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
-    else
-        exec_session="${default_session}"
-    fi
-    unset default_session
+    unset protoinitc
+    unset sessions_dir
+    unset proto_name
 }
 
 main () {
     nowtty="$(tty)"
     if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
-        _exports_for_proxies
+        _rc_exports_for_proxies
         if ${RUNCOM_LAUNCH_UI}; then
             if [ -z "${RUNCOM_SESSION}" ]; then
-                _select_display_protocol
+                _rc_select_display_protocol
                 if [ "${graph_proto}" = "x11" ]; then
-                    _exports_for_x11
-                    _select_x11_session
+                    _rc_exports_for_x11
+                    _rc_select_proto_session "${graph_proto}"
                     export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                     exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
                 elif [ "${graph_proto}" = "wayland" ]; then
-                    _exports_for_wayland
-                    _select_wayland_session
+                    _rc_exports_for_wayland
+                    _rc_select_proto_session "${graph_proto}"
                     export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                     exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
                 fi
@@ -235,7 +232,7 @@ main () {
         fi
     fi
     unset nowtty graph_proto exec_session RUNCOM_SESSION
-    _clean_up_tty
+    _rc_clean_up_tty
 }
 
 main "$@"

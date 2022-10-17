@@ -90,10 +90,10 @@ bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
 export KEYTIMEOUT=10
 
 # Use beam shape cursor for each new prompt.
-_fix_cursor () {
+_rc_fix_cursor () {
     echo -ne '\e[6 q'
 }
-add-zsh-hook precmd _fix_cursor
+add-zsh-hook precmd _rc_fix_cursor
 
 # Change cursor shape for different vi modes.
 zle-keymap-select () {
@@ -151,12 +151,12 @@ addlist
 
 unset addition share_dir add_dir
 
-_pspexec() {
+_rc_pspexec() {
     _cmd_start_t="${SECONDS}"
 }
 
-_pspps () {
-    _exit_color="$(last_exit_color $?)"
+_rc_pspps () {
+    _exit_color="$(_rc_last_exit_color $?)"
 
     _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
     unset _cmd_start_t
@@ -170,7 +170,7 @@ _pspps () {
 
     PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
     PS1+=$'%{\e[3;35m%}'
-    PS1+="$(_show_venv)"
+    PS1+="$(_rc_show_venv)"
     PS1+=$'%{\e[m%}'
     PS1+=$'@'
     PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
@@ -190,5 +190,5 @@ _pspps () {
     unset _exit_stat _elapsed
 }
 
-add-zsh-hook precmd _pspps
-add-zsh-hook preexec _pspexec
+add-zsh-hook precmd _rc_pspps
+add-zsh-hook preexec _rc_pspexec

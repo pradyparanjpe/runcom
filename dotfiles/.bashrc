@@ -70,7 +70,7 @@ preexec() {
 }
 
 precmd () {
-    _exit_color="$(last_exit_color $?)"
+    _exit_color="$(_rc_last_exit_color $?)"
 
     _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
     unset _cmd_start_t
@@ -83,7 +83,7 @@ precmd () {
     RPROMPT=""
 
     PS1+="\[\e[0;32m\]\u\[\e[m\]"
-    PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
+    PS1+="\[\e[3;35m\]\$(_rc_show_venv)\[\e[m\]"
     PS1+="@"
     PS1+="\[\e[0;34m\]\h\[\e[m\]"
     PS1+="\$(git_ps)"

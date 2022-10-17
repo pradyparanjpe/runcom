@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# -*- coding:utf-8; mode:shell-script -*-
+# -*- coding:utf-8; mode:shell-script; -*-
 #
 # Copyright 2020, 2021, 2022 Pradyumna Paranjape
 #
@@ -80,6 +80,7 @@ parse_desktop_entry () {
     exec_cmd="${exec_line#*=}"
     unset desk_line
 }
+
 parse_initrc () {
     # $1 wayinitrc file path
     file_is_exec=true
@@ -111,6 +112,7 @@ parse_client () {
         exit 1
     fi
 }
+
 clean_up () {
     unset client
     unset userclientrc

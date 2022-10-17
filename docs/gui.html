@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-09 Sun 09:42 -->
+<!-- 2022-10-13 Thu 13:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gui - launch gui</title>
@@ -23,22 +23,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org70ac053">Description</a></li>
-<li><a href="#org501af31">Code</a>
+<li><a href="#org620f803">Description</a></li>
+<li><a href="#org616af3a">Code</a>
 <ul>
-<li><a href="#org35fff3c">Handle global variables and exits</a></li>
-<li><a href="#orgbcdbac6">Parse command</a></li>
-<li><a href="#orgfa3317b">Launch</a></li>
-<li><a href="#orgae96c98">Main routine call</a></li>
+<li><a href="#org0a7eee7">Handle global variables and exits</a></li>
+<li><a href="#org9ebe955">Parse command</a></li>
+<li><a href="#orgac2f98e">Launch</a></li>
+<li><a href="#org1a99f3d">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org70ac053" class="outline-2">
-<h2 id="org70ac053">Description</h2>
-<div class="outline-text-2" id="text-org70ac053">
+<div id="outline-container-org620f803" class="outline-2">
+<h2 id="org620f803">Description</h2>
+<div class="outline-text-2" id="text-org620f803">
 <ul class="org-ul">
 <li>Launch gui apps from command line and kill terminal.</li>
 <li>TODO: Grab ui properties of the launching frame to launch <b>this</b> app</li>
@@ -47,16 +47,16 @@
 </div>
 </div>
 
-<div id="outline-container-org501af31" class="outline-2">
-<h2 id="org501af31">Code</h2>
-<div class="outline-text-2" id="text-org501af31">
+<div id="outline-container-org616af3a" class="outline-2">
+<h2 id="org616af3a">Code</h2>
+<div class="outline-text-2" id="text-org616af3a">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-org35fff3c" class="outline-3">
-<h3 id="org35fff3c">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org35fff3c">
+<div id="outline-container-org0a7eee7" class="outline-3">
+<h3 id="org0a7eee7">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org0a7eee7">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">args</span>=
@@ -114,9 +114,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgbcdbac6" class="outline-3">
-<h3 id="orgbcdbac6">Parse command</h3>
-<div class="outline-text-3" id="text-orgbcdbac6">
+<div id="outline-container-org9ebe955" class="outline-3">
+<h3 id="org9ebe955">Parse command</h3>
+<div class="outline-text-3" id="text-org9ebe955">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
@@ -159,9 +159,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgfa3317b" class="outline-3">
-<h3 id="orgfa3317b">Launch</h3>
-<div class="outline-text-3" id="text-orgfa3317b">
+<div id="outline-container-orgac2f98e" class="outline-3">
+<h3 id="orgac2f98e">Launch</h3>
+<div class="outline-text-3" id="text-orgac2f98e">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">launch_gui</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">call</span>=<span style="color: #98be65;">"$(echo "${cmd}" | cut -d " " -f 1)"</span>
@@ -185,9 +185,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 </div>
-<div id="outline-container-orgae96c98" class="outline-3">
-<h3 id="orgae96c98">Main routine call</h3>
-<div class="outline-text-3" id="text-orgae96c98">
+<div id="outline-container-org1a99f3d" class="outline-3">
+<h3 id="org1a99f3d">Main routine call</h3>
+<div class="outline-text-3" id="text-org1a99f3d">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Main routine call</span>

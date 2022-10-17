@@ -110,10 +110,22 @@
         pacman --noconfirm -Syu coreutils curl git stow || return 65
       #+end_src
 
+      #+BEGIN_SRC sh :tangle ../setup/dependencies.sh :exports none
+        }
+
+         brew_install() {
+      #+end_src
+
+    - brew: Mac (untested)
+      #+begin_src sh :tangle ../setup/dependencies.sh
+        brew update || return 65
+        brew install coreutils curl git stow || return 66
+      #+end_src
+
     #+begin_src sh :tangle ../setup/dependencies.sh :exports none
       }
        guess_manager() {
-           for manager in apt apk dnf pacman zypper; do
+           for manager in apt apk dnf pacman zypper brew; do
                if command -v "${manager}" 1>/dev/null 2>&1; then
                    printf "%s" "${manager}"
                    return 0

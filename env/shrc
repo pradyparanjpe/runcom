@@ -99,7 +99,7 @@ to_venv () {
     return 126
 }
 
-_show_venv () {
+_rc_show_venv () {
     # if a virtualenv is active, print it's name
     if [ -n "${VIRTUAL_ENV}" ]; then
         base="$(basename "${VIRTUAL_ENV}")"
@@ -202,7 +202,7 @@ git_ps() {
     fi
 }
 
-last_exit_color () {
+_rc_last_exit_color () {
     case "$1" in
         0)
             # success
@@ -533,7 +533,7 @@ lszcat () {
     fi
 }
 
-man_help () {
+_rc_man_help () {
     if man "$@"; then
         return 0
     elif tldr "$@"; then
@@ -551,7 +551,7 @@ man_help () {
     fi
 }
 
-posix_select () {
+_rc_posix_select () {
     # select implementation for POSIX
     word_l=""
     count=0
@@ -574,7 +574,7 @@ alias du='du -hc';
 alias df='df -h';
 alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 
-alias man="man_help";
+alias man="_rc_man_help";
 
 alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
 alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
@@ -585,5 +585,9 @@ alias watch="watch -n 10 --color";
 alias qqqq="exit";
 
 alias wc="zwc";
+
+_rc_decrypt_netrc () {
+    }
+alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
 
 "${RUNCOMDIR}/bin/timeout.sh"
