@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-09 Sun 09:42 -->
+<!-- 2022-10-17 Mon 17:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setup runcom</title>
@@ -23,47 +23,47 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org42fad0b">Legend</a>
+<li><a href="#org8231e20">Legend</a>
 <ul>
-<li><a href="#org88d77c4">Brackets</a></li>
+<li><a href="#orgae25c05">Brackets</a></li>
 </ul>
 </li>
-<li><a href="#org8d72b84">Requirements</a>
+<li><a href="#org8991c50">Requirements</a>
 <ul>
-<li><a href="#orgb6facd9">Knowledge</a></li>
-<li><a href="#org30643dc">Dependencies</a></li>
+<li><a href="#orgcc891c6">Knowledge</a></li>
+<li><a href="#orgdcca78c">Dependencies</a></li>
 </ul>
 </li>
-<li><a href="#orgfe02b4a">Set-up</a>
+<li><a href="#orgcae12bc">Set-up</a>
 <ul>
-<li><a href="#org6de1006">Bootstrap set-up using script</a></li>
-<li><a href="#org36312b6">Guide for manual set-up.</a></li>
+<li><a href="#org0a1696c">Bootstrap set-up using script</a></li>
+<li><a href="#org50eafa4">Guide for manual set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org1756735">Undo Set-up</a>
+<li><a href="#org43643ab">Undo Set-up</a>
 <ul>
-<li><a href="#orgfd4edcc">Bootstrap unset using script</a></li>
-<li><a href="#org9d265bf">Guide to manually undo set-up.</a></li>
+<li><a href="#org50f2580">Bootstrap unset using script</a></li>
+<li><a href="#org9beaac0">Guide to manually undo set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org087091f">Personalization</a>
+<li><a href="#org15bdc63">Personalization</a>
 <ul>
-<li><a href="#orgb24753a">Local</a></li>
-<li><a href="#orga46ceb3">Synchronized</a></li>
-<li><a href="#org7e89a1a">Proxy settings</a></li>
+<li><a href="#org8927e8b">Local</a></li>
+<li><a href="#org861e7d6">Synchronized</a></li>
+<li><a href="#org5fcc23f">Proxy settings</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org42fad0b" class="outline-2">
-<h2 id="org42fad0b">Legend</h2>
-<div class="outline-text-2" id="text-org42fad0b">
+<div id="outline-container-org8231e20" class="outline-2">
+<h2 id="org8231e20">Legend</h2>
+<div class="outline-text-2" id="text-org8231e20">
 </div>
-<div id="outline-container-org88d77c4" class="outline-3">
-<h3 id="org88d77c4">Brackets</h3>
-<div class="outline-text-3" id="text-org88d77c4">
+<div id="outline-container-orgae25c05" class="outline-3">
+<h3 id="orgae25c05">Brackets</h3>
+<div class="outline-text-3" id="text-orgae25c05">
 <ul class="org-ul">
 <li><b>Square</b> <code>[]</code>: optional parts: <code>W[orld]H[ealth]O[rganisation]</code></li>
 <li><b>Angular</b> <code>&lt;&gt;</code>: instructions to fill: <code>&lt;a global organisation&gt;</code></li>
@@ -74,20 +74,20 @@
 </div>
 </div>
 
-<div id="outline-container-org8d72b84" class="outline-2">
-<h2 id="org8d72b84">Requirements</h2>
-<div class="outline-text-2" id="text-org8d72b84">
+<div id="outline-container-org8991c50" class="outline-2">
+<h2 id="org8991c50">Requirements</h2>
+<div class="outline-text-2" id="text-org8991c50">
 </div>
-<div id="outline-container-orgb6facd9" class="outline-3">
-<h3 id="orgb6facd9">Knowledge</h3>
-<div class="outline-text-3" id="text-orgb6facd9">
+<div id="outline-container-orgcc891c6" class="outline-3">
+<h3 id="orgcc891c6">Knowledge</h3>
+<div class="outline-text-3" id="text-orgcc891c6">
 <ul class="org-ul">
 <li>Linux shell commands. We shall try to be POSIX-compliant.</li>
 <li>Knowledge of Linux, "dot-files".</li>
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="orga2c0f5a">
+<div class="warning" id="org870213b">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -97,9 +97,9 @@ Avoid use of <b>sudo</b> as much as possible.
 </div>
 </div>
 
-<div id="outline-container-org30643dc" class="outline-3">
-<h3 id="org30643dc">Dependencies</h3>
-<div class="outline-text-3" id="text-org30643dc">
+<div id="outline-container-orgdcca78c" class="outline-3">
+<h3 id="orgdcca78c">Dependencies</h3>
+<div class="outline-text-3" id="text-orgdcca78c">
 <ul class="org-ul">
 <li>A GNU/Linux distribution. I use <a href="https://fedoraproject.org">Fedora</a>.</li>
 <li>GNU <a href="https://www.gnu.org/software/coreutils/coreutils.html">coreutils</a>: Basic OS utilities.</li>
@@ -108,7 +108,7 @@ Avoid use of <b>sudo</b> as much as possible.
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="org265254b">
+<div class="important" id="org947a2be">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -119,9 +119,9 @@ For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href=
 </div>
 </div>
 
-<div id="outline-container-org5710aa4" class="outline-4">
-<h4 id="org5710aa4">Bootstrap installation of dependencies</h4>
-<div class="outline-text-4" id="text-org5710aa4">
+<div id="outline-container-org5046ed0" class="outline-4">
+<h4 id="org5046ed0">Bootstrap installation of dependencies</h4>
+<div class="outline-text-4" id="text-org5046ed0">
 <p>
 For automated installation of dependencies,
 run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
@@ -131,7 +131,7 @@ run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated 
 </pre>
 </div>
 
-<div class="note" id="org1b36730">
+<div class="note" id="org4e9e11b">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
@@ -143,9 +143,9 @@ install dependencies manually instead, that's all it does.
 </div>
 </div>
 
-<div id="outline-container-orgede952b" class="outline-4">
-<h4 id="orgede952b">Guide for manual installation of dependencies.</h4>
-<div class="outline-text-4" id="text-orgede952b">
+<div id="outline-container-org7e8904f" class="outline-4">
+<h4 id="org7e8904f">Guide for manual installation of dependencies.</h4>
+<div class="outline-text-4" id="text-org7e8904f">
 <p>
 Use suitable package manager (<a href="https://wiki.debian.org/Apt">apt</a>|<a href="https://pkgs.alpinelinux.org/packages">apk</a>|<a href="https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/">dnf</a>|<a href="https://archlinux.org/pacman/">pacman</a>|<a href="https://documentation.suse.com/smart/linux/html/concept-zypper/index.html">zypper</a>)
 to install coreutils, curl, git, stow.
@@ -197,28 +197,37 @@ pacman: Arch, Manjaro
 <pre class="src src-sh">pacman --noconfirm -Syu coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
 </pre>
 </div></li>
+
+<li><p>
+brew: Mac (untested)
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">brew update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
+brew install coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+</pre>
+</div></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfe02b4a" class="outline-2">
-<h2 id="orgfe02b4a">Set-up</h2>
-<div class="outline-text-2" id="text-orgfe02b4a">
+<div id="outline-container-orgcae12bc" class="outline-2">
+<h2 id="orgcae12bc">Set-up</h2>
+<div class="outline-text-2" id="text-orgcae12bc">
 <ul class="org-ul">
-<li>Affirm <a href="#org8d72b84">requirements</a>.</li>
+<li>Affirm <a href="#org8991c50">requirements</a>.</li>
 </ul>
-<div class="warning" id="org55748a8">
+<div class="warning" id="org53de93d">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="orgff89fcc">
+<div class="warning" id="org4588bb4">
 <ul class="org-ul">
-<li>The next steps require you to delete all <a href="index.html#org89679f1">stowed dotfiles</a>.</li>
+<li>The next steps require you to delete all <a href="index.html#org2ac3d82">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
 <li>Preserve this backup, you will need this during undoing set-up.</li>
 <li>You HAVE BEEN warned.</li>
@@ -227,9 +236,9 @@ Do <b>NOT</b> use <code>sudo</code> during set-up.
 </div>
 </div>
 
-<div id="outline-container-org6de1006" class="outline-3">
-<h3 id="org6de1006">Bootstrap set-up using script</h3>
-<div class="outline-text-3" id="text-org6de1006">
+<div id="outline-container-org0a1696c" class="outline-3">
+<h3 id="org0a1696c">Bootstrap set-up using script</h3>
+<div class="outline-text-3" id="text-org0a1696c">
 <ul class="org-ul">
 <li><p>
 Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
@@ -241,7 +250,7 @@ Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> s
 </pre>
 </div>
 
-<div class="note" id="org12773f7">
+<div class="note" id="orgc24971d">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
@@ -254,13 +263,13 @@ follow manual set-up instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org36312b6" class="outline-3">
-<h3 id="org36312b6">Guide for manual set-up.</h3>
-<div class="outline-text-3" id="text-org36312b6">
+<div id="outline-container-org50eafa4" class="outline-3">
+<h3 id="org50eafa4">Guide for manual set-up.</h3>
+<div class="outline-text-3" id="text-org50eafa4">
 </div>
-<div id="outline-container-orgdd62d49" class="outline-4">
-<h4 id="orgdd62d49">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
-<div class="outline-text-4" id="text-orgdd62d49">
+<div id="outline-container-orgd29c170" class="outline-4">
+<h4 id="orgd29c170">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
+<div class="outline-text-4" id="text-orgd29c170">
 <div class="org-src-container">
 <pre class="src src-sh">git clone --recurse-submodules <span style="color: #98be65;">"https://github.com/pradyparanjpe/runcom"</span> <span style="color: #98be65;">"${HOME}/.runcom"</span> || <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">1</span>
 </pre>
@@ -268,18 +277,18 @@ follow manual set-up instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org8592d30" class="outline-4">
-<h4 id="org8592d30">Stow dot-files</h4>
-<div class="outline-text-4" id="text-org8592d30">
+<div id="outline-container-org0c98bc2" class="outline-4">
+<h4 id="org0c98bc2">Stow dot-files</h4>
+<div class="outline-text-4" id="text-org0c98bc2">
 <ul class="org-ul">
 <li><code>GNU stow</code> will create symlinked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> in <code>${HOME}</code>.</li>
 <li>If <code>stow</code> finds a pre-existing directory, symlinks are created inside that directory.</li>
 <li>If <code>stow</code> finds a pre-existing file (non-directory), it throws error.</li>
 </ul>
 </div>
-<div id="outline-container-org90bc896" class="outline-5">
-<h5 id="org90bc896">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
-<div class="outline-text-5" id="text-org90bc896">
+<div id="outline-container-org6e18dab" class="outline-5">
+<h5 id="org6e18dab">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
+<div class="outline-text-5" id="text-org6e18dab">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #ffffaf;">presence</span>=<span style="color: #98be65;">"${HOME}/OLD_CONFIG"</span>
 mkdir -p <span style="color: #98be65;">"${presence}"</span>
@@ -295,9 +304,9 @@ cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"<
 </div>
 </div>
 
-<div id="outline-container-orgaeeaf88" class="outline-5">
-<h5 id="orgaeeaf88">Create directories, so that symlinks are made <i>inside</i> them.</h5>
-<div class="outline-text-5" id="text-orgaeeaf88">
+<div id="outline-container-org3869ee4" class="outline-5">
+<h5 id="org3869ee4">Create directories, so that symlinks are made <i>inside</i> them.</h5>
+<div class="outline-text-5" id="text-org3869ee4">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #51afef;">for</span> conf_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span style="color: #51afef;">do</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -334,9 +343,9 @@ mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
 </div>
 </div>
 
-<div id="outline-container-orgf3cf0ea" class="outline-5">
-<h5 id="orgf3cf0ea">Stow</h5>
-<div class="outline-text-5" id="text-orgf3cf0ea">
+<div id="outline-container-org9295449" class="outline-5">
+<h5 id="org9295449">Stow</h5>
+<div class="outline-text-5" id="text-org9295449">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vS -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> dotfiles
 </pre>
@@ -345,9 +354,9 @@ mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
 </div>
 </div>
 
-<div id="outline-container-org814c3b2" class="outline-4">
-<h4 id="org814c3b2">Set up Cargo (RUST) HOME</h4>
-<div class="outline-text-4" id="text-org814c3b2">
+<div id="outline-container-org3fe9623" class="outline-4">
+<h4 id="org3fe9623">Set up Cargo (RUST) HOME</h4>
+<div class="outline-text-4" id="text-org3fe9623">
 <p>
 Cargo (RUST) clutters <code>${HOME}</code> with its <i>data</i>. Put it at the right place.
 Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> like python3.
@@ -379,17 +388,17 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
 </div>
 
 
-<div id="outline-container-org1756735" class="outline-2">
-<h2 id="org1756735">Undo Set-up</h2>
-<div class="outline-text-2" id="text-org1756735">
-<div class="warning" id="org9d2d5a5">
+<div id="outline-container-org43643ab" class="outline-2">
+<h2 id="org43643ab">Undo Set-up</h2>
+<div class="outline-text-2" id="text-org43643ab">
+<div class="warning" id="org428b120">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="orgaf3d25b">
+<div class="note" id="org1ce0faf">
 <ul class="org-ul">
 <li>The next steps will require a directory containing 'old configuration files'.</li>
 <li>You HAD BEEN warned against deleting it during the set-up.</li>
@@ -398,9 +407,9 @@ Do <b>NOT</b> use <code>sudo</code> during unset.
 </div>
 </div>
 
-<div id="outline-container-orgfd4edcc" class="outline-3">
-<h3 id="orgfd4edcc">Bootstrap unset using script</h3>
-<div class="outline-text-3" id="text-orgfd4edcc">
+<div id="outline-container-org50f2580" class="outline-3">
+<h3 id="org50f2580">Bootstrap unset using script</h3>
+<div class="outline-text-3" id="text-org50f2580">
 <ul class="org-ul">
 <li><p>
 Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.
@@ -412,7 +421,7 @@ Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> sc
 </pre>
 </div>
 
-<div class="note" id="org5aea33d">
+<div class="note" id="orgf816441">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -425,20 +434,20 @@ follow manual unset instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org9d265bf" class="outline-3">
-<h3 id="org9d265bf">Guide to manually undo set-up.</h3>
-<div class="outline-text-3" id="text-org9d265bf">
+<div id="outline-container-org9beaac0" class="outline-3">
+<h3 id="org9beaac0">Guide to manually undo set-up.</h3>
+<div class="outline-text-3" id="text-org9beaac0">
 </div>
-<div id="outline-container-orgbcd6f91" class="outline-4">
-<h4 id="orgbcd6f91">UnStow dot-files</h4>
-<div class="outline-text-4" id="text-orgbcd6f91">
+<div id="outline-container-org86c35d4" class="outline-4">
+<h4 id="org86c35d4">UnStow dot-files</h4>
+<div class="outline-text-4" id="text-org86c35d4">
 <ul class="org-ul">
 <li>Use <code>GNU stow</code> to unstow to un-linked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> from <code>${HOME}</code>.</li>
 </ul>
 </div>
-<div id="outline-container-org4b4588e" class="outline-5">
-<h5 id="org4b4588e">UnStow</h5>
-<div class="outline-text-5" id="text-org4b4588e">
+<div id="outline-container-orge644776" class="outline-5">
+<h5 id="orge644776">UnStow</h5>
+<div class="outline-text-5" id="text-orge644776">
 <div class="org-src-container">
 <pre class="src src-sh">stow -vp -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> -D dotfiles
 
@@ -447,9 +456,9 @@ follow manual unset instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-orgfc12207" class="outline-5">
-<h5 id="orgfc12207">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
-<div class="outline-text-5" id="text-orgfc12207">
+<div id="outline-container-org8b2825f" class="outline-5">
+<h5 id="org8b2825f">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
+<div class="outline-text-5" id="text-org8b2825f">
 <p>
 Replace the target directory <code>${1:-${HOME}/OLD_CONFIG}</code> in following code block
 with &lt;path/to/old/config/directory&gt;.
@@ -471,9 +480,9 @@ with &lt;path/to/old/config/directory&gt;.
 </div>
 </div>
 
-<div id="outline-container-org8d11ae9" class="outline-4">
-<h4 id="org8d11ae9">Restore CARGO_HOME</h4>
-<div class="outline-text-4" id="text-org8d11ae9">
+<div id="outline-container-org9fd11df" class="outline-4">
+<h4 id="org9fd11df">Restore CARGO_HOME</h4>
+<div class="outline-text-4" id="text-org9fd11df">
 <p>
 move <code>${XDG_DATA_HOME}/cargo</code> to "${HOME}/.cargo"
 </p>
@@ -484,9 +493,9 @@ move <code>${XDG_DATA_HOME}/cargo</code> to "${HOME}/.cargo"
 </div>
 </div>
 
-<div id="outline-container-org74513a9" class="outline-4">
-<h4 id="org74513a9">Delete runcom</h4>
-<div class="outline-text-4" id="text-org74513a9">
+<div id="outline-container-org35a3f31" class="outline-4">
+<h4 id="org35a3f31">Delete runcom</h4>
+<div class="outline-text-4" id="text-org35a3f31">
 <p>
 Goodbye
 </p>
@@ -500,13 +509,13 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-org087091f" class="outline-2">
-<h2 id="org087091f">Personalization</h2>
-<div class="outline-text-2" id="text-org087091f">
+<div id="outline-container-org15bdc63" class="outline-2">
+<h2 id="org15bdc63">Personalization</h2>
+<div class="outline-text-2" id="text-org15bdc63">
 </div>
-<div id="outline-container-orgb24753a" class="outline-3">
-<h3 id="orgb24753a">Local</h3>
-<div class="outline-text-3" id="text-orgb24753a">
+<div id="outline-container-org8927e8b" class="outline-3">
+<h3 id="org8927e8b">Local</h3>
+<div class="outline-text-3" id="text-org8927e8b">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc</code> are sourced.</li>
 <li>Do not synchronize this directory. This directory is only for the machine.</li>
@@ -515,16 +524,16 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-orga46ceb3" class="outline-3">
-<h3 id="orga46ceb3">Synchronized</h3>
-<div class="outline-text-3" id="text-orga46ceb3">
+<div id="outline-container-org861e7d6" class="outline-3">
+<h3 id="org861e7d6">Synchronized</h3>
+<div class="outline-text-3" id="text-org861e7d6">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc</code> are sourced.</li>
 <li><p>
 Synchronize (stow) that directory using a local repository or by simply copying contents.
 </p>
 
-<div class="danger" id="org6834178">
+<div class="danger" id="orgc759a7f">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
@@ -534,7 +543,7 @@ Synchronize (stow) that directory using a local repository or by simply copying 
 </div></li>
 </ul>
 
-<div class="tip" id="org78eed6a">
+<div class="tip" id="orgc8d5769">
 <ul class="org-ul">
 <li><p>
 Remember to keep the repository updated.
@@ -550,9 +559,9 @@ Remember to keep the repository updated.
 </div>
 </div>
 
-<div id="outline-container-org7e89a1a" class="outline-3">
-<h3 id="org7e89a1a">Proxy settings</h3>
-<div class="outline-text-3" id="text-org7e89a1a">
+<div id="outline-container-org5fcc23f" class="outline-3">
+<h3 id="org5fcc23f">Proxy settings</h3>
+<div class="outline-text-3" id="text-org5fcc23f">
 <p>
 Read set up for <a href="./proxy_send.html">proxy_send</a>.
 </p>

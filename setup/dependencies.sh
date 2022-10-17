@@ -33,8 +33,15 @@ zypper -n install coreutils curl git stow || return 66
 pacman --noconfirm -Syu coreutils curl git stow || return 65
 
 }
+
+ brew_install() {
+
+brew update || return 65
+brew install coreutils curl git stow || return 66
+
+}
  guess_manager() {
-     for manager in apt apk dnf pacman zypper; do
+     for manager in apt apk dnf pacman zypper brew; do
          if command -v "${manager}" 1>/dev/null 2>&1; then
              printf "%s" "${manager}"
              return 0

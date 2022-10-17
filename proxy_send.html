@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-09 Sun 09:41 -->
+<!-- 2022-10-13 Thu 13:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proxy_send - send proxy authentication</title>
@@ -23,31 +23,31 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0a34e9d">Description</a></li>
-<li><a href="#org93b243d">Setup</a>
+<li><a href="#org1b563a7">Description</a></li>
+<li><a href="#org383b864">Setup</a>
 <ul>
-<li><a href="#org0bfcc3f">Password store</a></li>
-<li><a href="#org4053704">Environment declaration</a></li>
+<li><a href="#org46214d9">Password store</a></li>
+<li><a href="#orgc609961">Environment declaration</a></li>
 </ul>
 </li>
-<li><a href="#org5a5336b">Code</a>
+<li><a href="#org913d8f5">Code</a>
 <ul>
-<li><a href="#org2229570">Check availability</a></li>
-<li><a href="#orge946a85">Handle global variables and exits</a></li>
-<li><a href="#org79ef794">Parse command</a></li>
-<li><a href="#orgf18eca8">Extract proxy information from environment variable</a></li>
-<li><a href="#orge802d59">Compile proxy information</a></li>
-<li><a href="#orgde80c17">Html handling</a></li>
-<li><a href="#orgb4ac701">Main routine call</a></li>
+<li><a href="#org819852b">Check availability</a></li>
+<li><a href="#org023df91">Handle global variables and exits</a></li>
+<li><a href="#orgb0882f1">Parse command</a></li>
+<li><a href="#org336d21b">Extract proxy information from environment variable</a></li>
+<li><a href="#orge40d4ae">Compile proxy information</a></li>
+<li><a href="#org2c3c7bf">Html handling</a></li>
+<li><a href="#orgab064ba">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0a34e9d" class="outline-2">
-<h2 id="org0a34e9d">Description</h2>
-<div class="outline-text-2" id="text-org0a34e9d">
+<div id="outline-container-org1b563a7" class="outline-2">
+<h2 id="org1b563a7">Description</h2>
+<div class="outline-text-2" id="text-org1b563a7">
 <ul class="org-ul">
 <li>This script is automatically called by prady_runcom's profile scripts when network is inferred as <i>office</i>.</li>
 <li>We try to open <a href="https://www.duckduckgo.com/">duckduckgo</a> and send proxy authentication secret.</li>
@@ -57,14 +57,14 @@ does not demand proxy authentication again.</li>
 </div>
 </div>
 
-<div id="outline-container-org93b243d" class="outline-2">
-<h2 id="org93b243d">Setup</h2>
-<div class="outline-text-2" id="text-org93b243d">
+<div id="outline-container-org383b864" class="outline-2">
+<h2 id="org383b864">Setup</h2>
+<div class="outline-text-2" id="text-org383b864">
 <p>
 Proxy secret may be provided through any of the tools explained in following sections.
 </p>
 
-<div class="note" id="org8fb4786">
+<div class="note" id="orgb05bbc1">
 <ul class="org-ul">
 <li>If information is available at both locations, it is loaded in order.</li>
 <li>Information available from the latter supersedes the former.</li>
@@ -73,9 +73,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </div>
 </div>
 
-<div id="outline-container-org0bfcc3f" class="outline-3">
-<h3 id="org0bfcc3f">Password store</h3>
-<div class="outline-text-3" id="text-org0bfcc3f">
+<div id="outline-container-org46214d9" class="outline-3">
+<h3 id="org46214d9">Password store</h3>
+<div class="outline-text-3" id="text-org46214d9">
 <ul class="org-ul">
 <li><a href="https://www.passwordstore.org">Password manager</a> may hold the proxy-secret.</li>
 <li>Pass-name to the secret <b>MUST</b> be stored in an environment variable <code>${proxy_auth}</code>.</li>
@@ -86,9 +86,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 <i>pass-name</i> can be declared by adding following lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
 </p>
-<div class="seealso" id="org79ffc88">
+<div class="seealso" id="org36d9424">
 <ul class="org-ul">
-<li><a href="setup.html#org087091f">Personalization</a></li>
+<li><a href="setup.html#org15bdc63">Personalization</a></li>
 </ul>
 
 </div>
@@ -104,9 +104,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </ul>
 </div>
 
-<div id="outline-container-orgda48cab" class="outline-5">
-<h5 id="orgda48cab">plain password</h5>
-<div class="outline-text-5" id="text-orgda48cab">
+<div id="outline-container-org715f9d8" class="outline-5">
+<h5 id="org715f9d8">plain password</h5>
+<div class="outline-text-5" id="text-org715f9d8">
 <p>
 Password store stores just the &lt;password&gt;.
 &lt;password&gt; may be stored in password manager using a command such as:
@@ -118,9 +118,9 @@ Password store stores just the &lt;password&gt;.
 </div>
 </div>
 
-<div id="outline-container-orgb9ac82b" class="outline-5">
-<h5 id="orgb9ac82b">multi-field</h5>
-<div class="outline-text-5" id="text-orgb9ac82b">
+<div id="outline-container-orgccf2fb9" class="outline-5">
+<h5 id="orgccf2fb9">multi-field</h5>
+<div class="outline-text-5" id="text-orgccf2fb9">
 <p>
 Information about <i>any</i> or <i>all</i> of following fields may be provided.
 </p>
@@ -149,9 +149,9 @@ Fields may be stored in password manager using a command such as:
 </div>
 </div>
 
-<div id="outline-container-org4053704" class="outline-3">
-<h3 id="org4053704">Environment declaration</h3>
-<div class="outline-text-3" id="text-org4053704">
+<div id="outline-container-orgc609961" class="outline-3">
+<h3 id="orgc609961">Environment declaration</h3>
+<div class="outline-text-3" id="text-orgc609961">
 <ul class="org-ul">
 <li><p>
 A <code>${proxy_protocol}</code> environment variable <b>may</b> be declared.
@@ -183,7 +183,7 @@ It can be declared by adding following lines to
 <li><p>
 Its value must be of the form:
 </p>
-<pre class="example" id="org18571a5">
+<pre class="example" id="org1dc91e2">
 &lt;p_type&gt;_proxy="&lt;protocol&gt;://[&lt;encoded_username&gt;[:&lt;encoded_password&gt;]]@&lt;address&gt;[:&lt;port&gt;]/"
 </pre></li>
 
@@ -195,7 +195,7 @@ Its value must be of the form:
 </pre>
 </div>
 
-<div class="danger" id="orga9404c4">
+<div class="danger" id="org2670774">
 <p>
 Storing password in environment is strongly <b>discouraged</b>.
 </p>
@@ -206,16 +206,16 @@ Storing password in environment is strongly <b>discouraged</b>.
 </div>
 </div>
 
-<div id="outline-container-org5a5336b" class="outline-2">
-<h2 id="org5a5336b">Code</h2>
-<div class="outline-text-2" id="text-org5a5336b">
+<div id="outline-container-org913d8f5" class="outline-2">
+<h2 id="org913d8f5">Code</h2>
+<div class="outline-text-2" id="text-org913d8f5">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-org2229570" class="outline-3">
-<h3 id="org2229570">Check availability</h3>
-<div class="outline-text-3" id="text-org2229570">
+<div id="outline-container-org819852b" class="outline-3">
+<h3 id="org819852b">Check availability</h3>
+<div class="outline-text-3" id="text-org819852b">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> curl printenv grep tr; <span style="color: #51afef;">do</span>
@@ -232,9 +232,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orge946a85" class="outline-3">
-<h3 id="orge946a85">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-orge946a85">
+<div id="outline-container-org023df91" class="outline-3">
+<h3 id="org023df91">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org023df91">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">show</span>=false
@@ -301,9 +301,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-org79ef794" class="outline-3">
-<h3 id="org79ef794">Parse command</h3>
-<div class="outline-text-3" id="text-org79ef794">
+<div id="outline-container-orgb0882f1" class="outline-3">
+<h3 id="orgb0882f1">Parse command</h3>
+<div class="outline-text-3" id="text-orgb0882f1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
@@ -331,9 +331,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgf18eca8" class="outline-3">
-<h3 id="orgf18eca8">Extract proxy information from environment variable</h3>
-<div class="outline-text-3" id="text-orgf18eca8">
+<div id="outline-container-org336d21b" class="outline-3">
+<h3 id="org336d21b">Extract proxy information from environment variable</h3>
+<div class="outline-text-3" id="text-org336d21b">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">extract_env</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">url</span>=<span style="color: #98be65;">"${1}"</span>
@@ -384,9 +384,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orge802d59" class="outline-3">
-<h3 id="orge802d59">Compile proxy information</h3>
-<div class="outline-text-3" id="text-orge802d59">
+<div id="outline-container-orge40d4ae" class="outline-3">
+<h3 id="orge40d4ae">Compile proxy information</h3>
+<div class="outline-text-3" id="text-orge40d4ae">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">build</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">all_proxy</span>=<span style="color: #98be65;">"$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"</span>
@@ -425,9 +425,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgde80c17" class="outline-3">
-<h3 id="orgde80c17">Html handling</h3>
-<div class="outline-text-3" id="text-orgde80c17">
+<div id="outline-container-org2c3c7bf" class="outline-3">
+<h3 id="org2c3c7bf">Html handling</h3>
+<div class="outline-text-3" id="text-org2c3c7bf">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">quote</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     printf <span style="color: #98be65;">"%s"</span> <span style="color: #98be65;">"$1"</span> <span style="color: #98be65;">\</span>
@@ -462,9 +462,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgb4ac701" class="outline-3">
-<h3 id="orgb4ac701">Main routine call</h3>
-<div class="outline-text-3" id="text-orgb4ac701">
+<div id="outline-container-orgab064ba" class="outline-3">
+<h3 id="orgab064ba">Main routine call</h3>
+<div class="outline-text-3" id="text-orgab064ba">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Main routine call</span>
