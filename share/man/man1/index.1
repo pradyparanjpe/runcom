@@ -13,7 +13,7 @@ Cross-machine synchronization (hence, git)
 .IP \(em 4
 Modularity (hence, not a single file)
 .IP \(em 4
-Self-documenting (hence, a 😉 org files)
+Self-documenting (hence org files)
 .IP \(em 4
 Work-flow speed (obviously)
 .IP \(em 4
@@ -407,10 +407,10 @@ bindkey "^[[27;2;13~" vi-open-line-below  # shift Return
 export KEYTIMEOUT=10
 
 # Use beam shape cursor for each new prompt.
-_fix_cursor () {
+_rc_fix_cursor () {
     echo -ne '\e[6 q'
 }
-add-zsh-hook precmd _fix_cursor
+add-zsh-hook precmd _rc_fix_cursor
 
 # Change cursor shape for different vi modes.
 zle-keymap-select () {
@@ -501,6 +501,17 @@ unset addition share_dir add_dir
 .RE
 
 .SS "shrc"
+.SS "Current shelL"
+.PP
+Which shell is running?
+.RS
+.nf
+\fC_RC_SHELL="$(readlink /proc/$$/exe | sed "s/.*\///")"
+export _RC_SHELL
+\fP
+.fi
+.RE
+
 .SS "Local un-synced changes"
 .PP
 All files \fI${XDG_CONFIG_HOME:\-${HOME}/.config}/{local,pvt}.d/.*rc\fP
@@ -519,25 +530,63 @@ unset rcfile unsync_d
 .RE
 
 .SH "Better alternatives"
-.SS "cat"
+.SS "Alias-er script"
+.PP
+Alias some common commands to better alternatives if available
+Commands that are listed (<space> separated) in the environment variable
+\fC_RC_NO_ALT\fP are not aliased.
 .RS
 .nf
-\fCif builtin command -v 'bat' >/dev/null 2>&1; then
-    alias cat="bat --color=auto";
-fi
+\fC# use better alternatives
+# Args:
+#     canon_cmd: canonically used command
+#     alt_cmds: optional list of alternative that may be used if available
+# Environment Variables
+#     _RC_NO_ALT: Don't replace alternatives for <space> separated
+_rc_alternative () {
+    if [ ! "${_RC_NO_ALT% "${1}"*}" = "${_RC_NO_ALT}" ] ||\
+       [ ! "${_RC_NO_ALT#*"${1}" }" = "${_RC_NO_ALT}" ] ||\
+       [ "${1}" = "${_RC_NO_ALT}" ]; then
+        return
+    fi
+    _rc_old_cmd="${1}"
+    shift
+    for _rc_alt in "$@"; do
+        if builtin command -v "${_rc_alt%% *}" >/dev/null 2>&1; then
+            eval "alias ${_rc_old_cmd}=\"${_rc_alt}\"";
+            return
+        fi
+    done
+    unset _rc_alt _rc_old_cmd
+}
+\fP
+.fi
+.RE
+.SS "alias commands"
+.RS
+.nf
+\fC_rc_alternative cat bat
+_rc_alternative diff delta difft
+_rc_alternative df lfs
+_rc_alternative du "dust" "du -hc"
+_rc_alternative grep "rg --color=auto" "ag" "pt" "ack"
+_rc_alternative ls "exa -Fh --color=auto"
+_rc_alternative vim nvim
+_rc_alternative ex nvim
+_rc_alternative docker podman
+_rc_alternative docker-compose "podman compose"
 \fP
 .fi
 .RE
 
-.SS "g/re/p"
+.SS "Atuin"
+.PP
+Use https://github.com/ellie/atuin \fBat\fP \fIatuin\fP for up-arrow history if available
 .RS
 .nf
-\fCfor sc in "ack" "pt" "ag" "rg"; do
-    if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
-        # shellcheck disable=SC2139
-        alias grep="${sc} --color=auto";
-    fi
-done
+\fCif builtin command -v 'atuin' >/dev/null 2>&1; then
+    eval "$(atuin init "${_RC_SHELL}" 2>/dev/null)"
+fi
 \fP
 .fi
 .RE
@@ -545,36 +594,11 @@ done
 .SS "List Contents"
 .RS
 .nf
-\fCif builtin command -v "exa" >/dev/null 2>&1; then
-    alias ls="exa -Fh --color=auto";
-    alias la='exa -a --color=auto';
-    alias ll='exa -lr -s size';
-    alias lla='exa -a';
-    alias l.='exa -a --color=auto |grep "^\."';
-    alias sl="ls";
-fi
-\fP
-.fi
-.RE
-
-.SS "neo visual editor improved"
-.RS
-.nf
-\fCif builtin command -v nvim >/dev/null 2>&1; then
-    alias ex="nvim"; # always open vim in normal mode
-    alias vim="nvim"; # always use neo
-fi
-\fP
-.fi
-.RE
-
-.SS "Container"
-.RS
-.nf
-\fCif builtin command -v podman >/dev/null 2>&1; then
-    alias docker="podman";  # Podman is drop-in replacement for docker
-    alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-fi
+\fCalias la='ls -a';
+alias ll='ls -lr -s size';
+alias lla='ls -la';
+alias l.='ls -a |grep "^\."';
+alias sl="ls";
 \fP
 .fi
 .RE
@@ -723,7 +747,8 @@ to locate site-packages
 
 .RS
 .nf
-\fCpython_ver() {
+\fC# default python version major.minor
+python_ver() {
     python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
 }
 \fP
@@ -736,7 +761,10 @@ Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/a
 This may require shell-identification for ksh, csh, fish since they have a different activate
 .RS
 .nf
-\fCto_venv () {
+\fC# Walk upto mount-point (if within 16 levels) and look for
+# '.venv' directory that contains python
+# virtual environment. If found, switch to it
+to_venv () {
     test_d="$(readlink -f "${PWD}")"
     parents=16  # path too long to waste time
     until mountpoint "${test_d}" > /dev/null 2> /dev/null; do
@@ -769,7 +797,7 @@ This may require shell-identification for ksh, csh, fish since they have a diffe
 .SS "Virtualenv in prompt string"
 .RS
 .nf
-\fC_show_venv () {
+\fC_rc_show_venv () {
     # if a virtualenv is active, print it's name
     if [ -n "${VIRTUAL_ENV}" ]; then
         base="$(basename "${VIRTUAL_ENV}")"
@@ -906,7 +934,9 @@ This function is called in PS1 section below
 .SS "Exit_colour"
 .RS
 .nf
-\fClast_exit_color () {
+\fC# Print ANSI terminal escape codes for colors according to exit status
+# of latest (last) executed command
+_rc_last_exit_color () {
     case "$1" in
         0)
             # success
@@ -954,7 +984,8 @@ This function is called in PS1 section below
 .SS "Elapsed_time"
 .RS
 .nf
-\fC_elapsed_time() {
+\fC# Calculate time elapsed (min/sec) while executing last command
+_elapsed_time() {
     # $1 is start time $2 is end time
     _cmd_start="$1"
     _cmd_end="$2"
@@ -1008,7 +1039,7 @@ preexec() {
 }
 
 precmd () {
-    _exit_color="$(last_exit_color $?)"
+    _exit_color="$(_rc_last_exit_color $?)"
 
     _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
     unset _cmd_start_t
@@ -1021,7 +1052,7 @@ precmd () {
     RPROMPT=""
 
     PS1+="\[\e[0;32m\]\u\[\e[m\]"
-    PS1+="\[\e[3;35m\]\$(_show_venv)\[\e[m\]"
+    PS1+="\[\e[3;35m\]\$(_rc_show_venv)\[\e[m\]"
     PS1+="@"
     PS1+="\[\e[0;34m\]\h\[\e[m\]"
     PS1+="\$(git_ps)"
@@ -1050,12 +1081,12 @@ zsh
 .ft
 .RS
 .nf
-\fC_pspexec() {
+\fC_rc_pspexec() {
     _cmd_start_t="${SECONDS}"
 }
 
-_pspps () {
-    _exit_color="$(last_exit_color $?)"
+_rc_pspps () {
+    _exit_color="$(_rc_last_exit_color $?)"
 
     _elapsed="$(_elapsed_time $_cmd_start_t ${SECONDS})"
     unset _cmd_start_t
@@ -1069,7 +1100,7 @@ _pspps () {
 
     PS1+=$'%{\e[0;32m%}%n%{\e[m%}'
     PS1+=$'%{\e[3;35m%}'
-    PS1+="$(_show_venv)"
+    PS1+="$(_rc_show_venv)"
     PS1+=$'%{\e[m%}'
     PS1+=$'@'
     PS1+=$'%{\e[0;34m%}%m%{\e[m%}'
@@ -1089,8 +1120,8 @@ _pspps () {
     unset _exit_stat _elapsed
 }
 
-add-zsh-hook precmd _pspps
-add-zsh-hook preexec _pspexec
+add-zsh-hook precmd _rc_pspps
+add-zsh-hook preexec _rc_pspexec
 
 \fP
 .fi
@@ -1101,7 +1132,8 @@ add-zsh-hook preexec _pspexec
 .SS "In-Line Calculator"
 .RS
 .nf
-\fCmathcalc() {
+\fC# quick cmoonad line calculator
+mathcalc() {
     echo "$*"| bc -lq
 }
 \fP
@@ -1111,7 +1143,8 @@ add-zsh-hook preexec _pspexec
 .SS "Computational"
 .RS
 .nf
-\fCdec2hex() {
+\fC# convert from decimal to hexadecimal and back
+dec2hex() {
     echo "hex:"
     echo "obase=16; $*"| bc
     echo "dec:"
@@ -1125,7 +1158,8 @@ add-zsh-hook preexec _pspexec
 .SS "PDF from Latex"
 .RS
 .nf
-\fCpdfcompile() {
+\fC# compile pdf from given latex file using pdflatex
+pdfcompile() {
     if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
         printf "pdftex is not installed\n"
         return 127
@@ -1150,8 +1184,9 @@ Org to Something
 .ft
 .RS
 .nf
-\fCorg2export() {
-    # Usage: org2oth [-f] <infile> <othtype>
+\fC# export from org to 'other' using pandoc
+# Usage: org2export [-f] <infile> <othtype>
+org2export() {
     if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
         printf "pandoc is not installed\n"
         return 127
@@ -1209,7 +1244,8 @@ Org to Docx
 .ft
 .RS
 .nf
-\fCorg2doc () {
+\fC# export from org to MS DOCX format using pandoc
+org2doc () {
     org2export "$@" "docx"
 }
 \fP
@@ -1223,7 +1259,8 @@ Org to PDF
 .ft
 .RS
 .nf
-\fCorg2pdf () {
+\fC# export from org to pdf format using pandoc
+org2pdf () {
     org2export "$@" "pdf"
 }
 \fP
@@ -1237,7 +1274,8 @@ Docx to Org
 .ft
 .RS
 .nf
-\fCdoc2org() {
+\fC# export from MS DOCX to org mode using pandoc
+doc2org() {
     if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
         printf "pandoc is not installed\n"
         return 127
@@ -1264,13 +1302,15 @@ ssh Cloud mounts
 see ./cloud_mount.html \fBat\fP \fIcloud_mount\fP
 .RS
 .nf
-\fCmount_cloud_sshfs() {
+\fC# mount standard cloud locations using sshfs (read doc)
+mount_cloud_sshfs() {
     mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
     if [ -f "${mount_script}" ]; then
         eval "${mount_script}"
     fi
 }
 
+# unmount standard cloud locations using sshfs (read doc)
 umount_cloud_sshfs() {
     mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
     if [ -f "${mount_script}" ]; then
@@ -1290,7 +1330,8 @@ Un-interactive terminal commands may also be called
 Code is tangled in gui.org
 .RS
 .nf
-\fCgui () {
+\fC# Launch command and kill current shell if command exists
+gui () {
     "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
     if [ $? = 65 ]; then
         # if bin/gui.sh returns 65, kill shell, else, maintain
@@ -1304,7 +1345,8 @@ Code is tangled in gui.org
 .SS "Un-Compress by context"
 .RS
 .nf
-\fCdeconvolute() {
+\fC# uncompress using appropriate protocol (guessed from extension)
+deconvolute() {
     if builtin command -v "pigz" >/dev/null 2>&1; then
         _gzip="pigz"
     else
@@ -1355,7 +1397,8 @@ When no virtualenv is active, but one is available, switch to it
 Inspired by \fIhttps://lukesmith.xyz/\fP
 .RS
 .nf
-\fClfcd () {
+\fC# Navigate using 'lf' and cd to location
+lfcd () {
     if ! command -v 'lf' >/dev/null 2>/dev/null; then
         printf "lf is not installed\n"
         return 127
@@ -1372,6 +1415,7 @@ Inspired by \fIhttps://lukesmith.xyz/\fP
     unset tmp_file target_dir
 }
 
+# Navigate using pattern 'fzf' and cd to location
 fzfcd () {
     if ! command -v 'fzf' >/dev/null 2>/dev/null; then
         printf "fzf is not installed\n"
@@ -1389,7 +1433,8 @@ Guess whether target is zipped;
 if zipped, unzip and count else classical wc
 .RS
 .nf
-\fCzwc () {
+\fC# gunzip, word count
+zwc () {
     args="$*"
     fname="${args##* }"
     args="${args% ${fname}}"
@@ -1420,7 +1465,9 @@ To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
 Calling the function again reverts
 .RS
 .nf
-\fCforce_global_venv () {
+\fC# When we wish NOT to use first encountered venv (default behaviour)
+# we use this function. (function behaviour: toggle)
+force_global_venv () {
     if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
         unset VIRTUAL_ENV
         to_venv 2>/dev/null
@@ -1436,7 +1483,8 @@ Calling the function again reverts
 .SS "lszcat"
 .RS
 .nf
-\fClszcat () {
+\fC# gunzip and ls (if directory) or cat (if file)
+lszcat () {
     args="$*"
     fname="${args##* }"
     args="${args%% ${fname}}"
@@ -1482,7 +1530,9 @@ Calling the function again reverts
 .SS "Manual pages"
 .RS
 .nf
-\fCman_help () {
+\fC# if manpage is available, display. else display tldr if it is available
+# else, assume '--help' argument and display output passing --help to command
+_rc_man_help () {
     if man "$@"; then
         return 0
     elif tldr "$@"; then
@@ -1506,7 +1556,8 @@ Calling the function again reverts
 .SS "Selection menu"
 .RS
 .nf
-\fCposix_select () {
+\fC# posix selection option by index in cli
+_rc_posix_select () {
     # select implementation for POSIX
     word_l=""
     count=0
@@ -1529,20 +1580,10 @@ Calling the function again reverts
 .RE
 
 .SH "Aliases"
-.SS "Disk Usage"
-.RS
-.nf
-\fCalias du='du -hc';
-alias df='df -h';
-alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
-\fP
-.fi
-.RE
-
 .SS "manual page help"
 .RS
 .nf
-\fCalias man="man_help";
+\fCalias man="_rc_man_help";
 \fP
 .fi
 .RE
@@ -1550,7 +1591,7 @@ alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
 .RS
 .nf
 \fCalias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
-alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+alias nethogs='sudo su -l -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
 alias ping="ping -c 4 ";
 \fP
 .fi
@@ -1580,6 +1621,20 @@ alias ping="ping -c 4 ";
 .fi
 .RE
 
+.SS "Encrypted cURL"
+.IP \(em 4
+With look for \fI${HOME}/.netrc.gpg\fP.
+If it exists, decrypt it and use the contents.
+.RS
+.nf
+\fC# does nothing
+_rc_decrypt_netrc () {
+    true
+}
+alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
+\fP
+.fi
+.RE
 .SH "Networking"
 .SS "State"
 .RS
@@ -1609,7 +1664,7 @@ ssh-add -l > /dev/null || ssh-add
 .SS "Terminal"
 .RS
 .nf
-\fCfor term in foot alacritty termite tilix urxvt xterm; do
+\fCfor term in alacritty foot termite tilix urxvt xterm; do
     if [ -n "$(command -v $term)" ]; then
         defterm="$term";
         export defterm
@@ -1636,7 +1691,8 @@ If running from tty1 offer to launch a graphical session
 Exports to be made according to selected graphical environment
 .RS
 .nf
-\fC_common_exports() {
+\fC# exports common to both wayland and X11
+_rc_common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
         XDG_RUNTIME_DIR="/run/user/$(id -u)"
     fi
@@ -1652,11 +1708,12 @@ Exports to be made according to selected graphical environment
     export _JAVA_AWT_WM_NONREPARENTING
 }
 
-_exports_for_wayland () {
+# exports specific to wayland
+_rc_exports_for_wayland () {
     # export DISPLAY=":0"
     # export WAYLAND_DISPLAY=wayland-0
     # export GDK_BACKEND=wayland,x11
-    _common_exports
+    _rc_common_exports
 
     XDG_SESSION_TYPE="wayland"
     SDL_VIDEODRIVER="wayland"
@@ -1683,8 +1740,9 @@ _exports_for_wayland () {
     export SWAYROOT
 }
 
-_exports_for_x11 () {
-    _common_exports
+# exports specific to x11
+_rc_exports_for_x11 () {
+    _rc_common_exports
 
     XDG_SESSION_TYPE="x11"
     SDL_VIDEODRIVER="x11"
@@ -1704,7 +1762,8 @@ _exports_for_x11 () {
     unset MOZ_ENABLE_WAYLAND
 }
 
-_exports_for_proxies () {
+# offer to export proxies to global environment before launching GUI
+_rc_exports_for_proxies () {
     if [ -z "${export_proxies}" ]; then
         printf "Export proxies?[y/N]:\t"
         read -r export_proxies
@@ -1737,8 +1796,9 @@ _exports_for_proxies () {
 Display protocol and session selection
 .RS
 .nf
-\fC_clean_up_tty() {
-    _common_exports
+\fC# clear TTY, recolor
+_rc_clean_up_tty() {
+    _rc_common_exports
     if [ "$TERM" = "linux" ]; then
         printf "\e]P0000000" #black
         printf "\e]P83f3f3f" #darkgrey
@@ -1760,7 +1820,8 @@ Display protocol and session selection
     fi
 }
 
-_select_display_protocol () {
+# Choice for wayland/X11
+_rc_select_display_protocol () {
     mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
     default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
     if [ -z "${default_proto}" ]; then
@@ -1768,7 +1829,7 @@ _select_display_protocol () {
     fi
     echo ""
     echo "Display protocols [${default_proto}]"
-    graph_proto="$(posix_select "wayland" "x11" "non-graphical")"
+    graph_proto="$(_rc_posix_select "wayland" "x11" "non-graphical")"
     if [ -n "${graph_proto}" ]; then
         echo "${graph_proto}" \
              > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
@@ -1778,41 +1839,39 @@ _select_display_protocol () {
     unset default_proto
 }
 
-_select_wayland_session () {
-    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session")" 2>/dev/null
+# Choice of window manager / desktop environment
+# Args:
+#     $1: protocol name
+_rc_select_proto_session () {
+    proto_name="${1}"
+    sessions_mem="${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"
+
+    protoinitrc=".xinitrc"
+    sessions_dir="/usr/share/xsessions/"
+    if [ "${proto_name}" = "wayland" ]; then
+        protoinitrc=".wayinitrc"
+        sessions_dir="/usr/share/wayland-sessions/"
+    fi
+
+    default_session="$(cat "${sessions_mem}")" 2>/dev/null
     if [ -z "${default_session}" ]; then
-        default_session=".wayinitrc"
+        default_session="${protoinitrc}"
     fi
     echo ""
-    echo "Wayland sessions [${default_session}]"
+    echo "${proto_name} sessions [${default_session}]"
 
     # shellcheck disable=SC2046
-    exec_session="$(posix_select $(ls "/usr/share/wayland-sessions"))"
+    exec_session="$(_rc_posix_select $(ls "${sessions_dir}"))"
     if [ -n "${exec_session}" ]; then
         echo "${exec_session}" \
-             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/wayland_session"
+             > "${sessions_mem}"
     else
         exec_session="${default_session}"
     fi
     unset default_session
-}
-
-
-_select_x11_session () {
-    default_session="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/xsession")" 2>/dev/null
-    if [ -z "${default_session}" ]; then
-        default_session=".xinitrc"
-    fi
-    echo "X11 sessions [${default_session}]"
-    # shellcheck disable=SC2046
-    exec_session="$(posix_select $(ls "/usr/share/xsessions"))"
-    if [ -n "${exec_session}" ]; then
-        echo "${exec_session}" \
-             > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/x11_session"
-    else
-        exec_session="${default_session}"
-    fi
-    unset default_session
+    unset protoinitc
+    unset sessions_dir
+    unset proto_name
 }
 
 \fP
@@ -1822,21 +1881,22 @@ _select_x11_session () {
 .SS "Interaction"
 .RS
 .nf
-\fCmain () {
+\fC# main UI choice routine
+main () {
     nowtty="$(tty)"
     if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then
-        _exports_for_proxies
+        _rc_exports_for_proxies
         if ${RUNCOM_LAUNCH_UI}; then
             if [ -z "${RUNCOM_SESSION}" ]; then
-                _select_display_protocol
+                _rc_select_display_protocol
                 if [ "${graph_proto}" = "x11" ]; then
-                    _exports_for_x11
-                    _select_x11_session
+                    _rc_exports_for_x11
+                    _rc_select_proto_session "${graph_proto}"
                     export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                     exec "${RUNCOMDIR}/bin/x11start" "${exec_session}"
                 elif [ "${graph_proto}" = "wayland" ]; then
-                    _exports_for_wayland
-                    _select_wayland_session
+                    _rc_exports_for_wayland
+                    _rc_select_proto_session "${graph_proto}"
                     export RUNCOM_SESSION="${graph_proto}: ${exec_session}"
                     exec "${RUNCOMDIR}/bin/waystart" "${exec_session}"
                 fi
@@ -1844,7 +1904,7 @@ _select_x11_session () {
         fi
     fi
     unset nowtty graph_proto exec_session RUNCOM_SESSION
-    _clean_up_tty
+    _rc_clean_up_tty
 }
 
 main "$@"

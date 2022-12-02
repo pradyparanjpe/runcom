@@ -419,6 +419,13 @@ Settings
 #+END_SRC
 
 ** shrc
+*** Current shelL
+Which shell is running?
+#+BEGIN_SRC sh :tangle ../env/shrc
+  _RC_SHELL="$(readlink /proc/$$/exe | sed "s/.*\///")"
+  export _RC_SHELL
+#+END_SRC
+
 *** Local un-synced changes
 All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
 #+BEGIN_SRC sh :tangle ../env/shrc
@@ -433,49 +440,63 @@ All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
 #+END_SRC
 
 * Better alternatives
-** cat
+** Alias-er script
+Alias some common commands to better alternatives if available
+Commands that are listed (<space> separated) in the environment variable
+~_RC_NO_ALT~ are not aliased.
 #+BEGIN_SRC sh :tangle ../env/shrc
-  if builtin command -v 'bat' >/dev/null 2>&1; then
-      alias cat="bat --color=auto";
-  fi
+  # use better alternatives
+  # Args:
+  #     canon_cmd: canonically used command
+  #     alt_cmds: optional list of alternative that may be used if available
+  # Environment Variables
+  #     _RC_NO_ALT: Don't replace alternatives for <space> separated
+  _rc_alternative () {
+      if [ ! "${_RC_NO_ALT% "${1}"*}" = "${_RC_NO_ALT}" ] ||\
+         [ ! "${_RC_NO_ALT#*"${1}" }" = "${_RC_NO_ALT}" ] ||\
+         [ "${1}" = "${_RC_NO_ALT}" ]; then
+          return
+      fi
+      _rc_old_cmd="${1}"
+      shift
+      for _rc_alt in "$@"; do
+          if builtin command -v "${_rc_alt%% *}" >/dev/null 2>&1; then
+              eval "alias ${_rc_old_cmd}=\"${_rc_alt}\"";
+              return
+          fi
+      done
+      unset _rc_alt _rc_old_cmd
+  }
+#+END_SRC
+** alias commands
+#+BEGIN_SRC sh :tangle ../env/shrc
+  _rc_alternative cat bat
+  _rc_alternative diff delta difft
+  _rc_alternative df lfs
+  _rc_alternative du "dust" "du -hc"
+  _rc_alternative grep "rg --color=auto" "ag" "pt" "ack"
+  _rc_alternative ls "exa -Fh --color=auto"
+  _rc_alternative vim nvim
+  _rc_alternative ex nvim
+  _rc_alternative docker podman
+  _rc_alternative docker-compose "podman compose"
 #+END_SRC
 
-** g/re/p
+** Atuin
+Use [[https://github.com/ellie/atuin][atuin]] for up-arrow history if available
 #+BEGIN_SRC sh :tangle ../env/shrc
-  for sc in "ack" "pt" "ag" "rg"; do
-      if builtin command -v "${sc%% *}" >/dev/null 2>&1; then
-          # shellcheck disable=SC2139
-          alias grep="${sc} --color=auto";
-      fi
-  done
+  if builtin command -v 'atuin' >/dev/null 2>&1; then
+      eval "$(atuin init "${_RC_SHELL}" 2>/dev/null)"
+  fi
 #+END_SRC
 
 ** List Contents
 #+BEGIN_SRC sh :tangle ../env/shrc
-  if builtin command -v "exa" >/dev/null 2>&1; then
-      alias ls="exa -Fh --color=auto";
-      alias la='exa -a --color=auto';
-      alias ll='exa -lr -s size';
-      alias lla='exa -a';
-      alias l.='exa -a --color=auto |grep "^\."';
-      alias sl="ls";
-  fi
-#+END_SRC
-
-** neo visual editor improved
-#+BEGIN_SRC sh :tangle ../env/shrc
-  if builtin command -v nvim >/dev/null 2>&1; then
-      alias ex="nvim"; # always open vim in normal mode
-      alias vim="nvim"; # always use neo
-  fi
-#+END_SRC
-
-** Container
-#+BEGIN_SRC sh :tangle ../env/shrc
-  if builtin command -v podman >/dev/null 2>&1; then
-      alias docker="podman";  # Podman is drop-in replacement for docker
-      alias docker-compose="podman-compose";  # Podman is drop-in replacement for docker
-  fi
+  alias la='ls -a';
+  alias ll='ls -lr -s size';
+  alias lla='ls -la';
+  alias l.='ls -a |grep "^\."';
+  alias sl="ls";
 #+END_SRC
 
 * Variables
@@ -593,6 +614,7 @@ Silence debugging output for gtk+
 to locate site-packages
 
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # default python version major.minor
   python_ver() {
       python --version |cut -d "." -f1,2 |sed 's/ //' |sed 's/P/p/'
   }
@@ -602,6 +624,9 @@ to locate site-packages
 Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/activate"
 This may require shell-identification for ksh, csh, fish since they have a different activate
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # Walk upto mount-point (if within 16 levels) and look for
+  # '.venv' directory that contains python
+  # virtual environment. If found, switch to it
   to_venv () {
       test_d="$(readlink -f "${PWD}")"
       parents=16  # path too long to waste time
@@ -754,6 +779,8 @@ This function is called in PS1 section below
 ** Prompt String
 *** Exit_colour
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # Print ANSI terminal escape codes for colors according to exit status
+  # of latest (last) executed command
   _rc_last_exit_color () {
       case "$1" in
           0)
@@ -799,6 +826,7 @@ This function is called in PS1 section below
 
 *** Elapsed_time
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # Calculate time elapsed (min/sec) while executing last command
   _elapsed_time() {
       # $1 is start time $2 is end time
       _cmd_start="$1"
@@ -928,6 +956,7 @@ This function is called in PS1 section below
 ** Mathematical
 *** In-Line Calculator
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # quick cmoonad line calculator
   mathcalc() {
       echo "$*"| bc -lq
   }
@@ -935,6 +964,7 @@ This function is called in PS1 section below
 
 *** Computational
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # convert from decimal to hexadecimal and back
   dec2hex() {
       echo "hex:"
       echo "obase=16; $*"| bc
@@ -946,6 +976,7 @@ This function is called in PS1 section below
 ** Documents compilation
 *** PDF from Latex
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # compile pdf from given latex file using pdflatex
   pdfcompile() {
       if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
           printf "pdftex is not installed\n"
@@ -964,8 +995,9 @@ This function is called in PS1 section below
 *** Pandoc
 **** Org to Something
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # export from org to 'other' using pandoc
+  # Usage: org2export [-f] <infile> <othtype>
   org2export() {
-      # Usage: org2oth [-f] <infile> <othtype>
       if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
           printf "pandoc is not installed\n"
           return 127
@@ -1016,6 +1048,7 @@ This function is called in PS1 section below
 
 **** Org to Docx
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # export from org to MS DOCX format using pandoc
   org2doc () {
       org2export "$@" "docx"
   }
@@ -1023,6 +1056,7 @@ This function is called in PS1 section below
 
 **** Org to PDF
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # export from org to pdf format using pandoc
   org2pdf () {
       org2export "$@" "pdf"
   }
@@ -1030,6 +1064,7 @@ This function is called in PS1 section below
 
 **** Docx to Org
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # export from MS DOCX to org mode using pandoc
   doc2org() {
       if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
           printf "pandoc is not installed\n"
@@ -1051,6 +1086,7 @@ This function is called in PS1 section below
 ssh Cloud mounts
 - see [[./cloud_mount.html][cloud_mount]]
   #+BEGIN_SRC sh :tangle ../env/shrc
+    # mount standard cloud locations using sshfs (read doc)
     mount_cloud_sshfs() {
         mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
         if [ -f "${mount_script}" ]; then
@@ -1058,6 +1094,7 @@ ssh Cloud mounts
         fi
     }
 
+    # unmount standard cloud locations using sshfs (read doc)
     umount_cloud_sshfs() {
         mount_script="${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"
         if [ -f "${mount_script}" ]; then
@@ -1073,6 +1110,7 @@ Acts like a launcher
 Un-interactive terminal commands may also be called
 Code is tangled in gui.org
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # Launch command and kill current shell if command exists
   gui () {
       "${RUNCOM:-${HOME}/.runcom}/bin/gui.sh" "$*"
       if [ $? = 65 ]; then
@@ -1084,6 +1122,7 @@ Code is tangled in gui.org
 
 ** Un-Compress by context
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # uncompress using appropriate protocol (guessed from extension)
   deconvolute() {
       if builtin command -v "pigz" >/dev/null 2>&1; then
           _gzip="pigz"
@@ -1127,6 +1166,7 @@ Code is tangled in gui.org
 
   - Inspired by [[https://lukesmith.xyz/]]
     #+BEGIN_SRC sh :tangle ../env/shrc
+      # Navigate using 'lf' and cd to location
       lfcd () {
           if ! command -v 'lf' >/dev/null 2>/dev/null; then
               printf "lf is not installed\n"
@@ -1144,6 +1184,7 @@ Code is tangled in gui.org
           unset tmp_file target_dir
       }
 
+      # Navigate using pattern 'fzf' and cd to location
       fzfcd () {
           if ! command -v 'fzf' >/dev/null 2>/dev/null; then
               printf "fzf is not installed\n"
@@ -1157,6 +1198,7 @@ Code is tangled in gui.org
 - Guess whether target is zipped;
   if zipped, unzip and count else classical wc
   #+begin_src sh :tangle ../env/shrc
+    # gunzip, word count
     zwc () {
         args="$*"
         fname="${args##* }"
@@ -1183,6 +1225,8 @@ Code is tangled in gui.org
 - To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
   - Calling the function again reverts
     #+BEGIN_SRC sh :tangle ../env/shrc
+      # When we wish NOT to use first encountered venv (default behaviour)
+      # we use this function. (function behaviour: toggle)
       force_global_venv () {
           if [ "${VIRTUAL_ENV}" = "Global_Env" ]; then
               unset VIRTUAL_ENV
@@ -1196,6 +1240,7 @@ Code is tangled in gui.org
 
 ** lszcat
 #+begin_src sh :tangle ../env/shrc
+  # gunzip and ls (if directory) or cat (if file)
   lszcat () {
       args="$*"
       fname="${args##* }"
@@ -1239,6 +1284,8 @@ Code is tangled in gui.org
 
 ** Manual pages
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # if manpage is available, display. else display tldr if it is available
+  # else, assume '--help' argument and display output passing --help to command
   _rc_man_help () {
       if man "$@"; then
           return 0
@@ -1260,6 +1307,7 @@ Code is tangled in gui.org
 
 ** Selection menu
 #+BEGIN_SRC sh :tangle ../env/shrc
+  # posix selection option by index in cli
   _rc_posix_select () {
       # select implementation for POSIX
       word_l=""
@@ -1281,13 +1329,6 @@ Code is tangled in gui.org
 #+END_SRC
 
 * Aliases
-** Disk Usage
-#+BEGIN_SRC sh :tangle ../env/shrc
-  alias du='du -hc';
-  alias df='df -h';
-  alias duall="du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'";
-#+END_SRC
-
 ** manual page help
 #+BEGIN_SRC sh :tangle ../env/shrc
   alias man="_rc_man_help";
@@ -1295,7 +1336,7 @@ Code is tangled in gui.org
 ** Network
 #+BEGIN_SRC sh :tangle ../env/shrc
   alias nload='nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'
-  alias nethogs='\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
+  alias nethogs='sudo su -l -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"';
   alias ping="ping -c 4 ";
 #+END_SRC
 
@@ -1316,10 +1357,12 @@ Code is tangled in gui.org
 
 ** Encrypted cURL
 - With look for =${HOME}/.netrc.gpg=.
-   If it exists, decrypt it and use the contents.
+  If it exists, decrypt it and use the contents.
 #+begin_src sh :tangle ../env/shrc
+  # does nothing
   _rc_decrypt_netrc () {
-      }
+      true
+  }
   alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
 #+end_src
 * Networking
@@ -1364,6 +1407,7 @@ If running from tty1 offer to launch a graphical session
 *** Graphical exports preparations
 Exports to be made according to selected graphical environment
 #+BEGIN_SRC sh :tangle ../env/ui
+  # exports common to both wayland and X11
   _rc_common_exports() {
       if [ -z "$XDG_RUNTIME_DIR" ]; then
           XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -1380,6 +1424,7 @@ Exports to be made according to selected graphical environment
       export _JAVA_AWT_WM_NONREPARENTING
   }
 
+  # exports specific to wayland
   _rc_exports_for_wayland () {
       # export DISPLAY=":0"
       # export WAYLAND_DISPLAY=wayland-0
@@ -1411,6 +1456,7 @@ Exports to be made according to selected graphical environment
       export SWAYROOT
   }
 
+  # exports specific to x11
   _rc_exports_for_x11 () {
       _rc_common_exports
 
@@ -1432,6 +1478,7 @@ Exports to be made according to selected graphical environment
       unset MOZ_ENABLE_WAYLAND
   }
 
+  # offer to export proxies to global environment before launching GUI
   _rc_exports_for_proxies () {
       if [ -z "${export_proxies}" ]; then
           printf "Export proxies?[y/N]:\t"
@@ -1461,6 +1508,7 @@ Exports to be made according to selected graphical environment
 *** Graphical selections
 Display protocol and session selection
 #+BEGIN_SRC sh :tangle ../env/ui
+  # clear TTY, recolor
   _rc_clean_up_tty() {
       _rc_common_exports
       if [ "$TERM" = "linux" ]; then
@@ -1484,6 +1532,7 @@ Display protocol and session selection
       fi
   }
 
+  # Choice for wayland/X11
   _rc_select_display_protocol () {
       mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
       default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
@@ -1502,16 +1551,17 @@ Display protocol and session selection
       unset default_proto
   }
 
-  # $1: protocol name
-  # $3: initrc file
+  # Choice of window manager / desktop environment
+  # Args:
+  #     $1: protocol name
   _rc_select_proto_session () {
       proto_name="${1}"
       sessions_mem="${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"
 
-      protoinitc=".xinitrc"
+      protoinitrc=".xinitrc"
       sessions_dir="/usr/share/xsessions/"
       if [ "${proto_name}" = "wayland" ]; then
-          protoinitc=".wayinitrc"
+          protoinitrc=".wayinitrc"
           sessions_dir="/usr/share/wayland-sessions/"
       fi
 
@@ -1540,6 +1590,7 @@ Display protocol and session selection
 
 *** Interaction
 #+BEGIN_SRC sh :tangle ../env/ui
+  # main UI choice routine
   main () {
       nowtty="$(tty)"
       if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then

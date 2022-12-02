@@ -42,6 +42,7 @@ for term in alacritty foot termite tilix urxvt xterm; do
     fi;
 done
 
+# exports common to both wayland and X11
 _rc_common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
         XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -58,6 +59,7 @@ _rc_common_exports() {
     export _JAVA_AWT_WM_NONREPARENTING
 }
 
+# exports specific to wayland
 _rc_exports_for_wayland () {
     # export DISPLAY=":0"
     # export WAYLAND_DISPLAY=wayland-0
@@ -89,6 +91,7 @@ _rc_exports_for_wayland () {
     export SWAYROOT
 }
 
+# exports specific to x11
 _rc_exports_for_x11 () {
     _rc_common_exports
 
@@ -110,6 +113,7 @@ _rc_exports_for_x11 () {
     unset MOZ_ENABLE_WAYLAND
 }
 
+# offer to export proxies to global environment before launching GUI
 _rc_exports_for_proxies () {
     if [ -z "${export_proxies}" ]; then
         printf "Export proxies?[y/N]:\t"
@@ -135,6 +139,7 @@ _rc_exports_for_proxies () {
 
 }
 
+# clear TTY, recolor
 _rc_clean_up_tty() {
     _rc_common_exports
     if [ "$TERM" = "linux" ]; then
@@ -158,6 +163,7 @@ _rc_clean_up_tty() {
     fi
 }
 
+# Choice for wayland/X11
 _rc_select_display_protocol () {
     mkdir -p "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"
     default_proto="$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")" 2>/dev/null
@@ -176,16 +182,17 @@ _rc_select_display_protocol () {
     unset default_proto
 }
 
-# $1: protocol name
-# $3: initrc file
+# Choice of window manager / desktop environment
+# Args:
+#     $1: protocol name
 _rc_select_proto_session () {
     proto_name="${1}"
     sessions_mem="${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"
 
-    protoinitc=".xinitrc"
+    protoinitrc=".xinitrc"
     sessions_dir="/usr/share/xsessions/"
     if [ "${proto_name}" = "wayland" ]; then
-        protoinitc=".wayinitrc"
+        protoinitrc=".wayinitrc"
         sessions_dir="/usr/share/wayland-sessions/"
     fi
 
@@ -210,6 +217,7 @@ _rc_select_proto_session () {
     unset proto_name
 }
 
+# main UI choice routine
 main () {
     nowtty="$(tty)"
     if [ ! "${nowtty#/dev/tty}" = "${nowtty}" ]; then

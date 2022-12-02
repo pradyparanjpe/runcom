@@ -82,12 +82,8 @@ font:
 
   # The italic font face
   italic:
-    family: "Source Code Pro"
-    style: "Medium Italic"
-    # style: "Light Oblique"
+    family: "Fira Code"
     # family: "Fira Code"
-    # family: "Source Code Pro"
-    # style: "Medium Italic"
 
   # Point size of the font
   size: 20.0

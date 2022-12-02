@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-17 Mon 17:38 -->
+<!-- 2022-12-02 Fri 16:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setup runcom</title>
@@ -87,7 +87,7 @@
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="org870213b">
+<div class="warning" id="orgfc73867">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -108,7 +108,7 @@ Avoid use of <b>sudo</b> as much as possible.
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="org947a2be">
+<div class="important" id="org9de2be7">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -131,7 +131,7 @@ run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated 
 </pre>
 </div>
 
-<div class="note" id="org4e9e11b">
+<div class="note" id="orgd2c8863">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
@@ -218,14 +218,14 @@ brew install coreutils curl git stow || <span style="color: #51afef;">return</sp
 <ul class="org-ul">
 <li>Affirm <a href="#org8991c50">requirements</a>.</li>
 </ul>
-<div class="warning" id="org53de93d">
+<div class="warning" id="orga31e55f">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="org4588bb4">
+<div class="warning" id="org97898d9">
 <ul class="org-ul">
 <li>The next steps require you to delete all <a href="index.html#org2ac3d82">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
@@ -250,7 +250,7 @@ Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> s
 </pre>
 </div>
 
-<div class="note" id="orgc24971d">
+<div class="note" id="orgf4e25eb">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
@@ -391,14 +391,14 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
 <div id="outline-container-org43643ab" class="outline-2">
 <h2 id="org43643ab">Undo Set-up</h2>
 <div class="outline-text-2" id="text-org43643ab">
-<div class="warning" id="org428b120">
+<div class="warning" id="org204833f">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="org1ce0faf">
+<div class="note" id="org42c36d7">
 <ul class="org-ul">
 <li>The next steps will require a directory containing 'old configuration files'.</li>
 <li>You HAD BEEN warned against deleting it during the set-up.</li>
@@ -421,7 +421,7 @@ Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> sc
 </pre>
 </div>
 
-<div class="note" id="orgf816441">
+<div class="note" id="org48f78fc">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -533,7 +533,7 @@ Goodbye
 Synchronize (stow) that directory using a local repository or by simply copying contents.
 </p>
 
-<div class="danger" id="orgc759a7f">
+<div class="danger" id="org1a2e5a8">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
@@ -543,7 +543,7 @@ Synchronize (stow) that directory using a local repository or by simply copying 
 </div></li>
 </ul>
 
-<div class="tip" id="orgc8d5769">
+<div class="tip" id="org765d07a">
 <ul class="org-ul">
 <li><p>
 Remember to keep the repository updated.
