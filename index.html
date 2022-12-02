@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-17 Mon 17:38 -->
+<!-- 2022-12-02 Fri 16:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Prady runcom</title>
@@ -41,24 +41,23 @@
 <li><a href="#orgac6175e">Init</a>
 <ul>
 <li><a href="#org03ba903">profile</a></li>
-<li><a href="#org0ccdf16">bash</a></li>
-<li><a href="#org57e8f17">zsh</a></li>
+<li><a href="#org338c1ba">bash</a></li>
+<li><a href="#orgdb484ed">zsh</a></li>
 </ul>
 </li>
 <li><a href="#org927b103">Inherit</a>
 <ul>
-<li><a href="#orga7b2ae5">bash</a></li>
-<li><a href="#org01d7968">zsh</a></li>
+<li><a href="#org214f1ac">bash</a></li>
+<li><a href="#orgdbfbbcf">zsh</a></li>
 <li><a href="#org397a645">shrc</a></li>
 </ul>
 </li>
 <li><a href="#org34c43ba">Better alternatives</a>
 <ul>
-<li><a href="#org93e661d">cat</a></li>
-<li><a href="#org785b25c">g/re/p</a></li>
+<li><a href="#org2c33787">Alias-er script</a></li>
+<li><a href="#orge733e48">alias commands</a></li>
+<li><a href="#org60119c7">Atuin</a></li>
 <li><a href="#org7506b31">List Contents</a></li>
-<li><a href="#orgf406826">neo visual editor improved</a></li>
-<li><a href="#org70fc79d">Container</a></li>
 </ul>
 </li>
 <li><a href="#org095cf67">Variables</a>
@@ -93,7 +92,6 @@
 </li>
 <li><a href="#org780ea88">Aliases</a>
 <ul>
-<li><a href="#org0bdc238">Disk Usage</a></li>
 <li><a href="#org4e1eba6">manual page help</a></li>
 <li><a href="#orgebb6789">Network</a></li>
 <li><a href="#orgd584645">Monitor Job queues</a></li>
@@ -117,8 +115,8 @@
 </li>
 <li><a href="#org20d2c7b">Calls</a>
 <ul>
-<li><a href="#org371f1ea">bash</a></li>
-<li><a href="#org6649e60">zsh</a></li>
+<li><a href="#org9050916">bash</a></li>
+<li><a href="#org2613e3c">zsh</a></li>
 </ul>
 </li>
 </ul>
@@ -168,7 +166,7 @@
 Probably <a href="setup.html#orgcc891c6"><b>NOT</b></a>.
 If you insist, check <a href="setup.html">setup</a> instructions.
 </p>
-<div class="important" id="org932d86a">
+<div class="important" id="org704586a">
 <p>
 Read till the end before you decide to set this up.
 </p>
@@ -373,16 +371,16 @@ They are loaded in following order.
 <h3 id="org40a9d93">Bash</h3>
 <div class="outline-text-3" id="text-org40a9d93">
 </div>
-<div id="outline-container-org5daa4a0" class="outline-4">
-<h4 id="org5daa4a0">/etc/profile</h4>
-<div class="outline-text-4" id="text-org5daa4a0">
+<div id="outline-container-orgb25bfad" class="outline-4">
+<h4 id="orgb25bfad">/etc/profile</h4>
+<div class="outline-text-4" id="text-orgb25bfad">
 </div>
 <div id="outline-container-org5785e58" class="outline-5">
 <h5 id="org5785e58">/etc/bashrc</h5>
 <div class="outline-text-5" id="text-org5785e58">
 </div>
 <ul class="org-ul">
-<li><a id="orgb6b12d6"></a>/etc/profile.d/*<br /></li>
+<li><a id="org3d701f8"></a>/etc/profile.d/*<br /></li>
 </ul>
 </div>
 </div>
@@ -391,8 +389,8 @@ They are loaded in following order.
 <h4 id="org8ff0129">${HOME}/.bash_profile</h4>
 <div class="outline-text-4" id="text-org8ff0129">
 </div>
-<div id="outline-container-orgb12093a" class="outline-5">
-<h5 id="orgb12093a">${HOME}/.profile</h5>
+<div id="outline-container-org8d24987" class="outline-5">
+<h5 id="org8d24987">${HOME}/.profile</h5>
 </div>
 
 <div id="outline-container-orga487618" class="outline-5">
@@ -400,10 +398,10 @@ They are loaded in following order.
 <div class="outline-text-5" id="text-orga487618">
 </div>
 <ul class="org-ul">
-<li><a id="orgd80d8cb"></a>${RUNCOMDIR}/env/shrc<br />
+<li><a id="org68638a5"></a>${RUNCOMDIR}/env/shrc<br />
 <ul class="org-ul">
-<li><a id="orgb488f10"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org2ef0dd0"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="orgc95d3e2"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="org4e4c0f9"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
 </ul>
 </li>
 </ul>
@@ -414,7 +412,7 @@ They are loaded in following order.
 <div class="outline-text-5" id="text-orgd361cca">
 </div>
 <ul class="org-ul">
-<li><a id="orgbed82fb"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="org7109506"></a>${RUNCOMDIR}/env/ui<br /></li>
 </ul>
 </div>
 </div>
@@ -424,16 +422,16 @@ They are loaded in following order.
 <h3 id="org40a5603">Zsh</h3>
 <div class="outline-text-3" id="text-org40a5603">
 </div>
-<div id="outline-container-org432f603" class="outline-4">
-<h4 id="org432f603">/etc/profile</h4>
-<div class="outline-text-4" id="text-org432f603">
+<div id="outline-container-orgb6962ae" class="outline-4">
+<h4 id="orgb6962ae">/etc/profile</h4>
+<div class="outline-text-4" id="text-orgb6962ae">
 </div>
 <div id="outline-container-org56f0a97" class="outline-5">
 <h5 id="org56f0a97">/etc/zshrc</h5>
 <div class="outline-text-5" id="text-org56f0a97">
 </div>
 <ul class="org-ul">
-<li><a id="org8a384bd"></a>/etc/profile.d/*<br /></li>
+<li><a id="org681be76"></a>/etc/profile.d/*<br /></li>
 </ul>
 </div>
 </div>
@@ -446,8 +444,8 @@ They are loaded in following order.
 <h4 id="org52e8a33">${HOME}/.zprofile</h4>
 <div class="outline-text-4" id="text-org52e8a33">
 </div>
-<div id="outline-container-org5750eb1" class="outline-5">
-<h5 id="org5750eb1">${HOME}/.profile</h5>
+<div id="outline-container-org6937bef" class="outline-5">
+<h5 id="org6937bef">${HOME}/.profile</h5>
 </div>
 </div>
 
@@ -456,10 +454,10 @@ They are loaded in following order.
 <div class="outline-text-4" id="text-orgb91ae47">
 </div>
 <ul class="org-ul">
-<li><a id="org1981f04"></a>${RUNCOMDIR}/env/shrc<br />
+<li><a id="org98708aa"></a>${RUNCOMDIR}/env/shrc<br />
 <ul class="org-ul">
-<li><a id="org62e1355"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org8d13801"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
+<li><a id="org79ffd3d"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
+<li><a id="org1012765"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
 </ul>
 </li>
 </ul>
@@ -470,7 +468,7 @@ They are loaded in following order.
 <div class="outline-text-4" id="text-org2404519">
 </div>
 <ul class="org-ul">
-<li><a id="orgd6c33be"></a>${RUNCOMDIR}/env/ui<br /></li>
+<li><a id="orga38bc8b"></a>${RUNCOMDIR}/env/ui<br /></li>
 </ul>
 </div>
 </div>
@@ -552,9 +550,9 @@ zstyle :compinstall filename <span style="color: #98be65;">"${HOME}/.zshrc"</spa
 </div>
 </div>
 </div>
-<div id="outline-container-org0ccdf16" class="outline-3">
-<h3 id="org0ccdf16">bash</h3>
-<div class="outline-text-3" id="text-org0ccdf16">
+<div id="outline-container-org338c1ba" class="outline-3">
+<h3 id="org338c1ba">bash</h3>
+<div class="outline-text-3" id="text-org338c1ba">
 <ul class="org-ul">
 <li><p>
 Prevent bashrc from running outside non-interactive mode
@@ -619,9 +617,9 @@ bind <span style="color: #98be65;">'"jk":vi-movement-mode'</span>
 </div>
 </div>
 
-<div id="outline-container-org57e8f17" class="outline-3">
-<h3 id="org57e8f17">zsh</h3>
-<div class="outline-text-3" id="text-org57e8f17">
+<div id="outline-container-orgdb484ed" class="outline-3">
+<h3 id="orgdb484ed">zsh</h3>
+<div class="outline-text-3" id="text-orgdb484ed">
 <p>
 Settings
 </p>
@@ -751,9 +749,9 @@ zle -N zle-keymap-select
 <h2 id="org927b103">Inherit</h2>
 <div class="outline-text-2" id="text-org927b103">
 </div>
-<div id="outline-container-orga7b2ae5" class="outline-3">
-<h3 id="orga7b2ae5">bash</h3>
-<div class="outline-text-3" id="text-orga7b2ae5">
+<div id="outline-container-org214f1ac" class="outline-3">
+<h3 id="org214f1ac">bash</h3>
+<div class="outline-text-3" id="text-org214f1ac">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -767,9 +765,9 @@ zle -N zle-keymap-select
 </div>
 </div>
 
-<div id="outline-container-org01d7968" class="outline-3">
-<h3 id="org01d7968">zsh</h3>
-<div class="outline-text-3" id="text-org01d7968">
+<div id="outline-container-orgdbfbbcf" class="outline-3">
+<h3 id="orgdbfbbcf">zsh</h3>
+<div class="outline-text-3" id="text-orgdbfbbcf">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck source=".runcom/env/shrc"</span>
 <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -f <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
@@ -808,6 +806,20 @@ zle -N zle-keymap-select
 <h3 id="org397a645">shrc</h3>
 <div class="outline-text-3" id="text-org397a645">
 </div>
+<div id="outline-container-orgd03fc0b" class="outline-4">
+<h4 id="orgd03fc0b">Current shelL</h4>
+<div class="outline-text-4" id="text-orgd03fc0b">
+<p>
+Which shell is running?
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ffffaf;">_RC_SHELL</span>=<span style="color: #98be65;">"$(readlink /proc/$$/exe | sed "s/.*\///")"</span>
+<span style="color: #d76f10;">export</span> _RC_SHELL
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org257ae33" class="outline-4">
 <h4 id="org257ae33">Local un-synced changes</h4>
 <div class="outline-text-4" id="text-org257ae33">
@@ -834,28 +846,70 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 <h2 id="org34c43ba">Better alternatives</h2>
 <div class="outline-text-2" id="text-org34c43ba">
 </div>
-<div id="outline-container-org93e661d" class="outline-3">
-<h3 id="org93e661d">cat</h3>
-<div class="outline-text-3" id="text-org93e661d">
+<div id="outline-container-org2c33787" class="outline-3">
+<h3 id="org2c33787">Alias-er script</h3>
+<div class="outline-text-3" id="text-org2c33787">
+<p>
+Alias some common commands to better alternatives if available
+Commands that are listed (&lt;space&gt; separated) in the environment variable
+<code>_RC_NO_ALT</code> are not aliased.
+</p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">'bat'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">cat</span>=<span style="color: #98be65;">"bat --color=auto"</span>;
-<span style="color: #51afef;">fi</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">use better alternatives</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Args:</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#     </span><span style="color: #3f4f5f; background-color: #0f0f0f;">canon_cmd: canonically used command</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#     </span><span style="color: #3f4f5f; background-color: #0f0f0f;">alt_cmds: optional list of alternative that may be used if available</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Environment Variables</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#     </span><span style="color: #3f4f5f; background-color: #0f0f0f;">_RC_NO_ALT: Don't replace alternatives for &lt;space&gt; separated</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_alternative</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> <span style="color: #98be65;">"${_RC_NO_ALT% "</span>$<span style="color: #98be65;">{</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #98be65;">}</span><span style="color: #98be65;">"*}"</span> = <span style="color: #98be65;">"${_RC_NO_ALT}"</span> <span style="color: #c678dd;">]</span> ||<span style="color: #98be65;">\</span>
+       <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> <span style="color: #98be65;">"${_RC_NO_ALT#*"</span>$<span style="color: #98be65;">{</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #98be65;">}</span><span style="color: #98be65;">" }"</span> = <span style="color: #98be65;">"${_RC_NO_ALT}"</span> <span style="color: #c678dd;">]</span> ||<span style="color: #98be65;">\</span>
+       <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> = <span style="color: #98be65;">"${_RC_NO_ALT}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
+        <span style="color: #51afef;">return</span>
+    <span style="color: #51afef;">fi</span>
+    <span style="color: #ffffaf;">_rc_old_cmd</span>=<span style="color: #98be65;">"${1}"</span>
+    <span style="color: #d76f10;">shift</span>
+    <span style="color: #51afef;">for</span> _rc_alt<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">do</span>
+        <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${_rc_alt%% *}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+            <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"alias ${_rc_old_cmd}=\"${_rc_alt}\""</span>;
+            <span style="color: #51afef;">return</span>
+        <span style="color: #51afef;">fi</span>
+    <span style="color: #51afef;">done</span>
+    <span style="color: #d76f10;">unset</span> _rc_alt _rc_old_cmd
+<span style="color: #51afef;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge733e48" class="outline-3">
+<h3 id="orge733e48">alias commands</h3>
+<div class="outline-text-3" id="text-orge733e48">
+<div class="org-src-container">
+<pre class="src src-sh">_rc_alternative cat bat
+_rc_alternative diff delta difft
+_rc_alternative df lfs
+_rc_alternative du <span style="color: #98be65;">"dust"</span> <span style="color: #98be65;">"du -hc"</span>
+_rc_alternative grep <span style="color: #98be65;">"rg --color=auto"</span> <span style="color: #98be65;">"ag"</span> <span style="color: #98be65;">"pt"</span> <span style="color: #98be65;">"ack"</span>
+_rc_alternative ls <span style="color: #98be65;">"exa -Fh --color=auto"</span>
+_rc_alternative vim nvim
+_rc_alternative ex nvim
+_rc_alternative docker podman
+_rc_alternative docker-compose <span style="color: #98be65;">"podman compose"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org785b25c" class="outline-3">
-<h3 id="org785b25c">g/re/p</h3>
-<div class="outline-text-3" id="text-org785b25c">
+<div id="outline-container-org60119c7" class="outline-3">
+<h3 id="org60119c7">Atuin</h3>
+<div class="outline-text-3" id="text-org60119c7">
+<p>
+Use <a href="https://github.com/ellie/atuin">atuin</a> for up-arrow history if available
+</p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">for</span> sc<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"ack"</span> <span style="color: #98be65;">"pt"</span> <span style="color: #98be65;">"ag"</span> <span style="color: #98be65;">"rg"</span>; <span style="color: #51afef;">do</span>
-    <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"${sc%% *}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2139</span>
-        <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">grep</span>=<span style="color: #98be65;">"${sc} --color=auto"</span>;
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">done</span>
+<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">'atuin'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
+    <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"$(atuin init "${_RC_SHELL}" 2&gt;/dev/null)"</span>
+<span style="color: #51afef;">fi</span>
 </pre>
 </div>
 </div>
@@ -865,40 +919,11 @@ All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
 <h3 id="org7506b31">List Contents</h3>
 <div class="outline-text-3" id="text-org7506b31">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"exa"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ls</span>=<span style="color: #98be65;">"exa -Fh --color=auto"</span>;
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">la</span>=<span style="color: #98be65;">'exa -a --color=auto'</span>;
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ll</span>=<span style="color: #98be65;">'exa -lr -s size'</span>;
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">lla</span>=<span style="color: #98be65;">'exa -a'</span>;
-    <span style="color: #d76f10;">alias</span> l.=<span style="color: #98be65;">'exa -a --color=auto |grep "^\."'</span>;
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">sl</span>=<span style="color: #98be65;">"ls"</span>;
-<span style="color: #51afef;">fi</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf406826" class="outline-3">
-<h3 id="orgf406826">neo visual editor improved</h3>
-<div class="outline-text-3" id="text-orgf406826">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v nvim &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ex</span>=<span style="color: #98be65;">"nvim"</span>; <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">always open vim in normal mode</span>
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">vim</span>=<span style="color: #98be65;">"nvim"</span>; <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">always use neo</span>
-<span style="color: #51afef;">fi</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org70fc79d" class="outline-3">
-<h3 id="org70fc79d">Container</h3>
-<div class="outline-text-3" id="text-org70fc79d">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v podman &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-    <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">docker</span>=<span style="color: #98be65;">"podman"</span>;  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Podman is drop-in replacement for docker</span>
-    <span style="color: #d76f10;">alias</span> docker-compose=<span style="color: #98be65;">"podman-compose"</span>;  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Podman is drop-in replacement for docker</span>
-<span style="color: #51afef;">fi</span>
+<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">la</span>=<span style="color: #98be65;">'ls -a'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ll</span>=<span style="color: #98be65;">'ls -lr -s size'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">lla</span>=<span style="color: #98be65;">'ls -la'</span>;
+<span style="color: #d76f10;">alias</span> l.=<span style="color: #98be65;">'ls -a |grep "^\."'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">sl</span>=<span style="color: #98be65;">"ls"</span>;
 </pre>
 </div>
 </div>
@@ -1080,7 +1105,8 @@ to locate site-packages
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">python_ver</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">default python version major.minor</span>
+<span style="color: #9f5f9f; font-weight: bold;">python_ver</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     python --version |cut -d <span style="color: #98be65;">"."</span> -f1,2 |sed <span style="color: #98be65;">'s/ //'</span> |sed <span style="color: #98be65;">'s/P/p/'</span>
 <span style="color: #51afef;">}</span>
 </pre>
@@ -1096,7 +1122,10 @@ Scan up to mount-point, if any direct parent has .venv, source that ".venv/bin/a
 This may require shell-identification for ksh, csh, fish since they have a different activate
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">to_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Walk upto mount-point (if within 16 levels) and look for</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">'.venv' directory that contains python</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">virtual environment. If found, switch to it</span>
+<span style="color: #9f5f9f; font-weight: bold;">to_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">test_d</span>=<span style="color: #98be65;">"$(readlink -f "${PWD}")"</span>
     <span style="color: #ffffaf;">parents</span>=<span style="color: #da8548; font-weight: bold;">16</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">path too long to waste time</span>
     <span style="color: #51afef;">until</span> mountpoint <span style="color: #98be65;">"${test_d}"</span> &gt; /dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt; /dev/null; <span style="color: #51afef;">do</span>
@@ -1287,7 +1316,9 @@ This function is called in PS1 section below
 <h4 id="orgfb1a303">Exit_colour</h4>
 <div class="outline-text-4" id="text-orgfb1a303">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_last_exit_color</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Print ANSI terminal escape codes for colors according to exit status</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">of latest (last) executed command</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_last_exit_color</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">case</span> <span style="color: #98be65;">"$1"</span><span style="color: #51afef;"> in</span>
         <span style="color: #da8548; font-weight: bold;">0</span>)
             <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">success</span>
@@ -1337,7 +1368,8 @@ This function is called in PS1 section below
 <h4 id="org539f83d">Elapsed_time</h4>
 <div class="outline-text-4" id="text-org539f83d">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_elapsed_time</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Calculate time elapsed (min/sec) while executing last command</span>
+<span style="color: #9f5f9f; font-weight: bold;">_elapsed_time</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$1 is start time $2 is end time</span>
     <span style="color: #ffffaf;">_cmd_start</span>=<span style="color: #98be65;">"$1"</span>
     <span style="color: #ffffaf;">_cmd_end</span>=<span style="color: #98be65;">"$2"</span>
@@ -1381,9 +1413,9 @@ This function is called in PS1 section below
 <h4 id="orgb18b53f">PROMPT_COMMAND</h4>
 <div class="outline-text-4" id="text-orgb18b53f">
 </div>
-<div id="outline-container-org7c83341" class="outline-5">
-<h5 id="org7c83341">bash</h5>
-<div class="outline-text-5" id="text-org7c83341">
+<div id="outline-container-org860e7bd" class="outline-5">
+<h5 id="org860e7bd">bash</h5>
+<div class="outline-text-5" id="text-org860e7bd">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export PROMPT_COMMAND=__prompt_command</span>
 
@@ -1428,9 +1460,9 @@ This function is called in PS1 section below
 </div>
 </div>
 
-<div id="outline-container-orgd104bb2" class="outline-5">
-<h5 id="orgd104bb2">zsh</h5>
-<div class="outline-text-5" id="text-orgd104bb2">
+<div id="outline-container-org2ab1de1" class="outline-5">
+<h5 id="org2ab1de1">zsh</h5>
+<div class="outline-text-5" id="text-org2ab1de1">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #9f5f9f; font-weight: bold;">_rc_pspexec</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">_cmd_start_t</span>=<span style="color: #98be65;">"${SECONDS}"</span>
@@ -1489,7 +1521,8 @@ add-zsh-hook preexec _rc_pspexec
 <h4 id="orgc722562">In-Line Calculator</h4>
 <div class="outline-text-4" id="text-orgc722562">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">mathcalc</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">quick cmoonad line calculator</span>
+<span style="color: #9f5f9f; font-weight: bold;">mathcalc</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"$*"</span>| bc -lq
 <span style="color: #51afef;">}</span>
 </pre>
@@ -1501,7 +1534,8 @@ add-zsh-hook preexec _rc_pspexec
 <h4 id="orga71ed91">Computational</h4>
 <div class="outline-text-4" id="text-orga71ed91">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">dec2hex</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">convert from decimal to hexadecimal and back</span>
+<span style="color: #9f5f9f; font-weight: bold;">dec2hex</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"hex:"</span>
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"obase=16; $*"</span>| bc
     <span style="color: #d76f10;">echo</span> <span style="color: #98be65;">"dec:"</span>
@@ -1521,7 +1555,8 @@ add-zsh-hook preexec _rc_pspexec
 <h4 id="org16943d6">PDF from Latex</h4>
 <div class="outline-text-4" id="text-org16943d6">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">pdfcompile</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">compile pdf from given latex file using pdflatex</span>
+<span style="color: #9f5f9f; font-weight: bold;">pdfcompile</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if ! </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pdflatex"</span> <span style="color: #da8548; font-weight: bold;">1</span>&gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"pdftex is not installed\n"</span>
         <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">127</span>
@@ -1547,8 +1582,9 @@ add-zsh-hook preexec _rc_pspexec
 <h5 id="orgf182328">Org to Something</h5>
 <div class="outline-text-5" id="text-orgf182328">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2export</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Usage: org2oth [-f] &lt;infile&gt; &lt;othtype&gt;</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export from org to 'other' using pandoc</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Usage: org2export [-f] &lt;infile&gt; &lt;othtype&gt;</span>
+<span style="color: #9f5f9f; font-weight: bold;">org2export</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if ! </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pandoc"</span> <span style="color: #da8548; font-weight: bold;">1</span>&gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"pandoc is not installed\n"</span>
         <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">127</span>
@@ -1604,7 +1640,8 @@ add-zsh-hook preexec _rc_pspexec
 <h5 id="orgccbf413">Org to Docx</h5>
 <div class="outline-text-5" id="text-orgccbf413">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2doc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export from org to MS DOCX format using pandoc</span>
+<span style="color: #9f5f9f; font-weight: bold;">org2doc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"docx"</span>
 <span style="color: #51afef;">}</span>
 </pre>
@@ -1616,7 +1653,8 @@ add-zsh-hook preexec _rc_pspexec
 <h5 id="orga3913c3">Org to PDF</h5>
 <div class="outline-text-5" id="text-orga3913c3">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">org2pdf</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export from org to pdf format using pandoc</span>
+<span style="color: #9f5f9f; font-weight: bold;">org2pdf</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     org2export <span style="color: #98be65;">"$@"</span> <span style="color: #98be65;">"pdf"</span>
 <span style="color: #51afef;">}</span>
 </pre>
@@ -1628,7 +1666,8 @@ add-zsh-hook preexec _rc_pspexec
 <h5 id="org903691a">Docx to Org</h5>
 <div class="outline-text-5" id="text-org903691a">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">doc2org</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export from MS DOCX to org mode using pandoc</span>
+<span style="color: #9f5f9f; font-weight: bold;">doc2org</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if ! </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pandoc"</span> <span style="color: #da8548; font-weight: bold;">1</span>&gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"pandoc is not installed\n"</span>
         <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">127</span>
@@ -1661,13 +1700,15 @@ ssh Cloud mounts
 see <a href="./cloud_mount.html">cloud_mount</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">mount_cloud_sshfs</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">mount standard cloud locations using sshfs (read doc)</span>
+<span style="color: #9f5f9f; font-weight: bold;">mount_cloud_sshfs</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">mount_script</span>=<span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -f <span style="color: #98be65;">"${mount_script}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         <span style="color: #d76f10;">eval</span> <span style="color: #98be65;">"${mount_script}"</span>
     <span style="color: #51afef;">fi</span>
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">unmount standard cloud locations using sshfs (read doc)</span>
 <span style="color: #9f5f9f; font-weight: bold;">umount_cloud_sshfs</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">mount_script</span>=<span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -f <span style="color: #98be65;">"${mount_script}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
@@ -1691,7 +1732,8 @@ Un-interactive terminal commands may also be called
 Code is tangled in gui.org
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">gui</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Launch command and kill current shell if command exists</span>
+<span style="color: #9f5f9f; font-weight: bold;">gui</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #98be65;">"${RUNCOM:-${HOME}/.runcom}/bin/gui.sh"</span> <span style="color: #98be65;">"$*"</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">?</span> = <span style="color: #da8548; font-weight: bold;">65</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">if bin/gui.sh returns 65, kill shell, else, maintain</span>
@@ -1707,7 +1749,8 @@ Code is tangled in gui.org
 <h3 id="org972a193">Un-Compress by context</h3>
 <div class="outline-text-3" id="text-org972a193">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">deconvolute</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">uncompress using appropriate protocol (guessed from extension)</span>
+<span style="color: #9f5f9f; font-weight: bold;">deconvolute</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if </span><span style="color: #d76f10;">builtin</span> command -v <span style="color: #98be65;">"pigz"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
         <span style="color: #ffffaf;">_gzip</span>=<span style="color: #98be65;">"pigz"</span>
     <span style="color: #51afef;">else</span>
@@ -1762,7 +1805,8 @@ When no virtualenv is active, but one is available, switch to it
 Inspired by <a href="https://lukesmith.xyz/">https://lukesmith.xyz/</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Navigate using 'lf' and cd to location</span>
+<span style="color: #9f5f9f; font-weight: bold;">lfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> command -v <span style="color: #98be65;">'lf'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"lf is not installed\n"</span>
         <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">127</span>
@@ -1779,6 +1823,7 @@ Inspired by <a href="https://lukesmith.xyz/">https://lukesmith.xyz/</a>
     <span style="color: #d76f10;">unset</span> tmp_file target_dir
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Navigate using pattern 'fzf' and cd to location</span>
 <span style="color: #9f5f9f; font-weight: bold;">fzfcd</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> command -v <span style="color: #98be65;">'fzf'</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"fzf is not installed\n"</span>
@@ -1802,7 +1847,8 @@ Guess whether target is zipped;
 if zipped, unzip and count else classical wc
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">zwc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">gunzip, word count</span>
+<span style="color: #9f5f9f; font-weight: bold;">zwc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"$*"</span>
     <span style="color: #ffffaf;">fname</span>=<span style="color: #98be65;">"${args##* }"</span>
     <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args% ${fname}}"</span>
@@ -1838,7 +1884,9 @@ if zipped, unzip and count else classical wc
 Calling the function again reverts
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">force_global_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">When we wish NOT to use first encountered venv (default behaviour)</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">we use this function. (function behaviour: toggle)</span>
+<span style="color: #9f5f9f; font-weight: bold;">force_global_venv</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${VIRTUAL_ENV}"</span> = <span style="color: #98be65;">"Global_Env"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         <span style="color: #d76f10;">unset</span> VIRTUAL_ENV
         to_venv <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
@@ -1858,7 +1906,8 @@ Calling the function again reverts
 <h3 id="org5fd77d8">lszcat</h3>
 <div class="outline-text-3" id="text-org5fd77d8">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">lszcat</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">gunzip and ls (if directory) or cat (if file)</span>
+<span style="color: #9f5f9f; font-weight: bold;">lszcat</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"$*"</span>
     <span style="color: #ffffaf;">fname</span>=<span style="color: #98be65;">"${args##* }"</span>
     <span style="color: #ffffaf;">args</span>=<span style="color: #98be65;">"${args%% ${fname}}"</span>
@@ -1906,7 +1955,9 @@ Calling the function again reverts
 <h3 id="org9b31f5a">Manual pages</h3>
 <div class="outline-text-3" id="text-org9b31f5a">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_man_help</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">if manpage is available, display. else display tldr if it is available</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">else, assume '--help' argument and display output passing --help to command</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_man_help</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> man <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
         <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">0</span>
     <span style="color: #51afef;">elif</span> tldr <span style="color: #98be65;">"$@"</span>; <span style="color: #51afef;">then</span>
@@ -1932,7 +1983,8 @@ Calling the function again reverts
 <h3 id="org72c045e">Selection menu</h3>
 <div class="outline-text-3" id="text-org72c045e">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_posix_select</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">posix selection option by index in cli</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_posix_select</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">select implementation for POSIX</span>
     <span style="color: #ffffaf;">word_l</span>=<span style="color: #98be65;">""</span>
     <span style="color: #ffffaf;">count</span>=<span style="color: #da8548; font-weight: bold;">0</span>
@@ -1960,18 +2012,6 @@ Calling the function again reverts
 <h2 id="org780ea88">Aliases</h2>
 <div class="outline-text-2" id="text-org780ea88">
 </div>
-<div id="outline-container-org0bdc238" class="outline-3">
-<h3 id="org0bdc238">Disk Usage</h3>
-<div class="outline-text-3" id="text-org0bdc238">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">du</span>=<span style="color: #98be65;">'du -hc'</span>;
-<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">df</span>=<span style="color: #98be65;">'df -h'</span>;
-<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">duall</span>=<span style="color: #98be65;">"du -hc |\grep '^[3-9]\{3\}M\|^[0-9]\{0,3\}\.\{0,1\}[0-9]\{0,1\}G'"</span>;
-</pre>
-</div>
-</div>
-</div>
-
 <div id="outline-container-org4e1eba6" class="outline-3">
 <h3 id="org4e1eba6">manual page help</h3>
 <div class="outline-text-3" id="text-org4e1eba6">
@@ -1986,7 +2026,7 @@ Calling the function again reverts
 <div class="outline-text-3" id="text-orgebb6789">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nload</span>=<span style="color: #98be65;">'nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'</span>
-<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nethogs</span>=<span style="color: #98be65;">'\su - -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"'</span>;
+<span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">nethogs</span>=<span style="color: #98be65;">'sudo su -l -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"'</span>;
 <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">ping</span>=<span style="color: #98be65;">"ping -c 4 "</span>;
 </pre>
 </div>
@@ -2031,8 +2071,10 @@ Calling the function again reverts
 If it exists, decrypt it and use the contents.</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_decrypt_netrc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">does nothing</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_decrypt_netrc</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+    <span style="color: #d76f10;">true</span>
+<span style="color: #51afef;">}</span>
 <span style="color: #d76f10;">alias</span> <span style="color: #ffffaf;">curl</span>=<span style="color: #98be65;">"curl --netrc-file &lt;( gpg --batch -q -d ~/.netrc.gpg )"</span>
 </pre>
 </div>
@@ -2120,7 +2162,8 @@ If running from tty1 offer to launch a graphical session
 Exports to be made according to selected graphical environment
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_common_exports</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">exports common to both wayland and X11</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_common_exports</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"$XDG_RUNTIME_DIR"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         <span style="color: #ffffaf;">XDG_RUNTIME_DIR</span>=<span style="color: #98be65;">"/run/user/$(id -u)"</span>
     <span style="color: #51afef;">fi</span>
@@ -2136,6 +2179,7 @@ Exports to be made according to selected graphical environment
     <span style="color: #d76f10;">export</span> _JAVA_AWT_WM_NONREPARENTING
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">exports specific to wayland</span>
 <span style="color: #9f5f9f; font-weight: bold;">_rc_exports_for_wayland</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export DISPLAY=":0"</span>
     <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">export WAYLAND_DISPLAY=wayland-0</span>
@@ -2167,6 +2211,7 @@ Exports to be made according to selected graphical environment
     <span style="color: #d76f10;">export</span> SWAYROOT
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">exports specific to x11</span>
 <span style="color: #9f5f9f; font-weight: bold;">_rc_exports_for_x11</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     _rc_common_exports
 
@@ -2188,6 +2233,7 @@ Exports to be made according to selected graphical environment
     <span style="color: #d76f10;">unset</span> MOZ_ENABLE_WAYLAND
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">offer to export proxies to global environment before launching GUI</span>
 <span style="color: #9f5f9f; font-weight: bold;">_rc_exports_for_proxies</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${export_proxies}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"Export proxies?[y/N]:\t"</span>
@@ -2224,7 +2270,8 @@ Exports to be made according to selected graphical environment
 Display protocol and session selection
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">_rc_clean_up_tty</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">clear TTY, recolor</span>
+<span style="color: #9f5f9f; font-weight: bold;">_rc_clean_up_tty</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     _rc_common_exports
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$TERM"</span> = <span style="color: #98be65;">"linux"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         printf <span style="color: #98be65;">"\e]P0000000"</span> <span style="color: #3f4f5f; background-color: #0f0f0f;">#</span><span style="color: #3f4f5f; background-color: #0f0f0f;">black</span>
@@ -2247,6 +2294,7 @@ Display protocol and session selection
     <span style="color: #51afef;">fi</span>
 <span style="color: #51afef;">}</span>
 
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Choice for wayland/X11</span>
 <span style="color: #9f5f9f; font-weight: bold;">_rc_select_display_protocol</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     mkdir -p <span style="color: #98be65;">"${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"</span>
     <span style="color: #ffffaf;">default_proto</span>=<span style="color: #98be65;">"$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null
@@ -2265,16 +2313,17 @@ Display protocol and session selection
     <span style="color: #d76f10;">unset</span> default_proto
 <span style="color: #51afef;">}</span>
 
-<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$1: protocol name</span>
-<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$3: initrc file</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Choice of window manager / desktop environment</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Args:</span>
+<span style="color: #3f4f5f; background-color: #0f0f0f;">#     </span><span style="color: #3f4f5f; background-color: #0f0f0f;">$1: protocol name</span>
 <span style="color: #9f5f9f; font-weight: bold;">_rc_select_proto_session</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">proto_name</span>=<span style="color: #98be65;">"${1}"</span>
     <span style="color: #ffffaf;">sessions_mem</span>=<span style="color: #98be65;">"${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"</span>
 
-    <span style="color: #ffffaf;">protoinitc</span>=<span style="color: #98be65;">".xinitrc"</span>
+    <span style="color: #ffffaf;">protoinitrc</span>=<span style="color: #98be65;">".xinitrc"</span>
     <span style="color: #ffffaf;">sessions_dir</span>=<span style="color: #98be65;">"/usr/share/xsessions/"</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${proto_name}"</span> = <span style="color: #98be65;">"wayland"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">protoinitc</span>=<span style="color: #98be65;">".wayinitrc"</span>
+        <span style="color: #ffffaf;">protoinitrc</span>=<span style="color: #98be65;">".wayinitrc"</span>
         <span style="color: #ffffaf;">sessions_dir</span>=<span style="color: #98be65;">"/usr/share/wayland-sessions/"</span>
     <span style="color: #51afef;">fi</span>
 
@@ -2308,7 +2357,8 @@ Display protocol and session selection
 <h4 id="org7357d19">Interaction</h4>
 <div class="outline-text-4" id="text-org7357d19">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">main UI choice routine</span>
+<span style="color: #9f5f9f; font-weight: bold;">main</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
     <span style="color: #ffffaf;">nowtty</span>=<span style="color: #98be65;">"$(tty)"</span>
     <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> <span style="color: #98be65;">"${nowtty#/dev/tty}"</span> = <span style="color: #98be65;">"${nowtty}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
         _rc_exports_for_proxies
@@ -2346,9 +2396,9 @@ main <span style="color: #98be65;">"$@"</span>
 <h2 id="org20d2c7b">Calls</h2>
 <div class="outline-text-2" id="text-org20d2c7b">
 </div>
-<div id="outline-container-org371f1ea" class="outline-3">
-<h3 id="org371f1ea">bash</h3>
-<div class="outline-text-3" id="text-org371f1ea">
+<div id="outline-container-org9050916" class="outline-3">
+<h3 id="org9050916">bash</h3>
+<div class="outline-text-3" id="text-org9050916">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
 . <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
@@ -2357,9 +2407,9 @@ main <span style="color: #98be65;">"$@"</span>
 </div>
 </div>
 
-<div id="outline-container-org6649e60" class="outline-3">
-<h3 id="org6649e60">zsh</h3>
-<div class="outline-text-3" id="text-org6649e60">
+<div id="outline-container-org2613e3c" class="outline-3">
+<h3 id="org2613e3c">zsh</h3>
+<div class="outline-text-3" id="text-org2613e3c">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
 . <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
