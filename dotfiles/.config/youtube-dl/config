@@ -17,7 +17,7 @@
 
 --restrict-filenames
 
---cache-dir ${XDG_CACHE_HOME:-${HOME}/.cache}/youtube-dl
+--cache-dir "${XDG_CACHE_HOME:-${HOME}/.cache}/youtube-dl"
 
 # --format FORMAT
 -f 'bestvideo[height<=?720]+bestaudio/best[height<=?720]'

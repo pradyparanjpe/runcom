@@ -441,7 +441,7 @@ All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
 
 * Better alternatives
 ** Alias-er script
-Alias some common commands to better alternatives if available
+Alias some common commands to better alternatives if available.
 Commands that are listed (<space> separated) in the environment variable
 ~_RC_NO_ALT~ are not aliased.
 #+BEGIN_SRC sh :tangle ../env/shrc

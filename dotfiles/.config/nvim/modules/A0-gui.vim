@@ -1,4 +1,4 @@
-let s:fontsize = 9
+let s:fontsize = 16
 function! AdjustFontSize(amount)
   let s:fontsize = s:fontsize+a:amount
   :execute "GuiFont! Fira Code:h" . s:fontsize
