@@ -35,6 +35,7 @@ set_vars() {
         clean_exit 127 "\$cloud_sship AND/OR \$cloud_user is unset\n"
     fi
     srv_mnt_dir=
+    num_locs=0
     action="mount"
     usage="
     usage: ${0} -h
@@ -51,7 +52,7 @@ set_vars() {
       --help\t\t\tprint this help message and exit
 
     Optional Positional Arguments: |
-      unmount\t\tunmount filesystems
+      u[n]mount\t\tunmount filesystems
 "
 }
 
@@ -59,6 +60,7 @@ unset_vars () {
     unset help_msg
     unset usage
     unset action
+    unset num_locs
     unset srv_mnt_dir
 }
 
@@ -90,7 +92,7 @@ cli () {
                 # shellcheck disable=SC2059
                 clean_exit 0 "${help_msg}"
                 ;;
-            unmount)
+            unmount|umount)
                 action="unmount"
                 shift
                 ;;
@@ -102,40 +104,54 @@ cli () {
 
 discover () {
     IFS="$(printf '\t')" read -r _ _ netstate << netcheck
-$(eval "${RUNCOMDIR:-${HOME}/.runcom}/netcheck.sh")
+$(eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/netcheck.sh")
 netcheck
     # shellcheck disable=SC2154
     if [ $(( netstate & mount_net )) ]; then
         # On home network
         srv_mnt_dir="${HOME}/${cloud_sship}"
         # shellcheck disable=SC2154
-        set -- "${cloud_locs}"
+        num_locs="$(echo "${cloud_locs}" | grep ' ' -c)"
+        if [ -n "${clod_locs}" ]; then
+            num_locs="$(( num_locs + 1 ))"
+        fi
     else
         clean_exit 1 "Not on correct network"
     fi
 }
 
 mountssh () {
-    if [ "$(mount | grep -c "${srv_mnt_dir}")" -lt "$#" ]; then
+    if [ "$(mount | grep -c "${srv_mnt_dir}")" -lt "${num_locs}" ]; then
         # not mounted
-        while [ $# -gt 0 ]; do
-            mkdir -p "${srv_mnt_dir}${1}"
+        CDR="${cloud_locs} "
+        while [ -n "${CDR}" ]; do
+            CAR="${CDR%% *}"
+            printf "mounting %s -> %s\n" \
+                   "${cloud_user}@${cloud_sship}:${CAR}" \
+                   "${srv_mnt_dir}${CAR}"
+            mkdir -p "${srv_mnt_dir}${CAR}"
             sshfs -o \
                   "reconnect,ServerAliveInterval=15,ServerAliveCountMax=3" \
-                  "${cloud_user}@${cloud_sship}:${1}" "${srv_mnt_dir}${1}"
-            shift
-        done
+                  "${cloud_user}@${cloud_sship}:${CAR}" "${srv_mnt_dir}${CAR}"
+            CDR="${CDR#* }";
+        done;
+        unset CAR CDR
     fi
 }
 
 umountssh () {
-    if [ "$(mount | grep -c "${srv_mnt_dir}")" -ge "$#" ]; then
+    set -- "${cloud_locs}"
+    if [ "$(mount | grep -c "${srv_mnt_dir}")" -ge "${num_locs}" ]; then
         # mounted
-        while [ $# -gt 0 ]; do
-            umount "${srv_mnt_dir}${1}"
-            shift
+        CDR="${cloud_locs} "
+        while [ -n "${CDR}" ]; do
+            CAR="${CDR%% *}"
+            printf "unmounting %s\n" "${srv_mnt_dir}${CAR}"
+            umount "${srv_mnt_dir}${CAR}"
+            CDR="${CDR#* }";
         done
     fi
+    unset CAR CDR
 }
 
 main () {
@@ -144,9 +160,9 @@ main () {
     cli "$@"
     discover
     if [ "${action}" = 'unmount' ]; then
-        umountssh "$@"
+        umountssh
     else
-        mountssh "$@"
+        mountssh
     fi
     clean_exit
 }
