@@ -177,9 +177,10 @@ expected-line-ending-format=
 
 # Good variable names which should always be accepted, separated by a comma
 # pygmo2:
-#   x: attributes vector
-#   dv: decision vector
-good-names=i,j,k,x,ex,dv,Run,_
+##  x: attributes vector
+##  dv: decision vector
+##  __ to skip kwargs as **__
+good-names=i,j,k,x,ax,ex,dv,Run,_,__
 
 # Bad variable names which should always be refused, separated by a comma
 bad-names=foo,bar,baz,toto,tutu,tata

@@ -55,6 +55,11 @@ esac
 set -o vi
 bind '"jk":vi-movement-mode'
 
+vterm_prompt_end(){
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+}
+PS1=$PS1'\[$(vterm_prompt_end)\]'
+
 # shellcheck source=".runcom/env/shrc"
 if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
     . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"

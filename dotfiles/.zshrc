@@ -123,6 +123,12 @@ bindkey '^r' history-incremental-search-backward
 
 zle -N zle-keymap-select
 
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+}
+setopt PROMPT_SUBST
+PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
 # shellcheck source=".runcom/env/shrc"
 if [ -f "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc" ]; then
     . "${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"
