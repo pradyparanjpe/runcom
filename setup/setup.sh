@@ -27,13 +27,15 @@ EOR
 for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
     if [ -d "${conf_mask}" ]; then
         hard_directory="${HOME}/.config/${conf_mask##*/}"
-        if ! mkdir "${hard_directory}" 2>/dev/null; then
+        if [ -d "${hard_directory}" ]; then
+            # configuration already exists
             mv "${hard_directory}" "${presence}/${hard_directory}"
-            if ! mkdir "${hard_directory}" 2>/dev/null; then
-                # still no luck
-                printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
-                printf "This *shall* cause stow error\n"
-            fi
+        fi
+        if ! mkdir "${hard_directory}" 2>/dev/null; then
+            # no luck
+            printf "%s " "${hard_directory}"
+            printf "Couldn't be removed / backed up / created.\n"
+            printf "This *shall* cause stow error.\n"
         fi
     fi
 done
