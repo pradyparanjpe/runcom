@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Confirm that dependencies are available.
 affirm_availability () {
     for _import in sshfs grep; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -29,33 +30,42 @@ affirm_availability () {
     unset _import
 }
 
-set_vars() {
+# Set clean variables before running script.
+set_vars () {
     # shellcheck disable=SC2154
     if [ -z "${cloud_sship}" ] || [ -z "${cloud_user}" ]; then
         clean_exit 127 "\$cloud_sship AND/OR \$cloud_user is unset\n"
     fi
+
+    # directory to mount all cloud devices
     srv_mnt_dir=
     num_locs=0
+
+    # Mount/"U"Mount
     action="mount"
+
+    #help (usage)
     usage="
     usage: ${0} -h
     usage: ${0} --help
 "
+    #help (detailed)
     help_msg="${usage}
 
-    DESCRIPTION: |
+    DESCRIPTION:
       ssh filesystem mount
 
 
-    Optional Arguments: |
+    Optional Arguments:
       -h\t\t\tprint usage message and exit
       --help\t\t\tprint this help message and exit
 
-    Optional Positional Arguments: |
+    Optional Positional Arguments:
       u[n]mount\t\tunmount filesystems
 "
 }
 
+# Unsetset local variables to clean the environment.
 unset_vars () {
     unset help_msg
     unset usage
@@ -64,6 +74,7 @@ unset_vars () {
     unset srv_mnt_dir
 }
 
+# Clean environment and exit optionally with an exit error code
 clean_exit() {
     unset_vars
     if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -81,6 +92,7 @@ clean_exit() {
     exit 0
 }
 
+# Parse command line arguments
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -102,6 +114,7 @@ cli () {
     done
 }
 
+# Are we on the right network?
 discover () {
     IFS="$(printf '\t')" read -r _ _ netstate << netcheck
 $(eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/netcheck.sh")
@@ -120,6 +133,7 @@ netcheck
     fi
 }
 
+# Mount
 mountssh () {
     if [ "$(mount | grep -c "${srv_mnt_dir}")" -lt "${num_locs}" ]; then
         # not mounted
@@ -139,6 +153,7 @@ mountssh () {
     fi
 }
 
+# Unmount
 umountssh () {
     set -- "${cloud_locs}"
     if [ "$(mount | grep -c "${srv_mnt_dir}")" -ge "${num_locs}" ]; then
@@ -154,6 +169,7 @@ umountssh () {
     unset CAR CDR
 }
 
+# main routine call
 main () {
     affirm_availability
     set_vars

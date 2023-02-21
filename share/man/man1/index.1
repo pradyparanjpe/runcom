@@ -1,5 +1,4 @@
 .TH "Prady runcom" "1" 
-
 .SH "Prady_runcom"
 .SS "What's this?"
 .IP \(em 4
@@ -329,6 +328,18 @@ bind '"jk":vi-movement-mode'
 .fi
 .RE
 
+.IP \(em 4
+vterm directory and prompt tracking
+.RS
+.nf
+\fCvterm_prompt_end(){
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+}
+PS1=$PS1'\[$(vterm_prompt_end)\]'
+\fP
+.fi
+.RE
+
 .SS "zsh"
 .PP
 Settings
@@ -450,6 +461,19 @@ setopt SHARE_HISTORY             # Share history between all sessions.
 .IP \(em 4
 setopt HIST_BEEP                 # Beep when accessing non-existent history.
 
+.IP \(em 4
+vterm directory and prompt tracking
+.RS
+.nf
+\fCvterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+}
+setopt PROMPT_SUBST
+PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+\fP
+.fi
+.RE
+
 .SH "Inherit"
 .SS "bash"
 .RS
@@ -532,7 +556,7 @@ unset rcfile unsync_d
 .SH "Better alternatives"
 .SS "Alias-er script"
 .PP
-Alias some common commands to better alternatives if available
+Alias some common commands to better alternatives if available.
 Commands that are listed (<space> separated) in the environment variable
 \fC_RC_NO_ALT\fP are not aliased.
 .RS
@@ -813,6 +837,40 @@ to_venv () {
 \fP
 .fi
 .RE
+.SS "Vterm printf"
+.RS
+.nf
+\fCvterm_printf() {
+    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
+        # Tell tmux to pass the escape sequences through
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+\fP
+.fi
+.RE
+
+.SS "Vterm message passing"
+.RS
+.nf
+\fCvterm_cmd() {
+    local vterm_elisp
+    vterm_elisp=""
+    while [ $# -gt 0 ]; do
+        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+        shift
+    done
+    vterm_printf "51;E$vterm_elisp"
+}
+\fP
+.fi
+.RE
+
 .SS "Git"
 .SS "Status"
 .RS

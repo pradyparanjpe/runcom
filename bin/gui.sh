@@ -18,16 +18,25 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Set clean variables before running script.
 set_vars () {
+    # Arguments for application to be launched
     args=
+
+    # Executable for application to be launched
     call=
+
+    # Complete command as passed to us
     cmd=
+
+    # Usage (help)
     usage="
      usage: ${0} -h
      usage: ${0} --help
      usage: ${0} [--] CMD
 "
 
+    # help (detailed)
     help_msg="${usage}
 
      DESCRIPTION: |
@@ -43,6 +52,7 @@ set_vars () {
 "
 }
 
+# Unsetset local variables to clean the environment.
 unset_vars() {
     unset help_msg
     unset usage
@@ -51,7 +61,7 @@ unset_vars() {
     unset args
 }
 
-
+# Clean environment and exit optionally with an exit error code
 clean_exit() {
     unset_vars
     if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -69,6 +79,7 @@ clean_exit() {
     exit 0
 }
 
+# Parse command line arguments
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -105,9 +116,10 @@ cli () {
     done
 }
 
+# Launch
 launch_gui() {
     call="$(echo "${cmd}" | cut -d " " -f 1)"
-    args="${cmd#${call}}"
+    args="${cmd#"${call}"}"
     if [ -z "${call}" ]; then
         printf "%s" "${usage}"
         clean_exit 1
@@ -123,13 +135,12 @@ launch_gui() {
     exit 65
 }
 
+# Main routine call
 main() {
-    # Main routine call
     set_vars
     cli "$@"
     launch_gui
     clean_exit
 }
-
 
 main "$@"

@@ -1,7 +1,8 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Prady runcom
 #+SETUPFILE: header.org
-#+auto_tangle: t
+#+PROPERTY: header-args :mkdirp t :results no :eval no
+
 * Prady_runcom
 ** What's this?
 - A compilation of dot-files: default variables, custom functions, aliases.

@@ -1,6 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Gui - launch gui
 #+SETUPFILE: header.org
+#+PROPERTY: header-args :tangle ../bin/gui.sh :mkdirp t :results no :eval no
 
 * Description
   - Launch gui apps from command line and kill terminal.
@@ -9,7 +10,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle ../bin/gui.sh :exports none :shebang #!/usr/bin/env sh
+  #+begin_src sh :exports none :shebang #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
     # Copyright 2020, 2021, 2022 Pradyumna Paranjape
@@ -28,21 +29,29 @@
     #
     # You should have received a copy of the GNU General Public License
     # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-
   #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle ../bin/gui.sh
+   #+begin_src sh
+     # Set clean variables before running script.
      set_vars () {
+         # Arguments for application to be launched
          args=
+
+         # Executable for application to be launched
          call=
+
+         # Complete command as passed to us
          cmd=
+
+         # Usage (help)
          usage="
           usage: ${0} -h
           usage: ${0} --help
           usage: ${0} [--] CMD
      "
 
+         # help (detailed)
          help_msg="${usage}
 
           DESCRIPTION: |
@@ -58,6 +67,7 @@
      "
      }
 
+     # Unsetset local variables to clean the environment.
      unset_vars() {
          unset help_msg
          unset usage
@@ -66,7 +76,7 @@
          unset args
      }
 
-
+     # Clean environment and exit optionally with an exit error code
      clean_exit() {
          unset_vars
          if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -83,11 +93,11 @@
          fi
          exit 0
      }
-
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle ../bin/gui.sh
+   #+begin_src sh
+     # Parse command line arguments
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -123,14 +133,14 @@
              esac
          done
      }
-
    #+end_src
 
 ** Launch
-   #+begin_src sh :tangle ../bin/gui.sh
+   #+begin_src sh
+     # Launch
      launch_gui() {
          call="$(echo "${cmd}" | cut -d " " -f 1)"
-         args="${cmd#${call}}"
+         args="${cmd#"${call}"}"
          if [ -z "${call}" ]; then
              printf "%s" "${usage}"
              clean_exit 1
@@ -147,16 +157,16 @@
      }
 
    #+end_src
+
 ** Main routine call
-   #+begin_src sh :tangle ../bin/gui.sh
+   #+begin_src sh
+     # Main routine call
      main() {
-         # Main routine call
          set_vars
          cli "$@"
          launch_gui
          clean_exit
      }
-
 
      main "$@"
    #+end_src

@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Confirm that dependencies are available.
 affirm_availability () {
     for _import in curl printenv grep tr; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -28,9 +29,12 @@ affirm_availability () {
     unset _import
 }
 
+# Set clean variables before running script.
 set_vars () {
+    # show the sent heder?
     show=false
-    pass_keys="protocol username password host port"
+
+    # Compiled proxy header
     proxy_header=
     if [ -z "${proxy_protocol}" ]; then
         proxy_protocol='all'
@@ -39,11 +43,15 @@ set_vars () {
     proxy_password=
     proxy_host=
     proxy_port=
+
+    # help (usage)
     usage="
     usage: ${0} -h
     usage: ${0} --help
     usage: ${0} [Optional Arguments*] INSTANCE
 "
+
+    # help (details)
     help_msg="${usage}
 
     DESCRIPTION: |
@@ -58,6 +66,7 @@ set_vars () {
 "
 }
 
+# Unsetset local variables to clean the environment.
 unset_vars() {
     unset help_msg
     unset usage
@@ -71,6 +80,7 @@ unset_vars() {
 }
 
 
+# Clean environment and exit optionally with an exit error code
 clean_exit() {
     unset_vars
     if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -88,6 +98,7 @@ clean_exit() {
     exit 0
 }
 
+# Parse command line arguments
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -109,15 +120,16 @@ cli () {
     done
 }
 
+# extract from env variable
 extract_env () {
     url="${1}"
     # keep consuming URL like $@ is consumed from command line
     _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
-    url="${url#${_proto}://}"  # - protocol
+    url="${url#"${_proto}"://}"  # - protocol
     userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
     _user="${userpass%:*}"
     _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
-    url="$(printf "%s" "${url##${userpass}@}" | cut -d/ -f1)"  # - credentials
+    url="$(printf "%s" "${url##"${userpass}"@}" | cut -d/ -f1)"  # - credentials
     _host="${url%:*}"
     _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
     if [ -n "${_proto}" ]; then
@@ -143,6 +155,7 @@ extract_env () {
      unset _port _host _pass _user _proto userpass url
 }
 
+# Retrieve from env
 get_env_proxy () {
     # Parse environment variable.
     proxy_str="$(printenv "${proxy_protocol}_proxy")"
@@ -153,12 +166,14 @@ get_env_proxy () {
     unset proxy_str
 }
 
+# build proxy
 build () {
-    all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
+    all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
     extract_env "${all_proxy}"
     get_env_proxy
 }
 
+# Compile proxy header
 compile_proxy () {
     if [ -z "${proxy_host}" ]; then
         return
@@ -185,6 +200,7 @@ compile_proxy () {
     unset scrt
 }
 
+# Convert plain-text value into html quoted form.
 quote () {
     printf "%s" "$1" \
         | tr -d '\n' \
@@ -192,6 +208,7 @@ quote () {
         | cut -c 3-
 }
 
+# Send a request to duckduckgo.com
 send_request () {
     curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
     case $? in
@@ -213,8 +230,8 @@ send_request () {
     esac
 }
 
+# Main routine call
 main() {
-    # Main routine call
     affirm_availability
     set_vars
     cli "$@"
@@ -227,6 +244,5 @@ main() {
     send_request
     clean_exit
 }
-
 
 main "$@"

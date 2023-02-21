@@ -1,6 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_send - send proxy authentication
 #+SETUPFILE: header.org
+#+PROPERTY: header-args :tangle ../bin/proxy_send.sh :mkdirp t :results no :eval no
 
 * Description
   - This script is automatically called by prady_runcom's profile scripts when network is inferred as /office/.
@@ -95,7 +96,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle ../bin/proxy_send.sh :exports none :shebang #!/usr/bin/env sh
+  #+begin_src sh :exports none :shebang #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
     # Copyright 2020, 2021 Pradyumna Paranjape
@@ -114,11 +115,11 @@
     #
     # You should have received a copy of the GNU General Public License
     # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-
   #+end_src
 
 ** Check availability
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # Confirm that dependencies are available.
      affirm_availability () {
          for _import in curl printenv grep tr; do
              if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -132,10 +133,13 @@
    #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # Set clean variables before running script.
      set_vars () {
+         # show the sent heder?
          show=false
-         pass_keys="protocol username password host port"
+
+         # Compiled proxy header
          proxy_header=
          if [ -z "${proxy_protocol}" ]; then
              proxy_protocol='all'
@@ -144,11 +148,15 @@
          proxy_password=
          proxy_host=
          proxy_port=
+
+         # help (usage)
          usage="
          usage: ${0} -h
          usage: ${0} --help
          usage: ${0} [Optional Arguments*] INSTANCE
      "
+
+         # help (details)
          help_msg="${usage}
 
          DESCRIPTION: |
@@ -163,6 +171,7 @@
      "
      }
 
+     # Unsetset local variables to clean the environment.
      unset_vars() {
          unset help_msg
          unset usage
@@ -176,6 +185,7 @@
      }
 
 
+     # Clean environment and exit optionally with an exit error code
      clean_exit() {
          unset_vars
          if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -192,11 +202,11 @@
          fi
          exit 0
      }
-
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # Parse command line arguments
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -217,20 +227,20 @@
              esac
          done
      }
-
    #+end_src
 
 ** Extract proxy information from environment variable
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # extract from env variable
      extract_env () {
          url="${1}"
          # keep consuming URL like $@ is consumed from command line
          _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
-         url="${url#${_proto}://}"  # - protocol
+         url="${url#"${_proto}"://}"  # - protocol
          userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
          _user="${userpass%:*}"
          _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
-         url="$(printf "%s" "${url##${userpass}@}" | cut -d/ -f1)"  # - credentials
+         url="$(printf "%s" "${url##"${userpass}"@}" | cut -d/ -f1)"  # - credentials
          _host="${url%:*}"
          _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
          if [ -n "${_proto}" ]; then
@@ -256,6 +266,7 @@
           unset _port _host _pass _user _proto userpass url
      }
 
+     # Retrieve from env
      get_env_proxy () {
          # Parse environment variable.
          proxy_str="$(printenv "${proxy_protocol}_proxy")"
@@ -265,17 +276,18 @@
          extract_env "${proxy_str}"
          unset proxy_str
      }
-
    #+end_src
 
 ** Compile proxy information
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # build proxy
      build () {
-         all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
+         all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
          extract_env "${all_proxy}"
          get_env_proxy
      }
 
+     # Compile proxy header
      compile_proxy () {
          if [ -z "${proxy_host}" ]; then
              return
@@ -301,11 +313,11 @@
          proxy_header="${proxy_header}/"
          unset scrt
      }
-
    #+end_src
 
 ** Html handling
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # Convert plain-text value into html quoted form.
      quote () {
          printf "%s" "$1" \
              | tr -d '\n' \
@@ -313,6 +325,7 @@
              | cut -c 3-
      }
 
+     # Send a request to duckduckgo.com
      send_request () {
          curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
          case $? in
@@ -337,9 +350,9 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle ../bin/proxy_send.sh
+   #+begin_src sh
+     # Main routine call
      main() {
-         # Main routine call
          affirm_availability
          set_vars
          cli "$@"
@@ -352,7 +365,6 @@
          send_request
          clean_exit
      }
-
 
      main "$@"
    #+end_src

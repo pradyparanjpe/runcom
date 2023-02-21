@@ -1,6 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Wayland start graphics ui
 #+SETUPFILE: header.org
+#+PROPERTY: header-args :tangle ../bin/waystart :mkdirp t :results no :eval no
 
 * Description
 Start wayland similar to startx.
@@ -8,7 +9,7 @@ Start wayland similar to startx.
 * Code
 ** Header
    This section tangles the code (POSIX)
-   #+begin_src sh :tangle ../bin/waystart :exports none :shebang #!/usr/bin/env sh
+   #+begin_src sh :exports none :shebang #!/usr/bin/env sh
      # -*- coding:utf-8; mode:shell-script -*-
      #
      # Copyright 2020, 2021, 2022 Pradyumna Paranjape
@@ -27,27 +28,28 @@ Start wayland similar to startx.
      #
      # You should have received a copy of the GNU General Public License
      # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-
    #+end_src
 
 ** Variables
    With dbus-run-session under wayland, we don't define DISPLAY
-   #+begin_src sh :tangle ../bin/waystart :exports none
+   #+begin_src sh
+     # Set clean variables before running script.
      set_vars() {
          unset DBUS_SESSION_BUS_ADDRESS
          unset SESSION_MANAGER
          # Hopefully, following X11's rc
-         client=""
+         client=
          userclientrc="${HOME}/.wayinitrc"
          sysclientrc="/etc/wayland/wayinit/wayinitrc"
-         defaultclientargs=""
-         clientargs=""
-         exec_cmd=""
+         defaultclientargs=
+         clientargs=
+         exec_cmd=
      }
    #+end_src
 
 ** Parse command line arguments
-   #+begin_src sh :tangle ../bin/waystart :exports none
+   #+begin_src sh
+     # Parse command line arguments
      cli_args () {
          while [ -n "$1" ]; do
              case "$1" in
@@ -84,7 +86,10 @@ Start wayland similar to startx.
    #+end_src
 
 ** Parse files
-   #+begin_src sh :tangle ../bin/waystart :exports none
+   #+begin_src sh
+     # Extract "what to exec" from <client>.desktop file
+     # Args:
+     #    $1: selected client
      parse_desktop_entry () {
          client="${1}"
          if [ ! -f "${client}" ]; then
@@ -95,13 +100,17 @@ Start wayland similar to startx.
                  exit 1
              fi
          fi
-         exec_line="$(grep -i "^exec" ${client} | head -1)"
+         exec_line="$(grep -i "^exec" "${client}" | head -1)"
          if [ -z "${exec_line}" ]; then
-             exec_line="$(grep -i "^tryexec" ${client} | head -1)"
+             exec_line="$(grep -i "^tryexec" "${client}" | head -1)"
          fi
          exec_cmd="${exec_line#*=}"
          unset desk_line
      }
+
+     # parse inittc to decide how to execute it.
+     # Args:
+     #    $1: desktop file.
      parse_initrc () {
          # $1 wayinitrc file path
          file_is_exec=true
@@ -118,9 +127,9 @@ Start wayland similar to startx.
          unset file_is_exec
      }
    #+end_src
-
+ 
 ** Launch
-   #+begin_src sh :tangle ../bin/waystart :exports none
+   #+begin_src sh
      parse_client () {
          if builtin command -v "${client}" >/dev/null 2>&1 \
                 || [ -x "${client}" ]; then
@@ -151,7 +160,8 @@ Start wayland similar to startx.
    #+end_src
 
 ** Entry-Point
-   #+begin_src sh :tangle ../bin/waystart :exports none
+   #+begin_src sh
+     # Main routine call
      main () {
          set_vars
          cli_args "$@"
@@ -162,5 +172,6 @@ Start wayland similar to startx.
          clean_up
          exit $exit_code
      }
+
      main "$@"
    #+end_src

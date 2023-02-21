@@ -196,13 +196,15 @@ Create directories, so that symlinks are made \fIinside\fP them.
 \fCfor conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
     if [ -d "${conf_mask}" ]; then
         hard_directory="${HOME}/.config/${conf_mask##*/}"
-        if ! mkdir "${hard_directory}" 2>/dev/null; then
+        if [ -d "${hard_directory}" ]; then
+            # configuration already exists
             mv "${hard_directory}" "${presence}/${hard_directory}"
-            if ! mkdir "${hard_directory}" 2>/dev/null; then
-                # still no luck
-                printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
-                printf "This *shall* cause stow error\n"
-            fi
+        fi
+        if ! mkdir "${hard_directory}" 2>/dev/null; then
+            # no luck
+            printf "%s " "${hard_directory}"
+            printf "Couldn't be removed / backed up / created.\n"
+            printf "This *shall* cause stow error.\n"
         fi
     fi
 done
@@ -284,7 +286,6 @@ Unset may be bootstrapped by running the ./setup/unset.sh \fBat\fP \fIunset\fP s
 .RS
 .nf
 \fCcurl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
-
 \fP
 .fi
 .RE
@@ -306,7 +307,6 @@ UnStow
 .RS
 .nf
 \fCstow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
-
 \fP
 .fi
 .RE
@@ -319,6 +319,7 @@ Restore directories form \fI${HOME}/OLD_CONFIG\fP
 .PP
 Replace the target directory \fI${1:\-${HOME}/OLD_CONFIG}\fP in following code block
 with <path/to/old/config/directory>.
+
 .RS
 .nf
 \fCfor conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do

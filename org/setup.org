@@ -1,6 +1,7 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Setup runcom
 #+SETUPFILE: header.org
+#+PROPERTY: header-args :mkdirp t :results no :eval no
 
 * Legend
 ** Brackets
@@ -219,167 +220,167 @@
 
 *** Clone the repository and place at =${HOME}/.runcom=
 
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
-      clone_repo () {
-          if [ ! -d "${HOME}/.runcom" ]; then
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
+  clone_repo () {
+      if [ ! -d "${HOME}/.runcom" ]; then
+#+END_SRC
 
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh
-      git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../setup/setup.sh
+  git clone --recurse-submodules "https://github.com/pradyparanjpe/runcom" "${HOME}/.runcom" || exit 1
+#+END_SRC
 
-    #+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
-      else
-          printf "%s already exists. Quitting...\n" "${HOME}/.runcom"
-          exit 0
-      fi
-      }
+#+BEGIN_SRC sh :tangle ../setup/setup.sh :exports none
+  else
+      printf "%s already exists. Quitting...\n" "${HOME}/.runcom"
+      exit 0
+  fi
+  }
 
-       mask_stow_directories() {
-    #+END_SRC
+   mask_stow_directories() {
+#+END_SRC
 
 *** Stow dot-files
     - =GNU stow= will create symlinked structure for all contents in =${HOME}/.runcom/dotfiles= in =${HOME}=.
     - If =stow= finds a pre-existing directory, symlinks are created inside that directory.
     - If =stow= finds a pre-existing file (non-directory), it throws error.
 **** Preserve 'current' configuration in a *visible* folder in =${HOME}=
-     #+begin_src sh :tangle ../setup/setup.sh
-       presence="${HOME}/OLD_CONFIG"
-       mkdir -p "${presence}"
-       cat << EOR >> "${presence}/README.md"
-       # RUNCOM backup
-         This directory contains a backup of configuration that existed before runcom setup.
-         Files in this directory may be merged to their respective place after inspection.
-         I recommend that this directory should **NOT** be deleted.
-         It will be required during un-doing the setup.
-       EOR
-     #+end_src
+#+begin_src sh :tangle ../setup/setup.sh
+  presence="${HOME}/OLD_CONFIG"
+  mkdir -p "${presence}"
+  cat << EOR >> "${presence}/README.md"
+  # RUNCOM backup
+    This directory contains a backup of configuration that existed before runcom setup.
+    Files in this directory may be merged to their respective place after inspection.
+    I recommend that this directory should **NOT** be deleted.
+    It will be required during un-doing the setup.
+  EOR
+#+end_src
 
 **** Create directories, so that symlinks are made /inside/ them.
-     #+begin_src sh :tangle ../setup/setup.sh
-       for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
-           if [ -d "${conf_mask}" ]; then
-               hard_directory="${HOME}/.config/${conf_mask##*/}"
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   mv "${hard_directory}" "${presence}/${hard_directory}"
-                   if ! mkdir "${hard_directory}" 2>/dev/null; then
-                       # still no luck
-                       printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
-                       printf "This *shall* cause stow error\n"
-                   fi
-               fi
-           fi
-       done
-       mkdir -p "${HOME}/.config/pvt.d"
-       mkdir -p "${HOME}/.config/local.d"
+#+begin_src sh :tangle ../setup/setup.sh
+  for conf_mask in "${HOME}/.runcom/dotfiles/.config"/*; do
+      if [ -d "${conf_mask}" ]; then
+          hard_directory="${HOME}/.config/${conf_mask##*/}"
+          if [ -d "${hard_directory}" ]; then
+              # configuration already exists
+              mv "${hard_directory}" "${presence}/${hard_directory}"
+          fi
+          if ! mkdir "${hard_directory}" 2>/dev/null; then
+              # no luck
+              printf "%s " "${hard_directory}"
+              printf "Couldn't be removed / backed up / created.\n"
+              printf "This *shall* cause stow error.\n"
+          fi
+      fi
+  done
+  mkdir -p "${HOME}/.config/pvt.d"
+  mkdir -p "${HOME}/.config/local.d"
 
-       for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
-           if [ -d "${conf_mask}" ]; then
-               hard_directory="${HOME}/.local/share/${data_mask##*/}"
-               if ! mkdir "${hard_directory}" 2>/dev/null; then
-                   mv "${hard_directory}" "${presence}/${hard_directory}"
-                   if ! mkdir "${hard_directory}" 2>/dev/null; then
-                       # still no luck
-                       printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
-                       printf "This *shall* cause stow error\n"
-                   fi
-               fi
-           fi
-       done
-       unset hard_directory non_mt_msg
-     #+end_src
+  for data_mask in "${HOME}/.runcom/dotfiles/.local/share"/*; do
+      if [ -d "${conf_mask}" ]; then
+          hard_directory="${HOME}/.local/share/${data_mask##*/}"
+          if ! mkdir "${hard_directory}" 2>/dev/null; then
+              mv "${hard_directory}" "${presence}/${hard_directory}"
+              if ! mkdir "${hard_directory}" 2>/dev/null; then
+                  # still no luck
+                  printf "%s Couldn't be removed and backed up\n" "${hard_directory}"
+                  printf "This *shall* cause stow error\n"
+              fi
+          fi
+      fi
+  done
+  unset hard_directory non_mt_msg
+#+end_src
 
 **** Stow
-     #+begin_src sh :tangle no
-       stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
-     #+end_src
+#+begin_src sh :tangle no
+  stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles
+#+end_src
 
 *** Set up Cargo (RUST) HOME
     Cargo (RUST) clutters =${HOME}= with its /data/. Put it at the right place.
     Cargo's binaries should be installed in =${XDG_DATA_HOME}/../bin= like python3.
 
-    #+begin_src sh :tangle ../setup/setup.sh
-      move_cargo () {
-          CARGO_HOME="${HOME}/.local/share/cargo"
-          LOCAL_BIN="${HOME}/.local/bin"
-          BAD_CARGO_HOME="${HOME}/.cargo"
-          BAD_CARGO_BIN="${HOME}/.cargo/bin"
-          if [ -d "${BAD_CARGO_HOME}" ] && [ ! -L "${BAD_CARGO_HOME}" ]; then
-              mv -t "${CARGO_HOME}" "${BAD_CARGO_HOME}"
-          fi
-          if [ ! "$(readlink -f "${CARGO_HOME}/bin")" = "${LOCAL_BIN}" ]; then
-              mv -t "${LOCAL_BIN}" "${CARGO_HOME}/bin"/* && \
-                  rmdir "${CARGO_HOME}/bin" && \
-                  ln -s "${LOCAL_BIN}" "${CARGO_HOME}/bin"
-          fi
-          export CARGO_HOME
-          unset LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
-      }
+#+begin_src sh :tangle ../setup/setup.sh
+  move_cargo () {
+      CARGO_HOME="${HOME}/.local/share/cargo"
+      LOCAL_BIN="${HOME}/.local/bin"
+      BAD_CARGO_HOME="${HOME}/.cargo"
+      BAD_CARGO_BIN="${HOME}/.cargo/bin"
+      if [ -d "${BAD_CARGO_HOME}" ] && [ ! -L "${BAD_CARGO_HOME}" ]; then
+          mv -t "${CARGO_HOME}" "${BAD_CARGO_HOME}"
+      fi
+      if [ ! "$(readlink -f "${CARGO_HOME}/bin")" = "${LOCAL_BIN}" ]; then
+          mv -t "${LOCAL_BIN}" "${CARGO_HOME}/bin"/* && \
+              rmdir "${CARGO_HOME}/bin" && \
+              ln -s "${LOCAL_BIN}" "${CARGO_HOME}/bin"
+      fi
+      export CARGO_HOME
+      unset LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
+  }
 
-    #+end_src
+#+end_src
 
 
-    #+begin_src sh :tangle ../setup/setup.sh :exports none
-      }
-       stow_deploy() {
-           if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
-               # stow threw error
-               stow_error="$?"
-               printf "Fix above errors and try again."
-               exit "${stow_error}"
-           fi
-       }
+#+begin_src sh :tangle ../setup/setup.sh :exports none
+  }
+   stow_deploy() {
+       if ! stow -vS -t "${HOME}" -d "${HOME}/.runcom" dotfiles; then
+           # stow threw error
+           stow_error="$?"
+           printf "Fix above errors and try again."
+           exit "${stow_error}"
+       fi
+   }
 
-       main () {
-           clone_repo
-           mask_stow_directories
-           stow_deploy
-           move_cargo
-       }
-       main "$@"
-    #+end_src
+   main () {
+       clone_repo
+       mask_stow_directories
+       stow_deploy
+       move_cargo
+   }
+   main "$@"
+#+end_src
 
 * Undo Set-up
-  #+begin_warning
-  Do *NOT* use =sudo= during unset.
-  #+end_warning
+#+begin_warning
+Do *NOT* use =sudo= during unset.
+#+end_warning
 
-  #+begin_note
+#+begin_note
   - The next steps will require a directory containing 'old configuration files'.
   - You HAD BEEN warned against deleting it during the set-up.
-  #+end_note
+#+end_note
 
 ** Bootstrap unset using script
    - Unset may be bootstrapped by running the [[./setup/unset.sh][unset]] script.
 
-     #+BEGIN_SRC sh :tangle no
-       curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
+#+BEGIN_SRC sh :tangle no
+  curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
+#+END_SRC
 
-     #+END_SRC
-
-     #+begin_note
-     Inspecting scripts before running them is generally a good idea.
-     The /unset/ script is tangled (with automation wrappers) from the code below.
-     If you feel an urge to inspect it or if it fails,
-     follow manual unset instructions with modifications instead.
-     #+end_note
+#+begin_note
+Inspecting scripts before running them is generally a good idea.
+The /unset/ script is tangled (with automation wrappers) from the code below.
+If you feel an urge to inspect it or if it fails,
+follow manual unset instructions with modifications instead.
+#+end_note
 
 ** Guide to manually undo set-up.
 
-   #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-     #!/usr/bin/env sh
-     # -*- coding: utf-8; mode: shell-script; -*-
-   #+end_src
+#+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+  #!/usr/bin/env sh
+  # -*- coding: utf-8; mode: shell-script; -*-
+#+end_src
 
 *** UnStow dot-files
     - Use =GNU stow= to unstow to un-linked structure for all contents in =${HOME}/.runcom/dotfiles= from =${HOME}=.
 **** UnStow
-     #+begin_src sh :tangle no
-       stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
+#+begin_src sh :tangle no
+  stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles
+#+end_src
 
-     #+end_src
-
-     #+begin_src sh :tangle ../setup/unset.sh :exports none
+#+begin_src sh :tangle ../setup/unset.sh :exports none
        unstow_undeploy() {
            if ! stow -vp -t "${HOME}" -d "${HOME}/.runcom" -D dotfiles; then
                # stow threw error
@@ -390,72 +391,72 @@
        }
 
        restore_configurations() {
-
-     #+end_src
+#+end_src
 
 **** Restore directories form =${HOME}/OLD_CONFIG=
-     #+begin_src sh :tangle ../setup/unset.sh :exports none
-       if [ ! -d "${1:-${HOME}/OLD_CONFIG}" ]; then
-           printf "Old Configuration not found. Please supply as a positional argument.\n"
-           printf "Such as %s <path/to/old/config/directory>\n" "$0"
-           exit 1
-       fi
-     #+end_src
+#+begin_src sh :tangle ../setup/unset.sh :exports none
+  if [ ! -d "${1:-${HOME}/OLD_CONFIG}" ]; then
+      printf "Old Configuration not found. Please supply as a positional argument.\n"
+      printf "Such as %s <path/to/old/config/directory>\n" "$0"
+      exit 1
+  fi
+#+end_src
 
-     Replace the target directory =${1:-${HOME}/OLD_CONFIG}= in following code block
-     with <path/to/old/config/directory>.
-     #+begin_src sh :tangle ../setup/unset.sh
-       for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
-           cp -r "${conf_dir}" "${HOME}"/. || break
-       done
+Replace the target directory =${1:-${HOME}/OLD_CONFIG}= in following code block
+with <path/to/old/config/directory>.
 
-       # shellcheck disable=SC2181
-       if [ $? -ne 0 ]; then
-           printf "Restoration unsuccessful, copy backup files manually.\n"
-       else
-           printf "Restoration successful, backup directory may be deleted.\n"
-       fi
-     #+end_src
+#+begin_src sh :tangle ../setup/unset.sh
+  for conf_dir in "${1:-${HOME}/OLD_CONFIG}"/*; do
+      cp -r "${conf_dir}" "${HOME}"/. || break
+  done
+
+  # shellcheck disable=SC2181
+  if [ $? -ne 0 ]; then
+      printf "Restoration unsuccessful, copy backup files manually.\n"
+  else
+      printf "Restoration successful, backup directory may be deleted.\n"
+  fi
+#+end_src
 
 *** Restore CARGO_HOME
     move =${XDG_DATA_HOME}/cargo= to "${HOME}/.cargo"
-    #+BEGIN_SRC sh :tangle no
-      mv "${XDG_DATA_HOME}/cargo" "${HOME}/.cargo"
-    #+END_SRC
+#+BEGIN_SRC sh :tangle no
+  mv "${XDG_DATA_HOME}/cargo" "${HOME}/.cargo"
+#+END_SRC
 
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-      BAD_CARGO_HOME="${HOME}/.cargo"
-      if [ -L "${BAD_CARGO_HOME}" ]; then
-          rm "${BAD_CARGO_HOME}"
-      fi
-      mv "${CARGO_HOME}" "${HOME}/.cargo"
-      unset CARGO_HOME BAD_CARGO_HOME
-      export CARGO_HOME
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+  BAD_CARGO_HOME="${HOME}/.cargo"
+  if [ -L "${BAD_CARGO_HOME}" ]; then
+      rm "${BAD_CARGO_HOME}"
+  fi
+  mv "${CARGO_HOME}" "${HOME}/.cargo"
+  unset CARGO_HOME BAD_CARGO_HOME
+  export CARGO_HOME
+#+END_SRC
 
 *** Delete runcom
-    Goodbye
+Goodbye
 
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-      }
+#+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+  }
 
-       delete_repo () {
-    #+END_SRC
+   delete_repo () {
+#+END_SRC
 
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh
-      rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
-    #+END_SRC
+#+BEGIN_SRC sh :tangle ../setup/unset.sh
+  rm -rf "${RUNCOMDIR:-${HOME}/.runcom}" && printf "Goodbye ✋"
+#+END_SRC
 
-    #+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
-      }
+#+BEGIN_SRC sh :tangle ../setup/unset.sh :exports none
+  }
 
-       main () {
-           unstow_undeploy
-           restore_configurations "$@"
-           delete_repo
-       }
-       main "$@"
-    #+END_SRC
+   main () {
+       unstow_undeploy
+       restore_configurations "$@"
+       delete_repo
+   }
+   main "$@"
+#+END_SRC
 
 * Personalization
 ** Local
@@ -467,19 +468,19 @@
    - All files that match the glob =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc= are sourced.
    - Synchronize (stow) that directory using a local repository or by simply copying contents.
 
-     #+begin_danger
-     - *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
-     - *DO NOT* synchronize this directory using a public repository.
-     - *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
-     #+end_danger
+#+begin_danger
+- *DO NOT* create this directory inside =${RUNCOMDIR}:-${HOME}/.runcom}/.config=.
+- *DO NOT* synchronize this directory using a public repository.
+- *DO NOT* store passwords in this directory. For password management, use [[https://passwordstore.org][pass]]
+#+end_danger
 
-   #+begin_tip
-   - Remember to keep the repository updated.
+#+begin_tip
+- Remember to keep the repository updated.
 
-     #+BEGIN_SRC sh :tangle no
-       git pull --recurse-submodules
-     #+END_SRC
-   #+end_tip
+#+BEGIN_SRC sh :tangle no
+    git pull --recurse-submodules
+#+END_SRC
+#+end_tip
 
 ** Proxy settings
-   Read set up for [[./proxy_send.html][proxy_send]].
+Read set up for [[./proxy_send.html][proxy_send]].

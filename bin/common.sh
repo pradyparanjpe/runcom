@@ -45,10 +45,12 @@ parse_desktop_entry () {
             clean_exit 1 "Bad wayland session: ${client}."
         fi
     fi
-    exec_line="$(grep -i "^exec" ${client} | head -1)"
+    exec_line="$(grep -i "^exec" "${client}" | head -1)"
     if [ -z "${exec_line}" ]; then
-        exec_line="$(grep -i "^tryexec" ${client} | head -1)"
+        exec_line="$(grep -i "^tryexec" "${client}" | head -1)"
     fi
+    # exec_cmd is used by waystart  and x11start scripts, which call this function
+    # shellcheck disable=SC2034
     exec_cmd="${exec_line#*=}"
     unset desk_line
 }

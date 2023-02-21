@@ -84,6 +84,4 @@ Return output file name."
   ;; (export-runcom)
   )
 
-(provide 'publish)
-
 ;;; publish.el ends here

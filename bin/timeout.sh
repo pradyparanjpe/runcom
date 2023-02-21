@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 # -*- coding:utf-8; mode:shell-script -*-
 #
 # Copyright 2020, 2021, 2022 Pradyumna Paranjape
@@ -18,9 +18,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Set clean variables before running script.
 set_vars () {
+    # time out seconds
     t_o_s=5
+
+    # Command to attempt
     cmd_exec=
+
+    # help (usage)
     usage="
     usage: ${0} -h
     usage: ${0} --help
@@ -28,6 +34,7 @@ set_vars () {
     usage: ${0} [--] TIME CMD
 "
 
+    # help (details)
     help_msg="${usage}
 
     DESCRIPTION:
@@ -44,6 +51,7 @@ set_vars () {
 "
 }
 
+# Unsetset local variables to clean the environment.
 unset_vars() {
     unset help_msg
     unset usage
@@ -52,6 +60,7 @@ unset_vars() {
 }
 
 
+# Clean environment and exit optionally with an exit error code
 clean_exit() {
     unset_vars
     if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -69,6 +78,7 @@ clean_exit() {
     exit 0
 }
 
+# Parse command line arguments
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -108,6 +118,7 @@ cli () {
     fi
 }
 
+# Cpmmected omtermet info
 netinfo () {
     # shellcheck source=./bin/netcheck.sh
     net_out="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"
@@ -175,6 +186,5 @@ main() {
     _timeout
     clean_exit
 }
-
 
 main "$@"

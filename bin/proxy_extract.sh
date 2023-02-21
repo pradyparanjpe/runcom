@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Confirm that dependencies are available.
 affirm_availability () {
     for _import in pass curl; do
         if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -28,35 +29,45 @@ affirm_availability () {
     unset _import
 }
 
+# Set clean variables before running script.
 set_vars () {
-    show=false
+    # send to clipboard
+    clip=false
+
+    # compiled proxy header
     proxy_header=
+
     pass_keys=
     if [ -z "${proxy_protocol}" ]; then
         proxy_protocol='all'
     fi
+
     proxy_username=
     proxy_password=
     proxy_host=
     proxy_port=
+
+    #help (usage)
     usage="
     usage: ${0} -h
     usage: ${0} --help
     usage: ${0}
 "
+    #help (detailed)
     help_msg="${usage}
 
-    DESCRIPTION: |
+    DESCRIPTION:
       extract proxy authentication from password store
 
 
-    Optional Arguments: |
-      -h\t\t\tprint usage message and exit
-      --help\t\t\tprint this help message and exit
-
+    Optional Arguments:
+      -h\tprint usage message and exit
+      --help\tprint this help message and exit
+      -c|--clip\tCopy to clipboard
 "
 }
 
+# Unsetset local variables to clean the environment.
 unset_vars() {
     unset help_msg
     unset usage
@@ -68,7 +79,7 @@ unset_vars() {
     unset proxy_header
 }
 
-
+# Clean environment and exit optionally with an exit error code
 clean_exit() {
     unset_vars
     if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -86,6 +97,7 @@ clean_exit() {
     exit 0
 }
 
+# Parse command line arguments
 cli () {
     while [ $# -gt 0 ]; do
         case "${1}" in
@@ -97,8 +109,8 @@ cli () {
                 # shellcheck disable=SC2059
                 clean_exit 0 "${help_msg}"
                 ;;
-            -s|--show)
-                show=true
+            -c|--clip)
+                clip=true
                 shift
                 ;;
             *)
@@ -107,6 +119,7 @@ cli () {
     done
 }
 
+# Convert plain-text value into html quoted form.
 quote () {
     printf "%s" "$1" \
         | tr -d '\n' \
@@ -114,6 +127,9 @@ quote () {
         | cut -c 3-
 }
 
+# Extract value from key-value pair separated by <:>.
+# Args:
+#    $1: secret of the form "key: value"
 extract_key () {
     key="$(printf "%s" "$1" | cut -d: -f1 )"
     value="$(printf "%s" "$1" | cut -d: -f2 )"
@@ -142,6 +158,11 @@ extract_key () {
     unset key value
 }
 
+# Extract secret(s) from passed string.
+# Args:
+#    $1: string with secrets.
+#        This may be simply the proxy_password
+#        or elaborate list of secrets.
 extract_secret () {
     if [ -z "$1" ]; then
         return
@@ -172,6 +193,7 @@ extract_secret () {
     unset o_ifs line
 }
 
+# Retrieve proxy from unix password manager.
 get_pass_proxy () {
     ## build proxy authentication
     if command -v "pass" >/dev/null 2>&1; then
@@ -182,6 +204,7 @@ get_pass_proxy () {
     fi
 }
 
+# Compile proxy into the form accepted by http request.
 compile_proxy () {
     if [ -z "${proxy_host}" ]; then
         return
@@ -208,13 +231,19 @@ compile_proxy () {
     unset scrt
 }
 
+# Main routine call
 main() {
-    # Main routine call
     set_vars
     cli "$@"
     get_pass_proxy
     compile_proxy
-    printf "%s\n" "${proxy_header}"
+    if $clip; then
+        if ! wl-copy "${proxy_header}" ; then
+            xcopy "${proxy_header}"
+        fi
+    else
+        printf "%s\n" "${proxy_header}"
+    fi
     clean_exit
 }
 

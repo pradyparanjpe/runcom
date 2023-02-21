@@ -1,10 +1,11 @@
 # -*- mode:org; coding: utf-8; -*-
 #+TITLE: Proxy_extract - extract proxy authentication from password store
 #+SETUPFILE: header.org
+#+PROPERTY: header-args :tangle ../bin/proxy_extract.sh :mkdirp t :results no :eval no
 #+EXPORT_FILE_NAME: ../docs/proxy_extract.html
 
 * Description
-  - This script is automatically called by =bin/proxy_extract.sh=.
+  - This script is automatically called by =bin/proxy_send.sh=.
   - This may be used in =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.proxyrc=
     to extract proxy settings from the password store.
     #+begin_src sh :tangle no
@@ -44,7 +45,7 @@
    #+BEGIN_SRC sh :tangle no
      pass insert office/proxy_server.example.com/best_employee
    #+END_SRC
-
+ 
 ** multi-field
    Information about /any/ or /all/ of following fields may be provided.
    - Order is not strict.
@@ -65,7 +66,7 @@
 
 * Code
   This section tangles the code (POSIX)
-  #+begin_src sh :tangle ../bin/proxy_extract.sh :exports none :shebang #!/usr/bin/env sh
+  #+begin_src sh :exports none :shebang #!/usr/bin/env sh
     # -*- coding:utf-8; mode:shell-script -*-
     #
     # Copyright 2020, 2021 Pradyumna Paranjape
@@ -84,11 +85,11 @@
     #
     # You should have received a copy of the GNU General Public License
     # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
-
   #+end_src
 
 ** Check availability
-   #+begin_src sh :tangle ../bin/proxy_extract.sh
+   #+begin_src sh
+     # Confirm that dependencies are available.
      affirm_availability () {
          for _import in pass curl; do
              if ! command -v "${_import}" >/dev/null 2>&1; then
@@ -102,36 +103,46 @@
    #+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh :tangle ../bin/proxy_extract.sh
+   #+begin_src sh
+     # Set clean variables before running script.
      set_vars () {
-         show=false
+         # send to clipboard
+         clip=false
+
+         # compiled proxy header
          proxy_header=
+
          pass_keys=
          if [ -z "${proxy_protocol}" ]; then
              proxy_protocol='all'
          fi
+
          proxy_username=
          proxy_password=
          proxy_host=
          proxy_port=
+
+         #help (usage)
          usage="
          usage: ${0} -h
          usage: ${0} --help
          usage: ${0}
      "
+         #help (detailed)
          help_msg="${usage}
 
-         DESCRIPTION: |
+         DESCRIPTION:
            extract proxy authentication from password store
 
 
-         Optional Arguments: |
-           -h\t\t\tprint usage message and exit
-           --help\t\t\tprint this help message and exit
-
+         Optional Arguments:
+           -h\tprint usage message and exit
+           --help\tprint this help message and exit
+           -c|--clip\tCopy to clipboard
      "
      }
 
+     # Unsetset local variables to clean the environment.
      unset_vars() {
          unset help_msg
          unset usage
@@ -143,7 +154,7 @@
          unset proxy_header
      }
 
-
+     # Clean environment and exit optionally with an exit error code
      clean_exit() {
          unset_vars
          if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
@@ -160,11 +171,11 @@
          fi
          exit 0
      }
-
    #+end_src
 
 ** Parse command
-   #+begin_src sh :tangle ../bin/proxy_extract.sh
+   #+begin_src sh
+     # Parse command line arguments
      cli () {
          while [ $# -gt 0 ]; do
              case "${1}" in
@@ -176,8 +187,8 @@
                      # shellcheck disable=SC2059
                      clean_exit 0 "${help_msg}"
                      ;;
-                 -s|--show)
-                     show=true
+                 -c|--clip)
+                     clip=true
                      shift
                      ;;
                  ,*)
@@ -185,11 +196,11 @@
              esac
          done
      }
-
    #+end_src
 
 ** Extractor
-   #+begin_src sh :tangle ../bin/proxy_extract.sh :exports none :tangle-mode (identity #o755)
+   #+begin_src sh :exports none
+     # Convert plain-text value into html quoted form.
      quote () {
          printf "%s" "$1" \
              | tr -d '\n' \
@@ -197,6 +208,9 @@
              | cut -c 3-
      }
 
+     # Extract value from key-value pair separated by <:>.
+     # Args:
+     #    $1: secret of the form "key: value"
      extract_key () {
          key="$(printf "%s" "$1" | cut -d: -f1 )"
          value="$(printf "%s" "$1" | cut -d: -f2 )"
@@ -225,6 +239,11 @@
          unset key value
      }
 
+     # Extract secret(s) from passed string.
+     # Args:
+     #    $1: string with secrets.
+     #        This may be simply the proxy_password
+     #        or elaborate list of secrets.
      extract_secret () {
          if [ -z "$1" ]; then
              return
@@ -255,6 +274,7 @@
          unset o_ifs line
      }
 
+     # Retrieve proxy from unix password manager.
      get_pass_proxy () {
          ## build proxy authentication
          if command -v "pass" >/dev/null 2>&1; then
@@ -267,7 +287,8 @@
    #+end_src
 
 ** Compiler
-   #+begin_src sh :tangle ../bin/proxy_extract.sh
+   #+begin_src sh
+     # Compile proxy into the form accepted by http request.
      compile_proxy () {
          if [ -z "${proxy_host}" ]; then
              return
@@ -296,14 +317,20 @@
    #+end_src
 
 ** Main routine call
-   #+begin_src sh :tangle ../bin/proxy_extract.sh
+   #+begin_src sh
+     # Main routine call
      main() {
-         # Main routine call
          set_vars
          cli "$@"
          get_pass_proxy
          compile_proxy
-         printf "%s\n" "${proxy_header}"
+         if $clip; then
+             if ! wl-copy "${proxy_header}" ; then
+                 xcopy "${proxy_header}"
+             fi
+         else
+             printf "%s\n" "${proxy_header}"
+         fi
          clean_exit
      }
 

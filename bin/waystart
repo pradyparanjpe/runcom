@@ -18,18 +18,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
+# Set clean variables before running script.
 set_vars() {
     unset DBUS_SESSION_BUS_ADDRESS
     unset SESSION_MANAGER
     # Hopefully, following X11's rc
-    client=""
+    client=
     userclientrc="${HOME}/.wayinitrc"
     sysclientrc="/etc/wayland/wayinit/wayinitrc"
-    defaultclientargs=""
-    clientargs=""
-    exec_cmd=""
+    defaultclientargs=
+    clientargs=
+    exec_cmd=
 }
 
+# Parse command line arguments
 cli_args () {
     while [ -n "$1" ]; do
         case "$1" in
@@ -63,6 +65,9 @@ cli_args () {
     fi
 }
 
+# Extract "what to exec" from <client>.desktop file
+# Args:
+#    $1: selected client
 parse_desktop_entry () {
     client="${1}"
     if [ ! -f "${client}" ]; then
@@ -73,13 +78,17 @@ parse_desktop_entry () {
             exit 1
         fi
     fi
-    exec_line="$(grep -i "^exec" ${client} | head -1)"
+    exec_line="$(grep -i "^exec" "${client}" | head -1)"
     if [ -z "${exec_line}" ]; then
-        exec_line="$(grep -i "^tryexec" ${client} | head -1)"
+        exec_line="$(grep -i "^tryexec" "${client}" | head -1)"
     fi
     exec_cmd="${exec_line#*=}"
     unset desk_line
 }
+
+# parse inittc to decide how to execute it.
+# Args:
+#    $1: desktop file.
 parse_initrc () {
     # $1 wayinitrc file path
     file_is_exec=true
@@ -124,6 +133,7 @@ clean_up () {
     fi
 }
 
+# Main routine call
 main () {
     set_vars
     cli_args "$@"
@@ -134,4 +144,5 @@ main () {
     clean_up
     exit $exit_code
 }
+
 main "$@"
