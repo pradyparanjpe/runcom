@@ -26,7 +26,7 @@ Read till the end before you decide to set this up.
 #+end_important
 
 * Copyright/License Header
-Copyright 2020, 2021, 2022, 2023 Pradyumna Paranjape
+Copyright (c) 2020-2023 Pradyumna Paranjape
 
 This file is part of Prady_runcom.
 
@@ -112,7 +112,7 @@ Copyright, License banners
 #+BEGIN_SRC sh :tangle ../env/shrc :exports none :noweb-ref banner
   # -*- coding:utf-8; mode:shell-script; -*-
   #
-  # Copyright 2020, 2021 Pradyumna Paranjape
+  # Copyright (c) 2020-2023 Pradyumna Paranjape
   #
   # This file is part of Prady_runcom.
   #

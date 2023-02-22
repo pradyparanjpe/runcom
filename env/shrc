@@ -2,7 +2,7 @@
 
 # -*- coding:utf-8; mode:shell-script; -*-
 #
-# Copyright 2020, 2021 Pradyumna Paranjape
+# Copyright (c) 2020-2023 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #
