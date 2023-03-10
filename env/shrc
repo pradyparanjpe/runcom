@@ -621,7 +621,7 @@ _rc_posix_select () {
     # select implementation for POSIX
     word_l=""
     count=0
-    for word in "${@}"; do
+    for word in $@; do
         if [ -z "${word_l}" ]; then
             word_l="${word}"
         else
@@ -631,9 +631,51 @@ _rc_posix_select () {
         echo "${count}: ${word}" >&2
     done
     printf "Selection: " >&2
-    read -r select_num
-    echo "${word_l}" | cut -d' ' -f"${select_num}" 2>/dev/null
-    unset word word_l
+    read -r s_num
+    echo "${word_l}" | cut -d' ' -f"${s_num}" 2>/dev/null
+    unset word word_l count
+}
+
+_rc_dialog_select () {
+    opt_list=
+    opt_num=0
+    while [ $# -gt 0 ]; do
+        opt_num=$(( opt_num + 1 ))
+        opt_list="${opt_list} $opt_num ${1}"
+        shift
+    done
+    s_num="$(echo "${opt_list}" \
+                  | xargs dialog --stdout \
+                  --menu "Display protocol" 0 0 0)"
+    echo "$opt_list" | cut -d " " -f $((s_num + s_num + 1))
+    unset opt_list opt_num s_num
+}
+
+_rc_select () {
+    if [ "${_RC_SHELL}" = "zsh" ]; then
+        mod_opt=false
+        now_setopts="$(setopt)"
+        if [ "${now_setopts#*shwordsplit}" = "${now_setopts}" ]; then
+            setopt shwordsplit
+            mod_opt=true
+        fi
+    fi
+
+    if builtin command -v dialog >/dev/null 2>&1; then
+        _selected="$(_rc_dialog_select $@)"
+    else
+        _selected="$(_rc_posix_select $@)"
+    fi
+
+    if [ "${_RC_SHELL}" = "zsh" ] && $mod_opt; then
+        unsetopt shwordsplit
+    fi
+
+    if [ -z "${_selected}" ]; then
+        _selected="$(echo $@ | cut -d" " -f1)"
+    fi
+    echo "${_selected}"
+    unset mod_opt now_setopts _selected
 }
 
 alias man="_rc_man_help";
