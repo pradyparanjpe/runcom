@@ -21,6 +21,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+Plug 'nvim-neorg/neorg'
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'jalvesaq/Nvim-r'
 Plug 'neovim/nvim-lspconfig'
