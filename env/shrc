@@ -619,6 +619,10 @@ _rc_man_help () {
 # posix selection option by index in cli
 _rc_posix_select () {
     # select implementation for POSIX
+    heading="${1}"
+    shift
+    echo ""
+    echo "Display protocols [${1}]"
     word_l=""
     count=0
     for word in $@; do
@@ -637,6 +641,8 @@ _rc_posix_select () {
 }
 
 _rc_dialog_select () {
+    heading="${1}"
+    shift
     opt_list=
     opt_num=0
     while [ $# -gt 0 ]; do
@@ -644,9 +650,11 @@ _rc_dialog_select () {
         opt_list="${opt_list} $opt_num ${1}"
         shift
     done
+    export DIALOGRC="${RUNCOMDIR}/env/dialogrc"
     s_num="$(echo "${opt_list}" \
                   | xargs dialog --stdout \
-                  --menu "Display protocol" 0 0 0)"
+                  --menu "${heading}" 0 0 0 2>/dev/null)"
+    export DIALOGRC=
     echo "$opt_list" | cut -d " " -f $((s_num + s_num + 1))
     unset opt_list opt_num s_num
 }

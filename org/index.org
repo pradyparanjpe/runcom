@@ -1357,6 +1357,10 @@ Code is tangled in gui.org
   # posix selection option by index in cli
   _rc_posix_select () {
       # select implementation for POSIX
+      heading="${1}"
+      shift
+      echo ""
+      echo "Display protocols [${1}]"
       word_l=""
       count=0
       for word in $@; do
@@ -1376,8 +1380,11 @@ Code is tangled in gui.org
 #+END_SRC
 
 *** NCURSES Dialog
+TODO: better temporary declaration of =DIALOGRC=
 #+BEGIN_SRC sh :tangle ../env/shrc
   _rc_dialog_select () {
+      heading="${1}"
+      shift
       opt_list=
       opt_num=0
       while [ $# -gt 0 ]; do
@@ -1385,9 +1392,11 @@ Code is tangled in gui.org
           opt_list="${opt_list} $opt_num ${1}"
           shift
       done
+      export DIALOGRC="${RUNCOMDIR}/env/dialogrc"
       s_num="$(echo "${opt_list}" \
                     | xargs dialog --stdout \
-                    --menu "Display protocol" 0 0 0)"
+                    --menu "${heading}" 0 0 0 2>/dev/null)"
+      export DIALOGRC=
       echo "$opt_list" | cut -d " " -f $((s_num + s_num + 1))
       unset opt_list opt_num s_num
   }
@@ -1634,11 +1643,9 @@ Display protocol and session selection
       if [ -z "${default_proto}" ]; then
           default_proto="non-graphical"
       fi
-      echo ""
-      echo "Display protocols [${default_proto}]"
       graph_avail="wayland x11 non-graphical"
       graph_avail="${default_proto}${graph_avail#*"${default_proto}"} ${graph_avail%%"${default_proto}"*}"
-      graph_proto="$(_rc_select ${graph_avail})"
+      graph_proto="$(_rc_select Display-Protocol ${graph_avail})"
       echo "${graph_proto}" > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
       unset default_proto graph_avail
   }
@@ -1661,13 +1668,11 @@ Display protocol and session selection
       if [ -z "${default_session}" ]; then
           default_session="${protoinitrc}"
       fi
-      echo ""
-      echo "${proto_name} sessions [${default_session}]"
 
       # shellcheck disable=SC2046
       sessions_avail="$(ls "${sessions_dir}")"
       sessions_avail="${default_session}${sessions_avail#*"${default_session}"} ${sessions_avail%%"${default_session}"*}"
-      exec_session="$(_rc_select ${sessions_avail})"
+      exec_session="$(_rc_select ${proto_name}-sessions ${sessions_avail})"
       echo "${exec_session}" > "${sessions_mem}"
       unset default_session sessions_avail
       unset protoinitc
