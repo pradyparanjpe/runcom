@@ -88,6 +88,7 @@ let g:leader_map.p = {
 let g:leader_map.q = {
     \ 'name': '+quit',
     \ 'q': ['quit', 'qall'],
+    \ 'Q': ['quit', 'qall'],
     \ }
 
 vnoremap <leader>scy "+y

@@ -113,14 +113,37 @@ _rc_exports_for_x11 () {
     unset MOZ_ENABLE_WAYLAND
 }
 
+# yes/no prompt using dialog
+# Args:
+#    $1: Title
+#    $2: Prompt
+#
+# Returns: "yes" or "no"
+_rc_dialog_yesno () {
+    if DIALOGRC="${RUNCOMDIR}/env/dialogrc" dialog \
+               --clear --defaultno --stdout --title "${1}" \
+               --yesno "${2}" 0 0 >/dev/null 2>&1; then
+        printf "yes\n"
+    else
+        printf "no\n"
+    fi
+}
+
 # offer to export proxies to global environment before launching GUI
 _rc_exports_for_proxies () {
     if [ -z "${export_proxies}" ]; then
-        printf "Export proxies?[y/N]:\t"
-        read -r export_proxies
+        if builtin command -v dialog >/dev/null 2>&1; then
+            export_proxies="$(_rc_dialog_yesno "Proxies" "Use proxies?")"
+        else
+            printf "\n|-------|\n"
+            printf "|Proxies|\n"
+            printf "|-------|\n"
+            printf "Use proxies?[y/N]:\t"
+            read -r export_proxies
+        fi
     fi
-    case "${export_proxies}}" in
-        Y*|y*)
+    case "${export_proxies}" in
+        [Yy]*)
             all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
             http_proxy="${all_proxy}"
             https_proxy="${all_proxy}"
@@ -172,7 +195,7 @@ _rc_select_display_protocol () {
     fi
     graph_avail="wayland x11 non-graphical"
     graph_avail="${default_proto}${graph_avail#*"${default_proto}"} ${graph_avail%%"${default_proto}"*}"
-    graph_proto="$(_rc_select Display-Protocol ${graph_avail})"
+    graph_proto="$(_rc_select Display-Protocol "${graph_avail}")"
     echo "${graph_proto}" > "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"
     unset default_proto graph_avail
 }
@@ -199,7 +222,7 @@ _rc_select_proto_session () {
     # shellcheck disable=SC2046
     sessions_avail="$(ls "${sessions_dir}")"
     sessions_avail="${default_session}${sessions_avail#*"${default_session}"} ${sessions_avail%%"${default_session}"*}"
-    exec_session="$(_rc_select ${proto_name}-sessions ${sessions_avail})"
+    exec_session="$(_rc_select "${proto_name}"-sessions "${sessions_avail}")"
     echo "${exec_session}" > "${sessions_mem}"
     unset default_session sessions_avail
     unset protoinitc

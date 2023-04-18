@@ -621,8 +621,17 @@ _rc_posix_select () {
     # select implementation for POSIX
     heading="${1}"
     shift
-    echo ""
-    echo "Display protocols [${1}]"
+    len_head="$(expr length "${heading}")"
+    printf "\n--"
+    for _ in {1.."${len_head}"}; do printf "-"; done
+    printf "--\n"
+
+    printf "| %s |: [%s]" "${heading}" "${1}"
+
+    printf "\n--"
+    for _ in {1.."${len_head}"}; do printf "-"; done
+    printf "--\n"
+    unset len_head
     word_l=""
     count=0
     for word in $@; do
