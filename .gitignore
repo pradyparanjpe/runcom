@@ -160,3 +160,7 @@ cython_debug/
 *locals.conf.d/
 *local.d/
 *pvt.d/
+
+# Locally built documentation
+docs/
+sitemap.org

@@ -1,0 +1,23 @@
+image: iquiw/alpine-emacs
+
+stages:
+- docs
+- build
+- prepare_release
+- release
+
+variables:
+  PACKAGE_VERSION: 0.1.0
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/runcom/${PACKAGE_VERSION}"
+
+pages:
+  stage: docs
+  script:
+  - echo "Exporting..."
+  - emacs --batch --no-init-file --load publish.el --funcall export-runcom
+  - cp -r docs/ public/
+  artifacts:
+    paths:
+    - public
+  rules:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

@@ -131,6 +131,10 @@ _rc_dialog_yesno () {
 
 # offer to export proxies to global environment before launching GUI
 _rc_exports_for_proxies () {
+    if  [ -n "${all_proxy}" ]; then
+        # all_proxy is already exported by now
+        return
+    fi
     if [ -z "${export_proxies}" ]; then
         if builtin command -v dialog >/dev/null 2>&1; then
             export_proxies="$(_rc_dialog_yesno "Proxies" "Use proxies?")"

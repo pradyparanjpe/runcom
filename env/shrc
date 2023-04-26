@@ -31,7 +31,7 @@ _RC_SHELL="$(readlink /proc/$$/exe | sed "s/.*\///")"
 export _RC_SHELL
 
 # shellcheck disable=SC1090
-for unsync_d in "local.d" "pvt.d"; do
+for unsync_d in "pvt.d" "local.d"; do
     for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
         . "${rcfile}"
     done 2>/dev/null

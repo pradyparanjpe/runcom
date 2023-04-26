@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-12-02 Fri 16:33 -->
+<!-- 2023-04-21 Fri 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Info about current IP</title>
@@ -23,50 +23,164 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org17d4f2d">Description</a></li>
-<li><a href="#org0fbb653">Code</a>
+<li><a href="#org7e03622">Description</a></li>
+<li><a href="#org805871b">Code</a>
 <ul>
-<li><a href="#org15f0324">Handle global variables and exits</a></li>
-<li><a href="#org6a8aba8">Parse command</a></li>
-<li><a href="#org8f87f7a">Execution</a></li>
-<li><a href="#orga055409">Main routine call</a></li>
+<li><a href="#org4180465">Handle global variables and exits</a></li>
+<li><a href="#orgdaf0af2">Parse command</a></li>
+<li><a href="#orge5d24e4">Execution</a></li>
+<li><a href="#org92df1f3">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org17d4f2d" class="outline-2">
-<h2 id="org17d4f2d">Description</h2>
-<div class="outline-text-2" id="text-org17d4f2d">
+<div id="outline-container-org7e03622" class="outline-2">
+<h2 id="org7e03622">Description</h2>
+<div class="outline-text-2" id="text-org7e03622">
 <p>
 Wait on command, abort if timed out.
 Default: print net info within 5 seconds.
+<code>GNU coreutils</code> provides <a href="https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html">timeout</a>;
+but we can&rsquo;t assume that it is installed.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0fbb653" class="outline-2">
-<h2 id="org0fbb653">Code</h2>
-<div class="outline-text-2" id="text-org0fbb653">
+<div id="outline-container-org805871b" class="outline-2">
+<h2 id="org805871b">Code</h2>
+<div class="outline-text-2" id="text-org805871b">
 <p>
 Following section tangles code.
 </p>
 </div>
 
-<div id="outline-container-org15f0324" class="outline-3">
-<h3 id="org15f0324">Handle global variables and exits</h3>
+<div id="outline-container-org4180465" class="outline-3">
+<h3 id="org4180465">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org4180465">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
+<span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">time out seconds</span>
+    <span class="org-variable-name">t_o_s</span>=5
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Command to attempt</span>
+    <span class="org-variable-name">cmd_exec</span>=
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">help (usage)</span>
+    <span class="org-variable-name">usage</span>=<span class="org-string">"</span>
+<span class="org-string">    usage: ${0} -h</span>
+<span class="org-string">    usage: ${0} --help</span>
+<span class="org-string">    usage: ${0}</span>
+<span class="org-string">    usage: ${0} [--] TIME CMD</span>
+<span class="org-string">"</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">help (details)</span>
+    <span class="org-variable-name">help_msg</span>=<span class="org-string">"${usage}</span>
+
+<span class="org-string">    DESCRIPTION:</span>
+<span class="org-string">        Launch CMD, wait for it to complete, if not in time, kill</span>
+
+<span class="org-string">    Optional arguments:</span>
+<span class="org-string">        -h\tprint usage message and exit</span>
+<span class="org-string">        --help\tprint this help message and exit</span>
+<span class="org-string">        --\t$(basename "${0}")'s argument end; required if CMD has arguments</span>
+
+<span class="org-string">    Optional Positional argument:</span>
+<span class="org-string">        TIME\tTime out in seconds [default: ${t_o_s}]</span>
+<span class="org-string">        CMD\tCommand to launch [default: print netinfo]</span>
+<span class="org-string">"</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Unsetset local variables to clean the environment.</span>
+<span class="org-function-name">unset_vars</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-builtin">unset</span> help_msg
+    <span class="org-builtin">unset</span> usage
+    <span class="org-builtin">unset</span> cmd_exec
+    <span class="org-builtin">unset</span> t_o_s
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Clean environment and exit optionally with an exit error code</span>
+<span class="org-function-name">clean_exit</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    unset_vars
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${1}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> -ne <span class="org-string">"0"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+            printf <span class="org-string">"${2}\n"</span> &gt;&amp;2
+        <span class="org-keyword">fi</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
+        <span class="org-keyword">exit</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+        printf <span class="org-string">"${2}\n"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">exit</span> 0
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
 </div>
-<div id="outline-container-org6a8aba8" class="outline-3">
-<h3 id="org6a8aba8">Parse command</h3>
 </div>
-<div id="outline-container-org8f87f7a" class="outline-3">
-<h3 id="org8f87f7a">Execution</h3>
-<div class="outline-text-3" id="text-org8f87f7a">
 </div>
-<div id="outline-container-org4b8499b" class="outline-4">
-<h4 id="org4b8499b">Guess and print net info</h4>
-<div class="outline-text-4" id="text-org4b8499b">
+
+<div id="outline-container-orgdaf0af2" class="outline-3">
+<h3 id="orgdaf0af2">Parse command</h3>
+<div class="outline-text-3" id="text-orgdaf0af2">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
+<span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">#</span> -gt 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
+        <span class="org-keyword">case</span> <span class="org-string">"${1}"</span><span class="org-keyword"> in</span>
+            -h)
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${usage}"</span>
+                ;;
+            --help)
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${help_msg}"</span>
+                ;;
+            --)
+                <span class="org-builtin">shift</span> 1
+                <span class="org-variable-name">t_o_s</span>=<span class="org-string">"${1}"</span>
+                <span class="org-builtin">shift</span> 1
+                <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${cmd_exec}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+                    <span class="org-variable-name">cmd_exec</span>=<span class="org-string">"${cmd_exec} $*"</span>
+                <span class="org-keyword">else</span>
+                    <span class="org-variable-name">cmd_exec</span>=<span class="org-string">"$*"</span>
+                <span class="org-keyword">fi</span>
+                <span class="org-keyword">break</span>
+                ;;
+            *)
+                <span class="org-variable-name">t_o_s</span>=<span class="org-string">"${1}"</span>
+                <span class="org-builtin">shift</span> 1
+                <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${cmd_exec}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+                    <span class="org-variable-name">cmd_exec</span>=<span class="org-string">"${cmd_exec} $*"</span>
+                <span class="org-keyword">else</span>
+                    <span class="org-variable-name">cmd_exec</span>=<span class="org-string">"$*"</span>
+                <span class="org-keyword">fi</span>
+                <span class="org-keyword">break</span>
+                ;;
+        <span class="org-keyword">esac</span>
+    <span class="org-keyword">done</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${cmd_exec}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">cmd_exec</span>=netinfo
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5d24e4" class="outline-3">
+<h3 id="orge5d24e4">Execution</h3>
+<div class="outline-text-3" id="text-orge5d24e4">
+</div>
+<div id="outline-container-org4bc2476" class="outline-4">
+<h4 id="org4bc2476">Guess and print net info</h4>
+<div class="outline-text-4" id="text-org4bc2476">
 <p>
 The <b>OLDEST</b> part of prady_runcom&#x2026;
 </p>
@@ -74,12 +188,93 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 <li>&#x2026; although, amended many times</li>
 <li>see [[<a href="netcheck.html">netcheck.html</a>]</li>
 </ul>
-</div>
-</div>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Cpmmected omtermet info</span>
+<span class="org-function-name">netinfo</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=./bin/netcheck.sh</span>
+    <span class="org-variable-name">net_out</span>=<span class="org-string">"$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">fish first arg as ip_addr and last arg as netstat</span>
+    <span class="org-variable-name">ip_addr</span>=<span class="org-string">"$(echo "${net_out}" | awk '{print $1}')"</span>
+    <span class="org-variable-name">netstate</span>=<span class="org-string">"$(echo "${net_out}" | rev | awk '{print $1}' | rev)"</span>
+    <span class="org-builtin">unset</span> net_out
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 8<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 8 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        printf <span class="org-string">"\e[1;34mInternet (GOOGLE) Connected\e[m\n"</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 16 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 16 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            printf <span class="org-string">"\e[1;35mProblem with DNS\e[m\n"</span>
+        <span class="org-keyword">fi</span>
+        printf <span class="org-string">"\033[0;32m%s \e[m is current wireless ip address\n"</span> <span class="org-string">"$ip_addr"</span>
+    <span class="org-keyword">else</span>
+        printf <span class="org-string">"\e[1;31mInternet (GOOGLE) Not reachable\e[m\n"</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 4 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 4 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Intranet is connected</span>
+            printf <span class="org-string">"\033[0;31mInternet Down\e[m\n"</span>
+            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 2 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 2 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+                printf <span class="org-string">"Home network connected,\n"</span>
+            <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 1 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 1 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+                printf <span class="org-string">"OFFICE network connected,\n"</span>
+            <span class="org-keyword">else</span>
+                printf <span class="org-string">"HOTSPOT connected\n"</span>
+            <span class="org-keyword">fi</span>
+        <span class="org-keyword">else</span>
+            printf <span class="org-string">"\e[1;33mNetwork connection Disconnected\e[m\n"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=./bin/proxy_send.sh</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${http_proxy}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> <span class="org-sh-escaped-newline">\</span>
+           &amp;&amp; <span class="org-negation-char">!</span> curl <span class="org-string">"https://duckduckgo.com/"</span> &gt; /dev/null 2&gt;&amp;1 <span class="org-sh-escaped-newline">\</span>
+           &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 1 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 1 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=./proxy_send.sh</span>
+        <span class="org-builtin">eval</span> <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"</span> <span class="org-sh-escaped-newline">\</span>
+            &amp;&amp; printf <span class="org-string">"\e[0;33mPROXY AUTH SENT\e[m\n"</span>;
+        <span class="org-builtin">unset</span> auto_proxy
+    <span class="org-keyword">fi</span>
+    <span class="org-builtin">unset</span> o_ifs ip_addr
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</pre>
 </div>
 
-<div id="outline-container-orga055409" class="outline-3">
-<h3 id="orga055409">Main routine call</h3>
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-function-name">_cleanup</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-builtin">kill</span> %1 %2
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-function-name">_timeout</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">trap</span> _cleanup TERM
+
+    <span class="org-rainbow-delimiters-depth-2">(</span>
+        $<span class="org-variable-name">cmd_exec</span>
+        <span class="org-builtin">kill</span> $<span class="org-variable-name">$</span>
+    <span class="org-rainbow-delimiters-depth-2">)</span> &amp;
+
+    <span class="org-rainbow-delimiters-depth-2">(</span>
+        sleep <span class="org-string">"$t_o_s"</span>
+        printf <span class="org-string">"Command '%s' timed out, skipping...\n"</span> <span class="org-string">"${cmd_exec}"</span>
+        <span class="org-builtin">kill</span> $<span class="org-variable-name">$</span>
+    <span class="org-rainbow-delimiters-depth-2">)</span> &amp;
+    <span class="org-builtin">wait</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org92df1f3" class="outline-3">
+<h3 id="org92df1f3">Main routine call</h3>
+<div class="outline-text-3" id="text-org92df1f3">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Main routine call</span>
+    set_vars
+    cli <span class="org-string">"$@"</span>
+    _timeout
+    clean_exit
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+main <span class="org-string">"$@"</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>

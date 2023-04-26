@@ -449,7 +449,7 @@ Which shell is running?
 All files =${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc=
 #+BEGIN_SRC sh :tangle ../env/shrc
   # shellcheck disable=SC1090
-  for unsync_d in "local.d" "pvt.d"; do
+  for unsync_d in "pvt.d" "local.d"; do
       for rcfile in "${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"/.*rc; do
           . "${rcfile}"
       done 2>/dev/null
@@ -1610,6 +1610,10 @@ Exports to be made according to selected graphical environment
 
   # offer to export proxies to global environment before launching GUI
   _rc_exports_for_proxies () {
+      if  [ -n "${all_proxy}" ]; then
+          # all_proxy is already exported by now
+          return
+      fi
       if [ -z "${export_proxies}" ]; then
           if builtin command -v dialog >/dev/null 2>&1; then
               export_proxies="$(_rc_dialog_yesno "Proxies" "Use proxies?")"

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-12-02 Fri 16:32 -->
+<!-- 2023-04-21 Fri 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proxy_send - send proxy authentication</title>
@@ -23,48 +23,48 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1b563a7">Description</a></li>
-<li><a href="#org383b864">Setup</a>
+<li><a href="#org7f5f59f">Description</a></li>
+<li><a href="#org72e0c52">Setup</a>
 <ul>
-<li><a href="#org46214d9">Password store</a></li>
-<li><a href="#orgc609961">Environment declaration</a></li>
+<li><a href="#org73ca1dd">Password store</a></li>
+<li><a href="#org841fc61">Environment declaration</a></li>
 </ul>
 </li>
-<li><a href="#org913d8f5">Code</a>
+<li><a href="#org1572129">Code</a>
 <ul>
-<li><a href="#org819852b">Check availability</a></li>
-<li><a href="#org023df91">Handle global variables and exits</a></li>
-<li><a href="#orgb0882f1">Parse command</a></li>
-<li><a href="#org336d21b">Extract proxy information from environment variable</a></li>
-<li><a href="#orge40d4ae">Compile proxy information</a></li>
-<li><a href="#org2c3c7bf">Html handling</a></li>
-<li><a href="#orgab064ba">Main routine call</a></li>
+<li><a href="#orgad23409">Check availability</a></li>
+<li><a href="#org70e48c7">Handle global variables and exits</a></li>
+<li><a href="#org88285a4">Parse command</a></li>
+<li><a href="#org9edeaae">Extract proxy information from environment variable</a></li>
+<li><a href="#org24f9dbc">Compile proxy information</a></li>
+<li><a href="#org6268ac1">Html handling</a></li>
+<li><a href="#org6bc3ab0">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1b563a7" class="outline-2">
-<h2 id="org1b563a7">Description</h2>
-<div class="outline-text-2" id="text-org1b563a7">
+<div id="outline-container-org7f5f59f" class="outline-2">
+<h2 id="org7f5f59f">Description</h2>
+<div class="outline-text-2" id="text-org7f5f59f">
 <ul class="org-ul">
-<li>This script is automatically called by prady_runcom's profile scripts when network is inferred as <i>office</i>.</li>
+<li>This script is automatically called by prady_runcom&rsquo;s profile scripts when network is inferred as <i>office</i>.</li>
 <li>We try to open <a href="https://www.duckduckgo.com/">duckduckgo</a> and send proxy authentication secret.</li>
-<li>The proxy server generally 'remembers' that our machine was authenticated and
+<li>The proxy server generally &rsquo;remembers&rsquo; that our machine was authenticated and
 does not demand proxy authentication again.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org383b864" class="outline-2">
-<h2 id="org383b864">Setup</h2>
-<div class="outline-text-2" id="text-org383b864">
+<div id="outline-container-org72e0c52" class="outline-2">
+<h2 id="org72e0c52">Setup</h2>
+<div class="outline-text-2" id="text-org72e0c52">
 <p>
 Proxy secret may be provided through any of the tools explained in following sections.
 </p>
 
-<div class="note" id="orge7bd859">
+<div class="note" id="org4a8dbca">
 <ul class="org-ul">
 <li>If information is available at both locations, it is loaded in order.</li>
 <li>Information available from the latter supersedes the former.</li>
@@ -73,9 +73,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </div>
 </div>
 
-<div id="outline-container-org46214d9" class="outline-3">
-<h3 id="org46214d9">Password store</h3>
-<div class="outline-text-3" id="text-org46214d9">
+<div id="outline-container-org73ca1dd" class="outline-3">
+<h3 id="org73ca1dd">Password store</h3>
+<div class="outline-text-3" id="text-org73ca1dd">
 <ul class="org-ul">
 <li><a href="https://www.passwordstore.org">Password manager</a> may hold the proxy-secret.</li>
 <li>Pass-name to the secret <b>MUST</b> be stored in an environment variable <code>${proxy_auth}</code>.</li>
@@ -86,16 +86,16 @@ Proxy secret may be provided through any of the tools explained in following sec
 <i>pass-name</i> can be declared by adding following lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
 </p>
-<div class="seealso" id="orgf19e4a4">
+<div class="seealso" id="orga7b3980">
 <ul class="org-ul">
-<li><a href="setup.html#org15bdc63">Personalization</a></li>
+<li><a href="setup.html#org0ea3361">Personalization</a></li>
 </ul>
 
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">proxy_auth</span>=<span style="color: #98be65;">"office/proxy_server.example.com/best_employee"</span>
-<span style="color: #d76f10;">export</span> proxy_auth
+<pre class="src src-sh"><span class="org-variable-name">proxy_auth</span>=<span class="org-string">"office/proxy_server.example.com/best_employee"</span>
+<span class="org-builtin">export</span> proxy_auth
 </pre>
 </div></li>
 </ul></li>
@@ -104,9 +104,9 @@ Proxy secret may be provided through any of the tools explained in following sec
 </ul>
 </div>
 
-<div id="outline-container-org715f9d8" class="outline-5">
-<h5 id="org715f9d8">plain password</h5>
-<div class="outline-text-5" id="text-org715f9d8">
+<ul class="org-ul">
+<li><a id="org50d56ba"></a>plain password<br />
+<div class="outline-text-5" id="text-org50d56ba">
 <p>
 Password store stores just the &lt;password&gt;.
 &lt;password&gt; may be stored in password manager using a command such as:
@@ -116,11 +116,10 @@ Password store stores just the &lt;password&gt;.
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-orgccf2fb9" class="outline-5">
-<h5 id="orgccf2fb9">multi-field</h5>
-<div class="outline-text-5" id="text-orgccf2fb9">
+<li><a id="orgc7ad916"></a>multi-field<br />
+<div class="outline-text-5" id="text-orgc7ad916">
 <p>
 Information about <i>any</i> or <i>all</i> of following fields may be provided.
 </p>
@@ -146,12 +145,13 @@ Fields may be stored in password manager using a command such as:
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 
-<div id="outline-container-orgc609961" class="outline-3">
-<h3 id="orgc609961">Environment declaration</h3>
-<div class="outline-text-3" id="text-orgc609961">
+<div id="outline-container-org841fc61" class="outline-3">
+<h3 id="org841fc61">Environment declaration</h3>
+<div class="outline-text-3" id="text-org841fc61">
 <ul class="org-ul">
 <li><p>
 A <code>${proxy_protocol}</code> environment variable <b>may</b> be declared.
@@ -160,8 +160,8 @@ It can be declared by adding following lines to
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">proxy_protocol</span>=<span style="color: #98be65;">"http"</span>
-<span style="color: #d76f10;">export</span> proxy_protocol
+<pre class="src src-sh"><span class="org-variable-name">proxy_protocol</span>=<span class="org-string">"http"</span>
+<span class="org-builtin">export</span> proxy_protocol
 
 </pre>
 </div>
@@ -183,19 +183,19 @@ It can be declared by adding following lines to
 <li><p>
 Its value must be of the form:
 </p>
-<pre class="example" id="org744d659">
+<pre class="example" id="orgdaaf994">
 &lt;p_type&gt;_proxy="&lt;protocol&gt;://[&lt;encoded_username&gt;[:&lt;encoded_password&gt;]]@&lt;address&gt;[:&lt;port&gt;]/"
 </pre></li>
 
 <li>example for <code>all_proxy</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">all_proxy</span>=<span style="color: #98be65;">"http://best_employee:secure%21secret@192.168.1.1:1080/"</span>
-<span style="color: #d76f10;">export</span> all_proxy
+<pre class="src src-sh"><span class="org-variable-name">all_proxy</span>=<span class="org-string">"http://best_employee:secure%21secret@192.168.1.1:1080/"</span>
+<span class="org-builtin">export</span> all_proxy
 </pre>
 </div>
 
-<div class="danger" id="orgb78dbaf">
+<div class="danger" id="org7ed4514">
 <p>
 Storing password in environment is strongly <b>discouraged</b>.
 </p>
@@ -206,283 +206,295 @@ Storing password in environment is strongly <b>discouraged</b>.
 </div>
 </div>
 
-<div id="outline-container-org913d8f5" class="outline-2">
-<h2 id="org913d8f5">Code</h2>
-<div class="outline-text-2" id="text-org913d8f5">
+<div id="outline-container-org1572129" class="outline-2">
+<h2 id="org1572129">Code</h2>
+<div class="outline-text-2" id="text-org1572129">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-org819852b" class="outline-3">
-<h3 id="org819852b">Check availability</h3>
-<div class="outline-text-3" id="text-org819852b">
+<div id="outline-container-orgad23409" class="outline-3">
+<h3 id="orgad23409">Check availability</h3>
+<div class="outline-text-3" id="text-orgad23409">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> curl printenv grep tr; <span style="color: #51afef;">do</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> command -v <span style="color: #98be65;">"${_import}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #d76f10;">unset</span> _import
-            clean_exit <span style="color: #da8548; font-weight: bold;">127</span> <span style="color: #98be65;">"${_import} is not installed\n"</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">done</span>
-    <span style="color: #d76f10;">unset</span> _import
-<span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Confirm that dependencies are available.</span>
+<span class="org-function-name">affirm_availability</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">for</span> _import<span class="org-keyword"> in</span> curl printenv grep tr; <span class="org-keyword">do</span>
+        <span class="org-keyword">if</span> <span class="org-negation-char">!</span> command -v <span class="org-string">"${_import}"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
+            <span class="org-builtin">unset</span> _import
+            clean_exit 127 <span class="org-string">"${_import} is not installed\n"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">done</span>
+    <span class="org-builtin">unset</span> _import
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org023df91" class="outline-3">
-<h3 id="org023df91">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org023df91">
+<div id="outline-container-org70e48c7" class="outline-3">
+<h3 id="org70e48c7">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org70e48c7">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">show</span>=false
-    <span style="color: #ffffaf;">pass_keys</span>=<span style="color: #98be65;">"protocol username password host port"</span>
-    <span style="color: #ffffaf;">proxy_header</span>=
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${proxy_protocol}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_protocol</span>=<span style="color: #98be65;">'all'</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #ffffaf;">proxy_username</span>=
-    <span style="color: #ffffaf;">proxy_password</span>=
-    <span style="color: #ffffaf;">proxy_host</span>=
-    <span style="color: #ffffaf;">proxy_port</span>=
-    <span style="color: #ffffaf;">usage</span>=<span style="color: #98be65;">"</span>
-<span style="color: #98be65;">    usage: ${0} -h</span>
-<span style="color: #98be65;">    usage: ${0} --help</span>
-<span style="color: #98be65;">    usage: ${0} [Optional Arguments*] INSTANCE</span>
-<span style="color: #98be65;">"</span>
-    <span style="color: #ffffaf;">help_msg</span>=<span style="color: #98be65;">"${usage}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
+<span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">show the sent heder?</span>
+    <span class="org-variable-name">show</span>=false
 
-<span style="color: #98be65;">    DESCRIPTION: |</span>
-<span style="color: #98be65;">      Auto-send proxy authentication</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Compiled proxy header</span>
+    <span class="org-variable-name">proxy_header</span>=
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${proxy_protocol}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_protocol</span>=<span class="org-string">'all'</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-variable-name">proxy_username</span>=
+    <span class="org-variable-name">proxy_password</span>=
+    <span class="org-variable-name">proxy_host</span>=
+    <span class="org-variable-name">proxy_port</span>=
 
+    <span class="org-comment-delimiter"># </span><span class="org-comment">help (usage)</span>
+    <span class="org-variable-name">usage</span>=<span class="org-string">"</span>
+<span class="org-string">    usage: ${0} -h</span>
+<span class="org-string">    usage: ${0} --help</span>
+<span class="org-string">    usage: ${0} [Optional Arguments*] INSTANCE</span>
+<span class="org-string">"</span>
 
-<span style="color: #98be65;">    Optional Arguments: |</span>
-<span style="color: #98be65;">      -h\t\t\tprint usage message and exit</span>
-<span style="color: #98be65;">      --help\t\t\tprint this help message and exit</span>
-<span style="color: #98be65;">      -s|--show\tdisplay what will be sent as header, don't send</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">help (details)</span>
+    <span class="org-variable-name">help_msg</span>=<span class="org-string">"${usage}</span>
 
-<span style="color: #98be65;">"</span>
-<span style="color: #51afef;">}</span>
-
-<span style="color: #9f5f9f; font-weight: bold;">unset_vars</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #d76f10;">unset</span> help_msg
-    <span style="color: #d76f10;">unset</span> usage
-    <span style="color: #d76f10;">unset</span> show
-    <span style="color: #d76f10;">unset</span> proxy_port
-    <span style="color: #d76f10;">unset</span> proxy_host
-    <span style="color: #d76f10;">unset</span> proxy_password
-    <span style="color: #d76f10;">unset</span> proxy_username
-    <span style="color: #d76f10;">unset</span> pass_keys
-    <span style="color: #d76f10;">unset</span> proxy_header
-<span style="color: #51afef;">}</span>
+<span class="org-string">    DESCRIPTION: |</span>
+<span class="org-string">      Auto-send proxy authentication</span>
 
 
-<span style="color: #9f5f9f; font-weight: bold;">clean_exit</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<span class="org-string">    Optional Arguments: |</span>
+<span class="org-string">      -h\t\t\tprint usage message and exit</span>
+<span class="org-string">      --help\t\t\tprint this help message and exit</span>
+<span class="org-string">      -s|--show\tdisplay what will be sent as header, don't send</span>
+
+<span class="org-string">"</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Unsetset local variables to clean the environment.</span>
+<span class="org-function-name">unset_vars</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-builtin">unset</span> help_msg
+    <span class="org-builtin">unset</span> usage
+    <span class="org-builtin">unset</span> show
+    <span class="org-builtin">unset</span> proxy_port
+    <span class="org-builtin">unset</span> proxy_host
+    <span class="org-builtin">unset</span> proxy_password
+    <span class="org-builtin">unset</span> proxy_username
+    <span class="org-builtin">unset</span> pass_keys
+    <span class="org-builtin">unset</span> proxy_header
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Clean environment and exit optionally with an exit error code</span>
+<span class="org-function-name">clean_exit</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     unset_vars
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${1}"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> -ne <span style="color: #98be65;">"0"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${2}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-            printf <span style="color: #98be65;">"${2}\n"</span> &gt;&amp;<span style="color: #da8548; font-weight: bold;">2</span>
-        <span style="color: #51afef;">fi</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
-        <span style="color: #51afef;">exit</span> $<span style="color: #c678dd;">{</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #c678dd;">}</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${2}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-        printf <span style="color: #98be65;">"${2}\n"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">0</span>
-<span style="color: #51afef;">}</span>
-
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${1}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> -ne <span class="org-string">"0"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+            printf <span class="org-string">"${2}\n"</span> &gt;&amp;2
+        <span class="org-keyword">fi</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
+        <span class="org-keyword">exit</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+        printf <span class="org-string">"${2}\n"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">exit</span> 0
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb0882f1" class="outline-3">
-<h3 id="orgb0882f1">Parse command</h3>
-<div class="outline-text-3" id="text-orgb0882f1">
+<div id="outline-container-org88285a4" class="outline-3">
+<h3 id="org88285a4">Parse command</h3>
+<div class="outline-text-3" id="text-org88285a4">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
-        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${1}"</span><span style="color: #51afef;"> in</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
+<span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">#</span> -gt 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
+        <span class="org-keyword">case</span> <span class="org-string">"${1}"</span><span class="org-keyword"> in</span>
             -h)
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-                clean_exit <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #98be65;">"${usage}"</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${usage}"</span>
                 ;;
             --help)
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-                clean_exit <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #98be65;">"${help_msg}"</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${help_msg}"</span>
                 ;;
             -s|--show)
-                <span style="color: #ffffaf;">show</span>=true
-                <span style="color: #d76f10;">shift</span>
+                <span class="org-variable-name">show</span>=true
+                <span class="org-builtin">shift</span>
                 ;;
             *)
-                clean_exit <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #98be65;">"${usage}"</span>
-        <span style="color: #51afef;">esac</span>
-    <span style="color: #51afef;">done</span>
-<span style="color: #51afef;">}</span>
-
+                clean_exit 1 <span class="org-string">"${usage}"</span>
+        <span class="org-keyword">esac</span>
+    <span class="org-keyword">done</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org336d21b" class="outline-3">
-<h3 id="org336d21b">Extract proxy information from environment variable</h3>
-<div class="outline-text-3" id="text-org336d21b">
+<div id="outline-container-org9edeaae" class="outline-3">
+<h3 id="org9edeaae">Extract proxy information from environment variable</h3>
+<div class="outline-text-3" id="text-org9edeaae">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">extract_env</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">url</span>=<span style="color: #98be65;">"${1}"</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">keep consuming URL like $@ is consumed from command line</span>
-    <span style="color: #ffffaf;">_proto</span>=<span style="color: #98be65;">"$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"</span>
-    <span style="color: #ffffaf;">url</span>=<span style="color: #98be65;">"${url#${_proto}://}"</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">- protocol</span>
-    <span style="color: #ffffaf;">userpass</span>=<span style="color: #98be65;">"$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"</span>
-    <span style="color: #ffffaf;">_user</span>=<span style="color: #98be65;">"${userpass%:*}"</span>
-    <span style="color: #ffffaf;">_pass</span>=<span style="color: #98be65;">"$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"</span>
-    <span style="color: #ffffaf;">url</span>=<span style="color: #98be65;">"$(printf "%s" "${url##${userpass}@}" | cut -d/ -f1)"</span>  <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">- credentials</span>
-    <span style="color: #ffffaf;">_host</span>=<span style="color: #98be65;">"${url%:*}"</span>
-    <span style="color: #ffffaf;">_port</span>=<span style="color: #98be65;">"$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_proto}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_protocol</span>=<span style="color: #98be65;">"${_proto}"</span>
-    <span style="color: #51afef;">fi</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">extract from env variable</span>
+<span class="org-function-name">extract_env</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">url</span>=<span class="org-string">"${1}"</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">keep consuming URL like $@ is consumed from command line</span>
+    <span class="org-variable-name">_proto</span>=<span class="org-string">"$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"</span>
+    <span class="org-variable-name">url</span>=<span class="org-string">"${url#"</span>$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">_proto</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-string">"://}"</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">- protocol</span>
+    <span class="org-variable-name">userpass</span>=<span class="org-string">"$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"</span>
+    <span class="org-variable-name">_user</span>=<span class="org-string">"${userpass%:*}"</span>
+    <span class="org-variable-name">_pass</span>=<span class="org-string">"$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"</span>
+    <span class="org-variable-name">url</span>=<span class="org-string">"$(printf "%s" "${url##"${userpass}"@}" | cut -d/ -f1)"</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">- credentials</span>
+    <span class="org-variable-name">_host</span>=<span class="org-string">"${url%:*}"</span>
+    <span class="org-variable-name">_port</span>=<span class="org-string">"$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_proto}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_protocol</span>=<span class="org-string">"${_proto}"</span>
+    <span class="org-keyword">fi</span>
 
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_user}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_username</span>=<span style="color: #98be65;">"${_user}"</span>
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_user}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_username</span>=<span class="org-string">"${_user}"</span>
+    <span class="org-keyword">fi</span>
 
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_pass}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_password</span>=<span style="color: #98be65;">"${_pass}"</span>
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_pass}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_password</span>=<span class="org-string">"${_pass}"</span>
+    <span class="org-keyword">fi</span>
 
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_host}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_host</span>=<span style="color: #98be65;">"${_host}"</span>
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_host}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_host</span>=<span class="org-string">"${_host}"</span>
+    <span class="org-keyword">fi</span>
 
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${_port}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_port</span>=<span style="color: #98be65;">"${_port}"</span>
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_port}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_port</span>=<span class="org-string">"${_port}"</span>
+    <span class="org-keyword">fi</span>
 
-     <span style="color: #d76f10;">unset</span> _port _host _pass _user _proto userpass url
-<span style="color: #51afef;">}</span>
+     <span class="org-builtin">unset</span> _port _host _pass _user _proto userpass url
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">get_env_proxy</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Parse environment variable.</span>
-    <span style="color: #ffffaf;">proxy_str</span>=<span style="color: #98be65;">"$(printenv "${proxy_protocol}_proxy")"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${proxy_str}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #51afef;">return</span>
-    <span style="color: #51afef;">fi</span>
-    extract_env <span style="color: #98be65;">"${proxy_str}"</span>
-    <span style="color: #d76f10;">unset</span> proxy_str
-<span style="color: #51afef;">}</span>
-
+<span class="org-comment-delimiter"># </span><span class="org-comment">Retrieve from env</span>
+<span class="org-function-name">get_env_proxy</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Parse environment variable.</span>
+    <span class="org-variable-name">proxy_str</span>=<span class="org-string">"$(printenv "${proxy_protocol}_proxy")"</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${proxy_str}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">return</span>
+    <span class="org-keyword">fi</span>
+    extract_env <span class="org-string">"${proxy_str}"</span>
+    <span class="org-builtin">unset</span> proxy_str
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge40d4ae" class="outline-3">
-<h3 id="orge40d4ae">Compile proxy information</h3>
-<div class="outline-text-3" id="text-orge40d4ae">
+<div id="outline-container-org24f9dbc" class="outline-3">
+<h3 id="org24f9dbc">Compile proxy information</h3>
+<div class="outline-text-3" id="text-org24f9dbc">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">build</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">all_proxy</span>=<span style="color: #98be65;">"$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"</span>
-    extract_env <span style="color: #98be65;">"${all_proxy}"</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">build proxy</span>
+<span class="org-function-name">build</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">all_proxy</span>=<span class="org-string">"$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"</span>
+    extract_env <span class="org-string">"${all_proxy}"</span>
     get_env_proxy
-<span style="color: #51afef;">}</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">compile_proxy</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${proxy_host}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #51afef;">return</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${proxy_protocol}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${proxy_protocol}"</span> = <span style="color: #98be65;">"all"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"http://"</span>
-        <span style="color: #51afef;">else</span>
-            <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"${proxy_protocol}://"</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${proxy_username}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">scrt</span>=<span style="color: #98be65;">"${proxy_username}"</span>
-        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${proxy_password}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #ffffaf;">scrt</span>=<span style="color: #98be65;">"${proxy_username}:${proxy_password}"</span>
-        <span style="color: #51afef;">fi</span>
-        <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"${proxy_header}${scrt}@"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"${proxy_header}${proxy_host}"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${proxy_port}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"${proxy_header}:${proxy_port}"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #ffffaf;">proxy_header</span>=<span style="color: #98be65;">"${proxy_header}/"</span>
-    <span style="color: #d76f10;">unset</span> scrt
-<span style="color: #51afef;">}</span>
-
+<span class="org-comment-delimiter"># </span><span class="org-comment">Compile proxy header</span>
+<span class="org-function-name">compile_proxy</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${proxy_host}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">return</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${proxy_protocol}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${proxy_protocol}"</span> = <span class="org-string">"all"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-variable-name">proxy_header</span>=<span class="org-string">"http://"</span>
+        <span class="org-keyword">else</span>
+            <span class="org-variable-name">proxy_header</span>=<span class="org-string">"${proxy_protocol}://"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${proxy_username}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">scrt</span>=<span class="org-string">"${proxy_username}"</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${proxy_password}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-variable-name">scrt</span>=<span class="org-string">"${proxy_username}:${proxy_password}"</span>
+        <span class="org-keyword">fi</span>
+        <span class="org-variable-name">proxy_header</span>=<span class="org-string">"${proxy_header}${scrt}@"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-variable-name">proxy_header</span>=<span class="org-string">"${proxy_header}${proxy_host}"</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${proxy_port}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">proxy_header</span>=<span class="org-string">"${proxy_header}:${proxy_port}"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-variable-name">proxy_header</span>=<span class="org-string">"${proxy_header}/"</span>
+    <span class="org-builtin">unset</span> scrt
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2c3c7bf" class="outline-3">
-<h3 id="org2c3c7bf">Html handling</h3>
-<div class="outline-text-3" id="text-org2c3c7bf">
+<div id="outline-container-org6268ac1" class="outline-3">
+<h3 id="org6268ac1">Html handling</h3>
+<div class="outline-text-3" id="text-org6268ac1">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">quote</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    printf <span style="color: #98be65;">"%s"</span> <span style="color: #98be65;">"$1"</span> <span style="color: #98be65;">\</span>
-        | tr -d <span style="color: #98be65;">'\n'</span> <span style="color: #98be65;">\</span>
-        | curl -Gso /dev/null -w <span style="color: #98be65;">"%{url_effective}"</span> --data-urlencode @- <span style="color: #98be65;">""</span> <span style="color: #98be65;">\</span>
-        | cut -c <span style="color: #da8548; font-weight: bold;">3-</span>
-<span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Convert plain-text value into html quoted form.</span>
+<span class="org-function-name">quote</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    printf <span class="org-string">"%s"</span> <span class="org-string">"$1"</span> <span class="org-sh-escaped-newline">\</span>
+        | tr -d <span class="org-string">'\n'</span> <span class="org-sh-escaped-newline">\</span>
+        | curl -Gso /dev/null -w <span class="org-string">"%{url_effective}"</span> --data-urlencode @- <span class="org-string">""</span> <span class="org-sh-escaped-newline">\</span>
+        | cut -c 3-
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">send_request</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    curl -sLf -x <span style="color: #98be65;">"${proxy_header}"</span> <span style="color: #98be65;">"https://www.duckduckgo.com/"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>
-    <span style="color: #51afef;">case</span> $<span style="color: #ffffaf;">?</span><span style="color: #51afef;"> in</span>
-        <span style="color: #da8548; font-weight: bold;">0</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Send a request to duckduckgo.com</span>
+<span class="org-function-name">send_request</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    curl -sLf -x <span class="org-string">"${proxy_header}"</span> <span class="org-string">"https://www.duckduckgo.com/"</span> &gt;/dev/null 2&gt;&amp;1
+    <span class="org-keyword">case</span> $<span class="org-variable-name">?</span><span class="org-keyword"> in</span>
+        0)
             clean_exit
             ;;
-        <span style="color: #da8548; font-weight: bold;">6</span>)
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Couldn't resolve</span>
-            clean_exit <span style="color: #da8548; font-weight: bold;">6</span>
+        6)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Couldn't resolve</span>
+            clean_exit 6
             ;;
-        <span style="color: #da8548; font-weight: bold;">7</span>)
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">No route to proxy_host</span>
+        7)
+            <span class="org-comment-delimiter"># </span><span class="org-comment">No route to proxy_host</span>
             clean_exit
             ;;
         *)
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">other error</span>
-            clean_exit <span style="color: #98be65;">"$?"</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">other error</span>
+            clean_exit <span class="org-string">"$?"</span>
             ;;
-    <span style="color: #51afef;">esac</span>
-<span style="color: #51afef;">}</span>
+    <span class="org-keyword">esac</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgab064ba" class="outline-3">
-<h3 id="orgab064ba">Main routine call</h3>
-<div class="outline-text-3" id="text-orgab064ba">
+<div id="outline-container-org6bc3ab0" class="outline-3">
+<h3 id="org6bc3ab0">Main routine call</h3>
+<div class="outline-text-3" id="text-org6bc3ab0">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">Main routine call</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Main routine call</span>
+<span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     affirm_availability
     set_vars
-    cli <span style="color: #98be65;">"$@"</span>
+    cli <span class="org-string">"$@"</span>
     build
     compile_proxy
-    <span style="color: #51afef;">if</span> $<span style="color: #ffffaf;">show</span>; <span style="color: #51afef;">then</span>
-        printf <span style="color: #98be65;">"auth: '%s'\n"</span> <span style="color: #98be65;">"${proxy_header}"</span>
+    <span class="org-keyword">if</span> $<span class="org-variable-name">show</span>; <span class="org-keyword">then</span>
+        printf <span class="org-string">"auth: '%s'\n"</span> <span class="org-string">"${proxy_header}"</span>
         clean_exit
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">fi</span>
     send_request
     clean_exit
-<span style="color: #51afef;">}</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-
-main <span style="color: #98be65;">"$@"</span>
+main <span class="org-string">"$@"</span>
 </pre>
 </div>
 </div>

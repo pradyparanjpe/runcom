@@ -6,93 +6,83 @@
 #+OPTIONS: toc: t mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle zathurarc
-
-* Table of Contents :TOC:
-- [[#what-is-this][What is this]]
-- [[#fixed-width][Fixed width]]
-- [[#pages-per-row][Pages Per Row]]
-- [[#stop-at-page-boundries][stop at page boundries]]
-- [[#zoom][zoom]]
-- [[#dark-config][Dark Config]]
-- [[#scrolling][Scrolling]]
-- [[#plagiarism][Plagiarism]]
+#+auto_tangle: t
 
 * What is this
-  Zathura configuration file written in Org Mode for management
-  See man `man zathurarc'
+Zathura configuration file written in Org Mode for management
+See man `man zathurarc'
 
 * Fixed width
-  Open document in fit-width mode by default
-  #+BEGIN_SRC bash
-    set adjust-open "best-fit"
-  #+END_SRC
+Open document in fit-width mode by default
+#+BEGIN_SRC bash
+  set adjust-open "best-fit"
+#+END_SRC
 
 * Pages Per Row
-  #+BEGIN_SRC bash
-    set pages-per-row 1
-  #+END_SRC
+#+BEGIN_SRC bash
+  set pages-per-row 1
+#+END_SRC
 
 * stop at page boundries
-  #+BEGIN_SRC bash
-    set scroll-page-aware "true"
-    set scroll-full-overlap 0.01
-    set scroll-step 100
-  #+END_SRC
+#+BEGIN_SRC bash
+  set scroll-page-aware "true"
+  set scroll-full-overlap 0.01
+  set scroll-step 100
+#+END_SRC
 
 * zoom
-  #+BEGIN_SRC bash
-    set zoom-min 10
-    set guioptions ""
-  #+END_SRC
+#+BEGIN_SRC bash
+  set zoom-min 10
+  set guioptions ""
+#+END_SRC
 
 * Dark Config
-  #+BEGIN_SRC bash
-    set font "Fira Code Retina 15"
-    set default-bg "#000000" #00
-    set default-fg "#F7F7F6" #01
+#+BEGIN_SRC bash
+  set font "Fira Code Retina 15"
+  set default-bg "#000000" #00
+  set default-fg "#F7F7F6" #01
 
-    set statusbar-fg "#B0B0B0" #04
-    set statusbar-bg "#202020" #01
+  set statusbar-fg "#B0B0B0" #04
+  set statusbar-bg "#202020" #01
 
-    set inputbar-bg "#151515" #00 currently not used
-    set inputbar-fg "#FFFFFF" #02
+  set inputbar-bg "#151515" #00 currently not used
+  set inputbar-fg "#FFFFFF" #02
 
-    set notification-error-bg "#AC4142" #08
-    set notification-error-fg "#151515" #00
+  set notification-error-bg "#AC4142" #08
+  set notification-error-fg "#151515" #00
 
-    set notification-warning-bg "#AC4142" #08
-    set notification-warning-fg "#151515" #00
+  set notification-warning-bg "#AC4142" #08
+  set notification-warning-fg "#151515" #00
 
-    set highlight-color "#F4BF75" #0A
-    set highlight-active-color "#6A9FB5" #0D
+  set highlight-color "#F4BF75" #0A
+  set highlight-active-color "#6A9FB5" #0D
 
-    set completion-highlight-fg "#151515" #02
-    set completion-highlight-bg "#90A959" #0C
+  set completion-highlight-fg "#151515" #02
+  set completion-highlight-bg "#90A959" #0C
 
-    set completion-bg "#303030" #02
-    set completion-fg "#E0E0E0" #0C
+  set completion-bg "#303030" #02
+  set completion-fg "#E0E0E0" #0C
 
-    set notification-bg "#90A959" #0B
-    set notification-fg "#151515" #00
+  set notification-bg "#90A959" #0B
+  set notification-fg "#151515" #00
 
-    set recolor "true"
-    set recolor-lightcolor "#000000" #00
-    set recolor-darkcolor "#E0E0E0" #06
-    set recolor-reverse-video "true"
-    set recolor-keephue "true"
-  #+END_SRC
+  set recolor "true"
+  set recolor-lightcolor "#000000" #00
+  set recolor-darkcolor "#E0E0E0" #06
+  set recolor-reverse-video "true"
+  set recolor-keephue "true"
+#+END_SRC
 
 * Scrolling
-  #+BEGIN_SRC bash
-    set scroll-step 50
-  #+END_SRC
+#+BEGIN_SRC bash
+  set scroll-step 50
+#+END_SRC
 
 * Plagiarism
-  I simply copied this from someone
-
-  #+BEGIN_SRC bash
-    set render-loading "false"
-    unmap f
-    map f toggle_fullscreen
-    map [fullscreen] f toggle_fullscreen
-  #+END_SRC
+I simply copied this from someone
+#+BEGIN_SRC bash
+  set render-loading "false"
+  unmap f
+  map f toggle_fullscreen
+  map [fullscreen] f toggle_fullscreen
+#+END_SRC
