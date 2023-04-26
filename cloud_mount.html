@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-12-02 Fri 16:33 -->
+<!-- 2023-04-21 Fri 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cloud mount</title>
@@ -23,33 +23,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0d164c4">Description</a></li>
-<li><a href="#org7bf8ba3">Setup</a></li>
-<li><a href="#orgf0cdab8">Code</a>
+<li><a href="#orge99988f">Description</a></li>
+<li><a href="#org713c619">Setup</a></li>
+<li><a href="#org7b99624">Code</a>
 <ul>
-<li><a href="#org9ca04af">Check availability</a></li>
-<li><a href="#orgb39c21e">Handle global variables and exits</a></li>
-<li><a href="#org22fdb04">Parse command</a></li>
-<li><a href="#org8851a5f">Mount/Unmount</a></li>
-<li><a href="#org17b6b9e">Main routine call</a></li>
+<li><a href="#org4febc23">Check availability</a></li>
+<li><a href="#org2cf04cf">Handle global variables and exits</a></li>
+<li><a href="#org8d3e5fb">Parse command</a></li>
+<li><a href="#org0fb8755">Mount/Unmount</a></li>
+<li><a href="#orga9499b5">Main routine call</a></li>
 </ul>
 </li>
+<li><a href="#orgf8dd61e">References</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0d164c4" class="outline-2">
-<h2 id="org0d164c4">Description</h2>
-<div class="outline-text-2" id="text-org0d164c4">
+<div id="outline-container-orge99988f" class="outline-2">
+<h2 id="orge99988f">Description</h2>
+<div class="outline-text-2" id="text-orge99988f">
 <p>
 mount (unmount) cloud-media using sshfs
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7bf8ba3" class="outline-2">
-<h2 id="org7bf8ba3">Setup</h2>
-<div class="outline-text-2" id="text-org7bf8ba3">
+<div id="outline-container-org713c619" class="outline-2">
+<h2 id="org713c619">Setup</h2>
+<div class="outline-text-2" id="text-org713c619">
 <p>
 Following variables should be declared by adding lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
@@ -58,212 +59,252 @@ Following variables should be declared by adding lines to
 <li>cloud_sship: address (ip/domain name) for ssh</li>
 <li>cloud_locs: absolute paths on <code>cloud_sship</code> to mount (space-separated)</li>
 <li>cloud_user: user name for ssh</li>
-<li>mount_net: network code necessary for <code>cloud_sship</code> to be accessible
+<li><p>
+mount_net: network code necessary for <code>cloud_sship</code> to be accessible
+</p>
 <ul class="org-ul">
 <li>1: home</li>
 <li>2: work</li>
 <li>4: (any) intranet</li>
 <li>8: internet</li>
-</ul></li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">cloud_sship</span>=<span style="color: #98be65;">"10.0.0.10"</span>
-<span style="color: #ffffaf;">cloud_user</span>=<span style="color: #98be65;">"weatherman"</span>
-<span style="color: #ffffaf;">cloud_locs</span>=<span style="color: #98be65;">"/media/shared /home/weatherman"</span>
-<span style="color: #ffffaf;">mount_net</span>=<span style="color: #da8548; font-weight: bold;">2</span>
-<span style="color: #d76f10;">export</span> cloud_sship
-<span style="color: #d76f10;">export</span> cloud_user
-<span style="color: #d76f10;">export</span> cloud_locs
-<span style="color: #d76f10;">export</span> mount_net
-
+<pre class="src src-sh"><span class="org-variable-name">cloud_sship</span>=<span class="org-string">"10.0.0.10"</span>
+<span class="org-variable-name">cloud_user</span>=<span class="org-string">"weatherman"</span>
+<span class="org-variable-name">cloud_locs</span>=<span class="org-string">"/media/shared /home/weatherman"</span>
+<span class="org-variable-name">mount_net</span>=2
+<span class="org-builtin">export</span> cloud_sship
+<span class="org-builtin">export</span> cloud_user
+<span class="org-builtin">export</span> cloud_locs
+<span class="org-builtin">export</span> mount_net
 </pre>
-</div>
+</div></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgf0cdab8" class="outline-2">
-<h2 id="orgf0cdab8">Code</h2>
-<div class="outline-text-2" id="text-orgf0cdab8">
+<div id="outline-container-org7b99624" class="outline-2">
+<h2 id="org7b99624">Code</h2>
+<div class="outline-text-2" id="text-org7b99624">
 <p>
 This section tangles source code
 </p>
 </div>
-<div id="outline-container-org9ca04af" class="outline-3">
-<h3 id="org9ca04af">Check availability</h3>
-<div class="outline-text-3" id="text-org9ca04af">
+<div id="outline-container-org4febc23" class="outline-3">
+<h3 id="org4febc23">Check availability</h3>
+<div class="outline-text-3" id="text-org4febc23">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">affirm_availability</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">for</span> _import<span style="color: #51afef;"> in</span> sshfs grep; <span style="color: #51afef;">do</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> command -v <span style="color: #98be65;">"${_import}"</span> &gt;/dev/null <span style="color: #da8548; font-weight: bold;">2</span>&gt;&amp;<span style="color: #da8548; font-weight: bold;">1</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #d76f10;">unset</span> _import
-            clean_exit <span style="color: #da8548; font-weight: bold;">127</span> <span style="color: #98be65;">"${_import} is not installed\n"</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">done</span>
-    <span style="color: #d76f10;">unset</span> _import
-<span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Confirm that dependencies are available.</span>
+<span class="org-function-name">affirm_availability</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">for</span> _import<span class="org-keyword"> in</span> sshfs grep; <span class="org-keyword">do</span>
+        <span class="org-keyword">if</span> <span class="org-negation-char">!</span> command -v <span class="org-string">"${_import}"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
+            <span class="org-builtin">unset</span> _import
+            clean_exit 127 <span class="org-string">"${_import} is not installed\n"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">done</span>
+    <span class="org-builtin">unset</span> _import
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb39c21e" class="outline-3">
-<h3 id="orgb39c21e">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-orgb39c21e">
+<div id="outline-container-org2cf04cf" class="outline-3">
+<h3 id="org2cf04cf">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org2cf04cf">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">set_vars</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2154</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${cloud_sship}"</span> <span style="color: #c678dd;">]</span> || <span style="color: #c678dd;">[</span> -z <span style="color: #98be65;">"${cloud_user}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        clean_exit <span style="color: #da8548; font-weight: bold;">127</span> <span style="color: #98be65;">"\$cloud_sship AND/OR \$cloud_user is unset\n"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #ffffaf;">srv_mnt_dir</span>=
-    <span style="color: #ffffaf;">action</span>=<span style="color: #98be65;">"mount"</span>
-    <span style="color: #ffffaf;">usage</span>=<span style="color: #98be65;">"</span>
-<span style="color: #98be65;">    usage: ${0} -h</span>
-<span style="color: #98be65;">    usage: ${0} --help</span>
-<span style="color: #98be65;">"</span>
-    <span style="color: #ffffaf;">help_msg</span>=<span style="color: #98be65;">"${usage}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
+<span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2154</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${cloud_sship}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> || <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${cloud_user}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        clean_exit 127 <span class="org-string">"\$cloud_sship AND/OR \$cloud_user is unset\n"</span>
+    <span class="org-keyword">fi</span>
 
-<span style="color: #98be65;">    DESCRIPTION: |</span>
-<span style="color: #98be65;">      ssh filesystem mount</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">directory to mount all cloud devices</span>
+    <span class="org-variable-name">srv_mnt_dir</span>=
+    <span class="org-variable-name">num_locs</span>=0
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Mount/"U"Mount</span>
+    <span class="org-variable-name">action</span>=<span class="org-string">"mount"</span>
+
+    <span class="org-comment-delimiter">#</span><span class="org-comment">help (usage)</span>
+    <span class="org-variable-name">usage</span>=<span class="org-string">"</span>
+<span class="org-string">    usage: ${0} -h</span>
+<span class="org-string">    usage: ${0} --help</span>
+<span class="org-string">"</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">help (detailed)</span>
+    <span class="org-variable-name">help_msg</span>=<span class="org-string">"${usage}</span>
+
+<span class="org-string">    DESCRIPTION:</span>
+<span class="org-string">      ssh filesystem mount</span>
 
 
-<span style="color: #98be65;">    Optional Arguments: |</span>
-<span style="color: #98be65;">      -h\t\t\tprint usage message and exit</span>
-<span style="color: #98be65;">      --help\t\t\tprint this help message and exit</span>
+<span class="org-string">    Optional Arguments:</span>
+<span class="org-string">      -h\t\t\tprint usage message and exit</span>
+<span class="org-string">      --help\t\t\tprint this help message and exit</span>
 
-<span style="color: #98be65;">    Optional Positional Arguments: |</span>
-<span style="color: #98be65;">      unmount\t\tunmount filesystems</span>
-<span style="color: #98be65;">"</span>
-<span style="color: #51afef;">}</span>
+<span class="org-string">    Optional Positional Arguments:</span>
+<span class="org-string">      u[n]mount\t\tunmount filesystems</span>
+<span class="org-string">"</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">unset_vars</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #d76f10;">unset</span> help_msg
-    <span style="color: #d76f10;">unset</span> usage
-    <span style="color: #d76f10;">unset</span> action
-    <span style="color: #d76f10;">unset</span> srv_mnt_dir
-<span style="color: #51afef;">}</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Unsetset local variables to clean the environment.</span>
+<span class="org-function-name">unset_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-builtin">unset</span> help_msg
+    <span class="org-builtin">unset</span> usage
+    <span class="org-builtin">unset</span> action
+    <span class="org-builtin">unset</span> num_locs
+    <span class="org-builtin">unset</span> srv_mnt_dir
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">clean_exit</span><span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Clean environment and exit optionally with an exit error code</span>
+<span class="org-function-name">clean_exit</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     unset_vars
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${1}"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${1}"</span> -ne <span style="color: #98be65;">"0"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${2}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-            <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-            printf <span style="color: #98be65;">"${2}\n"</span> &gt;&amp;<span style="color: #da8548; font-weight: bold;">2</span>
-        <span style="color: #51afef;">fi</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2086</span>
-        <span style="color: #51afef;">exit</span> $<span style="color: #c678dd;">{</span><span style="color: #da8548; font-weight: bold;">1</span><span style="color: #c678dd;">}</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -n <span style="color: #98be65;">"${2}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-        printf <span style="color: #98be65;">"${2}\n"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">0</span>
-<span style="color: #51afef;">}</span>
-
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${1}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> -ne <span class="org-string">"0"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+            printf <span class="org-string">"${2}\n"</span> &gt;&amp;2
+        <span class="org-keyword">fi</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
+        <span class="org-keyword">exit</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${2}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+        printf <span class="org-string">"${2}\n"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">exit</span> 0
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org22fdb04" class="outline-3">
-<h3 id="org22fdb04">Parse command</h3>
-<div class="outline-text-3" id="text-org22fdb04">
+<div id="outline-container-org8d3e5fb" class="outline-3">
+<h3 id="org8d3e5fb">Parse command</h3>
+<div class="outline-text-3" id="text-org8d3e5fb">
 <div class="org-src-container">
-<pre class="src src-sh">
-<span style="color: #9f5f9f; font-weight: bold;">cli</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
-        <span style="color: #51afef;">case</span> <span style="color: #98be65;">"${1}"</span><span style="color: #51afef;"> in</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
+<span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">#</span> -gt 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
+        <span class="org-keyword">case</span> <span class="org-string">"${1}"</span><span class="org-keyword"> in</span>
             -h)
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-                clean_exit <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #98be65;">"${usage}"</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${usage}"</span>
                 ;;
             --help)
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2059</span>
-                clean_exit <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #98be65;">"${help_msg}"</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059</span>
+                clean_exit 0 <span class="org-string">"${help_msg}"</span>
                 ;;
-            unmount)
-                <span style="color: #ffffaf;">action</span>=<span style="color: #98be65;">"unmount"</span>
-                <span style="color: #d76f10;">shift</span>
+            unmount|umount)
+                <span class="org-variable-name">action</span>=<span class="org-string">"unmount"</span>
+                <span class="org-builtin">shift</span>
                 ;;
             *)
-                clean_exit <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #98be65;">"${usage}"</span>
-        <span style="color: #51afef;">esac</span>
-    <span style="color: #51afef;">done</span>
-<span style="color: #51afef;">}</span>
+                clean_exit 1 <span class="org-string">"${usage}"</span>
+        <span class="org-keyword">esac</span>
+    <span class="org-keyword">done</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8851a5f" class="outline-3">
-<h3 id="org8851a5f">Mount/Unmount</h3>
-<div class="outline-text-3" id="text-org8851a5f">
+<div id="outline-container-org0fb8755" class="outline-3">
+<h3 id="org0fb8755">Mount/Unmount</h3>
+<div class="outline-text-3" id="text-org0fb8755">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">discover</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">IFS</span>=<span style="color: #98be65;">"$(printf '\t')"</span> read -r _ _ netstate &lt;&lt; netcheck
-<span style="color: #98be65;">$(eval "${RUNCOMDIR:-${HOME}/.runcom}/netcheck.sh")</span>
-<span style="color: #98be65;">netcheck</span>
-    <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2154</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> $<span style="color: #98be65;">(</span><span style="color: #a9a1e1;">(</span> netstate &amp; mount_net <span style="color: #a9a1e1;">)</span><span style="color: #98be65;">)</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">On home network</span>
-        <span style="color: #ffffaf;">srv_mnt_dir</span>=<span style="color: #98be65;">"${HOME}/${cloud_sship}"</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2154</span>
-        <span style="color: #d76f10;">set</span> -- <span style="color: #98be65;">"${cloud_locs}"</span>
-    <span style="color: #51afef;">else</span>
-        clean_exit <span style="color: #da8548; font-weight: bold;">1</span> <span style="color: #98be65;">"Not on correct network"</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Are we on the right network?</span>
+<span class="org-function-name">discover</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">IFS</span>=<span class="org-string">"$(printf '\t')"</span> read -r _ _ netstate &lt;&lt; netcheck
+<span class="org-sh-heredoc">$(eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/netcheck.sh")</span>
+<span class="org-sh-heredoc">netcheck</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2154</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; mount_net <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">On home network</span>
+        <span class="org-variable-name">srv_mnt_dir</span>=<span class="org-string">"${HOME}/${cloud_sship}"</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2154</span>
+        <span class="org-variable-name">num_locs</span>=<span class="org-string">"$(echo "${cloud_locs}" | grep ' ' -c)"</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${clod_locs}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+            <span class="org-variable-name">num_locs</span>=<span class="org-string">"$(( num_locs + 1 ))"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">else</span>
+        clean_exit 1 <span class="org-string">"Not on correct network"</span>
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">mountssh</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$(mount | grep -c "${srv_mnt_dir}")"</span> -lt <span style="color: #98be65;">"$#"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">not mounted</span>
-        <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
-            mkdir -p <span style="color: #98be65;">"${srv_mnt_dir}${1}"</span>
-            sshfs -o <span style="color: #98be65;">\</span>
-                  <span style="color: #98be65;">"reconnect,ServerAliveInterval=15,ServerAliveCountMax=3"</span> <span style="color: #98be65;">\</span>
-                  <span style="color: #98be65;">"${cloud_user}@${cloud_sship}:${1}"</span> <span style="color: #98be65;">"${srv_mnt_dir}${1}"</span>
-            <span style="color: #d76f10;">shift</span>
-        <span style="color: #51afef;">done</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">}</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Mount</span>
+<span class="org-function-name">mountssh</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$(mount | grep -c "${srv_mnt_dir}")"</span> -lt <span class="org-string">"${num_locs}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">not mounted</span>
+        <span class="org-variable-name">CDR</span>=<span class="org-string">"${cloud_locs} "</span>
+        <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${CDR}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
+            <span class="org-variable-name">CAR</span>=<span class="org-string">"${CDR%% *}"</span>
+            printf <span class="org-string">"mounting %s -&gt; %s\n"</span> <span class="org-sh-escaped-newline">\</span>
+                   <span class="org-string">"${cloud_user}@${cloud_sship}:${CAR}"</span> <span class="org-sh-escaped-newline">\</span>
+                   <span class="org-string">"${srv_mnt_dir}${CAR}"</span>
+            mkdir -p <span class="org-string">"${srv_mnt_dir}${CAR}"</span>
+            sshfs -o <span class="org-sh-escaped-newline">\</span>
+                  <span class="org-string">"reconnect,ServerAliveInterval=15,ServerAliveCountMax=3"</span> <span class="org-sh-escaped-newline">\</span>
+                  <span class="org-string">"${cloud_user}@${cloud_sship}:${CAR}"</span> <span class="org-string">"${srv_mnt_dir}${CAR}"</span>
+            <span class="org-variable-name">CDR</span>=<span class="org-string">"${CDR#* }"</span>;
+        <span class="org-keyword">done</span>;
+        <span class="org-builtin">unset</span> CAR CDR
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #9f5f9f; font-weight: bold;">umountssh</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"$(mount | grep -c "${srv_mnt_dir}")"</span> -ge <span style="color: #98be65;">"$#"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">mounted</span>
-        <span style="color: #51afef;">while</span> <span style="color: #c678dd;">[</span> $<span style="color: #ffffaf;">#</span> -gt <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">do</span>
-            umount <span style="color: #98be65;">"${srv_mnt_dir}${1}"</span>
-            <span style="color: #d76f10;">shift</span>
-        <span style="color: #51afef;">done</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">}</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Unmount</span>
+<span class="org-function-name">umountssh</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-builtin">set</span> -- <span class="org-string">"${cloud_locs}"</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$(mount | grep -c "${srv_mnt_dir}")"</span> -ge <span class="org-string">"${num_locs}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">mounted</span>
+        <span class="org-variable-name">CDR</span>=<span class="org-string">"${cloud_locs} "</span>
+        <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${CDR}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
+            <span class="org-variable-name">CAR</span>=<span class="org-string">"${CDR%% *}"</span>
+            printf <span class="org-string">"unmounting %s\n"</span> <span class="org-string">"${srv_mnt_dir}${CAR}"</span>
+            umount <span class="org-string">"${srv_mnt_dir}${CAR}"</span>
+            <span class="org-variable-name">CDR</span>=<span class="org-string">"${CDR#* }"</span>;
+        <span class="org-keyword">done</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-builtin">unset</span> CAR CDR
+<span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org17b6b9e" class="outline-3">
-<h3 id="org17b6b9e">Main routine call</h3>
-<div class="outline-text-3" id="text-org17b6b9e">
+<div id="outline-container-orga9499b5" class="outline-3">
+<h3 id="orga9499b5">Main routine call</h3>
+<div class="outline-text-3" id="text-orga9499b5">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">main</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">main routine call</span>
+<span class="org-function-name">main</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     affirm_availability
     set_vars
-    cli <span style="color: #98be65;">"$@"</span>
+    cli <span class="org-string">"$@"</span>
     discover
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #98be65;">"${action}"</span> = <span style="color: #98be65;">'unmount'</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        umountssh <span style="color: #98be65;">"$@"</span>
-    <span style="color: #51afef;">else</span>
-        mountssh <span style="color: #98be65;">"$@"</span>
-    <span style="color: #51afef;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${action}"</span> = <span class="org-string">'unmount'</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        umountssh
+    <span class="org-keyword">else</span>
+        mountssh
+    <span class="org-keyword">fi</span>
     clean_exit
-<span style="color: #51afef;">}</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-main <span style="color: #98be65;">"$@"</span>
+main <span class="org-string">"$@"</span>
 </pre>
 </div>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgf8dd61e" class="outline-2">
+<h2 id="orgf8dd61e">References</h2>
+<div class="outline-text-2" id="text-orgf8dd61e">
+<ul class="org-ul">
+<li>POSIX iterator was inspired by <a href="https://gist.github.com/biiont/290341b29657c0bb2df6">biiont</a></li>
+</ul>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-12-02 Fri 16:33 -->
+<!-- 2023-04-21 Fri 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setup runcom</title>
@@ -23,47 +23,47 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8231e20">Legend</a>
+<li><a href="#org0ab826f">Legend</a>
 <ul>
-<li><a href="#orgae25c05">Brackets</a></li>
+<li><a href="#orgcdc8de9">Brackets</a></li>
 </ul>
 </li>
-<li><a href="#org8991c50">Requirements</a>
+<li><a href="#org55babe1">Requirements</a>
 <ul>
-<li><a href="#orgcc891c6">Knowledge</a></li>
-<li><a href="#orgdcca78c">Dependencies</a></li>
+<li><a href="#org0c1caa4">Knowledge</a></li>
+<li><a href="#org7c7b210">Dependencies</a></li>
 </ul>
 </li>
-<li><a href="#orgcae12bc">Set-up</a>
+<li><a href="#orge3071f8">Set-up</a>
 <ul>
-<li><a href="#org0a1696c">Bootstrap set-up using script</a></li>
-<li><a href="#org50eafa4">Guide for manual set-up.</a></li>
+<li><a href="#org766fd97">Bootstrap set-up using script</a></li>
+<li><a href="#org1e9eca1">Guide for manual set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org43643ab">Undo Set-up</a>
+<li><a href="#org6463b5c">Undo Set-up</a>
 <ul>
-<li><a href="#org50f2580">Bootstrap unset using script</a></li>
-<li><a href="#org9beaac0">Guide to manually undo set-up.</a></li>
+<li><a href="#org1044795">Bootstrap unset using script</a></li>
+<li><a href="#org0c08d99">Guide to manually undo set-up.</a></li>
 </ul>
 </li>
-<li><a href="#org15bdc63">Personalization</a>
+<li><a href="#org0ea3361">Personalization</a>
 <ul>
-<li><a href="#org8927e8b">Local</a></li>
-<li><a href="#org861e7d6">Synchronized</a></li>
-<li><a href="#org5fcc23f">Proxy settings</a></li>
+<li><a href="#orgcfbc508">Local</a></li>
+<li><a href="#org93bbc42">Synchronized</a></li>
+<li><a href="#orgdb63e79">Proxy settings</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8231e20" class="outline-2">
-<h2 id="org8231e20">Legend</h2>
-<div class="outline-text-2" id="text-org8231e20">
+<div id="outline-container-org0ab826f" class="outline-2">
+<h2 id="org0ab826f">Legend</h2>
+<div class="outline-text-2" id="text-org0ab826f">
 </div>
-<div id="outline-container-orgae25c05" class="outline-3">
-<h3 id="orgae25c05">Brackets</h3>
-<div class="outline-text-3" id="text-orgae25c05">
+<div id="outline-container-orgcdc8de9" class="outline-3">
+<h3 id="orgcdc8de9">Brackets</h3>
+<div class="outline-text-3" id="text-orgcdc8de9">
 <ul class="org-ul">
 <li><b>Square</b> <code>[]</code>: optional parts: <code>W[orld]H[ealth]O[rganisation]</code></li>
 <li><b>Angular</b> <code>&lt;&gt;</code>: instructions to fill: <code>&lt;a global organisation&gt;</code></li>
@@ -74,20 +74,20 @@
 </div>
 </div>
 
-<div id="outline-container-org8991c50" class="outline-2">
-<h2 id="org8991c50">Requirements</h2>
-<div class="outline-text-2" id="text-org8991c50">
+<div id="outline-container-org55babe1" class="outline-2">
+<h2 id="org55babe1">Requirements</h2>
+<div class="outline-text-2" id="text-org55babe1">
 </div>
-<div id="outline-container-orgcc891c6" class="outline-3">
-<h3 id="orgcc891c6">Knowledge</h3>
-<div class="outline-text-3" id="text-orgcc891c6">
+<div id="outline-container-org0c1caa4" class="outline-3">
+<h3 id="org0c1caa4">Knowledge</h3>
+<div class="outline-text-3" id="text-org0c1caa4">
 <ul class="org-ul">
 <li>Linux shell commands. We shall try to be POSIX-compliant.</li>
-<li>Knowledge of Linux, "dot-files".</li>
+<li>Knowledge of Linux, &ldquo;dot-files&rdquo;.</li>
 <li><p>
 super user (sudo) permissions (only for package installation)
 </p>
-<div class="warning" id="orgfc73867">
+<div class="warning" id="orgf194f93">
 <p>
 Avoid use of <b>sudo</b> as much as possible.
 </p>
@@ -97,9 +97,9 @@ Avoid use of <b>sudo</b> as much as possible.
 </div>
 </div>
 
-<div id="outline-container-orgdcca78c" class="outline-3">
-<h3 id="orgdcca78c">Dependencies</h3>
-<div class="outline-text-3" id="text-orgdcca78c">
+<div id="outline-container-org7c7b210" class="outline-3">
+<h3 id="org7c7b210">Dependencies</h3>
+<div class="outline-text-3" id="text-org7c7b210">
 <ul class="org-ul">
 <li>A GNU/Linux distribution. I use <a href="https://fedoraproject.org">Fedora</a>.</li>
 <li>GNU <a href="https://www.gnu.org/software/coreutils/coreutils.html">coreutils</a>: Basic OS utilities.</li>
@@ -108,7 +108,7 @@ Avoid use of <b>sudo</b> as much as possible.
 <li><a href="https://git-scm.com/">git</a>: git it</li>
 </ul>
 
-<div class="important" id="org9de2be7">
+<div class="important" id="org8d14b3c">
 <p>
 For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href="https://&lt;mirror-server&gt;/alpine/%3Cversion%3E/community">community repository</a>.
 </p>
@@ -119,33 +119,33 @@ For Alpine Linux, <a href="file:///etc/apk/repositories">enable</a> the <a href=
 </div>
 </div>
 
-<div id="outline-container-org5046ed0" class="outline-4">
-<h4 id="org5046ed0">Bootstrap installation of dependencies</h4>
-<div class="outline-text-4" id="text-org5046ed0">
+<div id="outline-container-org709ca46" class="outline-4">
+<h4 id="org709ca46">Bootstrap installation of dependencies</h4>
+<div class="outline-text-4" id="text-org709ca46">
 <p>
 For automated installation of dependencies,
 run the <a href="./setup/dependencies.sh">dependencies script</a> with elevated privileges.
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/dependencies.sh"</span> | sudo sh
+<pre class="src src-sh">curl -sLf <span class="org-string">"https://pradyparanjpe.github.io/runcom/setup/dependencies.sh"</span> | sudo sh
 </pre>
 </div>
 
-<div class="note" id="orgd2c8863">
+<div class="note" id="org50fc780">
 <p>
 Inspecting scripts before running them (especially with <code>sudo</code>) is always a good idea.
 The <i>dependencies</i> script is tangled (with automation wrappers) from the code below.
 If you feel an urge to inspect it or if it fails,
-install dependencies manually instead, that's all it does.
+install dependencies manually instead, that&rsquo;s all it does.
 </p>
 
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e8904f" class="outline-4">
-<h4 id="org7e8904f">Guide for manual installation of dependencies.</h4>
-<div class="outline-text-4" id="text-org7e8904f">
+<div id="outline-container-org2107469" class="outline-4">
+<h4 id="org2107469">Guide for manual installation of dependencies.</h4>
+<div class="outline-text-4" id="text-org2107469">
 <p>
 Use suitable package manager (<a href="https://wiki.debian.org/Apt">apt</a>|<a href="https://pkgs.alpinelinux.org/packages">apk</a>|<a href="https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/package-management/DNF/">dnf</a>|<a href="https://archlinux.org/pacman/">pacman</a>|<a href="https://documentation.suse.com/smart/linux/html/concept-zypper/index.html">zypper</a>)
 to install coreutils, curl, git, stow.
@@ -158,8 +158,8 @@ and repository database before installing packages.
 dnf: Fedora, RockyLinux, RHEL, CentOS
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">dnf -y update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-dnf -y install coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+<pre class="src src-sh">dnf -y update || <span class="org-keyword">return</span> 65
+dnf -y install coreutils curl git stow || <span class="org-keyword">return</span> 66
 </pre>
 </div></li>
 
@@ -167,8 +167,8 @@ dnf -y install coreutils curl git stow || <span style="color: #51afef;">return</
 apk: Alpine Linux
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">apk update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-apk --virtual runcom add coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+<pre class="src src-sh">apk update || <span class="org-keyword">return</span> 65
+apk --virtual runcom add coreutils curl git stow || <span class="org-keyword">return</span> 66
 </pre>
 </div></li>
 
@@ -176,8 +176,8 @@ apk --virtual runcom add coreutils curl git stow || <span style="color: #51afef;
 apt: Debian, Ubuntu
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">apt update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-apt install -y coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+<pre class="src src-sh">apt update || <span class="org-keyword">return</span> 65
+apt install -y coreutils curl git stow || <span class="org-keyword">return</span> 66
 </pre>
 </div></li>
 
@@ -185,8 +185,8 @@ apt install -y coreutils curl git stow || <span style="color: #51afef;">return</
 zypper: OpenSuSE, SuSE
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">zypper ref || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-zypper -n install coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+<pre class="src src-sh">zypper ref || <span class="org-keyword">return</span> 65
+zypper -n install coreutils curl git stow || <span class="org-keyword">return</span> 66
 </pre>
 </div></li>
 
@@ -194,7 +194,7 @@ zypper -n install coreutils curl git stow || <span style="color: #51afef;">retur
 pacman: Arch, Manjaro
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">pacman --noconfirm -Syu coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
+<pre class="src src-sh">pacman --noconfirm -Syu coreutils curl git stow || <span class="org-keyword">return</span> 65
 </pre>
 </div></li>
 
@@ -202,8 +202,8 @@ pacman: Arch, Manjaro
 brew: Mac (untested)
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">brew update || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">65</span>
-brew install coreutils curl git stow || <span style="color: #51afef;">return</span> <span style="color: #da8548; font-weight: bold;">66</span>
+<pre class="src src-sh">brew update || <span class="org-keyword">return</span> 65
+brew install coreutils curl git stow || <span class="org-keyword">return</span> 66
 </pre>
 </div></li>
 </ul>
@@ -212,22 +212,22 @@ brew install coreutils curl git stow || <span style="color: #51afef;">return</sp
 </div>
 </div>
 
-<div id="outline-container-orgcae12bc" class="outline-2">
-<h2 id="orgcae12bc">Set-up</h2>
-<div class="outline-text-2" id="text-orgcae12bc">
+<div id="outline-container-orge3071f8" class="outline-2">
+<h2 id="orge3071f8">Set-up</h2>
+<div class="outline-text-2" id="text-orge3071f8">
 <ul class="org-ul">
-<li>Affirm <a href="#org8991c50">requirements</a>.</li>
+<li>Affirm <a href="#org55babe1">requirements</a>.</li>
 </ul>
-<div class="warning" id="orga31e55f">
+<div class="warning" id="org5ca5ab1">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during set-up.
 </p>
 
 </div>
 
-<div class="warning" id="org97898d9">
+<div class="warning" id="org10dcdda">
 <ul class="org-ul">
-<li>The next steps require you to delete all <a href="index.html#org2ac3d82">stowed dotfiles</a>.</li>
+<li>The next steps require you to delete all <a href="index.html#org2f57bdd">stowed dotfiles</a>.</li>
 <li>We shall copy them in a directory named <code>${HOME}/OLD_CONFIG</code> before proceeding.</li>
 <li>Preserve this backup, you will need this during undoing set-up.</li>
 <li>You HAVE BEEN warned.</li>
@@ -236,21 +236,21 @@ Do <b>NOT</b> use <code>sudo</code> during set-up.
 </div>
 </div>
 
-<div id="outline-container-org0a1696c" class="outline-3">
-<h3 id="org0a1696c">Bootstrap set-up using script</h3>
-<div class="outline-text-3" id="text-org0a1696c">
+<div id="outline-container-org766fd97" class="outline-3">
+<h3 id="org766fd97">Bootstrap set-up using script</h3>
+<div class="outline-text-3" id="text-org766fd97">
 <ul class="org-ul">
 <li><p>
 Set-up may be bootstrapped by running the <a href="./setup/setup.sh">setup</a> script.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/setup.sh"</span> | sh
+<pre class="src src-sh">curl -sLf <span class="org-string">"https://pradyparanjpe.github.io/runcom/setup/setup.sh"</span> | sh
 
 </pre>
 </div>
 
-<div class="note" id="orgf4e25eb">
+<div class="note" id="org2166b5e">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>set-up</i> script is tangled (with automation wrappers) from the code below.
@@ -263,122 +263,123 @@ follow manual set-up instructions with modifications instead.
 </div>
 </div>
 
-<div id="outline-container-org50eafa4" class="outline-3">
-<h3 id="org50eafa4">Guide for manual set-up.</h3>
-<div class="outline-text-3" id="text-org50eafa4">
+<div id="outline-container-org1e9eca1" class="outline-3">
+<h3 id="org1e9eca1">Guide for manual set-up.</h3>
+<div class="outline-text-3" id="text-org1e9eca1">
 </div>
-<div id="outline-container-orgd29c170" class="outline-4">
-<h4 id="orgd29c170">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
-<div class="outline-text-4" id="text-orgd29c170">
+<div id="outline-container-orgac6adb6" class="outline-4">
+<h4 id="orgac6adb6">Clone the repository and place at <code>${HOME}/.runcom</code></h4>
+<div class="outline-text-4" id="text-orgac6adb6">
 <div class="org-src-container">
-<pre class="src src-sh">git clone --recurse-submodules <span style="color: #98be65;">"https://github.com/pradyparanjpe/runcom"</span> <span style="color: #98be65;">"${HOME}/.runcom"</span> || <span style="color: #51afef;">exit</span> <span style="color: #da8548; font-weight: bold;">1</span>
+<pre class="src src-sh">git clone --recurse-submodules <span class="org-string">"https://github.com/pradyparanjpe/runcom"</span> <span class="org-string">"${HOME}/.runcom"</span> || <span class="org-keyword">exit</span> 1
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0c98bc2" class="outline-4">
-<h4 id="org0c98bc2">Stow dot-files</h4>
-<div class="outline-text-4" id="text-org0c98bc2">
+<div id="outline-container-org3ef4aed" class="outline-4">
+<h4 id="org3ef4aed">Stow dot-files</h4>
+<div class="outline-text-4" id="text-org3ef4aed">
 <ul class="org-ul">
 <li><code>GNU stow</code> will create symlinked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> in <code>${HOME}</code>.</li>
 <li>If <code>stow</code> finds a pre-existing directory, symlinks are created inside that directory.</li>
 <li>If <code>stow</code> finds a pre-existing file (non-directory), it throws error.</li>
 </ul>
 </div>
-<div id="outline-container-org6e18dab" class="outline-5">
-<h5 id="org6e18dab">Preserve 'current' configuration in a <b>visible</b> folder in <code>${HOME}</code></h5>
-<div class="outline-text-5" id="text-org6e18dab">
+<ul class="org-ul">
+<li><a id="orgc845f15"></a>Preserve &rsquo;current&rsquo; configuration in a <b>visible</b> folder in <code>${HOME}</code><br />
+<div class="outline-text-5" id="text-orgc845f15">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ffffaf;">presence</span>=<span style="color: #98be65;">"${HOME}/OLD_CONFIG"</span>
-mkdir -p <span style="color: #98be65;">"${presence}"</span>
-cat &lt;&lt; EOR &gt;&gt; <span style="color: #98be65;">"${presence}/README.md"</span>
-<span style="color: #98be65;"># RUNCOM backup</span>
-<span style="color: #98be65;">  This directory contains a backup of configuration that existed before runcom setup.</span>
-<span style="color: #98be65;">  Files in this directory may be merged to their respective place after inspection.</span>
-<span style="color: #98be65;">  I recommend that this directory should **NOT** be deleted.</span>
-<span style="color: #98be65;">  It will be required during un-doing the setup.</span>
-<span style="color: #98be65;">EOR</span>
+<pre class="src src-sh"><span class="org-variable-name">presence</span>=<span class="org-string">"${HOME}/OLD_CONFIG"</span>
+mkdir -p <span class="org-string">"${presence}"</span>
+cat &lt;&lt; EOR &gt;&gt; <span class="org-string">"${presence}/README.md"</span>
+<span class="org-sh-heredoc"># RUNCOM backup</span>
+<span class="org-sh-heredoc">  This directory contains a backup of configuration that existed before runcom setup.</span>
+<span class="org-sh-heredoc">  Files in this directory may be merged to their respective place after inspection.</span>
+<span class="org-sh-heredoc">  I recommend that this directory should **NOT** be deleted.</span>
+<span class="org-sh-heredoc">  It will be required during un-doing the setup.</span>
+<span class="org-sh-heredoc">EOR</span>
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org3869ee4" class="outline-5">
-<h5 id="org3869ee4">Create directories, so that symlinks are made <i>inside</i> them.</h5>
-<div class="outline-text-5" id="text-org3869ee4">
+<li><a id="org674332e"></a>Create directories, so that symlinks are made <i>inside</i> them.<br />
+<div class="outline-text-5" id="text-org674332e">
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">for</span> conf_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span style="color: #51afef;">do</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">hard_directory</span>=<span style="color: #98be65;">"${HOME}/.config/${conf_mask##*/}"</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            mv <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #98be65;">"${presence}/${hard_directory}"</span>
-            <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">still no luck</span>
-                printf <span style="color: #98be65;">"%s Couldn't be removed and backed up\n"</span> <span style="color: #98be65;">"${hard_directory}"</span>
-                printf <span style="color: #98be65;">"This *shall* cause stow error\n"</span>
-            <span style="color: #51afef;">fi</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">done</span>
-mkdir -p <span style="color: #98be65;">"${HOME}/.config/pvt.d"</span>
-mkdir -p <span style="color: #98be65;">"${HOME}/.config/local.d"</span>
+<pre class="src src-sh"><span class="org-keyword">for</span> conf_mask<span class="org-keyword"> in</span> <span class="org-string">"${HOME}/.runcom/dotfiles/.config"</span>/*; <span class="org-keyword">do</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${conf_mask}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">hard_directory</span>=<span class="org-string">"${HOME}/.config/${conf_mask##*/}"</span>
+        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${hard_directory}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">configuration already exists</span>
+            mv <span class="org-string">"${hard_directory}"</span> <span class="org-string">"${presence}/${hard_directory}"</span>
+        <span class="org-keyword">fi</span>
+        <span class="org-keyword">if</span> <span class="org-negation-char">!</span> mkdir <span class="org-string">"${hard_directory}"</span> 2&gt;/dev/null; <span class="org-keyword">then</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">no luck</span>
+            printf <span class="org-string">"%s "</span> <span class="org-string">"${hard_directory}"</span>
+            printf <span class="org-string">"Couldn't be removed / backed up / created.\n"</span>
+            printf <span class="org-string">"This *shall* cause stow error.\n"</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">fi</span>
+<span class="org-keyword">done</span>
+mkdir -p <span class="org-string">"${HOME}/.config/pvt.d"</span>
+mkdir -p <span class="org-string">"${HOME}/.config/local.d"</span>
 
-<span style="color: #51afef;">for</span> data_mask<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${HOME}/.runcom/dotfiles/.local/share"</span>/*; <span style="color: #51afef;">do</span>
-    <span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> -d <span style="color: #98be65;">"${conf_mask}"</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-        <span style="color: #ffffaf;">hard_directory</span>=<span style="color: #98be65;">"${HOME}/.local/share/${data_mask##*/}"</span>
-        <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-            mv <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #98be65;">"${presence}/${hard_directory}"</span>
-            <span style="color: #51afef;">if</span> <span style="color: #51afef; font-weight: bold;">!</span> mkdir <span style="color: #98be65;">"${hard_directory}"</span> <span style="color: #da8548; font-weight: bold;">2</span>&gt;/dev/null; <span style="color: #51afef;">then</span>
-                <span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">still no luck</span>
-                printf <span style="color: #98be65;">"%s Couldn't be removed and backed up\n"</span> <span style="color: #98be65;">"${hard_directory}"</span>
-                printf <span style="color: #98be65;">"This *shall* cause stow error\n"</span>
-            <span style="color: #51afef;">fi</span>
-        <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">fi</span>
-<span style="color: #51afef;">done</span>
-<span style="color: #d76f10;">unset</span> hard_directory non_mt_msg
+<span class="org-keyword">for</span> data_mask<span class="org-keyword"> in</span> <span class="org-string">"${HOME}/.runcom/dotfiles/.local/share"</span>/*; <span class="org-keyword">do</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${conf_mask}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">hard_directory</span>=<span class="org-string">"${HOME}/.local/share/${data_mask##*/}"</span>
+        <span class="org-keyword">if</span> <span class="org-negation-char">!</span> mkdir <span class="org-string">"${hard_directory}"</span> 2&gt;/dev/null; <span class="org-keyword">then</span>
+            mv <span class="org-string">"${hard_directory}"</span> <span class="org-string">"${presence}/${hard_directory}"</span>
+            <span class="org-keyword">if</span> <span class="org-negation-char">!</span> mkdir <span class="org-string">"${hard_directory}"</span> 2&gt;/dev/null; <span class="org-keyword">then</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">still no luck</span>
+                printf <span class="org-string">"%s Couldn't be removed and backed up\n"</span> <span class="org-string">"${hard_directory}"</span>
+                printf <span class="org-string">"This *shall* cause stow error\n"</span>
+            <span class="org-keyword">fi</span>
+        <span class="org-keyword">fi</span>
+    <span class="org-keyword">fi</span>
+<span class="org-keyword">done</span>
+<span class="org-builtin">unset</span> hard_directory non_mt_msg
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org9295449" class="outline-5">
-<h5 id="org9295449">Stow</h5>
-<div class="outline-text-5" id="text-org9295449">
+<li><a id="org725ab11"></a>Stow<br />
+<div class="outline-text-5" id="text-org725ab11">
 <div class="org-src-container">
-<pre class="src src-sh">stow -vS -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> dotfiles
+<pre class="src src-sh">stow -vS -t <span class="org-string">"${HOME}"</span> -d <span class="org-string">"${HOME}/.runcom"</span> dotfiles
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 
-<div id="outline-container-org3fe9623" class="outline-4">
-<h4 id="org3fe9623">Set up Cargo (RUST) HOME</h4>
-<div class="outline-text-4" id="text-org3fe9623">
+<div id="outline-container-org52f1199" class="outline-4">
+<h4 id="org52f1199">Set up Cargo (RUST) HOME</h4>
+<div class="outline-text-4" id="text-org52f1199">
 <p>
 Cargo (RUST) clutters <code>${HOME}</code> with its <i>data</i>. Put it at the right place.
-Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> like python3.
+Cargo&rsquo;s binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> like python3.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #9f5f9f; font-weight: bold;">move_cargo</span> <span style="color: #51afef;">()</span> <span style="color: #51afef;">{</span>
-    <span style="color: #ffffaf;">CARGO_HOME</span>=<span style="color: #98be65;">"${HOME}/.local/share/cargo"</span>
-    <span style="color: #ffffaf;">LOCAL_BIN</span>=<span style="color: #98be65;">"${HOME}/.local/bin"</span>
-    <span style="color: #ffffaf;">BAD_CARGO_HOME</span>=<span style="color: #98be65;">"${HOME}/.cargo"</span>
-    <span style="color: #ffffaf;">BAD_CARGO_BIN</span>=<span style="color: #98be65;">"${HOME}/.cargo/bin"</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> -d <span style="color: #98be65;">"${BAD_CARGO_HOME}"</span> <span style="color: #c678dd;">]</span> &amp;&amp; <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> -L <span style="color: #98be65;">"${BAD_CARGO_HOME}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        mv -t <span style="color: #98be65;">"${CARGO_HOME}"</span> <span style="color: #98be65;">"${BAD_CARGO_HOME}"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #51afef;">if</span> <span style="color: #c678dd;">[</span> <span style="color: #51afef; font-weight: bold;">!</span> <span style="color: #98be65;">"$(readlink -f "${CARGO_HOME}/bin")"</span> = <span style="color: #98be65;">"${LOCAL_BIN}"</span> <span style="color: #c678dd;">]</span>; <span style="color: #51afef;">then</span>
-        mv -t <span style="color: #98be65;">"${LOCAL_BIN}"</span> <span style="color: #98be65;">"${CARGO_HOME}/bin"</span>/* &amp;&amp; <span style="color: #98be65;">\</span>
-            rmdir <span style="color: #98be65;">"${CARGO_HOME}/bin"</span> &amp;&amp; <span style="color: #98be65;">\</span>
-            ln -s <span style="color: #98be65;">"${LOCAL_BIN}"</span> <span style="color: #98be65;">"${CARGO_HOME}/bin"</span>
-    <span style="color: #51afef;">fi</span>
-    <span style="color: #d76f10;">export</span> CARGO_HOME
-    <span style="color: #d76f10;">unset</span> LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
-<span style="color: #51afef;">}</span>
+<pre class="src src-sh"><span class="org-function-name">move_cargo</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">CARGO_HOME</span>=<span class="org-string">"${HOME}/.local/share/cargo"</span>
+    <span class="org-variable-name">LOCAL_BIN</span>=<span class="org-string">"${HOME}/.local/bin"</span>
+    <span class="org-variable-name">BAD_CARGO_HOME</span>=<span class="org-string">"${HOME}/.cargo"</span>
+    <span class="org-variable-name">BAD_CARGO_BIN</span>=<span class="org-string">"${HOME}/.cargo/bin"</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -d <span class="org-string">"${BAD_CARGO_HOME}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -L <span class="org-string">"${BAD_CARGO_HOME}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        mv -t <span class="org-string">"${CARGO_HOME}"</span> <span class="org-string">"${BAD_CARGO_HOME}"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> <span class="org-string">"$(readlink -f "${CARGO_HOME}/bin")"</span> = <span class="org-string">"${LOCAL_BIN}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        mv -t <span class="org-string">"${LOCAL_BIN}"</span> <span class="org-string">"${CARGO_HOME}/bin"</span>/* &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+            rmdir <span class="org-string">"${CARGO_HOME}/bin"</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+            ln -s <span class="org-string">"${LOCAL_BIN}"</span> <span class="org-string">"${CARGO_HOME}/bin"</span>
+    <span class="org-keyword">fi</span>
+    <span class="org-builtin">export</span> CARGO_HOME
+    <span class="org-builtin">unset</span> LOCAL_BIN BAD_CARGO_HOME BAD_CARGO_BIN
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
 </pre>
 </div>
@@ -388,40 +389,38 @@ Cargo's binaries should be installed in <code>${XDG_DATA_HOME}/../bin</code> lik
 </div>
 
 
-<div id="outline-container-org43643ab" class="outline-2">
-<h2 id="org43643ab">Undo Set-up</h2>
-<div class="outline-text-2" id="text-org43643ab">
-<div class="warning" id="org204833f">
+<div id="outline-container-org6463b5c" class="outline-2">
+<h2 id="org6463b5c">Undo Set-up</h2>
+<div class="outline-text-2" id="text-org6463b5c">
+<div class="warning" id="orgb902b1c">
 <p>
 Do <b>NOT</b> use <code>sudo</code> during unset.
 </p>
 
 </div>
 
-<div class="note" id="org42c36d7">
+<div class="note" id="orgb8f9ecc">
 <ul class="org-ul">
-<li>The next steps will require a directory containing 'old configuration files'.</li>
+<li>The next steps will require a directory containing &rsquo;old configuration files&rsquo;.</li>
 <li>You HAD BEEN warned against deleting it during the set-up.</li>
 </ul>
 
 </div>
 </div>
 
-<div id="outline-container-org50f2580" class="outline-3">
-<h3 id="org50f2580">Bootstrap unset using script</h3>
-<div class="outline-text-3" id="text-org50f2580">
+<div id="outline-container-org1044795" class="outline-3">
+<h3 id="org1044795">Bootstrap unset using script</h3>
+<div class="outline-text-3" id="text-org1044795">
 <ul class="org-ul">
-<li><p>
-Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.
-</p>
+<li>Unset may be bootstrapped by running the <a href="./setup/unset.sh">unset</a> script.</li>
+</ul>
 
 <div class="org-src-container">
-<pre class="src src-sh">curl -sLf <span style="color: #98be65;">"https://pradyparanjpe.github.io/runcom/setup/unset.sh"</span> | sh
-
+<pre class="src src-sh">curl -sLf <span class="org-string">"https://pradyparanjpe.github.io/runcom/setup/unset.sh"</span> | sh
 </pre>
 </div>
 
-<div class="note" id="org48f78fc">
+<div class="note" id="orgee2b004">
 <p>
 Inspecting scripts before running them is generally a good idea.
 The <i>unset</i> script is tangled (with automation wrappers) from the code below.
@@ -429,79 +428,78 @@ If you feel an urge to inspect it or if it fails,
 follow manual unset instructions with modifications instead.
 </p>
 
-</div></li>
-</ul>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org9beaac0" class="outline-3">
-<h3 id="org9beaac0">Guide to manually undo set-up.</h3>
-<div class="outline-text-3" id="text-org9beaac0">
+<div id="outline-container-org0c08d99" class="outline-3">
+<h3 id="org0c08d99">Guide to manually undo set-up.</h3>
+<div class="outline-text-3" id="text-org0c08d99">
 </div>
-<div id="outline-container-org86c35d4" class="outline-4">
-<h4 id="org86c35d4">UnStow dot-files</h4>
-<div class="outline-text-4" id="text-org86c35d4">
+<div id="outline-container-org2985856" class="outline-4">
+<h4 id="org2985856">UnStow dot-files</h4>
+<div class="outline-text-4" id="text-org2985856">
 <ul class="org-ul">
 <li>Use <code>GNU stow</code> to unstow to un-linked structure for all contents in <code>${HOME}/.runcom/dotfiles</code> from <code>${HOME}</code>.</li>
 </ul>
 </div>
-<div id="outline-container-orge644776" class="outline-5">
-<h5 id="orge644776">UnStow</h5>
-<div class="outline-text-5" id="text-orge644776">
+<ul class="org-ul">
+<li><a id="orgee8f2e2"></a>UnStow<br />
+<div class="outline-text-5" id="text-orgee8f2e2">
 <div class="org-src-container">
-<pre class="src src-sh">stow -vp -t <span style="color: #98be65;">"${HOME}"</span> -d <span style="color: #98be65;">"${HOME}/.runcom"</span> -D dotfiles
-
+<pre class="src src-sh">stow -vp -t <span class="org-string">"${HOME}"</span> -d <span class="org-string">"${HOME}/.runcom"</span> -D dotfiles
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org8b2825f" class="outline-5">
-<h5 id="org8b2825f">Restore directories form <code>${HOME}/OLD_CONFIG</code></h5>
-<div class="outline-text-5" id="text-org8b2825f">
+<li><a id="orga8804ba"></a>Restore directories form <code>${HOME}/OLD_CONFIG</code><br />
+<div class="outline-text-5" id="text-orga8804ba">
 <p>
 Replace the target directory <code>${1:-${HOME}/OLD_CONFIG}</code> in following code block
 with &lt;path/to/old/config/directory&gt;.
 </p>
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #51afef;">for</span> conf_dir<span style="color: #51afef;"> in</span> <span style="color: #98be65;">"${1:-${HOME}/OLD_CONFIG}"</span>/*; <span style="color: #51afef;">do</span>
-    cp -r <span style="color: #98be65;">"${conf_dir}"</span> <span style="color: #98be65;">"${HOME}"</span>/. || <span style="color: #51afef;">break</span>
-<span style="color: #51afef;">done</span>
 
-<span style="color: #3f4f5f; background-color: #0f0f0f;"># </span><span style="color: #3f4f5f; background-color: #0f0f0f;">shellcheck disable=SC2181</span>
-<span style="color: #51afef;">if</span> <span style="color: #51afef;">[</span> $<span style="color: #ffffaf;">?</span> -ne <span style="color: #da8548; font-weight: bold;">0</span> <span style="color: #51afef;">]</span>; <span style="color: #51afef;">then</span>
-    printf <span style="color: #98be65;">"Restoration unsuccessful, copy backup files manually.\n"</span>
-<span style="color: #51afef;">else</span>
-    printf <span style="color: #98be65;">"Restoration successful, backup directory may be deleted.\n"</span>
-<span style="color: #51afef;">fi</span>
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-keyword">for</span> conf_dir<span class="org-keyword"> in</span> <span class="org-string">"${1:-${HOME}/OLD_CONFIG}"</span>/*; <span class="org-keyword">do</span>
+    cp -r <span class="org-string">"${conf_dir}"</span> <span class="org-string">"${HOME}"</span>/. || <span class="org-keyword">break</span>
+<span class="org-keyword">done</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2181</span>
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> $<span class="org-variable-name">?</span> -ne 0 <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+    printf <span class="org-string">"Restoration unsuccessful, copy backup files manually.\n"</span>
+<span class="org-keyword">else</span>
+    printf <span class="org-string">"Restoration successful, backup directory may be deleted.\n"</span>
+<span class="org-keyword">fi</span>
 </pre>
 </div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 
-<div id="outline-container-org9fd11df" class="outline-4">
-<h4 id="org9fd11df">Restore CARGO_HOME</h4>
-<div class="outline-text-4" id="text-org9fd11df">
+<div id="outline-container-orgcff7c7a" class="outline-4">
+<h4 id="orgcff7c7a">Restore CARGO_HOME</h4>
+<div class="outline-text-4" id="text-orgcff7c7a">
 <p>
-move <code>${XDG_DATA_HOME}/cargo</code> to "${HOME}/.cargo"
+move <code>${XDG_DATA_HOME}/cargo</code> to &ldquo;${HOME}/.cargo&rdquo;
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">mv <span style="color: #98be65;">"${XDG_DATA_HOME}/cargo"</span> <span style="color: #98be65;">"${HOME}/.cargo"</span>
+<pre class="src src-sh">mv <span class="org-string">"${XDG_DATA_HOME}/cargo"</span> <span class="org-string">"${HOME}/.cargo"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org35a3f31" class="outline-4">
-<h4 id="org35a3f31">Delete runcom</h4>
-<div class="outline-text-4" id="text-org35a3f31">
+<div id="outline-container-org7542ceb" class="outline-4">
+<h4 id="org7542ceb">Delete runcom</h4>
+<div class="outline-text-4" id="text-org7542ceb">
 <p>
 Goodbye
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">rm -rf <span style="color: #98be65;">"${RUNCOMDIR:-${HOME}/.runcom}"</span> &amp;&amp; printf <span style="color: #98be65;">"Goodbye &#9995;"</span>
+<pre class="src src-sh">rm -rf <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}"</span> &amp;&amp; printf <span class="org-string">"Goodbye &#9995;"</span>
 </pre>
 </div>
 </div>
@@ -509,13 +507,13 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-org15bdc63" class="outline-2">
-<h2 id="org15bdc63">Personalization</h2>
-<div class="outline-text-2" id="text-org15bdc63">
+<div id="outline-container-org0ea3361" class="outline-2">
+<h2 id="org0ea3361">Personalization</h2>
+<div class="outline-text-2" id="text-org0ea3361">
 </div>
-<div id="outline-container-org8927e8b" class="outline-3">
-<h3 id="org8927e8b">Local</h3>
-<div class="outline-text-3" id="text-org8927e8b">
+<div id="outline-container-orgcfbc508" class="outline-3">
+<h3 id="orgcfbc508">Local</h3>
+<div class="outline-text-3" id="text-orgcfbc508">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/local.d/.*rc</code> are sourced.</li>
 <li>Do not synchronize this directory. This directory is only for the machine.</li>
@@ -524,44 +522,40 @@ Goodbye
 </div>
 </div>
 
-<div id="outline-container-org861e7d6" class="outline-3">
-<h3 id="org861e7d6">Synchronized</h3>
-<div class="outline-text-3" id="text-org861e7d6">
+<div id="outline-container-org93bbc42" class="outline-3">
+<h3 id="org93bbc42">Synchronized</h3>
+<div class="outline-text-3" id="text-org93bbc42">
 <ul class="org-ul">
 <li>All files that match the glob <code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.*rc</code> are sourced.</li>
-<li><p>
-Synchronize (stow) that directory using a local repository or by simply copying contents.
-</p>
+<li>Synchronize (stow) that directory using a local repository or by simply copying contents.</li>
+</ul>
 
-<div class="danger" id="org1a2e5a8">
+<div class="danger" id="org092df56">
 <ul class="org-ul">
 <li><b>DO NOT</b> create this directory inside <code>${RUNCOMDIR}:-${HOME}/.runcom}/.config</code>.</li>
 <li><b>DO NOT</b> synchronize this directory using a public repository.</li>
 <li><b>DO NOT</b> store passwords in this directory. For password management, use <a href="https://passwordstore.org">pass</a></li>
 </ul>
 
-</div></li>
-</ul>
+</div>
 
-<div class="tip" id="org765d07a">
+<div class="tip" id="orge94162f">
 <ul class="org-ul">
-<li><p>
-Remember to keep the repository updated.
-</p>
+<li>Remember to keep the repository updated.</li>
+</ul>
 
 <div class="org-src-container">
 <pre class="src src-sh">git pull --recurse-submodules
 </pre>
-</div></li>
-</ul>
-
-</div>
-</div>
 </div>
 
-<div id="outline-container-org5fcc23f" class="outline-3">
-<h3 id="org5fcc23f">Proxy settings</h3>
-<div class="outline-text-3" id="text-org5fcc23f">
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb63e79" class="outline-3">
+<h3 id="orgdb63e79">Proxy settings</h3>
+<div class="outline-text-3" id="text-orgdb63e79">
 <p>
 Read set up for <a href="./proxy_send.html">proxy_send</a>.
 </p>
