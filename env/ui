@@ -45,7 +45,16 @@ done
 # exports common to both wayland and X11
 _rc_common_exports() {
     if [ -z "$XDG_RUNTIME_DIR" ]; then
-        XDG_RUNTIME_DIR="/run/user/$(id -u)"
+        case "$(uname -s)" in
+            L|linux)
+                XDG_RUNTIME_DIR="/run/user/$(id -u)"
+                ;;
+            D|darwin)
+                # MacOS doesn't allow creation of a /run directory
+                XDG_RUNTIME_DIR="/tmp/run/user/$(id -u)"
+                mkdir -p "${XDG_RUNTIME_DIR}"
+                ;;
+        esac
     fi
     QT_PLUGIN_PATH="/usr/lib/kde4/plugins/"
     QT_AUTO_SCREEN_SCALE_FACTOR=0
