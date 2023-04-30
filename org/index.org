@@ -4,6 +4,19 @@
 #+PROPERTY: header-args :mkdirp t :results no :eval no
 #+auto_tangle: t
 
+* ARCHIVED
+*THIS CONFIGURATION HAS BEEN RETIRED AND ARCHIVED.*
+
+The repository was migrated to [[https://pradyparanjpe:gitlab.io][gitlab]].
+However, the gitlab repository has code-changes that break this configuration.
+It extensively uses =fuse-overlayfs=, for management of global, private and local work-trees.
+
+To begin with, it separates
+- login: =.bash_login=, =.zlogin=
+- profile: =(\.d/.*)?=: =.bash_profile=, =.zprofile=
+- shrc: =.bashrc=, =.zshrc=
+- config: =${XDG_CONFIG_HOME}/.*=
+
 * Prady_runcom
 ** What's this?
 - A compilation of dot-files: default variables, custom functions, aliases.
