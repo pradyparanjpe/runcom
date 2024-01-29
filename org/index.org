@@ -1513,7 +1513,7 @@ Reuse ssh agent for all logins
 * Window Manager settings
 ** Terminal
 #+BEGIN_SRC sh :tangle ../env/ui
-  for term in alacritty foot termite tilix urxvt xterm; do
+  for term in kitty alacritty foot termite tilix urxvt xterm; do
       if [ -n "$(command -v $term)" ]; then
           defterm="$term";
           export defterm

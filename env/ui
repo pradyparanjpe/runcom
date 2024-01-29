@@ -34,7 +34,7 @@ SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 export SSH_AUTH_SOCK
 ssh-add -l > /dev/null || ssh-add
 
-for term in alacritty foot termite tilix urxvt xterm; do
+for term in kitty alacritty foot termite tilix urxvt xterm; do
     if [ -n "$(command -v $term)" ]; then
         defterm="$term";
         export defterm
