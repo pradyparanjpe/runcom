@@ -507,7 +507,7 @@ Commands that are listed (<space> separated) in the environment variable
   _rc_alternative df lfs
   _rc_alternative du "dust" "du -hc"
   _rc_alternative grep "rg --color=auto" "ag" "pt" "ack"
-  _rc_alternative ls "exa -Fh --color=auto"
+  _rc_alternative ls "eza -F -h --color=auto"
   _rc_alternative vim nvim
   _rc_alternative ex nvim
   _rc_alternative docker podman
@@ -1313,8 +1313,8 @@ Code is tangled in gui.org
           betcat="$(which cat)"
       fi
 
-      if builtin command -v exa >/dev/null 2>&1; then
-          betls="$(which exa)"
+      if builtin command -v eza >/dev/null 2>&1; then
+          betls="$(which eza)"
       else
           betls="$(which ls)"
       fi

@@ -67,7 +67,7 @@ _rc_alternative diff delta difft
 _rc_alternative df lfs
 _rc_alternative du "dust" "du -hc"
 _rc_alternative grep "rg --color=auto" "ag" "pt" "ack"
-_rc_alternative ls "exa -Fh --color=auto"
+_rc_alternative ls "eza -F -h --color=auto"
 _rc_alternative vim nvim
 _rc_alternative ex nvim
 _rc_alternative docker podman
@@ -568,8 +568,8 @@ lszcat () {
         betcat="$(which cat)"
     fi
 
-    if builtin command -v exa >/dev/null 2>&1; then
-        betls="$(which exa)"
+    if builtin command -v eza >/dev/null 2>&1; then
+        betls="$(which eza)"
     else
         betls="$(which ls)"
     fi
