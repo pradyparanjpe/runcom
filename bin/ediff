@@ -1,0 +1,186 @@
+#!/usr/bin/env sh
+# -*- coding:utf-8; mode:shell-script -*-
+#
+# Copyright (c) 2024 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+
+set_vars () {
+    # binary to Emacsclient
+    _EMACSCLIENT="$(which emacsclient)"
+    _LOCAL=
+    _REMOTE=
+    _MERGED=
+    _BASE=
+    _EDIFF=
+    _EVAL=
+
+    if [ "${TERM}" = "linux" ]; then
+        unset DISPLAY
+        _EMACSCLIENTOPTS="-t"
+    else
+        _EMACSCLIENTOPTS="-c"
+    fi
+
+    usage="
+    usage: ${0} -h
+    usage: ${0} --help
+    usage: ${0} [--] LOCAL REMOTE [MERGED BASE]
+    "
+
+    help_msg="${usage}
+
+    DESCRIPTION:
+        Wrapper script to use ediff as git-merge / git-diff tool.
+        The arguments LOCAL, REMOTE, MERGED, BASE
+        can be provided by 'git mergetool'.
+
+    Optional arguments:
+        -h\tprint usage message and exit
+        --help\tprint this help message and exit
+
+    Positional arguments:
+        LOCAL\tcheck 'man git-mergetool'
+        REMOTE\tcheck 'man git-mergetool'
+
+    Optional Positional arguments:
+        MERGED\tcheck 'man git-mergetool'
+        BASE\tcheck 'man git-mergetool'
+    "
+    local_vars="_EMACSCLIENT _EMACSCLIENTOPTS _LOCAL _REMOTE \
+        _MERGED _BASE _EDIFF _EVAL usage help_msg unset_vars"
+}
+
+
+# Unsetset local variables to clean the environment.
+unset_vars() {
+    for _lv in $local_vars; do
+        unset "${_lv}"
+    done
+}
+
+
+# Clean environment and exit optionally with an exit error code
+clean_exit() {
+    unset_vars
+    if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
+        if [ -n "${2}" ]; then
+            # shellcheck disable=SC2059
+            printf "${2}\n" >&2
+        fi
+        # shellcheck disable=SC2086
+        exit ${1}
+    fi
+    if [ -n "${2}" ]; then
+        # shellcheck disable=SC2059
+        printf "${2}\n"
+    fi
+    exit 0
+}
+
+# Parse positional arguments
+# Positional args may be $1 $2 $3 $4 as
+# LOCAL REMOTE [MERGED BASE]
+parse_pos_args () {
+    _LOCAL="${1}"
+    _REMOTE="${2}"
+    if [ "${3}" ] ; then
+        _MERGED="${3}"
+    else
+        _MERGED="${_REMOTE}"
+    fi
+    if [ "${4}" ] && [ -r "${4}" ] ; then
+        _BASE="${4}"
+        _EDIFF=ediff-merge-files-with-ancestor
+        _EVAL="${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\" \"${_BASE}\" nil \
+            \"${_MERGED}\""
+    elif [ "${_REMOTE}" = "${_MERGED}" ] ; then
+        _EDIFF=ediff
+        _EVAL="${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\""
+    else
+        _EDIFF=ediff-merge-files
+        _EVAL="${_EDIFF} \"${_LOCAL}\" \"${_REMOTE}\" nil \"${_MERGED}\""
+    fi
+}
+
+
+# Parse command line arguments
+cli () {
+    _POSARGS=
+    while [ $# -gt 0 ]; do
+        case "${1}" in
+            -h)
+                # shellcheck disable=SC2059
+                clean_exit 0 "${usage}"
+                ;;
+            --help)
+                # shellcheck disable=SC2059
+                clean_exit 0 "${help_msg}"
+                ;;
+            --)
+                shift 1
+                if [ -n "${_POSARGS}" ]; then
+                    _POSARGS="${_POSARGS} $*"
+                else
+                    _POSARGS="$*"
+                fi
+                break
+                ;;
+            *)
+                if [ -n "${_POSARGS}" ]; then
+                    _POSARGS="${_POSARGS} ${1}"
+                else
+                    _POSARGS="${1}"
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    if [ -z "${_POSARGS}" ]; then
+        clean_exit 1 "${usage}"
+    fi
+
+    # shellcheck disable=SC2086
+    parse_pos_args ${_POSARGS}
+}
+
+# run emacsclient
+run_client () {
+    ${_EMACSCLIENT} ${_EMACSCLIENTOPTS} -a '' -e "(${_EVAL})" 2>&1
+
+    # check modified file
+    _an="$(grep -Ec '^(<<<<<<<|=======|>>>>>>>|####### Ancestor)'
+        "${_MERGED}")"
+    if [ ! "${_an}" = 0 ]; then
+        _MERGEDSAVE="$(mktemp --tmpdir "$(basename "${_MERGED}")".XXXXXXXXXX)"
+        cp "${_MERGED}" "${_MERGEDSAVE}"
+        clean_exit 1 "Conflict markers detected in ${_MERGED}.
+            Saved changes to ${_MERGEDSAVE}"
+    fi
+    unset _MERGEDSAVE _an
+}
+
+
+main () {
+    set_vars
+    cli "$@"
+    run_client
+    clean_exit
+}
+
+
+main "$@"
