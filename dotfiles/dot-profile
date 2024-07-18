@@ -1,0 +1,119 @@
+# shellcheck shell=sh
+# -*- coding: utf-8; mode: shell-script; -*-
+#
+# Copyright © 2020-2024 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+#
+#===================================================================
+#  ___             _      ___                     _
+# | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+# |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+# |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+#                    |__/                      |__/|_|
+#===================================================================
+
+XDG_CACHE_HOME="${HOME}/.cache"
+XDG_CONFIG_HOME="${HOME}/.config"
+XDG_DATA_HOME="${HOME}/.local/share"
+XDG_STATE_HOME="${HOME}/.local/state"
+RUNCOMDIR="${RUNCOMDIR:-${HOME}/.runcom}"
+
+export XDG_CACHE_HOME
+export XDG_CONFIG_HOME
+export XDG_DATA_HOME
+export XDG_STATE_HOME
+export RUNCOMDIR
+
+# shellcheck source="bin"
+if [ -d "${HOME}/bin" ] ; then
+    if [ "${PATH#*"${HOME}"/bin}" = "${PATH}" ]; then
+        PATH="${HOME}/bin:${PATH:+$PATH}"
+    fi
+fi
+
+# shellcheck source=".local/bin"
+if [ -d "${HOME}/.local/bin" ] ; then
+    if [ "${PATH#*"${HOME}"/.local/bin}" = "${PATH}" ]; then
+        PATH="${HOME}/.local/bin:${PATH:+$PATH}"
+    fi
+fi
+export PATH
+
+for avail in nvim vim vi nano; do
+    if builtin command -v "${avail}" >/dev/null 2>&1; then
+        VISUAL="${avail}"
+        export VISUAL
+        break
+    fi
+done
+
+case "$VISUAL" in
+    vim)
+        # shellcheck disable=SC2089
+        export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+        ;;
+    nvim)
+        # shellcheck disable=SC2089,SC2090
+        export MANPAGER="nvim -c ':Man!' -"
+        ;;
+    *)
+        if builtin command -v bat >/dev/null 2>&1; then
+            # shellcheck disable=SC2090
+            export MANPAGER='bat -l man -p'
+        fi
+        ;;
+esac
+export MANPAGER
+
+LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+export LD_LIBRARY_PATH
+
+CARGO_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
+GOPATH="${XDG_DATA_HOME:-${HOME}/.local/share}/go"
+export CARGO_HOME GOPATH
+for lang in cargo go; do
+    ln -sn "${HOME}/.local/bin" \
+       "${XDG_DATA_HOME:-${HOME}/.local/share}/${lang}/bin" 2>/dev/null
+done
+
+NO_AT_BRIDGE=1
+export NO_AT_BRIDGE
+
+# Source all files in $1.d directory
+# $1 is the complete base file path such as ~/.profile to source ~/.profile.d/*
+_rc_drop_in () {
+    if [ -d "${1}.d/" ]; then
+        if ls -A1q "${1}.d" | grep -q .; then
+            for drop_in in "${1}.d"/*; do
+                if [ -r "${drop_in}" ]; then
+                    . "${drop_in}"
+                fi
+            done
+        fi
+    fi
+}
+
+_rc_drop_in "${HOME}/.profile"
+
+for drop_in in profile shrc login logout; do
+    mkdir -p "${HOME}/.${drop_in}.d/"
+done
+
+stow --no-folding --dotfiles --restow \
+     -t "${HOME}" \
+     -d "${RUNCOMDIR}" \
+     dotfiles

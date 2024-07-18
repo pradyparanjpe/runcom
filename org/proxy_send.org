@@ -4,102 +4,95 @@
 #+PROPERTY: header-args :tangle ../bin/proxy_send.sh :mkdirp t :results no :eval no
 
 * Description
-  - This script is automatically called by prady_runcom's profile scripts when network is inferred as /office/.
-  - We try to open [[https://www.duckduckgo.com/][duckduckgo]] and send proxy authentication secret.
-  - The proxy server generally 'remembers' that our machine was authenticated and
-    does not demand proxy authentication again.
+- This script is automatically called by prady_runcom's profile scripts when network is inferred as /office/.
+- We try to open [[https://www.gnu.org/][Gnu]] and send proxy authentication secret.
+- The proxy server generally 'remembers' that our machine was authenticated and does not demand proxy authentication again.
 
 * Setup
-  Proxy secret may be provided through any of the tools explained in following sections.
-
-  #+begin_note
-  - If information is available at both locations, it is loaded in order.
-  - Information available from the latter supersedes the former.
-
-  #+end_note
+Proxy secret may be provided through any of the tools explained in following sections.
+#+begin_note
+- If information is available at both locations, it is loaded in order.
+- Information available from the latter supersedes the former.
+#+end_note
 
 ** Password store
-   - [[https://www.passwordstore.org][Password manager]] may hold the proxy-secret.
-   - Pass-name to the secret *MUST* be stored in an environment variable =${proxy_auth}=.
-   - Secret MUST *NOT* be url-encoded.
+- [[https://www.passwordstore.org][Password manager]] may hold the proxy-secret.
+- Pass-name to the secret *MUST* be stored in an environment variable =${proxy_auth}=.
+- Secret MUST *NOT* be url-encoded.
+- /pass-name/ can be declared by adding following lines to =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
+#+begin_seealso
+- [[file:setup.org::*Personalization][Personalization]]
+#+end_seealso
 
-     - /pass-name/ can be declared by adding following lines to
-       =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
-       #+begin_seealso
-       - [[file:setup.org::*Personalization][Personalization]]
-       #+end_seealso
+#+BEGIN_SRC sh :tangle no
+  proxy_auth="office/proxy_server.example.com/best_employee"
+  export proxy_auth
+#+END_SRC
 
-       #+BEGIN_SRC sh :tangle no
-         proxy_auth="office/proxy_server.example.com/best_employee"
-         export proxy_auth
-       #+END_SRC
-
-   - Secret *MUST* be stored in either of following formats.
+- Secret *MUST* be stored in either of following formats.
 
 **** plain password
      Password store stores just the <password>.
      <password> may be stored in password manager using a command such as:
-     #+BEGIN_SRC sh :tangle no
-       pass insert office/proxy_server.example.com/best_employee
-     #+END_SRC
+#+BEGIN_SRC sh :tangle no
+  pass insert office/proxy_server.example.com/best_employee
+#+END_SRC
 
 **** multi-field
      Information about /any/ or /all/ of following fields may be provided.
      - Order is not strict.
 
-     #+begin_src yml :tangle no
-       protocol: <proxy protocol>
-       username: <username in plain text>
-       password: <password in plain text>
-       address: <proxy server address>
-       port: <proxy port>
-
-     #+end_src
+#+begin_src yml :tangle no
+  protocol: <proxy protocol>
+  username: <username in plain text>
+  password: <password in plain text>
+  address: <proxy server address>
+  port: <proxy port>
+#+end_src
 
      Fields may be stored in password manager using a command such as:
-     #+BEGIN_SRC sh :tangle no
-       pass insert -m office/proxy_server.example.com/best_employee
-     #+END_SRC
+#+BEGIN_SRC sh :tangle no
+  pass insert -m office/proxy_server.example.com/best_employee
+#+END_SRC
 
 ** Environment declaration
-   - A =${proxy_protocol}= environment variable *may* be declared.
-     It can be declared by adding following lines to
-     =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
+- A =${proxy_protocol}= environment variable *may* be declared.
+  It can be declared by adding following lines to
+  =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=
 
-     #+BEGIN_SRC sh :tangle no
-       proxy_protocol="http"
-       export proxy_protocol
+#+BEGIN_SRC sh :tangle no
+  proxy_protocol="http"
+  export proxy_protocol
+#+END_SRC
 
-     #+END_SRC
+  - Proxy information extraction attempt is made from =${proxy_protocol}_proxy= environment variable
+    - e.g. =http_proxy=, =socks_proxy=, etc.
+  - If =proxy_protocol= remains unset, extraction is attempted from =all_proxy= and /http/ is used as default.
 
-     - Proxy information extraction attempt is made from =${proxy_protocol}_proxy= environment variable
-       - e.g. =http_proxy=, =socks_proxy=, etc.
-     - If =proxy_protocol= remains unset, extraction is attempted from =all_proxy= and /http/ is used as default.
+- =${<proxy_protocol>_proxy}= should be declared in
+  =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=.
+  - Special characters (symbols) in username and password *MUST* be [[https://en.wikipedia.org/wiki/Percent-encoding][url-encoded]].
+  - Its value must be of the form:
+#+begin_example
+<p_type>_proxy="<protocol>://[<encoded_username>[:<encoded_password>]]@<address>[:<port>]/"
+#+end_example
 
-   - =${<proxy_protocol>_proxy}= should be declared in
-     =${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.<some_name>rc=.
-     - Special characters (symbols) in username and password *MUST* be [[https://en.wikipedia.org/wiki/Percent-encoding][url-encoded]].
-     - Its value must be of the form:
-       #+begin_example
-         <p_type>_proxy="<protocol>://[<encoded_username>[:<encoded_password>]]@<address>[:<port>]/"
-       #+end_example
+  - example for =all_proxy=
+#+BEGIN_SRC sh :tangle no
+  all_proxy="http://best_employee:secure%21secret@192.168.1.1:1080/"
+  export all_proxy
+#+END_SRC
 
-     - example for =all_proxy=
-     #+BEGIN_SRC sh :tangle no
-       all_proxy="http://best_employee:secure%21secret@192.168.1.1:1080/"
-       export all_proxy
-     #+END_SRC
-
-     #+begin_danger
-     Storing password in environment is strongly *discouraged*.
-     #+end_danger
+#+begin_danger
+Storing password in environment is strongly *discouraged*.
+#+end_danger
 
 * Code
 This section tangles the code (POSIX)
 #+begin_src sh :exports none :shebang #!/usr/bin/env sh
   # -*- coding:utf-8; mode:shell-script -*-
   #
-  # Copyright (c) 2020-2023 Pradyumna Paranjape
+  # Copyright (c) 2020-2024 Pradyumna Paranjape
   #
   # This file is part of Prady_runcom.
   #
@@ -118,253 +111,252 @@ This section tangles the code (POSIX)
 #+end_src
 
 ** Check availability
-   #+begin_src sh
-     # Confirm that dependencies are available.
-     affirm_availability () {
-         for _import in curl printenv grep tr; do
-             if ! command -v "${_import}" >/dev/null 2>&1; then
-                 unset _import
-                 clean_exit 127 "${_import} is not installed\n"
-             fi
-         done
-         unset _import
-     }
-
-   #+end_src
+#+begin_src sh
+  # Confirm that dependencies are available.
+  affirm_availability () {
+      for _import in curl printenv grep tr; do
+          if ! command -v "${_import}" >/dev/null 2>&1; then
+              unset _import
+              clean_exit 127 "${_import} is not installed\n"
+          fi
+      done
+      unset _import
+  }
+#+end_src
 
 ** Handle global variables and exits
-   #+begin_src sh
-     # Set clean variables before running script.
-     set_vars () {
-         # show the sent heder?
-         show=false
+#+begin_src sh
+  # Set clean variables before running script.
+  set_vars () {
+      # show the sent heder?
+      show=false
 
-         # Compiled proxy header
-         proxy_header=
-         if [ -z "${proxy_protocol}" ]; then
-             proxy_protocol='all'
-         fi
-         proxy_username=
-         proxy_password=
-         proxy_host=
-         proxy_port=
+      # Compiled proxy header
+      proxy_header=
+      if [ -z "${proxy_protocol}" ]; then
+          proxy_protocol='all'
+      fi
+      proxy_username=
+      proxy_password=
+      proxy_host=
+      proxy_port=
 
-         # help (usage)
-         usage="
-         usage: ${0} -h
-         usage: ${0} --help
-         usage: ${0} [Optional Arguments*] INSTANCE
-     "
+      # help (usage)
+      usage="
+      usage: ${0} -h
+      usage: ${0} --help
+      usage: ${0} [Optional Arguments*] INSTANCE
+  "
 
-         # help (details)
-         help_msg="${usage}
+      # help (details)
+      help_msg="${usage}
 
-         DESCRIPTION: |
-           Auto-send proxy authentication
-
-
-         Optional Arguments: |
-           -h\t\t\tprint usage message and exit
-           --help\t\t\tprint this help message and exit
-           -s|--show\tdisplay what will be sent as header, don't send
-
-     "
-     }
-
-     # Unsetset local variables to clean the environment.
-     unset_vars() {
-         unset help_msg
-         unset usage
-         unset show
-         unset proxy_port
-         unset proxy_host
-         unset proxy_password
-         unset proxy_username
-         unset pass_keys
-         unset proxy_header
-     }
+      DESCRIPTION: |
+        Auto-send proxy authentication
 
 
-     # Clean environment and exit optionally with an exit error code
-     clean_exit() {
-         unset_vars
-         if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
-             if [ -n "${2}" ]; then
-                 # shellcheck disable=SC2059
-                 printf "${2}\n" >&2
-             fi
-             # shellcheck disable=SC2086
-             exit ${1}
-         fi
-         if [ -n "${2}" ]; then
-             # shellcheck disable=SC2059
-             printf "${2}\n"
-         fi
-         exit 0
-     }
-   #+end_src
+      Optional Arguments: |
+        -h\t\t\tprint usage message and exit
+        --help\t\t\tprint this help message and exit
+        -s|--show\tdisplay what will be sent as header, don't send
+
+  "
+  }
+
+  # Unsetset local variables to clean the environment.
+  unset_vars() {
+      unset help_msg
+      unset usage
+      unset show
+      unset proxy_port
+      unset proxy_host
+      unset proxy_password
+      unset proxy_username
+      unset pass_keys
+      unset proxy_header
+  }
+
+
+  # Clean environment and exit optionally with an exit error code
+  clean_exit() {
+      unset_vars
+      if [ -n "${1}" ] && [ "${1}" -ne "0" ]; then
+          if [ -n "${2}" ]; then
+              # shellcheck disable=SC2059
+              printf "${2}\n" >&2
+          fi
+          # shellcheck disable=SC2086
+          exit ${1}
+      fi
+      if [ -n "${2}" ]; then
+          # shellcheck disable=SC2059
+          printf "${2}\n"
+      fi
+      exit 0
+  }
+#+end_src
 
 ** Parse command
-   #+begin_src sh
-     # Parse command line arguments
-     cli () {
-         while [ $# -gt 0 ]; do
-             case "${1}" in
-                 -h)
-                     # shellcheck disable=SC2059
-                     clean_exit 0 "${usage}"
-                     ;;
-                 --help)
-                     # shellcheck disable=SC2059
-                     clean_exit 0 "${help_msg}"
-                     ;;
-                 -s|--show)
-                     show=true
-                     shift
-                     ;;
-                 ,*)
-                     clean_exit 1 "${usage}"
-             esac
-         done
-     }
-   #+end_src
+#+begin_src sh
+  # Parse command line arguments
+  cli () {
+      while [ $# -gt 0 ]; do
+          case "${1}" in
+              -h)
+                  # shellcheck disable=SC2059
+                  clean_exit 0 "${usage}"
+                  ;;
+              --help)
+                  # shellcheck disable=SC2059
+                  clean_exit 0 "${help_msg}"
+                  ;;
+              -s|--show)
+                  show=true
+                  shift
+                  ;;
+              ,*)
+                  clean_exit 1 "${usage}"
+          esac
+      done
+  }
+#+end_src
 
 ** Extract proxy information from environment variable
-   #+begin_src sh
-     # extract from env variable
-     extract_env () {
-         url="${1}"
-         # keep consuming URL like $@ is consumed from command line
-         _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
-         url="${url#"${_proto}"://}"  # - protocol
-         userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
-         _user="${userpass%:*}"
-         _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
-         url="$(printf "%s" "${url##"${userpass}"@}" | cut -d/ -f1)"  # - credentials
-         _host="${url%:*}"
-         _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
-         if [ -n "${_proto}" ]; then
-             proxy_protocol="${_proto}"
-         fi
+#+begin_src sh
+  # extract from env variable
+  extract_env () {
+      url="${1}"
+      # keep consuming URL like $@ is consumed from command line
+      _proto="$(printf "%s" "${url}" | grep :// | sed -e 's,^\(.*\)://.*,\1,g')"
+      url="${url#"${_proto}"://}"  # - protocol
+      userpass="$(printf "%s" "${url}" | grep @ | cut -d@ -f1)"
+      _user="${userpass%:*}"
+      _pass="$(printf "%s" "${userpass}" | grep : | sed -e 's,^.*\?:\(.*\),\1,g')"
+      url="$(printf "%s" "${url##"${userpass}"@}" | cut -d/ -f1)"  # - credentials
+      _host="${url%:*}"
+      _port="$(printf "%s" "${url}" | \grep '[0-9]' | sed -e 's,^.*:\([0-9]\+\)$,\1,')"
+      if [ -n "${_proto}" ]; then
+          proxy_protocol="${_proto}"
+      fi
 
-         if [ -n "${_user}" ]; then
-             proxy_username="${_user}"
-         fi
+      if [ -n "${_user}" ]; then
+          proxy_username="${_user}"
+      fi
 
-         if [ -n "${_pass}" ]; then
-             proxy_password="${_pass}"
-         fi
+      if [ -n "${_pass}" ]; then
+          proxy_password="${_pass}"
+      fi
 
-         if [ -n "${_host}" ]; then
-             proxy_host="${_host}"
-         fi
+      if [ -n "${_host}" ]; then
+          proxy_host="${_host}"
+      fi
 
-         if [ -n "${_port}" ]; then
-             proxy_port="${_port}"
-         fi
+      if [ -n "${_port}" ]; then
+          proxy_port="${_port}"
+      fi
 
-          unset _port _host _pass _user _proto userpass url
-     }
+       unset _port _host _pass _user _proto userpass url
+  }
 
-     # Retrieve from env
-     get_env_proxy () {
-         # Parse environment variable.
-         proxy_str="$(printenv "${proxy_protocol}_proxy")"
-         if [ -z "${proxy_str}" ]; then
-             return
-         fi
-         extract_env "${proxy_str}"
-         unset proxy_str
-     }
-   #+end_src
+  # Retrieve from env
+  get_env_proxy () {
+      # Parse environment variable.
+      proxy_str="$(printenv "${proxy_protocol}_proxy")"
+      if [ -z "${proxy_str}" ]; then
+          return
+      fi
+      extract_env "${proxy_str}"
+      unset proxy_str
+  }
+#+end_src
 
 ** Compile proxy information
-   #+begin_src sh
-     # build proxy
-     build () {
-         all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
-         extract_env "${all_proxy}"
-         get_env_proxy
-     }
+#+begin_src sh
+  # build proxy
+  build () {
+      all_proxy="$("${RUNCOMDIR}"/bin/proxy_extract.sh)"
+      extract_env "${all_proxy}"
+      get_env_proxy
+  }
 
-     # Compile proxy header
-     compile_proxy () {
-         if [ -z "${proxy_host}" ]; then
-             return
-         fi
-         if [ -n "${proxy_protocol}" ]; then
-             if [ "${proxy_protocol}" = "all" ]; then
-                 proxy_header="http://"
-             else
-                 proxy_header="${proxy_protocol}://"
-             fi
-         fi
-         if [ -n "${proxy_username}" ]; then
-             scrt="${proxy_username}"
-             if [ -n "${proxy_password}" ]; then
-                 scrt="${proxy_username}:${proxy_password}"
-             fi
-             proxy_header="${proxy_header}${scrt}@"
-         fi
-         proxy_header="${proxy_header}${proxy_host}"
-         if [ -n "${proxy_port}" ]; then
-             proxy_header="${proxy_header}:${proxy_port}"
-         fi
-         proxy_header="${proxy_header}/"
-         unset scrt
-     }
-   #+end_src
+  # Compile proxy header
+  compile_proxy () {
+      if [ -z "${proxy_host}" ]; then
+          return
+      fi
+      if [ -n "${proxy_protocol}" ]; then
+          if [ "${proxy_protocol}" = "all" ]; then
+              proxy_header="http://"
+          else
+              proxy_header="${proxy_protocol}://"
+          fi
+      fi
+      if [ -n "${proxy_username}" ]; then
+          scrt="${proxy_username}"
+          if [ -n "${proxy_password}" ]; then
+              scrt="${proxy_username}:${proxy_password}"
+          fi
+          proxy_header="${proxy_header}${scrt}@"
+      fi
+      proxy_header="${proxy_header}${proxy_host}"
+      if [ -n "${proxy_port}" ]; then
+          proxy_header="${proxy_header}:${proxy_port}"
+      fi
+      proxy_header="${proxy_header}/"
+      unset scrt
+  }
+#+end_src
 
 ** Html handling
-   #+begin_src sh
-     # Convert plain-text value into html quoted form.
-     quote () {
-         printf "%s" "$1" \
-             | tr -d '\n' \
-             | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
-             | cut -c 3-
-     }
+#+begin_src sh
+  # Convert plain-text value into html quoted form.
+  quote () {
+      printf "%s" "$1" \
+          | tr -d '\n' \
+          | curl -Gso /dev/null -w "%{url_effective}" --data-urlencode @- "" \
+          | cut -c 3-
+  }
 
-     # Send a request to duckduckgo.com
-     send_request () {
-         curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
-         case $? in
-             0)
-                 clean_exit
-                 ;;
-             6)
-                 # Couldn't resolve
-                 clean_exit 6
-                 ;;
-             7)
-                 # No route to proxy_host
-                 clean_exit
-                 ;;
-             ,*)
-                 # other error
-                 clean_exit "$?"
-                 ;;
-         esac
-     }
+  # Send a request to duckduckgo.com
+  send_request () {
+      curl -sLf -x "${proxy_header}" "https://www.duckduckgo.com/" >/dev/null 2>&1
+      case $? in
+          0)
+              clean_exit
+              ;;
+          6)
+              # Couldn't resolve
+              clean_exit 6
+              ;;
+          7)
+              # No route to proxy_host
+              clean_exit
+              ;;
+          ,*)
+              # other error
+              clean_exit "$?"
+              ;;
+      esac
+  }
 
-   #+end_src
+#+end_src
 
 ** Main routine call
-   #+begin_src sh
-     # Main routine call
-     main() {
-         affirm_availability
-         set_vars
-         cli "$@"
-         build
-         compile_proxy
-         if $show; then
-             printf "auth: '%s'\n" "${proxy_header}"
-             clean_exit
-         fi
-         send_request
-         clean_exit
-     }
+#+begin_src sh
+  # Main routine call
+  main() {
+      affirm_availability
+      set_vars
+      cli "$@"
+      build
+      compile_proxy
+      if $show; then
+          printf "auth: '%s'\n" "${proxy_header}"
+          clean_exit
+      fi
+      send_request
+      clean_exit
+  }
 
-     main "$@"
-   #+end_src
+  main "$@"
+#+end_src

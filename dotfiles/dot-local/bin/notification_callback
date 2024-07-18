@@ -1,0 +1,150 @@
+#!/usr/bin/env sh
+# -*- coding:utf-8; mode:shell-script; -*-
+#
+# Copyright © 2020-2024 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+#
+#===================================================================
+#  ___             _      ___                     _
+# | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+# |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+# |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+#                    |__/                      |__/|_|
+#===================================================================
+#
+# We intend to have this POSIX compliant
+
+
+# set variables
+set_vars () {
+    # Command to copy (clipboard) xcopy / wl-clipboard
+    copy_cmd=
+
+    case "${XDG_SESSION_TYPE}" in
+        wayland)
+            copy_cmd="$(which "wl-copy")"
+            ;;
+        x|X11)
+            copy_cmd="$(which "xcopy")"
+            ;;
+    esac
+
+    # pushed the notification
+    appname=
+
+    # notification summary (converted to lower case)
+    summary=
+
+    # additional notification text (converted to lower case)
+    body=
+
+    # icon displayed with notification
+    icon=
+
+    # notification urgency choice={low,normal,critical}
+    urgency=
+
+    # extracted OTP (numeric 3 to 9 digits)
+    otp=
+}
+
+
+# We are good citizens who clean up their mess
+clean_exit () {
+    unset copy_cmd appname summary body icon urgency otp
+}
+
+
+# Parse dunst inputs to extract variable vaues
+#
+# Args:
+#     $1: appname, app that pushed notification
+#     $2: summary, notification summary (default text)
+#     $3: body,    notification body (additional text)
+#     $4: icon,    icon to display with notification
+#     $5: urgency, low, normal, critical
+parse_dunst () {
+    # shellcheck disable=SC2034
+    appname="${1}"
+    summary="$(echo "$2" | tr "[:upper:]" "[:lower:]")"
+    body="$(echo "$3" | tr "[:upper:]" "[:lower:]")"
+    # shellcheck disable=SC2034
+    icon="$4"
+    urgency="$(echo "$5" | tr "[:upper:]" "[:lower:]")"
+}
+
+
+# Send audio notification alert conditionally
+play_audio_alert () {
+    case "${urgency}" in
+        critical)
+            paplay "/usr/share/sounds/freedesktop/stereo/suspend-error.oga"
+            espeak "${summary}"
+            ;;
+        normal)
+            paplay "/usr/share/sounds/freedesktop/stereo/message.oga"
+            ;;
+    esac
+}
+
+
+# Pick OTP from string
+#
+# This assumes that the caller function has checked existance of copy_cmd
+# May fail if the keyword 'OTP' twice or more
+#
+# Args:
+#     $1: string to scan
+pick_OTP () {
+    # "OTP ... is ..." in body
+    predicate="${1#*otp}"
+    otp="$(echo "${predicate#*is}" | grep -E -o '[0-9]{3,9}' | head -1)"
+    if [ -z "${otp}" ]; then
+        # "... is the OTP for"
+        subject="${1%otp*}"
+        otp="$(echo "${subject%is*}" | grep -E -o '[0-9]{3,9}' | head -1)"
+    fi
+    if [ -n "${otp}" ]; then
+        echo "${otp}" | ${copy_cmd}
+    fi
+    unset subject predicate
+}
+
+
+# If summary or body contains keyword 'OTP', try to copy it
+copy_OTP () {
+    if [ -n "${copy_cmd}" ]; then
+        if [ ! "${summary%otp*}" = "${summary}" ]; then
+            pick_OTP "${summary}"
+        elif [ ! "${body%otp*}" = "${body}" ]; then
+            pick_OTP "${body}"
+        fi
+    fi
+}
+
+
+# main call
+main () {
+    set_vars
+    parse_dunst "$@"
+    play_audio_alert
+    copy_OTP
+    clean_exit
+}
+
+
+main "$@"

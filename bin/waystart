@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # -*- coding:utf-8; mode:shell-script -*-
 #
-# Copyright (c) 2020-2023 Pradyumna Paranjape
+# Copyright (c) 2020-2024 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #
@@ -20,9 +20,6 @@
 
 # Set clean variables before running script.
 set_vars() {
-    unset DBUS_SESSION_BUS_ADDRESS
-    unset SESSION_MANAGER
-    # Hopefully, following X11's rc
     client=
     userclientrc="${HOME}/.wayinitrc"
     sysclientrc="/etc/wayland/wayinit/wayinitrc"
@@ -105,6 +102,30 @@ parse_initrc () {
     unset file_is_exec
 }
 
+dbus_load_env () {
+    if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && [ -n "$XDG_RUNTIME_DIR" ] && \
+           [ "$XDG_RUNTIME_DIR" = "/run/user/$(id -u)" ] && \
+           [ -S "$XDG_RUNTIME_DIR/bus" ]; then
+        # We are under systemd-logind or something remarkably similar, and
+        # a user-session socket has already been set up.
+        #
+        # Be nice to non-libdbus, non-sd-bus implementations by using
+        # that as the session bus address in the environment. The check for
+        # XDG_RUNTIME_DIR = "/run/user/`id -u`" is because we know that
+        # form of the address, from systemd-logind, doesn't need escaping,
+        # whereas arbitrary addresses might.
+        DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+        export DBUS_SESSION_BUS_ADDRESS
+    fi
+
+    if [ -x "/usr/bin/dbus-update-activation-environment" ]; then
+        # tell dbus-daemon --session (and systemd --user, if running)
+        # to put a minimal subset of the environment in activated
+        # services' environments
+        dbus-update-activation-environment --systemd --all
+    fi
+}
+
 parse_client () {
     if builtin command -v "${client}" >/dev/null 2>&1 \
            || [ -x "${client}" ]; then
@@ -139,7 +160,8 @@ main () {
     cli_args "$@"
     parse_client
     # shellcheck disable=SC2086
-    dbus-run-session ${exec_cmd} ${clientargs}
+    dbus_load_env
+    ${exec_cmd} ${clientargs}
     exit_code=$?
     clean_up
     exit $exit_code

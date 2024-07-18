@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # -*- coding:utf-8; mode:shell-script -*-
 #
-# Copyright (c) 2020-2023 Pradyumna Paranjape
+# Copyright (c) 2020-2024 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #
@@ -121,7 +121,7 @@ cli () {
 # Cpmmected omtermet info
 netinfo () {
     # shellcheck source=./bin/netcheck.sh
-    net_out="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"
+    net_out="$("${RUNCOMDIR}"/bin/netcheck.sh | tr '\n' ' ')"
     # fish first arg as ip_addr and last arg as netstat
     ip_addr="$(echo "${net_out}" | awk '{print $1}')"
     netstate="$(echo "${net_out}" | rev | awk '{print $1}' | rev)"
@@ -152,7 +152,7 @@ netinfo () {
            && ! curl "https://duckduckgo.com/" > /dev/null 2>&1 \
            && [ $(( netstate & 1 )) = 1 ]; then
         # shellcheck source=./proxy_send.sh
-        eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh" \
+        eval "${RUNCOMDIR}/bin/proxy_send.sh" \
             && printf "\e[0;33mPROXY AUTH SENT\e[m\n";
         unset auto_proxy
     fi

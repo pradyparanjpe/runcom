@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # -*- coding:utf-8; mode:shell-script -*-
 #
-# Copyright (c) 2020-2023 Pradyumna Paranjape
+# Copyright (c) 2020-2024 Pradyumna Paranjape
 #
 # This file is part of Prady_runcom.
 #
@@ -168,7 +168,7 @@ get_env_proxy () {
 
 # build proxy
 build () {
-    all_proxy="$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"
+    all_proxy="$("${RUNCOMDIR}"/bin/proxy_extract.sh)"
     extract_env "${all_proxy}"
     get_env_proxy
 }

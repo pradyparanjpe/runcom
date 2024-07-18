@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8; mode: shell-script; -*-
+
+
+[ -z "${ZSH_VERSION}" ] && [ -z "${BASH_VERSION}" ] && return
+
+# Affirm argcomplete installation
+if command -v pip >/dev/null 2>&1; then
+    if ! command -v register-python-argcomplete &>/dev/null; then
+        python3 -m pip install -U argcomplete
+        activate-global-python-argcomplete --user
+    fi
+    eval "$(register-python-argcomplete "${PY_ARG_COMPL_SCRIPTS}")"
+fi

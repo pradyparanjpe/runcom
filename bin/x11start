@@ -19,7 +19,7 @@
 # along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
 
 # shellcheck disable=SC1091
-. "${RUNCOMDIR:-${HOME}/.runcom}/bin/common.sh" || exit 1
+. "${RUNCOMDIR}/bin/common.sh" || exit 1
 
 set_vars() {
     unset DBUS_SESSION_BUS_ADDRESS

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Info about current IP</title>
@@ -23,22 +23,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7e03622">Description</a></li>
-<li><a href="#org805871b">Code</a>
+<li><a href="#orge24a199">Description</a></li>
+<li><a href="#org7afc940">Code</a>
 <ul>
-<li><a href="#org4180465">Handle global variables and exits</a></li>
-<li><a href="#orgdaf0af2">Parse command</a></li>
-<li><a href="#orge5d24e4">Execution</a></li>
-<li><a href="#org92df1f3">Main routine call</a></li>
+<li><a href="#orgd5e19d7">Handle global variables and exits</a></li>
+<li><a href="#org547b761">Parse command</a></li>
+<li><a href="#org86a146f">Execution</a></li>
+<li><a href="#org71f59dc">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7e03622" class="outline-2">
-<h2 id="org7e03622">Description</h2>
-<div class="outline-text-2" id="text-org7e03622">
+<div id="outline-container-orge24a199" class="outline-2">
+<h2 id="orge24a199">Description</h2>
+<div class="outline-text-2" id="text-orge24a199">
 <p>
 Wait on command, abort if timed out.
 Default: print net info within 5 seconds.
@@ -48,17 +48,17 @@ but we can&rsquo;t assume that it is installed.
 </div>
 </div>
 
-<div id="outline-container-org805871b" class="outline-2">
-<h2 id="org805871b">Code</h2>
-<div class="outline-text-2" id="text-org805871b">
+<div id="outline-container-org7afc940" class="outline-2">
+<h2 id="org7afc940">Code</h2>
+<div class="outline-text-2" id="text-org7afc940">
 <p>
 Following section tangles code.
 </p>
 </div>
 
-<div id="outline-container-org4180465" class="outline-3">
-<h3 id="org4180465">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org4180465">
+<div id="outline-container-orgd5e19d7" class="outline-3">
+<h3 id="orgd5e19d7">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-orgd5e19d7">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
 <span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -125,9 +125,9 @@ Following section tangles code.
 </div>
 </div>
 
-<div id="outline-container-orgdaf0af2" class="outline-3">
-<h3 id="orgdaf0af2">Parse command</h3>
-<div class="outline-text-3" id="text-orgdaf0af2">
+<div id="outline-container-org547b761" class="outline-3">
+<h3 id="org547b761">Parse command</h3>
+<div class="outline-text-3" id="text-org547b761">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
 <span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -174,13 +174,13 @@ Following section tangles code.
 </div>
 </div>
 
-<div id="outline-container-orge5d24e4" class="outline-3">
-<h3 id="orge5d24e4">Execution</h3>
-<div class="outline-text-3" id="text-orge5d24e4">
+<div id="outline-container-org86a146f" class="outline-3">
+<h3 id="org86a146f">Execution</h3>
+<div class="outline-text-3" id="text-org86a146f">
 </div>
-<div id="outline-container-org4bc2476" class="outline-4">
-<h4 id="org4bc2476">Guess and print net info</h4>
-<div class="outline-text-4" id="text-org4bc2476">
+<div id="outline-container-org9a080bc" class="outline-4">
+<h4 id="org9a080bc">Guess and print net info</h4>
+<div class="outline-text-4" id="text-org9a080bc">
 <p>
 The <b>OLDEST</b> part of prady_runcom&#x2026;
 </p>
@@ -193,7 +193,7 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Cpmmected omtermet info</span>
 <span class="org-function-name">netinfo</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=./bin/netcheck.sh</span>
-    <span class="org-variable-name">net_out</span>=<span class="org-string">"$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/netcheck.sh | tr '\n' ' ')"</span>
+    <span class="org-variable-name">net_out</span>=<span class="org-string">"$("${RUNCOMDIR}"/bin/netcheck.sh | tr '\n' ' ')"</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">fish first arg as ip_addr and last arg as netstat</span>
     <span class="org-variable-name">ip_addr</span>=<span class="org-string">"$(echo "${net_out}" | awk '{print $1}')"</span>
     <span class="org-variable-name">netstate</span>=<span class="org-string">"$(echo "${net_out}" | rev | awk '{print $1}' | rev)"</span>
@@ -224,7 +224,7 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
            &amp;&amp; <span class="org-negation-char">!</span> curl <span class="org-string">"https://duckduckgo.com/"</span> &gt; /dev/null 2&gt;&amp;1 <span class="org-sh-escaped-newline">\</span>
            &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; 1 <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> = 1 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=./proxy_send.sh</span>
-        <span class="org-builtin">eval</span> <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_send.sh"</span> <span class="org-sh-escaped-newline">\</span>
+        <span class="org-builtin">eval</span> <span class="org-string">"${RUNCOMDIR}/bin/proxy_send.sh"</span> <span class="org-sh-escaped-newline">\</span>
             &amp;&amp; printf <span class="org-string">"\e[0;33mPROXY AUTH SENT\e[m\n"</span>;
         <span class="org-builtin">unset</span> auto_proxy
     <span class="org-keyword">fi</span>
@@ -259,9 +259,9 @@ The <b>OLDEST</b> part of prady_runcom&#x2026;
 </div>
 </div>
 </div>
-<div id="outline-container-org92df1f3" class="outline-3">
-<h3 id="org92df1f3">Main routine call</h3>
-<div class="outline-text-3" id="text-org92df1f3">
+<div id="outline-container-org71f59dc" class="outline-3">
+<h3 id="org71f59dc">Main routine call</h3>
+<div class="outline-text-3" id="text-org71f59dc">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">Main routine call</span>
@@ -277,6 +277,11 @@ main <span class="org-string">"$@"</span>
 </div>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

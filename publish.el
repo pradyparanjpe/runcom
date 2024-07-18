@@ -17,7 +17,7 @@
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-refresh-contents)
   (package-install 'htmlize)
-  (setq user-full-name nil))
+  (setq user-full-name "Pradyumna Paranjape"))
 
 ;; org mode
 (require 'org)

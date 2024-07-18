@@ -1,7 +1,29 @@
 #+AUTHOR: Pradyumna Paranjape
 #+EMAIL: pradyparanjpe@rediffmail.com
 #+LANGUAGE: en
-#+OPTIONS: toc:2 num:nil html-postamble:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
+#+OPTIONS: toc:2 num:nil ^:nil mathjax:t TeX:t ::t tags:nil *:t skip:t ^:nil
 #+STARTUP: overview
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+auto_tangle: t
+#+auto_tangle: vars:org-confirm-babel-evaluate
+
+* Templates                                                        :noexport:
+#+NAME: posix-check
+#+begin_src emacs-lisp :eval yes :results no :export none
+  (print "# shellcheck shell=sh")
+#+end_src
+
+#+NAME: bash-check
+#+begin_src emacs-lisp :eval yes :results no :export none
+  (print "# shellcheck shell=bash")
+#+end_src
+
+#+NAME: banner
+#+begin_src emacs-lisp :eval yes :results no :export none
+  (print (org-babel-with-temp-filebuffer "header.txt"
+           (buffer-string)))
+#+end_src
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# org-auto-tangle-babel-safelist: ("header.org")
+# End:

@@ -9,7 +9,7 @@
   - This may be used in =${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.proxyrc=
     to extract proxy settings from the password store.
     #+begin_src sh :tangle no
-      all_proxy="$(${RUNCOMDIR:-${HOME}/.runcom}/bin/proxy_extract.sh)"
+      all_proxy="$(${RUNCOMDIR}/bin/proxy_extract.sh)"
       http_proxy="${all_proxy}"
       https_proxy="${all_proxy}"
       ftp_proxy="${all_proxy}"

@@ -1,0 +1,9 @@
+[Unit]
+Description=Update user cargo using cargo-update
+
+[Service]
+Type=oneshot
+ExecStart=%D/../bin/cargo-install-update install-update --all
+
+[Install]
+WantedBy=default.target

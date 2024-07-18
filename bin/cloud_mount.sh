@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 #-*- coding:utf-8; mode:shell-script -*-
 #
-# Copyright (c) 2020-2023 Pradyumna Paranjape
+# Copyright (c) 2020-2024 Pradyumna Paranjape
 #
 ## Check for network connectivity at the beginning
 # This file is part of Prady_runcom.
@@ -117,7 +117,7 @@ cli () {
 # Are we on the right network?
 discover () {
     IFS="$(printf '\t')" read -r _ _ netstate << netcheck
-$(eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/netcheck.sh")
+$(eval "${RUNCOMDIR}/bin/netcheck.sh")
 netcheck
     # shellcheck disable=SC2154
     if [ $(( netstate & mount_net )) ]; then

@@ -1,0 +1,215 @@
+# -*- mode:org; coding: utf-8; -*-
+#+TITLE: Prady runcom profiles
+#+SETUPFILE: header.org
+#+PROPERTY: header-args :mkdirp t :results no :eval no
+
+* Headers
+Copyright, License banners
+#+BEGIN_SRC emacs-lisp :tangle ../dotfiles/dot-zshenv :noweb yes :eval yes :exports none
+  <<header.org:posix-check()>>
+  <<header.org:banner()>>
+#+END_SRC
+
+#+begin_src emacs-lisp :tangle ../dotfiles/dot-bash_profile :noweb yes :eval yes :exports none
+  <<header.org:bash-check()>>
+  <<header.org:banner()>>
+#+end_src
+
+#+BEGIN_SRC emacs-lisp :tangle ../dotfiles/dot-zprofile :noweb yes :eval yes :exports none
+  <<header.org:posix-check()>>
+  <<header.org:banner()>>
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle ../dotfiles/dot-profile :noweb yes :eval yes :exports none
+  <<header.org:posix-check()>>
+  <<header.org:banner()>>
+#+END_SRC
+
+#+begin_src emacs-lisp :tangle ../dotfiles/dot-profile.d/auth :noweb yes :eval yes :exports none
+  <<header.org:posix-check()>>
+  <<header.org:banner()>>
+#+end_src
+
+* Profiles
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-bash_profile
+  if [ -f "${HOME}/.profile" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.profile"
+  fi
+
+  if [ -f "${HOME}/.bashrc" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.bashrc"
+  fi
+
+  if [ -f "${HOME}/.bash_login" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.bash_login"
+  fi
+#+END_SRC
+
+#+BEGIN_SRC bash :tangle ../dotfiles/dot-zprofile
+  # shellcheck source=".profile"
+  if [ -f "${HOME}/.profile" ]; then
+      # shellcheck disable=SC1091
+      . "${HOME}/.profile"
+  fi
+#+END_SRC
+
+* Variables
+** XDG
+Standard locations (XDG) specifications these can be redefined in [[file://~/.profile.d/]]<somefile>.
+For example, RUNCOMDIR is redefined in file://~/.profile.d/00-base-path, which was created during setup.
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  XDG_CACHE_HOME="${HOME}/.cache"
+  XDG_CONFIG_HOME="${HOME}/.config"
+  XDG_DATA_HOME="${HOME}/.local/share"
+  XDG_STATE_HOME="${HOME}/.local/state"
+  RUNCOMDIR="${RUNCOMDIR:-${HOME}/.runcom}"
+
+  export XDG_CACHE_HOME
+  export XDG_CONFIG_HOME
+  export XDG_DATA_HOME
+  export XDG_STATE_HOME
+  export RUNCOMDIR
+#+END_SRC
+
+** PATH
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  # shellcheck source="bin"
+  if [ -d "${HOME}/bin" ] ; then
+      if [ "${PATH#*"${HOME}"/bin}" = "${PATH}" ]; then
+          PATH="${HOME}/bin:${PATH:+$PATH}"
+      fi
+  fi
+
+  # shellcheck source=".local/bin"
+  if [ -d "${HOME}/.local/bin" ] ; then
+      if [ "${PATH#*"${HOME}"/.local/bin}" = "${PATH}" ]; then
+          PATH="${HOME}/.local/bin:${PATH:+$PATH}"
+      fi
+  fi
+  export PATH
+#+END_SRC
+
+** Editor wars
+We shall set smaller editors as VISUAL.
+When launching a GUI later, we can reset it to something heavier such as Emacs.
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  for avail in nvim vim vi nano; do
+      if builtin command -v "${avail}" >/dev/null 2>&1; then
+          VISUAL="${avail}"
+          export VISUAL
+          break
+      fi
+  done
+
+  case "$VISUAL" in
+      vim)
+          # shellcheck disable=SC2089
+          export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+          ;;
+      nvim)
+          # shellcheck disable=SC2089,SC2090
+          export MANPAGER="nvim -c ':Man!' -"
+          ;;
+      ,*)
+          if builtin command -v bat >/dev/null 2>&1; then
+              # shellcheck disable=SC2090
+              export MANPAGER='bat -l man -p'
+          fi
+          ;;
+  esac
+  export MANPAGER
+#+END_SRC
+
+** C(++) exports
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  LD_LIBRARY_PATH="${HOME}/.local/lib:${HOME}/.local/lib64";
+  export LD_LIBRARY_PATH
+#+END_SRC
+
+** CARGO (Rust) exports
+Cargo unnecessarily clutters =${HOME}= with its DATA.
+It should be in =XDG_DATA_HOME=
+Also, cargo's binaries should be installed in =${XDG_DATA_HOME}/../bin= like python3.
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  CARGO_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
+  GOPATH="${XDG_DATA_HOME:-${HOME}/.local/share}/go"
+  export CARGO_HOME GOPATH
+  for lang in cargo go; do
+      ln -sn "${HOME}/.local/bin" \
+         "${XDG_DATA_HOME:-${HOME}/.local/share}/${lang}/bin" 2>/dev/null
+  done
+#+END_SRC
+
+** GTK+ debugging output
+Silence debugging output for gtk+
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  NO_AT_BRIDGE=1
+  export NO_AT_BRIDGE
+#+END_SRC
+
+* SSH Agent
+Reuse ssh agent for all logins
+#+begin_src sh :tangle ../dotfiles/dot-profile.d/auth
+  if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
+      eval "$(ssh-agent)"
+      ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  fi
+  SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  export SSH_AUTH_SOCK
+  ssh-add -l > /dev/null || ssh-add
+#+end_src
+
+* Drop-in generic call
+#+BEGIN_SRC sh :tangle ../dotfiles/dot-profile
+  # Source all files in $1.d directory
+  # $1 is the complete base file path such as ~/.profile to source ~/.profile.d/*
+  _rc_drop_in () {
+      if [ -d "${1}.d/" ]; then
+          if ls -A1q "${1}.d" | grep -q .; then
+              for drop_in in "${1}.d"/*; do
+                  if [ -r "${drop_in}" ]; then
+                      . "${drop_in}"
+                  fi
+              done
+          fi
+      fi
+  }
+#+end_src
+
+* Drop-ins
+** zshenv
+#+begin_src bash :tangle ../dotfiles/dot-zshenv
+  # zshenv is also sourced even before .profile,
+  # which contain the definition for _rc_drop_in
+  # So, we need to manually source dropins for zshenv
+  if [ -d "${HOME}/.zshenv.d/" ]; then
+      if ls -A1q "${HOME}/.zshenv.d" | grep -q .; then
+          for drop_in in "${HOME}/.zshenv.d"/*; do
+              if [ -r "${drop_in}" ]; then
+                  . "${drop_in}"
+              fi
+          done
+      fi
+  fi
+#+end_src
+
+** profile
+#+begin_src bash :tangle ../dotfiles/dot-profile
+  _rc_drop_in "${HOME}/.profile"
+#+end_src
+
+* Confirm dotfiles
+For the user to add local and privately synced sources, drop-in directories should be true directories, not symlinks.
+#+begin_src sh :tangle ../dotfiles/dot-profile
+  for drop_in in profile shrc login logout; do
+      mkdir -p "${HOME}/.${drop_in}.d/"
+  done
+
+  stow --no-folding --dotfiles --restow \
+       -t "${HOME}" \
+       -d "${RUNCOMDIR}" \
+       dotfiles
+#+end_src

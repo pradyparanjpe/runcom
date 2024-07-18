@@ -1,0 +1,19 @@
+# Swayimg configuration file.
+
+# Prady's personal configuration
+# location: .config/swayimg/config
+# The template was copied from /usr/share/swayimg/swayimgrc
+
+################################################################################
+# Key binding section: key = action [parameters]
+# Key can be specified with modifiers, e.g "Ctrl+Alt+Shift+x"
+# Use the `xkbcli` tool to get key name: `xkbcli interactive-wayland`
+################################################################################
+[keys]
+# Additional vim keybindings for navigation
+j = next_file
+k = prev_file
+h = first_file
+l = last_file
+
+# vim: filetype=dosini

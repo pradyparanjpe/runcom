@@ -1,0 +1,78 @@
+# shellcheck shell=sh
+# -*- coding: utf-8; mode: shell-script; -*-
+#
+# Copyright © 2020-2024 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+#
+#===================================================================
+#  ___             _      ___                     _
+# | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+# |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+# |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+#                    |__/                      |__/|_|
+#===================================================================
+
+# mount standard cloud locations using sshfs (read doc)
+mount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}"
+    fi
+}
+
+# unmount standard cloud locations using sshfs (read doc)
+umount_cloud_sshfs() {
+    mount_script="${RUNCOMDIR}/bin/cloud_mount.sh"
+    if [ -f "${mount_script}" ]; then
+        eval "${mount_script}" "umount"
+    fi
+}
+
+cd () {
+    # shellcheck disable=SC2164
+    builtin cd "${1:-${HOME}}"
+    if [ -z "${VIRTUAL_ENV}" ]; then
+        to_venv 2>/dev/null
+    fi
+}
+
+# Navigate using 'lf' and cd to location
+lfcd () {
+    if ! command -v 'lf' >/dev/null 2>/dev/null; then
+        printf "lf is not installed\n"
+        return 127
+    fi
+    tmp_file="$(mktemp)"
+    lf -last-dir-path="${tmp_file}" "$@"
+    if [ -f "${tmp_file}" ]; then
+        target_dir="$(cat "${tmp_file}")"
+        rm -f "${tmp_file}" >/dev/null
+        if [ -d "${target_dir}" ] && [ "${target_dir}" != "$(pwd)" ]; then
+            builtin cd "${target_dir}" || return
+        fi
+    fi
+    unset tmp_file target_dir
+}
+
+# Navigate using pattern 'fzf' and cd to location
+fzfcd () {
+    if ! command -v 'fzf' >/dev/null 2>/dev/null; then
+        printf "fzf is not installed\n"
+        return 127
+    fi
+    builtin cd "$(dirname "$(fzf)")" || true
+}

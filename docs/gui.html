@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gui - launch gui</title>
@@ -23,22 +23,22 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb48918a">Description</a></li>
-<li><a href="#orgec8164a">Code</a>
+<li><a href="#orgfd609e0">Description</a></li>
+<li><a href="#org50fd935">Code</a>
 <ul>
-<li><a href="#org2a50b4e">Handle global variables and exits</a></li>
-<li><a href="#orgffa28fc">Parse command</a></li>
-<li><a href="#orgf209cdd">Launch</a></li>
-<li><a href="#orgca066de">Main routine call</a></li>
+<li><a href="#org7cfa329">Handle global variables and exits</a></li>
+<li><a href="#org242dada">Parse command</a></li>
+<li><a href="#orgc2b4dde">Launch</a></li>
+<li><a href="#orge3aa554">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb48918a" class="outline-2">
-<h2 id="orgb48918a">Description</h2>
-<div class="outline-text-2" id="text-orgb48918a">
+<div id="outline-container-orgfd609e0" class="outline-2">
+<h2 id="orgfd609e0">Description</h2>
+<div class="outline-text-2" id="text-orgfd609e0">
 <ul class="org-ul">
 <li>Launch gui apps from command line and kill terminal.</li>
 <li>TODO: Grab ui properties of the launching frame to launch <b>this</b> app</li>
@@ -47,16 +47,16 @@
 </div>
 </div>
 
-<div id="outline-container-orgec8164a" class="outline-2">
-<h2 id="orgec8164a">Code</h2>
-<div class="outline-text-2" id="text-orgec8164a">
+<div id="outline-container-org50fd935" class="outline-2">
+<h2 id="org50fd935">Code</h2>
+<div class="outline-text-2" id="text-org50fd935">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
-<div id="outline-container-org2a50b4e" class="outline-3">
-<h3 id="org2a50b4e">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org2a50b4e">
+<div id="outline-container-org7cfa329" class="outline-3">
+<h3 id="org7cfa329">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org7cfa329">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
 <span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -123,9 +123,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgffa28fc" class="outline-3">
-<h3 id="orgffa28fc">Parse command</h3>
-<div class="outline-text-3" id="text-orgffa28fc">
+<div id="outline-container-org242dada" class="outline-3">
+<h3 id="org242dada">Parse command</h3>
+<div class="outline-text-3" id="text-org242dada">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
 <span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -168,9 +168,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgf209cdd" class="outline-3">
-<h3 id="orgf209cdd">Launch</h3>
-<div class="outline-text-3" id="text-orgf209cdd">
+<div id="outline-container-orgc2b4dde" class="outline-3">
+<h3 id="orgc2b4dde">Launch</h3>
+<div class="outline-text-3" id="text-orgc2b4dde">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Launch</span>
 <span class="org-function-name">launch_gui</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -196,9 +196,9 @@ This section tangles the code (POSIX)
 </div>
 </div>
 
-<div id="outline-container-orgca066de" class="outline-3">
-<h3 id="orgca066de">Main routine call</h3>
-<div class="outline-text-3" id="text-orgca066de">
+<div id="outline-container-orge3aa554" class="outline-3">
+<h3 id="orge3aa554">Main routine call</h3>
+<div class="outline-text-3" id="text-orge3aa554">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Main routine call</span>
 <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -214,6 +214,11 @@ main <span class="org-string">"$@"</span>
 </div>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

@@ -1,0 +1,220 @@
+# shellcheck shell=sh
+# -*- coding: utf-8; mode: shell-script; -*-
+#
+# Copyright © 2020-2024 Pradyumna Paranjape
+#
+# This file is part of Prady_runcom.
+#
+# Prady_runcom is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Prady_runcom is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Prady_runcom.  If not, see <https://www.gnu.org/licenses/>.
+#
+#===================================================================
+#  ___             _      ___                     _
+# | _ \_ _ __ _ __| |_  _| _ \__ _ _ _ __ _ _ _  (_)_ __  ___
+# |  _/ '_/ _` / _` | || |  _/ _` | '_/ _` | ' \ | | '_ \/ -_)
+# |_| |_| \__,_\__,_|\_, |_| \__,_|_| \__,_|_||_|/ | .__/\___|
+#                    |__/                      |__/|_|
+#===================================================================
+
+# quick command-line calculator
+mathcalc() {
+    echo "$*"| bc -lq
+}
+
+# convert from decimal to hexadecimal and back
+dec2hex() {
+    echo "hex:"
+    echo "obase=16; $*"| bc
+    echo "dec:"
+    echo "ibase=16; $*"| bc
+}
+
+# compile pdf from given latex file using pdflatex
+pdfcompile() {
+    if ! builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        printf "pdftex is not installed\n"
+        return 127
+    fi
+
+    pdflatex "$1"
+    for ext in ".toc" ".log" ".aux"; do
+        [ -f "${1%.tex}${ext}" ] && rm "${1%.tex}${ext}"
+    done
+    if builtin command -v "pdflatex" 1>/dev/null 2>&1; then
+        zathura "${1%.tex}.pdf"
+    fi
+}
+
+# export from org to 'other' using pandoc
+# Usage: org2export [-f] <infile> <othtype>
+org2export() {
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
+    proceed=false
+    while test $# -gt 1; do
+        case "$1" in
+            -f|--force)
+                proceed=true
+                shift 1
+                ;;
+            -h|--help)
+                printf "Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"
+                printf "Optional Arguments:\n"
+                printf "%s\tshow this help message\n\n" "-h|--help"
+                printf "%s\tignore extension mismatch\n" "-f|--force"
+                printf "Positional Arguments:\n"
+                printf "FILENAME.org\tpath to input filename\n"
+                printf "OUTFMT\t\tformat of output [pdf, docs, ...]\n"
+                return 0
+                ;;
+            --)
+                shift 1
+                ;;
+            *)
+                infile="${1}";
+                target="${2}";
+                break
+                ;;
+        esac
+    done
+    if [ "${target}" = "pdf" ]; then
+        target="latex"
+    fi
+    if [ "${infile%.org}" = "${infile}" ]; then
+        # <infile>
+        printf "Input file should be an org file\n"
+    else
+        # <infile>.org
+        proceed=true
+    fi
+    if $proceed; then
+        pandoc -f org -t "${target}" -o "${infile%.*}.${1}" "$infile"
+    fi
+    unset proceed target infile
+}
+
+# export from org to MS DOCX format using pandoc
+org2doc () {
+    org2export "$@" "docx"
+}
+
+# export from org to PDF using pandoc
+org2pdf () {
+    org2export "$@" "pdf"
+}
+
+# export from MS DOCX to org mode using pandoc
+doc2org() {
+    if ! builtin command -v "pandoc" 1>/dev/null 2>&1; then
+        printf "pandoc is not installed\n"
+        return 127
+    fi
+
+    case "${1}" in
+        *.docx)
+            pandoc -f docx -t org -o "${1%.docx}.org" "$1"
+            ;;
+        *)
+            echo "Input file must be a docx file"
+            ;;
+    esac
+}
+
+# Launch command and kill current shell if command exists
+gui () {
+    "${RUNCOMDIR}/bin/gui.sh" "$*"
+    if [ $? = 65 ]; then
+        # if bin/gui.sh returns 65, kill shell, else, maintain
+        exit 0
+    fi
+}
+
+# uncompress using appropriate protocol (guessed from extension)
+deconvolute() {
+    if builtin command -v "pigz" >/dev/null 2>&1; then
+        _gzip="pigz"
+    else
+        _gzip='gzip'
+    fi
+    if [ ! -f "${1}" ]; then
+        echo "No such file: ${1}.";
+    else
+        case "${1}" in
+            *.tar.bz2) tar -xjf "${1}" ;;
+            *.tbz2) tar -xjf "${1}" ;;
+            *.tar.gz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.tgz) tar -x --use-compress-program="${_gzip}" -f "${1}" ;;
+            *.gz) unpigz "${1}" || gunzip "${1}" ;;
+            *.rar) unrar -x "${1}" ;;
+            *.tar) tar -xf "${1}" ;;
+            *.zip) unzip "${1}" ;;
+            *.tar.xz) tar -xf "${1}" ;;
+            *) echo "Cannot extract ${1}, provide explicit command.";;
+        esac
+    fi
+    unset _gzip
+}
+
+# gunzip, word count
+zwc () {
+    args="$*"
+    fname="${args##* }"
+    args="${args% "${fname}"}"
+    args="${args%"${fname}"}"
+
+    if gzip -t "${fname}" > /dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        zcat -f "${fname}" | \wc $args
+        return
+    else
+        \wc "$@"
+        return
+    fi
+}
+
+# gunzip and ls (if directory) or cat (if file)
+lszcat () {
+    args="$*"
+    fname="${args##* }"
+    args="${args%% "${fname}"}"
+    args="${args%%"${fname}"}"
+
+    betcat="$(which cat)"
+    if builtin command -v bat >/dev/null 2>&1; then
+        betcat="$(which bat)"
+    fi
+
+    betls="$(which ls)"
+    if builtin command -v eza >/dev/null 2>&1; then
+        betls="$(which eza)"
+    fi
+
+    if [ -z "${fname}" ] || [ ! "${fname#-}" = "${fname}" ]; then
+        args="${args:+$args }${fname}"
+        fname="$(readlink -f ".")"
+        echo "${fname}"
+    fi
+
+    if [ -d "${fname}" ]; then
+        # shellcheck disable=SC2086
+        "${betls}" ${args} "${fname}"
+    elif gzip -t "${fname}" >/dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        zcat -f ${args} "${fname}" | "${betcat}"
+    else
+        # shellcheck disable=SC2086
+        "${betcat}" ${args} "${fname}"
+    fi
+}

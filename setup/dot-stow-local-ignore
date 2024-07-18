@@ -1,0 +1,22 @@
+## Stow ignore
+## See runcom's 'Unsubscription from configuration'
+## See https://www.gnu.org/software/stow/manual/html_node/Ignore-Lists.html
+#
+## Uncomment appropriate lines to unsubscribe. (remove the '# ')
+## Comment for subscribe.
+#
+## Configuration
+\.config/
+# \.config/qt5ct
+#
+## local bin
+# \.local/bin
+#
+## profile
+# \.profile\.d
+# \.profile\.d/auth
+#
+## shrc
+# \.shrc\.d
+# \.shrc\.d/alternatives
+# \.shrc\.d/
