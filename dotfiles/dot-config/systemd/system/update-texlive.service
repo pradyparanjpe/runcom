@@ -1,0 +1,9 @@
+[Unit]
+Description=Update texlive using tlmgr
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/tlmgr update --all
+
+[Install]
+WantedBy=default.target
