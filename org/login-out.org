@@ -73,7 +73,7 @@
 
 * Logouts
 ** bash
-#+begin_src bash :tangle ../dotfiles/dot-logout :noweb-ref logoutref
+#+begin_src bash :tangle ../dotfiles/dot-bash_logout :noweb-ref logoutref
   if [ -f "${HOME}/.logout" ]; then
       . "${HOME}/.logout"
   fi
@@ -83,6 +83,13 @@
 #+begin_src bash :tangle ../dotfiles/dot-zlogout :noweb yes
   <<logoutref>>
 #+end_src
+
+** common
+*** Call files from all *.d directories
+#+begin_src bash :tangle ../dotfiles/dot-logout
+  _rc_drop_in "${HOME}/.logout"
+#+end_src
+
 
 * DE/WM Launchers
 ** Selection menu
