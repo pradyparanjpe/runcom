@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wayland start graphics ui</title>
@@ -23,54 +23,52 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1ed5ef7">Description</a></li>
-<li><a href="#org55b26f7">Code</a>
+<li><a href="#org5e8b88c">Description</a></li>
+<li><a href="#org914034a">Code</a>
 <ul>
-<li><a href="#orge99daee">Header</a></li>
-<li><a href="#org1a21264">Variables</a></li>
-<li><a href="#org4ecd132">Parse command line arguments</a></li>
-<li><a href="#org98530ba">Parse files</a></li>
-<li><a href="#org5b60bbc">Launch</a></li>
-<li><a href="#org3f40be6">Entry-Point</a></li>
+<li><a href="#orga256643">Header</a></li>
+<li><a href="#org15256f0">Variables</a></li>
+<li><a href="#org5f4efaf">Parse command line arguments</a></li>
+<li><a href="#orgf2e7d7b">Parse files</a></li>
+<li><a href="#org1930aac">Systemd</a></li>
+<li><a href="#org8b15ccb">Launch</a></li>
+<li><a href="#orgb7c0763">Entry-Point</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1ed5ef7" class="outline-2">
-<h2 id="org1ed5ef7">Description</h2>
-<div class="outline-text-2" id="text-org1ed5ef7">
+<div id="outline-container-org5e8b88c" class="outline-2">
+<h2 id="org5e8b88c">Description</h2>
+<div class="outline-text-2" id="text-org5e8b88c">
 <p>
 Start wayland similar to startx.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org55b26f7" class="outline-2">
-<h2 id="org55b26f7">Code</h2>
-<div class="outline-text-2" id="text-org55b26f7">
+<div id="outline-container-org914034a" class="outline-2">
+<h2 id="org914034a">Code</h2>
+<div class="outline-text-2" id="text-org914034a">
 </div>
-<div id="outline-container-orge99daee" class="outline-3">
-<h3 id="orge99daee">Header</h3>
-<div class="outline-text-3" id="text-orge99daee">
+<div id="outline-container-orga256643" class="outline-3">
+<h3 id="orga256643">Header</h3>
+<div class="outline-text-3" id="text-orga256643">
 <p>
 This section tangles the code (POSIX)
 </p>
 </div>
 </div>
-<div id="outline-container-org1a21264" class="outline-3">
-<h3 id="org1a21264">Variables</h3>
-<div class="outline-text-3" id="text-org1a21264">
+<div id="outline-container-org15256f0" class="outline-3">
+<h3 id="org15256f0">Variables</h3>
+<div class="outline-text-3" id="text-org15256f0">
 <p>
 With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
 </p>
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
 <span class="org-function-name">set_vars</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">unset</span> DBUS_SESSION_BUS_ADDRESS
-    <span class="org-builtin">unset</span> SESSION_MANAGER
-    <span class="org-comment-delimiter"># </span><span class="org-comment">Hopefully, following X11's rc</span>
     <span class="org-variable-name">client</span>=
     <span class="org-variable-name">userclientrc</span>=<span class="org-string">"${HOME}/.wayinitrc"</span>
     <span class="org-variable-name">sysclientrc</span>=<span class="org-string">"/etc/wayland/wayinit/wayinitrc"</span>
@@ -83,9 +81,9 @@ With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
 </div>
 </div>
 
-<div id="outline-container-org4ecd132" class="outline-3">
-<h3 id="org4ecd132">Parse command line arguments</h3>
-<div class="outline-text-3" id="text-org4ecd132">
+<div id="outline-container-org5f4efaf" class="outline-3">
+<h3 id="org5f4efaf">Parse command line arguments</h3>
+<div class="outline-text-3" id="text-org5f4efaf">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
 <span class="org-function-name">cli_args</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -120,15 +118,14 @@ With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
         <span class="org-variable-name">clientargs</span>=<span class="org-string">"${defaultclientargs}"</span>
     <span class="org-keyword">fi</span>
 <span class="org-rainbow-delimiters-depth-1">}</span>
-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org98530ba" class="outline-3">
-<h3 id="org98530ba">Parse files</h3>
-<div class="outline-text-3" id="text-org98530ba">
+<div id="outline-container-orgf2e7d7b" class="outline-3">
+<h3 id="orgf2e7d7b">Parse files</h3>
+<div class="outline-text-3" id="text-orgf2e7d7b">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Extract "what to exec" from &lt;client&gt;.desktop file</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">Args:</span>
@@ -174,9 +171,41 @@ With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
 </div>
 </div>
 
-<div id="outline-container-org5b60bbc" class="outline-3">
-<h3 id="org5b60bbc">Launch</h3>
-<div class="outline-text-3" id="text-org5b60bbc">
+<div id="outline-container-org1930aac" class="outline-3">
+<h3 id="org1930aac">Systemd</h3>
+<div class="outline-text-3" id="text-org1930aac">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-function-name">dbus_load_env</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$DBUS_SESSION_BUS_ADDRESS"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"$XDG_RUNTIME_DIR"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+           <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$XDG_RUNTIME_DIR"</span> = <span class="org-string">"/run/user/$(id -u)"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+           <span class="org-rainbow-delimiters-depth-2">[</span> -S <span class="org-string">"$XDG_RUNTIME_DIR/bus"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">We are under systemd-logind or something remarkably similar, and</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">a user-session socket has already been set up.</span>
+        <span class="org-comment-delimiter">#</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Be nice to non-libdbus, non-sd-bus implementations by using</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">that as the session bus address in the environment. The check for</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">XDG_RUNTIME_DIR = "/run/user/`id -u`" is because we know that</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">form of the address, from systemd-logind, doesn't need escaping,</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">whereas arbitrary addresses might.</span>
+        <span class="org-variable-name">DBUS_SESSION_BUS_ADDRESS</span>=<span class="org-string">"unix:path=$XDG_RUNTIME_DIR/bus"</span>
+        <span class="org-builtin">export</span> DBUS_SESSION_BUS_ADDRESS
+    <span class="org-keyword">fi</span>
+
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -x <span class="org-string">"/usr/bin/dbus-update-activation-environment"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">tell dbus-daemon --session (and systemd --user, if running)</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">to put a minimal subset of the environment in activated</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">services' environments</span>
+        dbus-update-activation-environment --systemd --all
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8b15ccb" class="outline-3">
+<h3 id="org8b15ccb">Launch</h3>
+<div class="outline-text-3" id="text-org8b15ccb">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-function-name">parse_client</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"${client}"</span> &gt;/dev/null 2&gt;&amp;1 <span class="org-sh-escaped-newline">\</span>
@@ -210,9 +239,9 @@ With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
 </div>
 </div>
 
-<div id="outline-container-org3f40be6" class="outline-3">
-<h3 id="org3f40be6">Entry-Point</h3>
-<div class="outline-text-3" id="text-org3f40be6">
+<div id="outline-container-orgb7c0763" class="outline-3">
+<h3 id="orgb7c0763">Entry-Point</h3>
+<div class="outline-text-3" id="text-orgb7c0763">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Main routine call</span>
 <span class="org-function-name">main</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -220,7 +249,8 @@ With dbus-run-session under wayland, we don&rsquo;t define DISPLAY
     cli_args <span class="org-string">"$@"</span>
     parse_client
     <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
-    dbus-run-session $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">exec_cmd</span><span class="org-rainbow-delimiters-depth-2">}</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">clientargs</span><span class="org-rainbow-delimiters-depth-2">}</span>
+    dbus_load_env
+    $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">exec_cmd</span><span class="org-rainbow-delimiters-depth-2">}</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">clientargs</span><span class="org-rainbow-delimiters-depth-2">}</span>
     <span class="org-variable-name">exit_code</span>=$<span class="org-variable-name">?</span>
     clean_up
     <span class="org-keyword">exit</span> $<span class="org-variable-name">exit_code</span>
@@ -232,6 +262,11 @@ main <span class="org-string">"$@"</span>
 </div>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

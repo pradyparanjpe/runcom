@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cloud mount</title>
@@ -23,34 +23,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge99988f">Description</a></li>
-<li><a href="#org713c619">Setup</a></li>
-<li><a href="#org7b99624">Code</a>
+<li><a href="#org2b7a4c0">Description</a></li>
+<li><a href="#org027d641">Setup</a></li>
+<li><a href="#orgceb1aab">Code</a>
 <ul>
-<li><a href="#org4febc23">Check availability</a></li>
-<li><a href="#org2cf04cf">Handle global variables and exits</a></li>
-<li><a href="#org8d3e5fb">Parse command</a></li>
-<li><a href="#org0fb8755">Mount/Unmount</a></li>
-<li><a href="#orga9499b5">Main routine call</a></li>
+<li><a href="#orga5966d8">Check availability</a></li>
+<li><a href="#org5353380">Handle global variables and exits</a></li>
+<li><a href="#org6a942a7">Parse command</a></li>
+<li><a href="#org17b9527">Mount/Unmount</a></li>
+<li><a href="#org92ceb68">Main routine call</a></li>
 </ul>
 </li>
-<li><a href="#orgf8dd61e">References</a></li>
+<li><a href="#org0ada368">References</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge99988f" class="outline-2">
-<h2 id="orge99988f">Description</h2>
-<div class="outline-text-2" id="text-orge99988f">
+<div id="outline-container-org2b7a4c0" class="outline-2">
+<h2 id="org2b7a4c0">Description</h2>
+<div class="outline-text-2" id="text-org2b7a4c0">
 <p>
 mount (unmount) cloud-media using sshfs
 </p>
 </div>
 </div>
 
-<div id="outline-container-org713c619" class="outline-2">
-<h2 id="org713c619">Setup</h2>
-<div class="outline-text-2" id="text-org713c619">
+<div id="outline-container-org027d641" class="outline-2">
+<h2 id="org027d641">Setup</h2>
+<div class="outline-text-2" id="text-org027d641">
 <p>
 Following variables should be declared by adding lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
@@ -84,16 +84,16 @@ mount_net: network code necessary for <code>cloud_sship</code> to be accessible
 </div>
 </div>
 
-<div id="outline-container-org7b99624" class="outline-2">
-<h2 id="org7b99624">Code</h2>
-<div class="outline-text-2" id="text-org7b99624">
+<div id="outline-container-orgceb1aab" class="outline-2">
+<h2 id="orgceb1aab">Code</h2>
+<div class="outline-text-2" id="text-orgceb1aab">
 <p>
 This section tangles source code
 </p>
 </div>
-<div id="outline-container-org4febc23" class="outline-3">
-<h3 id="org4febc23">Check availability</h3>
-<div class="outline-text-3" id="text-org4febc23">
+<div id="outline-container-orga5966d8" class="outline-3">
+<h3 id="orga5966d8">Check availability</h3>
+<div class="outline-text-3" id="text-orga5966d8">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Confirm that dependencies are available.</span>
 <span class="org-function-name">affirm_availability</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -110,9 +110,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-org2cf04cf" class="outline-3">
-<h3 id="org2cf04cf">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org2cf04cf">
+<div id="outline-container-org5353380" class="outline-3">
+<h3 id="org5353380">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org5353380">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
 <span class="org-function-name">set_vars</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -180,9 +180,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-org8d3e5fb" class="outline-3">
-<h3 id="org8d3e5fb">Parse command</h3>
-<div class="outline-text-3" id="text-org8d3e5fb">
+<div id="outline-container-org6a942a7" class="outline-3">
+<h3 id="org6a942a7">Parse command</h3>
+<div class="outline-text-3" id="text-org6a942a7">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Parse command line arguments</span>
 <span class="org-function-name">cli</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -211,14 +211,14 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-org0fb8755" class="outline-3">
-<h3 id="org0fb8755">Mount/Unmount</h3>
-<div class="outline-text-3" id="text-org0fb8755">
+<div id="outline-container-org17b9527" class="outline-3">
+<h3 id="org17b9527">Mount/Unmount</h3>
+<div class="outline-text-3" id="text-org17b9527">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Are we on the right network?</span>
 <span class="org-function-name">discover</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     <span class="org-variable-name">IFS</span>=<span class="org-string">"$(printf '\t')"</span> read -r _ _ netstate &lt;&lt; netcheck
-<span class="org-sh-heredoc">$(eval "${RUNCOMDIR:-${HOME}/.runcom}/bin/netcheck.sh")</span>
+<span class="org-sh-heredoc">$(eval "${RUNCOMDIR}/bin/netcheck.sh")</span>
 <span class="org-sh-heredoc">netcheck</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2154</span>
     <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span> netstate &amp; mount_net <span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
@@ -274,9 +274,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orga9499b5" class="outline-3">
-<h3 id="orga9499b5">Main routine call</h3>
-<div class="outline-text-3" id="text-orga9499b5">
+<div id="outline-container-org92ceb68" class="outline-3">
+<h3 id="org92ceb68">Main routine call</h3>
+<div class="outline-text-3" id="text-org92ceb68">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">main routine call</span>
 <span class="org-function-name">main</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -299,14 +299,19 @@ main <span class="org-string">"$@"</span>
 </div>
 </div>
 
-<div id="outline-container-orgf8dd61e" class="outline-2">
-<h2 id="orgf8dd61e">References</h2>
-<div class="outline-text-2" id="text-orgf8dd61e">
+<div id="outline-container-org0ada368" class="outline-2">
+<h2 id="org0ada368">References</h2>
+<div class="outline-text-2" id="text-org0ada368">
 <ul class="org-ul">
 <li>POSIX iterator was inspired by <a href="https://gist.github.com/biiont/290341b29657c0bb2df6">biiont</a></li>
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

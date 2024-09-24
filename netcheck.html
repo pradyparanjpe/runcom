@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>netcheck - identify connected network</title>
@@ -23,58 +23,58 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8e5c9cb">Description</a>
+<li><a href="#org0ba8181">Description</a>
 <ul>
-<li><a href="#orgc6be5f1">IP-ADDRESS</a></li>
-<li><a href="#org6d69596">AP-ADDRESS</a></li>
-<li><a href="#orgb15b0c6">Net-State-Code</a></li>
+<li><a href="#org95a1f39">IP-ADDRESS</a></li>
+<li><a href="#orgf9a0b58">AP-ADDRESS</a></li>
+<li><a href="#org891adef">Net-State-Code</a></li>
 </ul>
 </li>
-<li><a href="#orgd36ee0a">Setup</a></li>
-<li><a href="#orge746f42">Code</a>
+<li><a href="#org265c626">Setup</a></li>
+<li><a href="#org4561f12">Code</a>
 <ul>
-<li><a href="#org2587f32">Handle global variables and exits</a></li>
-<li><a href="#orgf9fdaf3">Identify intranet</a></li>
-<li><a href="#org3e079d0">ping</a></li>
-<li><a href="#org7f69be9">Main routine call</a></li>
+<li><a href="#org7c8beae">Handle global variables and exits</a></li>
+<li><a href="#orgc4cc047">Identify intranet</a></li>
+<li><a href="#org203ed8d">ping</a></li>
+<li><a href="#org13b9208">Main routine call</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8e5c9cb" class="outline-2">
-<h2 id="org8e5c9cb">Description</h2>
-<div class="outline-text-2" id="text-org8e5c9cb">
+<div id="outline-container-org0ba8181" class="outline-2">
+<h2 id="org0ba8181">Description</h2>
+<div class="outline-text-2" id="text-org0ba8181">
 <p>
 Identify connected network.
 Print the following string
 </p>
-<pre class="example" id="org11c05f1">
+<pre class="example" id="orga0b5776">
 &lt;IP-ADDRESS&gt;\t&lt;AP-ADDRESS&gt;\t&lt;Net-State-Code&gt;
 </pre>
 </div>
-<div id="outline-container-orgc6be5f1" class="outline-3">
-<h3 id="orgc6be5f1">IP-ADDRESS</h3>
-<div class="outline-text-3" id="text-orgc6be5f1">
+<div id="outline-container-org95a1f39" class="outline-3">
+<h3 id="org95a1f39">IP-ADDRESS</h3>
+<div class="outline-text-3" id="text-org95a1f39">
 <p>
 Output of <code>hostname -I</code>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6d69596" class="outline-3">
-<h3 id="org6d69596">AP-ADDRESS</h3>
-<div class="outline-text-3" id="text-org6d69596">
+<div id="outline-container-orgf9a0b58" class="outline-3">
+<h3 id="orgf9a0b58">AP-ADDRESS</h3>
+<div class="outline-text-3" id="text-orgf9a0b58">
 <p>
 Access-Point address. Default route to which packets are sent.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb15b0c6" class="outline-3">
-<h3 id="orgb15b0c6">Net-State-Code</h3>
-<div class="outline-text-3" id="text-orgb15b0c6">
+<div id="outline-container-org891adef" class="outline-3">
+<h3 id="org891adef">Net-State-Code</h3>
+<div class="outline-text-3" id="text-org891adef">
 <p>
 5-bit number representing inferred state of network
 </p>
@@ -89,9 +89,9 @@ Access-Point address. Default route to which packets are sent.
 </div>
 </div>
 
-<div id="outline-container-orgd36ee0a" class="outline-2">
-<h2 id="orgd36ee0a">Setup</h2>
-<div class="outline-text-2" id="text-orgd36ee0a">
+<div id="outline-container-org265c626" class="outline-2">
+<h2 id="org265c626">Setup</h2>
+<div class="outline-text-2" id="text-org265c626">
 <p>
 Following variables should be declared by adding lines to
 <code>${XDG_CONFIG_HOME:-${HOME/.config}/(pvt|local).d/.&lt;some_name&gt;rc</code>
@@ -111,16 +111,16 @@ Following variables should be declared by adding lines to
 </div>
 </div>
 
-<div id="outline-container-orge746f42" class="outline-2">
-<h2 id="orge746f42">Code</h2>
-<div class="outline-text-2" id="text-orge746f42">
+<div id="outline-container-org4561f12" class="outline-2">
+<h2 id="org4561f12">Code</h2>
+<div class="outline-text-2" id="text-org4561f12">
 <p>
 This section tangles source code
 </p>
 </div>
-<div id="outline-container-org2587f32" class="outline-3">
-<h3 id="org2587f32">Handle global variables and exits</h3>
-<div class="outline-text-3" id="text-org2587f32">
+<div id="outline-container-org7c8beae" class="outline-3">
+<h3 id="org7c8beae">Handle global variables and exits</h3>
+<div class="outline-text-3" id="text-org7c8beae">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set clean variables before running script.</span>
 <span class="org-function-name">set_vars</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -196,9 +196,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-orgf9fdaf3" class="outline-3">
-<h3 id="orgf9fdaf3">Identify intranet</h3>
-<div class="outline-text-3" id="text-orgf9fdaf3">
+<div id="outline-container-orgc4cc047" class="outline-3">
+<h3 id="orgc4cc047">Identify intranet</h3>
+<div class="outline-text-3" id="text-orgc4cc047">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Are we at home?</span>
 <span class="org-function-name">at_home</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
@@ -216,9 +216,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-org3e079d0" class="outline-3">
-<h3 id="org3e079d0">ping</h3>
-<div class="outline-text-3" id="text-org3e079d0">
+<div id="outline-container-org203ed8d" class="outline-3">
+<h3 id="org203ed8d">ping</h3>
+<div class="outline-text-3" id="text-org203ed8d">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Ping a target</span>
 <span class="org-comment-delimiter">#</span>
@@ -279,9 +279,9 @@ This section tangles source code
 </div>
 </div>
 
-<div id="outline-container-org7f69be9" class="outline-3">
-<h3 id="org7f69be9">Main routine call</h3>
-<div class="outline-text-3" id="text-org7f69be9">
+<div id="outline-container-org13b9208" class="outline-3">
+<h3 id="org13b9208">Main routine call</h3>
+<div class="outline-text-3" id="text-org13b9208">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     set_vars
@@ -297,6 +297,11 @@ main <span class="org-string">"$@"</span>
 </div>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

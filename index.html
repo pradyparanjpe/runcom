@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 16:15 -->
+<!-- Thu, 2024-07-18 10:40+0530 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Prady runcom</title>
@@ -23,137 +23,52 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org044e268">Prady_runcom</a>
+<li><a href="#org7a5edca">Prady_runcom</a>
 <ul>
-<li><a href="#org73d7c83">What&rsquo;s this?</a></li>
-<li><a href="#orgf93d100">Will you be able to set this up?</a></li>
+<li><a href="#org12785d7">What&rsquo;s this?</a></li>
+<li><a href="#org61a4447">Will you be able to set this up?</a></li>
 </ul>
 </li>
-<li><a href="#org6a5df9c">Copyright/License Header</a></li>
-<li><a href="#org2f57bdd">Structure</a>
+<li><a href="#orgb2a7a3a">Copyright/License Header</a></li>
+<li><a href="#org96bddb7">Structure</a>
 <ul>
-<li><a href="#org0644b4b">Bash</a></li>
-<li><a href="#orgffdb411">Zsh</a></li>
-</ul>
-</li>
-<li><a href="#orgccb6503">Headers</a></li>
-<li><a href="#orgfd94ff3">Profiles</a></li>
-<li><a href="#org0d086fc">Init</a>
-<ul>
-<li><a href="#org91bf4ad">profile</a></li>
-<li><a href="#org8b833fc">bash</a></li>
-<li><a href="#org9b07b78">zsh</a></li>
-</ul>
-</li>
-<li><a href="#org5a76810">Inherit</a>
-<ul>
-<li><a href="#org6aaa260">bash</a></li>
-<li><a href="#orgcc7d06a">zsh</a></li>
-<li><a href="#org4e9f0e5">shrc</a></li>
-</ul>
-</li>
-<li><a href="#orgd003abe">Better alternatives</a>
-<ul>
-<li><a href="#orgfc89766">Alias-er script</a></li>
-<li><a href="#org9d285a7">alias commands</a></li>
-<li><a href="#orgd18599b">Atuin</a></li>
-<li><a href="#org29496ae">List Contents</a></li>
-</ul>
-</li>
-<li><a href="#org77dc0c1">Variables</a>
-<ul>
-<li><a href="#org9e1b647">XDG</a></li>
-<li><a href="#org2092bfe">PATH</a></li>
-<li><a href="#org55a741f">Editor wars</a></li>
-<li><a href="#orge5611e1">C(++) exports</a></li>
-<li><a href="#orgae2b4d4">CARGO (Rust) exports</a></li>
-<li><a href="#org49eca7e">GPU exports</a></li>
-<li><a href="#orgd6a797a">Bemenu exports</a></li>
-<li><a href="#orgc5e4d21">GTK+ debugging output</a></li>
-</ul>
-</li>
-<li><a href="#org84f45e7">Functions</a>
-<ul>
-<li><a href="#org9aee8a7">Python</a></li>
-<li><a href="#org1231eae">Vterm printf</a></li>
-<li><a href="#org0ea56db">Vterm message passing</a></li>
-<li><a href="#org57c6a1c">Git</a></li>
-<li><a href="#org5b5b96b">Prompt String</a></li>
-<li><a href="#org6606f63">Mathematical</a></li>
-<li><a href="#orga3d863b">Documents compilation</a></li>
-<li><a href="#org8d159b4">Mount over ssh</a></li>
-<li><a href="#org0749203">Launch GUI</a></li>
-<li><a href="#org9806d80">Un-Compress by context</a></li>
-<li><a href="#org93ab6ea">Navigate</a></li>
-<li><a href="#orgb61ed4d">zwc</a></li>
-<li><a href="#org139c4d9">disable auto-venv</a></li>
-<li><a href="#orgca09949">lszcat</a></li>
-<li><a href="#orgad2eb9f">Manual pages</a></li>
-<li><a href="#org9acaa36">Selection menu</a></li>
-</ul>
-</li>
-<li><a href="#org0e4df57">Aliases</a>
-<ul>
-<li><a href="#orga759f52">manual page help</a></li>
-<li><a href="#org4fbce1b">Network</a></li>
-<li><a href="#org783aa21">Monitor Job queues</a></li>
-<li><a href="#org16650f3">Lazy single-handed exit</a></li>
-<li><a href="#orgf141917">[z]wc</a></li>
-<li><a href="#org062e1ad">Encrypted cURL</a></li>
-</ul>
-</li>
-<li><a href="#org77fb127">Networking</a>
-<ul>
-<li><a href="#orgb8242bf">State</a></li>
-<li><a href="#org65c887e">SSH Agent</a></li>
-</ul>
-</li>
-<li><a href="#org7fe7af3">Window Manager settings</a>
-<ul>
-<li><a href="#orge98954c">Terminal</a></li>
-<li><a href="#org289ce2d">Sway exports</a></li>
-<li><a href="#org34decd6">User Interface (GUI/CLI)</a></li>
-</ul>
-</li>
-<li><a href="#orgabadca6">Calls</a>
-<ul>
-<li><a href="#org2b57e88">bash</a></li>
-<li><a href="#org9b85299">zsh</a></li>
+<li><a href="#unstow">Unsubscription from configuration</a></li>
+<li><a href="#org18628fb">Load order</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org044e268" class="outline-2">
-<h2 id="org044e268">Prady_runcom</h2>
-<div class="outline-text-2" id="text-org044e268">
+<div id="outline-container-org7a5edca" class="outline-2">
+<h2 id="org7a5edca">Prady_runcom</h2>
+<div class="outline-text-2" id="text-org7a5edca">
 </div>
-<div id="outline-container-org73d7c83" class="outline-3">
-<h3 id="org73d7c83">What&rsquo;s this?</h3>
-<div class="outline-text-3" id="text-org73d7c83">
+<div id="outline-container-org12785d7" class="outline-3">
+<h3 id="org12785d7">What&rsquo;s this?</h3>
+<div class="outline-text-3" id="text-org12785d7">
 <ul class="org-ul">
-<li>A compilation of dot-files: default variables, custom functions, aliases.</li>
+<li>A compilation of <a href="https://dotfiles.github.io/">dotfiles</a>: default variables, custom functions, aliases.</li>
 <li><b>My</b> configuration backup, &ldquo;<a href="https://git-scm.com/docs/git-push">push</a>&rdquo;ed to work as a template for yours.</li>
 </ul>
 </div>
 
-<div id="outline-container-org6b8fe40" class="outline-4">
-<h4 id="org6b8fe40">Aim</h4>
-<div class="outline-text-4" id="text-org6b8fe40">
+<div id="outline-container-org631511f" class="outline-4">
+<h4 id="org631511f">Aim</h4>
+<div class="outline-text-4" id="text-org631511f">
 <ul class="org-ul">
-<li>Cross-machine synchronization (hence, git)</li>
-<li>Modularity (hence, not a single file)</li>
-<li>Self-documenting (hence org files)</li>
+<li>Synchronization across-machines (hence, git)</li>
+<li>Modular (hence, not a single file)</li>
+<li>Self-documenting (hence <a href="https://orgmode.org/manual/Summary.html">org</a> files)</li>
 <li>Work-flow speed (obviously)</li>
 <li>&ldquo;Pretty&rdquo; low resource load (hence, not GNOME/KDE)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdfcf8e9" class="outline-4">
-<h4 id="orgdfcf8e9">Non-aim</h4>
-<div class="outline-text-4" id="text-orgdfcf8e9">
+<div id="outline-container-org8b4b00a" class="outline-4">
+<h4 id="org8b4b00a">Non-aim</h4>
+<div class="outline-text-4" id="text-org8b4b00a">
 <ul class="org-ul">
 <li>Ease</li>
 </ul>
@@ -161,14 +76,14 @@
 </div>
 </div>
 
-<div id="outline-container-orgf93d100" class="outline-3">
-<h3 id="orgf93d100">Will you be able to set this up?</h3>
-<div class="outline-text-3" id="text-orgf93d100">
+<div id="outline-container-org61a4447" class="outline-3">
+<h3 id="org61a4447">Will you be able to set this up?</h3>
+<div class="outline-text-3" id="text-org61a4447">
 <p>
-Probably <a href="setup.html#org0c1caa4"><b>NOT</b></a>.
+Probably <a href="setup.html#org6d015eb"><b>NOT</b></a>.
 If you insist, check <a href="setup.html">setup</a> instructions.
 </p>
-<div class="important" id="org6dabc8a">
+<div class="important" id="org7d934a4">
 <p>
 Read till the end before you decide to set this up.
 </p>
@@ -178,11 +93,11 @@ Read till the end before you decide to set this up.
 </div>
 </div>
 
-<div id="outline-container-org6a5df9c" class="outline-2">
-<h2 id="org6a5df9c">Copyright/License Header</h2>
-<div class="outline-text-2" id="text-org6a5df9c">
+<div id="outline-container-orgb2a7a3a" class="outline-2">
+<h2 id="orgb2a7a3a">Copyright/License Header</h2>
+<div class="outline-text-2" id="text-orgb2a7a3a">
 <p>
-Copyright (c) 2020-2023 Pradyumna Paranjape
+Copyright © 2020-2024 Pradyumna Paranjape
 </p>
 
 <p>
@@ -210,20 +125,17 @@ along with Prady_runcom.  If not, see <a href="https://www.gnu.org/licenses/">ht
 </div>
 </div>
 
-<div id="outline-container-org2f57bdd" class="outline-2">
-<h2 id="org2f57bdd">Structure</h2>
-<div class="outline-text-2" id="text-org2f57bdd">
+<div id="outline-container-org96bddb7" class="outline-2">
+<h2 id="org96bddb7">Structure</h2>
+<div class="outline-text-2" id="text-org96bddb7">
 <p>
-Following configuration files are available. This literate configuration tangles their contents.
+Following files are recognised for configuration.
+We shall try to comply with POSIX as much as possible even in files marked &rsquo;no&rsquo; In (table <a href="#orgc8affa0">1</a>).
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
+<table id="orgc8affa0" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <b>RUNCOM-declared files/directories</b>. Column named &rsquo;POSIX&rsquo; indicates if the file or contents of the directory are strictly POSIX compliant; <del>root</del> = &rsquo;managed by root&rsquo;.</caption>
 
 <colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
 <col  class="org-left" />
 
 <col  class="org-left" />
@@ -232,2342 +144,404 @@ Following configuration files are available. This literate configuration tangles
 <tr>
 <th scope="col" class="org-left">Configuration File Path</th>
 <th scope="col" class="org-left">POSIX</th>
-<th scope="col" class="org-left">Stowed</th>
-<th scope="col" class="org-left">Owner</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><code>/etc/profile</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">no</td>
-<td class="org-left">root</td>
-</tr>
-
-<tr>
 <td class="org-left"><code>/etc/bashrc</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">no</td>
-<td class="org-left">root</td>
+<td class="org-left"><del>root</del></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>/etc/zshrc</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">no</td>
-<td class="org-left">root</td>
+<td class="org-left"><code>/etc/profile</code></td>
+<td class="org-left"><del>root</del></td>
 </tr>
 
 <tr>
 <td class="org-left"><code>/etc/profile.d/*</code></td>
-<td class="org-left">yes</td>
+<td class="org-left"><del>root</del></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>/etc/zsh/*</code></td>
+<td class="org-left"><del>root</del></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bash_profile</code></td>
 <td class="org-left">no</td>
-<td class="org-left">root</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${HOME}/.bashrc</code></td>
+<td class="org-left"><code>~/.zshenv</code></td>
 <td class="org-left">no</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${HOME}/.zshrc</code></td>
+<td class="org-left"><code>~/.zshenv.d/*</code></td>
 <td class="org-left">no</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${HOME}/.bash_profile</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${HOME}/.bash_login</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${HOME}/.profile</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${HOME}/.zprofile</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${HOME}/.zshenv</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${HOME}/.zlogin</code></td>
-<td class="org-left">yes</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
-</tr>
-
-<tr>
-<td class="org-left"><code>${RUNCOMDIR}/env/shrc</code></td>
-<td class="org-left">yes</td>
+<td class="org-left"><code>~/.zprofile</code></td>
 <td class="org-left">no</td>
-<td class="org-left">RUNCOM</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${RUNCOMDIR}/env/ui</code></td>
+<td class="org-left"><code>~/.profile</code></td>
 <td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.profile.d/*</code></td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bashrc</code></td>
 <td class="org-left">no</td>
-<td class="org-left">RUNCOM</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${XDG_DATA_HOME}/bash-completion/completions/*</code></td>
+<td class="org-left"><code>~/.zshrc</code></td>
 <td class="org-left">no</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${XDG_CONFIG_DIR}</code></td>
+<td class="org-left"><code>~/.shrc</code></td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.shrc.d/*</code></td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bash_login</code></td>
 <td class="org-left">no</td>
-<td class="org-left">yes</td>
-<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${XDG_CONFIG_HOME}/local.d/.*rc</code></td>
-<td class="org-left">yes</td>
+<td class="org-left"><code>~/.zlogin</code></td>
 <td class="org-left">no</td>
-<td class="org-left"><code>${USER}</code></td>
 </tr>
 
 <tr>
-<td class="org-left"><code>${XDG_CONFIG_HOME}/pvt.d/.*rc</code></td>
+<td class="org-left"><code>~/.login</code></td>
 <td class="org-left">yes</td>
-<td class="org-left">pvt</td>
-<td class="org-left"><code>${USER}</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.login.d/ui.d/*</code></td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.login.d/*</code></td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bash_logout</code></td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.zlogout</code></td>
+<td class="org-left">no</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.logout</code></td>
+<td class="org-left">yes</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>~/.logout.d/*</code></td>
+<td class="org-left">yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.config/*</code></td>
+<td class="org-left">no</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>${XDG_DATA_HOME}/bash-completion</code></td>
+<td class="org-left">no</td>
 </tr>
 </tbody>
 </table>
+</div>
+
+<div id="outline-container-unstow" class="outline-3">
+<h3 id="unstow">Unsubscription from configuration</h3>
+<div class="outline-text-3" id="text-unstow">
 <p>
-They are loaded in following order.
+Regular files in <code>${RUNCOMDIR}/dotfiles/</code> are <a href="https://www.gnu.org/software/stow/manual/stow.html#Introduction">stowed</a> to (symlinked from) <code>${HOME}</code>.
+Directories in <code>${RUNCOMDIR}/dotfiles/</code> are made as regular directories if absent in <code>${HOME}</code> and the corresponding files stowed.
+User-specific local and privately version-controlled configuration can be safely stowed inside these sub-directories with non-conflicting names.
+Some config files may be <a href="https://www.gnu.org/software/stow/manual/html_node/Ignore-Lists.html">ignored</a> from such symlinking by placing a <code>.stow-local-ignore</code> in the <code>dotfiles</code>.
 </p>
-</div>
-
-<div id="outline-container-org0644b4b" class="outline-3">
-<h3 id="org0644b4b">Bash</h3>
-<div class="outline-text-3" id="text-org0644b4b">
-</div>
-<div id="outline-container-orgfbfc64e" class="outline-4">
-<h4 id="orgfbfc64e">/etc/profile</h4>
-<div class="outline-text-4" id="text-orgfbfc64e">
-</div>
-<ul class="org-ul">
-<li><a id="orgd5f8109"></a>/etc/bashrc<br />
-<ul class="org-ul">
-<li><a id="orgef697d7"></a>/etc/profile.d/*<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-
-<div id="outline-container-org072f450" class="outline-4">
-<h4 id="org072f450">${HOME}/.bash_profile</h4>
-<div class="outline-text-4" id="text-org072f450">
-</div>
-<ul class="org-ul">
-<li><a id="orgc52457e"></a>${HOME}/.profile<br /></li>
-
-<li><a id="org58866a8"></a>${HOME}/.bashrc<br />
-<ul class="org-ul">
-<li><a id="org8c03050"></a>${RUNCOMDIR}/env/shrc<br />
-<ul class="org-ul">
-<li><a id="orga43c925"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="orgf770c77"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
-</ul>
-</li>
-</ul>
-</li>
-
-<li><a id="orgef3dcf5"></a>${HOME}/.bash_login<br />
-<ul class="org-ul">
-<li><a id="orgfd14ee8"></a>${RUNCOMDIR}/env/ui<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgffdb411" class="outline-3">
-<h3 id="orgffdb411">Zsh</h3>
-<div class="outline-text-3" id="text-orgffdb411">
-</div>
-<div id="outline-container-orge12fd3d" class="outline-4">
-<h4 id="orge12fd3d">/etc/profile</h4>
-<div class="outline-text-4" id="text-orge12fd3d">
-</div>
-<ul class="org-ul">
-<li><a id="org2f4348e"></a>/etc/zshrc<br />
-<ul class="org-ul">
-<li><a id="org8576755"></a>/etc/profile.d/*<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-
-<div id="outline-container-orgff257eb" class="outline-4">
-<h4 id="orgff257eb">${HOME}/.zshenv</h4>
-</div>
-
-<div id="outline-container-org4604a9c" class="outline-4">
-<h4 id="org4604a9c">${HOME}/.zprofile</h4>
-<div class="outline-text-4" id="text-org4604a9c">
-</div>
-<ul class="org-ul">
-<li><a id="orga68a47a"></a>${HOME}/.profile<br /></li>
-</ul>
-</div>
-
-<div id="outline-container-org11daf27" class="outline-4">
-<h4 id="org11daf27">${HOME}/.zshrc</h4>
-<div class="outline-text-4" id="text-org11daf27">
-</div>
-<ul class="org-ul">
-<li><a id="orge5f82c1"></a>${RUNCOMDIR}/env/shrc<br />
-<ul class="org-ul">
-<li><a id="orgf5edc1b"></a>${XDG_CONFIG_HOME}/local.d/*<br /></li>
-<li><a id="org4d78451"></a>${XDG_CONFIG_HOME}/pvt.d/*<br /></li>
-</ul>
-</li>
-</ul>
-</div>
-
-<div id="outline-container-orgf7134d2" class="outline-4">
-<h4 id="orgf7134d2">${HOME}/.zlogin</h4>
-<div class="outline-text-4" id="text-orgf7134d2">
-</div>
-<ul class="org-ul">
-<li><a id="orgfe98465"></a>${RUNCOMDIR}/env/ui<br /></li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgccb6503" class="outline-2">
-<h2 id="orgccb6503">Headers</h2>
-<div class="outline-text-2" id="text-orgccb6503">
+<div class="warning" id="orgc8ef8dd">
 <p>
-Copyright, License banners
+Do not ignore the basic structure of runcom such as <code>.shrc</code>,  <code>.login</code>, <code>.profile</code>.
 </p>
-</div>
-</div>
-<div id="outline-container-orgfd94ff3" class="outline-2">
-<h2 id="orgfd94ff3">Profiles</h2>
-<div class="outline-text-2" id="text-orgfd94ff3">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${HOME}/.profile"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1091</span>
-    . <span class="org-string">"${HOME}/.profile"</span>
-<span class="org-keyword">fi</span>
 
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${HOME}/.bashrc"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1091</span>
-    . <span class="org-string">"${HOME}/.bashrc"</span>
-<span class="org-keyword">fi</span>
-
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${HOME}/.bash_login"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1091</span>
-    . <span class="org-string">"${HOME}/.bash_login"</span>
-<span class="org-keyword">fi</span>
-
-</pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=".profile"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${HOME}/.profile"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1091</span>
-    . <span class="org-string">"${HOME}/.profile"</span>
-<span class="org-keyword">fi</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">The following lines were added by compinstall</span>
-
-zstyle <span class="org-string">':completion:*'</span> completer _complete _ignored _approximate
-zstyle <span class="org-string">':completion:*'</span> list-colors <span class="org-string">''</span>
-zstyle <span class="org-string">':completion:*'</span> matcher-list <span class="org-string">''</span>
-zstyle <span class="org-string">':completion:*'</span> max-errors 2
-zstyle <span class="org-string">':completion:*'</span> menu <span class="org-variable-name">select</span>=3
-zstyle <span class="org-string">':completion:*'</span> select-prompt %SScrolling <span class="org-sh-escaped-newline">\</span>
-       active: current selection at %p%s
-zstyle :compinstall filename <span class="org-string">"${HOME}/.zshrc"</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">End of lines added by compinstall</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Lines configured by zsh-newuser-install</span>
-
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0d086fc" class="outline-2">
-<h2 id="org0d086fc">Init</h2>
-<div class="outline-text-2" id="text-org0d086fc">
-</div>
-<div id="outline-container-org91bf4ad" class="outline-3">
-<h3 id="org91bf4ad">profile</h3>
-<div class="outline-text-3" id="text-org91bf4ad">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">LC_ALL</span>=en_IN.UTF-8
-<span class="org-variable-name">LANG</span>=en_IN.UTF-8
-
-<span class="org-builtin">export</span> LC_ALL
-<span class="org-builtin">export</span> LANG
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org8b833fc" class="outline-3">
-<h3 id="org8b833fc">bash</h3>
-<div class="outline-text-3" id="text-org8b833fc">
-<ul class="org-ul">
-<li><p>
-Prevent bashrc from running outside non-interactive mode
+<div class="tip" id="orgea84fe9">
+<p>
+User may safely ignore:
 </p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-keyword">case</span> $<span class="org-variable-name">-</span><span class="org-keyword"> in</span>
-    *i*)
-    ;;
-    *)
-        <span class="org-keyword">return</span>
-        ;;
-<span class="org-keyword">esac</span>
-</pre>
-</div>
-
 <ul class="org-ul">
-<li><p>
-Option settings
-</p>
-<div class="org-src-container">
-<pre class="src src-bash">shopt -s autocd
-shopt -s checkwinsize
-shopt -s extglob
-shopt -s globstar
-shopt -s histappend
-shopt -s histverify
-</pre>
-</div>
-
+<li>Files located in
 <ul class="org-ul">
-<li>History</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-bash">shopt -s histappend
-<span class="org-variable-name">HISTCONTROL</span>=ignoreboth
-<span class="org-variable-name">HISTFILE</span>=<span class="org-string">"${XDG_CACHE_HOME:-${HOME}/.cache}/.bash_history"</span>
-<span class="org-variable-name">HISTFILESIZE</span>=10000
-<span class="org-variable-name">HISTSIZE</span>=10000
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>Coloured terminals</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-keyword">case</span> <span class="org-string">"$TERM"</span><span class="org-keyword"> in</span>
-    xterm-color|*-256color) <span class="org-variable-name">color_prompt</span>=yes;;
-<span class="org-keyword">esac</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>Key-bindings</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-builtin">set</span> -o vi
-bind <span class="org-string">'"jk":vi-movement-mode'</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li><p>
-vterm directory and prompt tracking
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-function-name">vterm_prompt_end</span><span class="org-rainbow-delimiters-depth-1">(){</span>
-    vterm_printf <span class="org-string">"51;A$(whoami)@$(hostname):$(pwd)"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-<span class="org-variable-name">PS1</span>=$<span class="org-variable-name">PS1</span><span class="org-string">'\[$(vterm_prompt_end)\]'</span>
-</pre>
-</div></li>
+<li>Drop-in directories: <code>.shrc.d/*</code>, <code>.profile.d/*</code>, etc.</li>
+<li>Config directories: <code>.config/*</code>.</li>
 </ul></li>
+
+<li>Or regular expressions accepted by gnu-stow.</li>
+<li>Or these directories themselves.</li>
+</ul>
+
+</div>
+
+<p>
+Optionally, the user may provide their own version of the ignored file as a regular file or a symlink.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org18628fb" class="outline-3">
+<h3 id="org18628fb">Load order</h3>
+<div class="outline-text-3" id="text-org18628fb">
+<p>
+Files are executed in the following order.
+</p>
+</div>
+<div id="outline-container-orgb7c1077" class="outline-4">
+<h4 id="orgb7c1077">Bash</h4>
+<div class="outline-text-4" id="text-orgb7c1077">
+</div>
+<ul class="org-ul">
+<li><a id="org49c832e"></a>Interactive Login<br />
+<div class="outline-text-5" id="text-org49c832e">
+<ul class="org-ul">
+<li><a href="#orge188fc9">/etc/profile</a></li>
+<li><a href="#orgf852164">~/.bash_profile</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgf852164"></a>~/.bash_profile<br />
+<div class="outline-text-5" id="text-orgf852164">
+<ul class="org-ul">
+<li><a href="#profile">~/.profile</a></li>
+<li><a href="#org4a9c44f">~/.bashrc</a></li>
+<li><a href="#orged658dd">~/.bash_login</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgc310280"></a>/etc/bash.bashrc<br />
+<div class="outline-text-5" id="text-orgc310280">
+<ul class="org-ul">
+<li><a href="file:///usr/share/bash-completion/bash_completion">file:///usr/share/bash-completion/bash_completion</a>
+<ul class="org-ul">
+<li><a href="file://~/.bash_completion">file://~/.bash_completion</a></li>
 </ul></li>
 </ul>
 </div>
-</div>
+</li>
 
-<div id="outline-container-org9b07b78" class="outline-3">
-<h3 id="org9b07b78">zsh</h3>
-<div class="outline-text-3" id="text-org9b07b78">
-<p>
-Settings
-</p>
+<li><a id="orged658dd"></a>~/.bash_login<br />
 <ul class="org-ul">
-<li><p>
-History
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-variable-name">HISTFILE</span>=<span class="org-string">"${XDG_CACHE_HOME:-${HOME}/.cache}/.zhistory"</span>
-<span class="org-variable-name">HISTSIZE</span>=10000
-<span class="org-variable-name">SAVEHIST</span>=10000
-</pre>
-</div>
-<ul class="org-ul">
-<li><p>
-cache files
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-variable-name">ZSH_COMPDUMP</span>=<span class="org-string">"${XDG_CACHE_HOME:-${HOME}/.cache}/.zcompdump"</span>
-</pre>
-</div></li>
-</ul></li>
+<li><a id="org54cdfe4"></a><a href="#login">~/.login</a><br /></li>
 </ul>
+</li>
 
 
+<li><a id="org2ac58af"></a>Interactive shell NOT login<br />
+<div class="outline-text-5" id="text-org2ac58af">
 <ul class="org-ul">
-<li><p>
-Options
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-variable-name">ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE</span>=<span class="org-string">"fg=</span><span class="custom-2"><span class="custom-1">#5f6f7f</span></span><span class="org-string">,bg=</span><span class="custom"><span class="custom-1">#172737</span></span><span class="org-string">"</span>
-<span class="org-variable-name">ZSH_AUTOSUGGEST_STRATEGY</span>=<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"history"</span> <span class="org-string">"completion"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-builtin">setopt</span> autocd
-<span class="org-builtin">setopt</span> interactive_comments
-<span class="org-builtin">setopt</span> appendhistory extendedglob notify
-<span class="org-builtin">setopt</span> BANG_HIST                 <span class="org-comment-delimiter"># </span><span class="org-comment">Treat the '!' character specially during expansion.</span>
-<span class="org-builtin">setopt</span> EXTENDED_HISTORY          <span class="org-comment-delimiter"># </span><span class="org-comment">Write the history file in the ":start:elapsed;command" format.</span>
-<span class="org-builtin">setopt</span> INC_APPEND_HISTORY        <span class="org-comment-delimiter"># </span><span class="org-comment">Write to the history file immediately, not when the shell exits.</span>
-<span class="org-builtin">setopt</span> HIST_EXPIRE_DUPS_FIRST    <span class="org-comment-delimiter"># </span><span class="org-comment">Expire duplicate entries first when trimming history.</span>
-<span class="org-builtin">setopt</span> HIST_IGNORE_DUPS          <span class="org-comment-delimiter"># </span><span class="org-comment">Don't record an entry that was just recorded again.</span>
-<span class="org-builtin">setopt</span> HIST_IGNORE_ALL_DUPS      <span class="org-comment-delimiter"># </span><span class="org-comment">Delete old recorded entry if new entry is a duplicate.</span>
-<span class="org-builtin">setopt</span> HIST_FIND_NO_DUPS         <span class="org-comment-delimiter"># </span><span class="org-comment">Do not display a line previously found.</span>
-<span class="org-builtin">setopt</span> HIST_SAVE_NO_DUPS         <span class="org-comment-delimiter"># </span><span class="org-comment">Don't write duplicate entries in the history file.</span>
-<span class="org-builtin">setopt</span> HIST_IGNORE_SPACE         <span class="org-comment-delimiter"># </span><span class="org-comment">Don't record an entry starting with a space.</span>
-<span class="org-builtin">setopt</span> HIST_REDUCE_BLANKS        <span class="org-comment-delimiter"># </span><span class="org-comment">Remove superfluous blanks before recording entry.</span>
-<span class="org-builtin">setopt</span> HIST_VERIFY               <span class="org-comment-delimiter"># </span><span class="org-comment">Don't execute immediately upon history expansion.</span>
-<span class="org-builtin">unsetopt</span> beep
-<span class="org-builtin">autoload</span> colors &amp;&amp; colors
-<span class="org-builtin">autoload</span> add-zsh-hook
-<span class="org-builtin">autoload</span> -Uz compinit
-<span class="org-builtin">autoload</span> -Uz bashcompinit
-compinit
-bashcompinit
-</pre>
-</div></li>
-
-<li><p>
-Key-bindings
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-variable-name">term_key_source</span>=<span class="org-string">"${HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${term_key_source}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    . <span class="org-string">"${term_key_source}"</span>
-<span class="org-keyword">fi</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">keybindings</span>
-<span class="org-builtin">bindkey</span> -v
-<span class="org-builtin">bindkey</span> -s <span class="org-string">'^o'</span> <span class="org-string">'lfcd\n'</span>
-<span class="org-builtin">bindkey</span> -s <span class="org-string">'^f'</span> <span class="org-string">'fzfcd\n'</span>
-<span class="org-builtin">bindkey</span> -s <span class="org-string">'^E'</span> <span class="org-string">'deactivate 2&gt;/dev/null || true\n'</span>
-<span class="org-builtin">bindkey</span> -s <span class="org-string">'^N'</span> <span class="org-string">'force_global_venv\n'</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[P'</span> delete-char  <span class="org-comment-delimiter"># </span><span class="org-comment">backspace key</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[1;5D'</span> vi-backward-word  <span class="org-comment-delimiter"># </span><span class="org-comment">ctrl &lt;-</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[1;5C'</span> vi-forward-word  <span class="org-comment-delimiter"># </span><span class="org-comment">ctrl -&gt;</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[3~'</span> vi-delete-char  <span class="org-comment-delimiter"># </span><span class="org-comment">delete key</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[F'</span> vi-end-of-line  <span class="org-comment-delimiter"># </span><span class="org-comment">end key</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">'^[[H'</span> vi-beginning-of-line  <span class="org-comment-delimiter"># </span><span class="org-comment">home key</span>
-<span class="org-builtin">bindkey</span> <span class="org-string">"^[[27;2;13~"</span> vi-open-line-below  <span class="org-comment-delimiter"># </span><span class="org-comment">shift Return</span>
-<span class="org-builtin">export</span> <span class="org-variable-name">KEYTIMEOUT</span>=10
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Use beam shape cursor for each new prompt.</span>
-<span class="org-function-name">_rc_fix_cursor</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">echo</span> -ne <span class="org-string">'\e[6 q'</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-add-zsh-hook precmd _rc_fix_cursor
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Change cursor shape for different vi modes.</span>
-<span class="org-function-name">zle-keymap-select</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${KEYMAP}"</span> = <span class="org-string">"vicmd"</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||
-           <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> = <span class="org-string">'block'</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">'\e[2 q'</span>
-
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${KEYMAP}"</span> = <span class="org-string">"main"</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||
-             <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${KEYMAP}"</span> = <span class="org-string">"viins"</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||
-             <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${KEYMAP}"</span> = <span class="org-string">''</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||
-             <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> = <span class="org-string">'beam'</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">'\e[6 q'</span>
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${KEYMAP}"</span> = <span class="org-string">"visual"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">'\e[4 q'</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Use vim keys in tab complete menu:</span>
-zmodload zsh/complist
-zmodload zsh/mapfile
-<span class="org-builtin">bindkey</span> -M menuselect <span class="org-string">'h'</span> vi-backward-char
-<span class="org-builtin">bindkey</span> -M menuselect <span class="org-string">'k'</span> vi-up-line-or-history
-<span class="org-builtin">bindkey</span> -M menuselect <span class="org-string">'l'</span> vi-forward-char
-<span class="org-builtin">bindkey</span> -M menuselect <span class="org-string">'j'</span> vi-down-line-or-history
-<span class="org-builtin">bindkey</span> -v <span class="org-string">'^?'</span> backward-delete-char
-<span class="org-builtin">bindkey</span> -M viins <span class="org-string">'jk'</span> vi-cmd-mode
-<span class="org-builtin">bindkey</span> <span class="org-string">'^r'</span> history-incremental-search-backward
-
-zle -N zle-keymap-select
-
-</pre>
-</div></li>
-<li>Unset options:
-<ul class="org-ul">
-<li>setopt SHARE_HISTORY             # Share history between all sessions.</li>
-<li>setopt HIST_BEEP                 # Beep when accessing non-existent history.</li>
-</ul></li>
-
-<li><p>
-vterm directory and prompt tracking
-</p>
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-function-name">vterm_prompt_end</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    vterm_printf <span class="org-string">"51;A$(whoami)@$(hostname):$(pwd)"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-<span class="org-builtin">setopt</span> PROMPT_SUBST
-<span class="org-variable-name">PROMPT</span>=$<span class="org-variable-name">PROMPT</span><span class="org-string">'%{$(vterm_prompt_end)%}'</span>
-</pre>
-</div></li>
+<li><a href="#org4a9c44f">~/.bashrc</a></li>
 </ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org5a76810" class="outline-2">
-<h2 id="org5a76810">Inherit</h2>
-<div class="outline-text-2" id="text-org5a76810">
-</div>
-<div id="outline-container-org6aaa260" class="outline-3">
-<h3 id="org6aaa260">bash</h3>
-<div class="outline-text-3" id="text-org6aaa260">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=".runcom/env/shrc"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    . <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span>
-<span class="org-keyword">fi</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    . <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bash-preexec/bash-preexec.sh"</span>
-<span class="org-keyword">fi</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgcc7d06a" class="outline-3">
-<h3 id="orgcc7d06a">zsh</h3>
-<div class="outline-text-3" id="text-orgcc7d06a">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=".runcom/env/shrc"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -f <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    . <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/shrc"</span>
-<span class="org-keyword">fi</span>
-<span class="org-keyword">while </span><span class="org-builtin">read</span> -r addition; <span class="org-keyword">do</span>
-    <span class="org-keyword">while </span><span class="org-builtin">read</span> -r share_dir; <span class="org-keyword">do</span>
-        <span class="org-variable-name">add_dir</span>=<span class="org-string">"${share_dir}/zsh-${addition}"</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${add_dir}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-            <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1090</span>
-            . <span class="org-string">"${add_dir}/zsh-${addition}.zsh"</span>
-            <span class="org-keyword">break</span>
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">done</span> &lt;&lt; data_dir
-<span class="org-sh-heredoc">/usr/local/share</span>
-<span class="org-sh-heredoc">/usr/share</span>
-<span class="org-sh-heredoc">/usr/share/zsh/plugins</span>
-<span class="org-sh-heredoc">${XDG_DATA_HOME:-${HOME}/.local/share}</span>
-<span class="org-sh-heredoc">${XDG_DATA_HOME:-${HOME}/.local/share}/pspman/local/share</span>
-<span class="org-sh-heredoc">${HOME}/local/share</span>
-<span class="org-sh-heredoc">${HOME}/share</span>
-<span class="org-sh-heredoc">data_dir</span>
-<span class="org-keyword">done</span> &lt;&lt; addlist
-<span class="org-sh-heredoc">syntax-highlighting</span>
-<span class="org-sh-heredoc">autosuggestions</span>
-<span class="org-sh-heredoc">addlist</span>
-
-<span class="org-builtin">unset</span> addition share_dir add_dir
-
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org4e9f0e5" class="outline-3">
-<h3 id="org4e9f0e5">shrc</h3>
-<div class="outline-text-3" id="text-org4e9f0e5">
-</div>
-<div id="outline-container-orgcae94d6" class="outline-4">
-<h4 id="orgcae94d6">Current shelL</h4>
-<div class="outline-text-4" id="text-orgcae94d6">
-<p>
-Which shell is running?
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">_RC_SHELL</span>=<span class="org-string">"$(readlink /proc/$$/exe | sed "s/.*\///")"</span>
-<span class="org-builtin">export</span> _RC_SHELL
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga2f4bf8" class="outline-4">
-<h4 id="orga2f4bf8">Local un-synced changes</h4>
-<div class="outline-text-4" id="text-orga2f4bf8">
-<p>
-All files <code>${XDG_CONFIG_HOME:-${HOME}/.config}/{local,pvt}.d/.*rc</code>
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1090</span>
-<span class="org-keyword">for</span> unsync_d<span class="org-keyword"> in</span> <span class="org-string">"local.d"</span> <span class="org-string">"pvt.d"</span>; <span class="org-keyword">do</span>
-    <span class="org-keyword">for</span> rcfile<span class="org-keyword"> in</span> <span class="org-string">"${XDG_CONFIG_HOME:-${HOME}/.config}/${unsync_d}"</span>/.*rc; <span class="org-keyword">do</span>
-        . <span class="org-string">"${rcfile}"</span>
-    <span class="org-keyword">done</span> 2&gt;/dev/null
-<span class="org-keyword">done</span> 2&gt;/dev/null
-
-<span class="org-builtin">unset</span> rcfile unsync_d
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd003abe" class="outline-2">
-<h2 id="orgd003abe">Better alternatives</h2>
-<div class="outline-text-2" id="text-orgd003abe">
-</div>
-<div id="outline-container-orgfc89766" class="outline-3">
-<h3 id="orgfc89766">Alias-er script</h3>
-<div class="outline-text-3" id="text-orgfc89766">
-<p>
-Alias some common commands to better alternatives if available.
-Commands that are listed (&lt;space&gt; separated) in the environment variable
-<code>_RC_NO_ALT</code> are not aliased.
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">use better alternatives</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Args:</span>
-<span class="org-comment-delimiter">#     </span><span class="org-comment">canon_cmd: canonically used command</span>
-<span class="org-comment-delimiter">#     </span><span class="org-comment">alt_cmds: optional list of alternative that may be used if available</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Environment Variables</span>
-<span class="org-comment-delimiter">#     </span><span class="org-comment">_RC_NO_ALT: Don't replace alternatives for &lt;space&gt; separated</span>
-<span class="org-function-name">_rc_alternative</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> <span class="org-string">"${_RC_NO_ALT% "</span>$<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-string">"*}"</span> = <span class="org-string">"${_RC_NO_ALT}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||<span class="org-sh-escaped-newline">\</span>
-       <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> <span class="org-string">"${_RC_NO_ALT#*"</span>$<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-string">" }"</span> = <span class="org-string">"${_RC_NO_ALT}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> ||<span class="org-sh-escaped-newline">\</span>
-       <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${1}"</span> = <span class="org-string">"${_RC_NO_ALT}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">_rc_old_cmd</span>=<span class="org-string">"${1}"</span>
-    <span class="org-builtin">shift</span>
-    <span class="org-keyword">for</span> _rc_alt<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>; <span class="org-keyword">do</span>
-        <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"${_rc_alt%% *}"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-            <span class="org-builtin">eval</span> <span class="org-string">"alias ${_rc_old_cmd}=\"${_rc_alt}\""</span>;
-            <span class="org-keyword">return</span>
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">done</span>
-    <span class="org-builtin">unset</span> _rc_alt _rc_old_cmd
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org9d285a7" class="outline-3">
-<h3 id="org9d285a7">alias commands</h3>
-<div class="outline-text-3" id="text-org9d285a7">
-<div class="org-src-container">
-<pre class="src src-sh">_rc_alternative cat bat
-_rc_alternative diff delta difft
-_rc_alternative df lfs
-_rc_alternative du <span class="org-string">"dust"</span> <span class="org-string">"du -hc"</span>
-_rc_alternative grep <span class="org-string">"rg --color=auto"</span> <span class="org-string">"ag"</span> <span class="org-string">"pt"</span> <span class="org-string">"ack"</span>
-_rc_alternative ls <span class="org-string">"exa -Fh --color=auto"</span>
-_rc_alternative vim nvim
-_rc_alternative ex nvim
-_rc_alternative docker podman
-_rc_alternative docker-compose <span class="org-string">"podman compose"</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd18599b" class="outline-3">
-<h3 id="orgd18599b">Atuin</h3>
-<div class="outline-text-3" id="text-orgd18599b">
-<p>
-Use <a href="https://github.com/ellie/atuin">atuin</a> for up-arrow history if available
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">'atuin'</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-    <span class="org-builtin">eval</span> <span class="org-string">"$(atuin init "${_RC_SHELL}" 2&gt;/dev/null)"</span>
-<span class="org-keyword">fi</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org29496ae" class="outline-3">
-<h3 id="org29496ae">List Contents</h3>
-<div class="outline-text-3" id="text-org29496ae">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">la</span>=<span class="org-string">'ls -a'</span>;
-<span class="org-builtin">alias</span> <span class="org-variable-name">ll</span>=<span class="org-string">'ls -lr -s size'</span>;
-<span class="org-builtin">alias</span> <span class="org-variable-name">lla</span>=<span class="org-string">'ls -la'</span>;
-<span class="org-builtin">alias</span> l.=<span class="org-string">'ls -a |grep "^\."'</span>;
-<span class="org-builtin">alias</span> <span class="org-variable-name">sl</span>=<span class="org-string">"ls"</span>;
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org77dc0c1" class="outline-2">
-<h2 id="org77dc0c1">Variables</h2>
-<div class="outline-text-2" id="text-org77dc0c1">
-</div>
-<div id="outline-container-org9e1b647" class="outline-3">
-<h3 id="org9e1b647">XDG</h3>
-<div class="outline-text-3" id="text-org9e1b647">
-<p>
-XDG standard locations specifications these can be redefined in
-<code>${XDG_CONFIG_HOME:-${HOME}/.config}/pvt.d/.&lt;some name&gt;rc</code>
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">XDG_CACHE_HOME</span>=<span class="org-string">"${HOME}/.cache"</span>
-<span class="org-variable-name">XDG_CONFIG_HOME</span>=<span class="org-string">"${HOME}/.config"</span>
-<span class="org-variable-name">XDG_DATA_HOME</span>=<span class="org-string">"${HOME}/.local/share"</span>
-<span class="org-variable-name">XDG_STATE_HOME</span>=<span class="org-string">"${HOME}/.local/state"</span>
-<span class="org-variable-name">RUNCOMDIR</span>=<span class="org-string">"${HOME}/.runcom"</span>
-
-<span class="org-builtin">export</span> XDG_CACHE_HOME
-<span class="org-builtin">export</span> XDG_CONFIG_HOME
-<span class="org-builtin">export</span> XDG_DATA_HOME
-<span class="org-builtin">export</span> XDG_STATE_HOME
-<span class="org-builtin">export</span> RUNCOMDIR
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org2092bfe" class="outline-3">
-<h3 id="org2092bfe">PATH</h3>
-<div class="outline-text-3" id="text-org2092bfe">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source="bin"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${HOME}/bin"</span> <span class="org-rainbow-delimiters-depth-1">]</span> ; <span class="org-keyword">then</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> <span class="org-string">"${PATH#*${HOME}/bin}"</span> = <span class="org-string">"${PATH}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">PATH</span>=<span class="org-string">"${HOME}/bin:${PATH}"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-keyword">fi</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck source=".local/bin"</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -d <span class="org-string">"${HOME}/.local/bin"</span> <span class="org-rainbow-delimiters-depth-1">]</span> ; <span class="org-keyword">then</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> <span class="org-string">"${PATH#*${HOME}/.local/bin}"</span> = <span class="org-string">"${PATH}"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">PATH</span>=<span class="org-string">"${HOME}/.local/bin:${PATH}"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-keyword">fi</span>
-<span class="org-builtin">export</span> PATH;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org55a741f" class="outline-3">
-<h3 id="org55a741f">Editor wars</h3>
-<div class="outline-text-3" id="text-org55a741f">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-keyword">while </span><span class="org-builtin">read</span> -r avail; <span class="org-keyword">do</span>
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"${avail}"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-variable-name">EDITOR</span>=<span class="org-string">"${avail}"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-keyword">done</span> &lt;&lt; EOF
-<span class="org-sh-heredoc">nano</span>
-<span class="org-sh-heredoc">vi</span>
-<span class="org-sh-heredoc">vim</span>
-<span class="org-sh-heredoc">nvim</span>
-<span class="org-sh-heredoc">EOF</span>
-<span class="org-builtin">export</span> EDITOR
-
-<span class="org-keyword">case</span> <span class="org-string">"$EDITOR"</span><span class="org-keyword"> in</span>
-    vim)
-        <span class="org-builtin">export</span> <span class="org-variable-name">MANPAGER</span>=<span class="org-string">'/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa&lt;CR&gt;\"&lt;/dev/tty &lt;(col -b)"'</span>
-        ;;
-    nvim)
-        <span class="org-builtin">export</span> <span class="org-variable-name">MANPAGER</span>=<span class="org-string">"nvim -c ':Man!' -"</span>
-        ;;
-    *)
-        <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v bat; <span class="org-keyword">then</span>
-            <span class="org-builtin">export</span> <span class="org-variable-name">MANPAGER</span>=<span class="org-string">'bat -l man -p'</span>
-        <span class="org-keyword">fi</span>
-        ;;
-<span class="org-keyword">esac</span>
-<span class="org-builtin">export</span> MANPAGER
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orge5611e1" class="outline-3">
-<h3 id="orge5611e1">C(++) exports</h3>
-<div class="outline-text-3" id="text-orge5611e1">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">LD_LIBRARY_PATH</span>=<span class="org-string">"${HOME}/.local/lib:${HOME}/.local/lib64"</span>;
-<span class="org-variable-name">C_INCLUDE_PATH</span>=<span class="org-string">"${XDG_DATA_HOME}/pspman/include/"</span>
-<span class="org-variable-name">CPLUS_INCLUDE_PATH</span>=<span class="org-string">"${XDG_DATA_HOME}/pspman/include/"</span>
-<span class="org-builtin">export</span> LD_LIBRARY_PATH
-<span class="org-builtin">export</span> C_INCLUDE_PATH
-<span class="org-builtin">export</span> CPLUS_INCLUDE_PATH
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgae2b4d4" class="outline-3">
-<h3 id="orgae2b4d4">CARGO (Rust) exports</h3>
-<div class="outline-text-3" id="text-orgae2b4d4">
-<p>
-Cargo unnecessarily clutters <code>${HOME}</code> with its DATA.
-It should be in <code>XDG_DATA_HOME</code>
-Also, cargo&rsquo;s binaries should be installed in
-<code>${XDG_DATA_HOME}/../bin</code> like python3.
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">CARGO_HOME</span>=<span class="org-string">"${HOME}/.local/share/cargo"</span>
-<span class="org-builtin">export</span> CARGO_HOME
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org49eca7e" class="outline-3">
-<h3 id="org49eca7e">GPU exports</h3>
-<div class="outline-text-3" id="text-org49eca7e">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">PYOPENCL_CTX</span>=<span class="org-string">'0'</span>;
-<span class="org-variable-name">PYOPENCL_COMPILER_OUTPUT</span>=1;
-<span class="org-variable-name">OCL_ICD_VENDORS</span>=<span class="org-string">"/etc/OpenCL/vendors/"</span>;
-<span class="org-builtin">export</span> PYOPENCL_CTX
-<span class="org-builtin">export</span> PYOPENCL_COMPILER_OUTPUT
-<span class="org-builtin">export</span> OCL_ICD_VENDORS
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd6a797a" class="outline-3">
-<h3 id="orgd6a797a">Bemenu exports</h3>
-<div class="outline-text-3" id="text-orgd6a797a">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">export</span> <span class="org-variable-name">BEMENU_OPTS</span>=<span class="org-string">'--fn firacode 14 '</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgc5e4d21" class="outline-3">
-<h3 id="orgc5e4d21">GTK+ debugging output</h3>
-<div class="outline-text-3" id="text-orgc5e4d21">
-<p>
-Silence debugging output for gtk+
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-variable-name">NO_AT_BRIDGE</span>=1
-<span class="org-builtin">export</span> NO_AT_BRIDGE
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org84f45e7" class="outline-2">
-<h2 id="org84f45e7">Functions</h2>
-<div class="outline-text-2" id="text-org84f45e7">
-</div>
-<div id="outline-container-org9aee8a7" class="outline-3">
-<h3 id="org9aee8a7">Python</h3>
-<div class="outline-text-3" id="text-org9aee8a7">
-</div>
-<div id="outline-container-orgd9d3daa" class="outline-4">
-<h4 id="orgd9d3daa">Python version</h4>
-<div class="outline-text-4" id="text-orgd9d3daa">
-<p>
-to locate site-packages
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">default python version major.minor</span>
-<span class="org-function-name">python_ver</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    python --version |cut -d <span class="org-string">"."</span> -f1,2 |sed <span class="org-string">'s/ //'</span> |sed <span class="org-string">'s/P/p/'</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org541dcbd" class="outline-4">
-<h4 id="org541dcbd">Quickly change to virtualenv</h4>
-<div class="outline-text-4" id="text-org541dcbd">
-<p>
-Scan up to mount-point, if any direct parent has .venv, source that &ldquo;.venv/bin/activate&rdquo;
-This may require shell-identification for ksh, csh, fish since they have a different activate
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Walk upto mount-point (if within 16 levels) and look for</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">'.venv' directory that contains python</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">virtual environment. If found, switch to it</span>
-<span class="org-function-name">to_venv</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">test_d</span>=<span class="org-string">"$(readlink -f "${PWD}")"</span>
-    <span class="org-variable-name">parents</span>=16  <span class="org-comment-delimiter"># </span><span class="org-comment">path too long to waste time</span>
-    <span class="org-keyword">until</span> mountpoint <span class="org-string">"${test_d}"</span> &gt; /dev/null 2&gt; /dev/null; <span class="org-keyword">do</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">parents</span> -le 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            printf <span class="org-string">"Too many branch-nodes searched"</span> &gt;&amp;2
-            <span class="org-builtin">unset</span> parents test_d env_d
-            <span class="org-keyword">return</span> 126
-        <span class="org-keyword">fi</span>
-        <span class="org-keyword">for</span> env_d<span class="org-keyword"> in</span> <span class="org-string">".venv"</span> <span class="org-string">"venv"</span>; <span class="org-keyword">do</span>
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -d <span class="org-string">"${test_d}/${env_d}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> <span class="org-sh-escaped-newline">\</span>
-                   || <span class="org-rainbow-delimiters-depth-2">[</span> -L <span class="org-string">"${test_d}/${env_d}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC1090</span>
-                . <span class="org-string">"${test_d}/${env_d}/bin/activate"</span>
-                printf <span class="org-string">"Found %s, switching...\n"</span> <span class="org-string">"${test_d}/${env_d}"</span>
-                <span class="org-builtin">unset</span> parents test_d env_d
-                <span class="org-keyword">return</span> 0
-            <span class="org-keyword">fi</span>
-        <span class="org-keyword">done</span>
-        <span class="org-variable-name">test_d</span>=<span class="org-string">"$(dirname "${test_d}")"</span>
-        <span class="org-variable-name">parents</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>parents - 1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-keyword">done</span>
-    printf <span class="org-string">"Couldn't find .venv upto mountpoint %s\n"</span> <span class="org-string">"${test_d}"</span> &gt;&amp;2
-    <span class="org-builtin">unset</span> parents test_d env_d
-    <span class="org-keyword">return</span> 126
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgfc1cc04" class="outline-4">
-<h4 id="orgfc1cc04">Virtualenv in prompt string</h4>
-<div class="outline-text-4" id="text-orgfc1cc04">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">_rc_show_venv</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">if a virtualenv is active, print it's name</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${VIRTUAL_ENV}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">base</span>=<span class="org-string">"$(basename "${VIRTUAL_ENV}")"</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${base}"</span> = <span class="org-string">".venv"</span> <span class="org-rainbow-delimiters-depth-2">]</span> || <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${base}"</span> = <span class="org-string">"venv"</span>  <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            printf <span class="org-string">"/%s"</span> <span class="org-string">"$(basename "$(dirname "${VIRTUAL_ENV}")")"</span>
-            <span class="org-builtin">unset</span> base
-        <span class="org-keyword">else</span>
-            printf <span class="org-string">"/%s"</span> <span class="org-string">"${base}"</span>
-            <span class="org-builtin">unset</span> base
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-org1231eae" class="outline-3">
-<h3 id="org1231eae">Vterm printf</h3>
-<div class="outline-text-3" id="text-org1231eae">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">vterm_printf</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"$TMUX"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">[</span> <span class="org-string">"${TERM%%-*}"</span> = <span class="org-string">"tmux"</span> <span class="org-rainbow-delimiters-depth-3">]</span> || <span class="org-rainbow-delimiters-depth-3">[</span> <span class="org-string">"${TERM%%-*}"</span> = <span class="org-string">"screen"</span> <span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">Tell tmux to pass the escape sequences through</span>
-        printf <span class="org-string">"\ePtmux;\e\e]%s\007\e\\"</span> <span class="org-string">"$1"</span>
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${TERM%%-*}"</span> = <span class="org-string">"screen"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">GNU screen (screen, screen-256color, screen-256color-bce)</span>
-        printf <span class="org-string">"\eP\e]%s\007\e\\"</span> <span class="org-string">"$1"</span>
-    <span class="org-keyword">else</span>
-        printf <span class="org-string">"\e]%s\e\\"</span> <span class="org-string">"$1"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0ea56db" class="outline-3">
-<h3 id="org0ea56db">Vterm message passing</h3>
-<div class="outline-text-3" id="text-org0ea56db">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">vterm_cmd</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">local</span> vterm_elisp
-    <span class="org-variable-name">vterm_elisp</span>=<span class="org-string">""</span>
-    <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">#</span> -gt 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
-        <span class="org-variable-name">vterm_elisp</span>=<span class="org-string">"$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"</span>
-        <span class="org-builtin">shift</span>
-    <span class="org-keyword">done</span>
-    vterm_printf <span class="org-string">"51;E$vterm_elisp"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org57c6a1c" class="outline-3">
-<h3 id="org57c6a1c">Git</h3>
-<div class="outline-text-3" id="text-org57c6a1c">
-</div>
-<div id="outline-container-org8a0421f" class="outline-4">
-<h4 id="org8a0421f">Status</h4>
-<div class="outline-text-4" id="text-org8a0421f">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">git_status</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">_modified</span>=0
-    <span class="org-variable-name">_cached</span>=0
-    <span class="org-variable-name">_untracked</span>=0
-
-    <span class="org-keyword">while </span><span class="org-builtin">read</span> -r _line; <span class="org-keyword">do</span>
-        <span class="org-keyword">case</span> <span class="org-string">"${_line}"</span><span class="org-keyword"> in</span>
-            _*_<span class="org-string">\ </span>_)
-                <span class="org-variable-name">_cached</span>=1
-                ;;
-            _<span class="org-string">\ </span>_*_)
-                <span class="org-variable-name">_modified</span>=1
-                ;;
-            _?_?_)
-                <span class="org-variable-name">_untracked</span>=1
-                ;;
-        <span class="org-keyword">esac</span>
-    <span class="org-keyword">done</span> &lt;&lt; endstat
-<span class="org-sh-heredoc">$(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')</span>
-<span class="org-sh-heredoc">endstat</span>
-
-    <span class="org-variable-name">_stat_str</span>=<span class="org-string">''</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_modified"</span> -ne 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_stat_str</span>=<span class="org-string">"${_stat_str}\033[0;31m\ue728"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_cached"</span> -ne 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_stat_str</span>=<span class="org-string">"${_stat_str}\033[0;32m\ue729"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_untracked"</span> -ne 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_stat_str</span>=<span class="org-string">"${_stat_str}\033[0;31m\uf476"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"$(git stash list)"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_stat_str</span>=<span class="org-string">"${_stat_str}\e[0;36m\uf48e"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${_stat_str}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2059  # I do want escape characters</span>
-        printf <span class="org-string">"${_stat_str}\e[m"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">unset</span> _modified _cached _untracked _stat_str
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org80a003e" class="outline-4">
-<h4 id="org80a003e">Branch</h4>
-<div class="outline-text-4" id="text-org80a003e">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">git_branch</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">branch_str</span>=<span class="org-string">''</span>
-    <span class="org-variable-name">branch</span>=<span class="org-string">"$(git branch 2&gt;/dev/null | grep '^\*' | sed -e 's/^* //')"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -n <span class="org-string">"${branch}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">case</span> <span class="org-string">"${branch}"</span><span class="org-keyword"> in</span>
-            feat-*)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\033[0;32m"</span>
-                ;;
-            bug-*)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\033[0;31m"</span>
-                ;;
-            act-*)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\e[0;36m"</span>
-                ;;
-            tmp-*)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\e[0;36m"</span>
-                ;;
-            *HEAD<span class="org-string">\ </span>detached*|,*rebasing*)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\e[0;33m"</span>
-                ;;
-            main|master)
-                <span class="org-builtin">unset</span> branch branch_str
-                <span class="org-keyword">return</span>
-                ;;
-            *)
-                <span class="org-variable-name">branch_str</span>=<span class="org-string">"${branch_str}\e[0;35m"</span>
-                ;;
-        <span class="org-keyword">esac</span>
-    <span class="org-keyword">fi</span>
-    printf <span class="org-string">"${branch_str}%s\ue725\e[m"</span> <span class="org-string">"${branch}"</span>
-    <span class="org-builtin">unset</span> branch_str branch
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org65920e9" class="outline-4">
-<h4 id="org65920e9">Hash</h4>
-<div class="outline-text-4" id="text-org65920e9">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">git_hash</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    git log --pretty=format:<span class="org-string">'%h'</span> -n 1
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org871b887" class="outline-4">
-<h4 id="org871b887">Prompt string</h4>
-<div class="outline-text-4" id="text-org871b887">
-<p>
-Include git&rsquo;s branch, hash, status in PS1 if in git repository
-This function is called in PS1 section below
-</p>
-<div class="org-src-container">
-<pre class="src src-sh" id="org611860a"><span class="org-function-name">git_ps</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-negation-char">!</span> git status --ignore-submodules &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">else</span>
-        printf <span class="org-string">" %s%s%s "</span> <span class="org-string">"$(git_branch)"</span> <span class="org-string">"$(git_hash)"</span> <span class="org-string">"$(git_status)"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org5b5b96b" class="outline-3">
-<h3 id="org5b5b96b">Prompt String</h3>
-<div class="outline-text-3" id="text-org5b5b96b">
-</div>
-<div id="outline-container-orgfd34b71" class="outline-4">
-<h4 id="orgfd34b71">Exit_colour</h4>
-<div class="outline-text-4" id="text-orgfd34b71">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Print ANSI terminal escape codes for colors according to exit status</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">of latest (last) executed command</span>
-<span class="org-function-name">_rc_last_exit_color</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">case</span> <span class="org-string">"$1"</span><span class="org-keyword"> in</span>
-        0)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">success</span>
-            printf <span class="org-string">"\e[0;32m"</span>
-            ;;
-        1)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">general error</span>
-            printf <span class="org-string">"\e[0;33m"</span>
-            ;;
-        2)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">misuse of shell builtins</span>
-            printf <span class="org-string">"\e[0;31m"</span>
-            ;;
-        126)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">cannot execute</span>
-            printf <span class="org-string">"\e[0;37m"</span>
-            ;;
-        127)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">command not found</span>
-            printf <span class="org-string">"\e[0;30m"</span>
-            ;;
-        255)
-            <span class="org-comment-delimiter"># </span><span class="org-comment">exit status limit</span>
-            printf <span class="org-string">"\e[0;31m"</span>
-            ;;
-        *)
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$1"</span> -gt <span class="org-string">"63"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$1"</span> -lt <span class="org-string">"84"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                <span class="org-comment-delimiter"># </span><span class="org-comment">syserror.h</span>
-                printf <span class="org-string">"\e[0;91m"</span>
-
-            <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$1"</span> -gt <span class="org-string">"127"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$1"</span> -lt <span class="org-string">"191"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                <span class="org-comment-delimiter"># </span><span class="org-comment">Fatal error</span>
-                printf <span class="org-string">"\e[0;41m"</span>
-            <span class="org-keyword">else</span>
-                printf <span class="org-string">"\e[0;31m"</span>
-            <span class="org-keyword">fi</span>
-            <span class="org-builtin">unset</span> _err
-            ;;
-    <span class="org-keyword">esac</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org214dc5f" class="outline-4">
-<h4 id="org214dc5f">Elapsed_time</h4>
-<div class="outline-text-4" id="text-org214dc5f">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Calculate time elapsed (min/sec) while executing last command</span>
-<span class="org-function-name">_elapsed_time</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">$1 is start time $2 is end time</span>
-    <span class="org-variable-name">_cmd_start</span>=<span class="org-string">"$1"</span>
-    <span class="org-variable-name">_cmd_end</span>=<span class="org-string">"$2"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$_cmd_end"</span> <span class="org-rainbow-delimiters-depth-2">]</span> || <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$_cmd_start"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">_sec</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span> _cmd_end - _cmd_start <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-builtin">unset</span> _cmd_start _cmd_end
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_sec"</span> -le 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_sec"</span> -le 60 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">"%s"</span> <span class="org-string">"${_sec}"</span>
-        <span class="org-builtin">unset</span> _sec
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">_min</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span> _sec/60 <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-builtin">unset</span> _sec
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_min"</span> -le 60 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">"%sm"</span> <span class="org-string">"${_min}"</span>
-        <span class="org-builtin">unset</span> _min
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">_hr</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span> _min/60 <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-builtin">unset</span> _min
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$_hr"</span> -le 24 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">"%sh"</span> <span class="org-string">"${_hr}"</span>
-        <span class="org-builtin">unset</span> _hr
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">_day</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span> _hr/24 <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    printf <span class="org-string">"%sd"</span> <span class="org-string">"${_day}"</span>
-    <span class="org-builtin">unset</span> _min _day
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org488a519" class="outline-4">
-<h4 id="org488a519">PROMPT_COMMAND</h4>
-<div class="outline-text-4" id="text-org488a519">
-</div>
-<ul class="org-ul">
-<li><a id="org482fd2b"></a>bash<br />
-<div class="outline-text-5" id="text-org482fd2b">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">export PROMPT_COMMAND=__prompt_command</span>
-
-<span class="org-function-name">preexec</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">_cmd_start_t</span>=<span class="org-string">"${SECONDS}"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-function-name">precmd</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">_exit_color</span>=<span class="org-string">"$(_rc_last_exit_color $?)"</span>
-
-    <span class="org-variable-name">_elapsed</span>=<span class="org-string">"$(_elapsed_time $_cmd_start_t ${SECONDS})"</span>
-    <span class="org-builtin">unset</span> _cmd_start_t
-
-    <span class="org-comment-delimiter"># </span><span class="org-comment">unset previous</span>
-    <span class="org-variable-name">PS1</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">PS2</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">PS3</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">PS4</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">RPROMPT</span>=<span class="org-string">""</span>
-
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\[\e[0;32m\]\u\[\e[m\]"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\[\e[3;35m\]\$(_rc_show_venv)\[\e[m\]"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"@"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\[\e[0;34m\]\h\[\e[m\]"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\$(git_ps)"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\[\e[0;36m\]:\W"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"\[\e[0;37m\]"</span>
-
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"$(date '+%H:%M:%S')"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">" ${_exit_color}-${_elapsed}"</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">'\[\e[m\]\n&#187; '</span>
-
-    <span class="org-variable-name">PS2</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">PS2</span>+=<span class="org-string">"\[\e[0;36m\]cont..."</span>
-    <span class="org-variable-name">PS2</span>+=<span class="org-string">"\[\e[m\]"</span>
-    <span class="org-variable-name">PS2</span>+=<span class="org-string">"&#187; "</span>;
-
-    <span class="org-variable-name">PS3</span>=<span class="org-string">'Selection: '</span>;
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
 </div>
 </li>
 
-<li><a id="org7fc647f"></a>zsh<br />
-<div class="outline-text-5" id="text-org7fc647f">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-function-name">_rc_pspexec</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">_cmd_start_t</span>=<span class="org-string">"${SECONDS}"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-function-name">_rc_pspps</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">_exit_color</span>=<span class="org-string">"$(_rc_last_exit_color $?)"</span>
-
-    <span class="org-variable-name">_elapsed</span>=<span class="org-string">"$(_elapsed_time $_cmd_start_t ${SECONDS})"</span>
-    <span class="org-builtin">unset</span> _cmd_start_t
-
-    <span class="org-comment-delimiter"># </span><span class="org-comment">unset previous</span>
-    <span class="org-variable-name">PS1</span>=$<span class="org-string">''</span>
-    <span class="org-variable-name">PS2</span>=$<span class="org-string">''</span>
-    <span class="org-variable-name">PS3</span>=$<span class="org-string">''</span>
-    <span class="org-variable-name">PS4</span>=$<span class="org-string">''</span>
-    <span class="org-variable-name">RPROMPT</span>=$<span class="org-string">''</span>
-
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[0;32m%}%n%{\e[m%}'</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[3;35m%}'</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"$(_rc_show_venv)"</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[m%}'</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'@'</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[0;34m%}%m%{\e[m%}'</span>
-    <span class="org-variable-name">PS1</span>+=<span class="org-string">"$(git_ps)"</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[0;36m%}:%1~'</span>
-    <span class="org-variable-name">PS1</span>+=$<span class="org-string">'%{\e[0;37m%}\n%{\e[m%}&#187; '</span>
-
-    <span class="org-variable-name">PS2</span>+=$<span class="org-string">'%{\e[0;36m%}cont...'</span>
-    <span class="org-variable-name">PS2</span>+=$<span class="org-string">'%{\e[m%}'</span>
-    <span class="org-variable-name">PS2</span>+=$<span class="org-string">'&#187; '</span>
-
-    <span class="org-variable-name">PS3</span>=<span class="org-string">'Selection: '</span>
-
-    <span class="org-variable-name">RPROMPT</span>+=$<span class="org-string">'%*'</span>
-    <span class="org-variable-name">RPROMPT</span>+=<span class="org-string">"%{$_exit_color%}-${_elapsed}"</span>
-    <span class="org-variable-name">RPROMPT</span>+=$<span class="org-string">'%{\e[m%}'</span>
-    <span class="org-builtin">unset</span> _exit_stat _elapsed
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-add-zsh-hook precmd _rc_pspps
-add-zsh-hook preexec _rc_pspexec
-
-</pre>
+<li><a id="org4a9c44f"></a>~/.bashrc<br />
+<div class="outline-text-5" id="text-org4a9c44f">
+<ul class="org-ul">
+<li><a href="#shrc">~/.shrc</a></li>
+</ul>
 </div>
+</li>
+
+<li><a id="org6b0f3ea"></a>At logout<br />
+<ul class="org-ul">
+<li><a id="org7c30f90"></a>~/.bash_logout<br />
+<div class="outline-text-6" id="text-org7c30f90">
+<ul class="org-ul">
+<li><a href="#logout">~/.logout</a></li>
+</ul>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org9fa21c0" class="outline-4">
+<h4 id="org9fa21c0">Zsh</h4>
+<div class="outline-text-4" id="text-org9fa21c0">
+</div>
+<ul class="org-ul">
+<li><a id="orgefa84c5"></a>Interactive login<br />
+<div class="outline-text-5" id="text-orgefa84c5">
+<ul class="org-ul">
+<li><a href="file:///etc/zsh/zshenv">file:///etc/zsh/zshenv</a></li>
+<li><a href="#org521f83a">~/.zshenv</a></li>
+<li><a href="#org9b0dd8e">/etc/zsh/zprofile</a></li>
+<li><a href="#orgd7d5a28">~/.zprofile</a></li>
+<li><a href="file:///etc/zsh/zshrc">file:///etc/zsh/zshrc</a></li>
+<li><a href="#orgdbaae22">~/.zshrc</a></li>
+<li><a href="file:///etc/zsh/zlogin">file:///etc/zsh/zlogin</a></li>
+<li><a href="#org9b8311a">~/.zlogin</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org9b0dd8e"></a>/etc/zsh/zprofile<br />
+<div class="outline-text-5" id="text-org9b0dd8e">
+<ul class="org-ul">
+<li><a href="#orge188fc9">/etc/profile</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgd7d5a28"></a>~/.zprofile<br />
+<div class="outline-text-5" id="text-orgd7d5a28">
+<ul class="org-ul">
+<li><a href="#profile">~/.profile</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgc1c13a5"></a>Interactive shell NOT login<br />
+<div class="outline-text-5" id="text-orgc1c13a5">
+<ul class="org-ul">
+<li><a href="file:///etc/zsh/zshenv">file:///etc/zsh/zshenv</a></li>
+<li><a href="#org521f83a">~/.zshenv</a></li>
+<li><a href="file:///etc/zsh/zshrc">file:///etc/zsh/zshrc</a></li>
+<li><a href="#orgdbaae22">~/.zshrc</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgdbaae22"></a>~/.zshrc<br />
+<div class="outline-text-5" id="text-orgdbaae22">
+<ul class="org-ul">
+<li><a href="#shrc">~/.shrc</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org521f83a"></a>~/.zshenv<br />
+<div class="outline-text-5" id="text-org521f83a">
+<ul class="org-ul">
+<li><a href="file://~/.zshenv.d/">file://~/.zshenv.d/</a>*</li>
+</ul>
+</div>
+</li>
+
+<li><a id="org9b8311a"></a>~/.zlogin<br />
+<div class="outline-text-5" id="text-org9b8311a">
+<ul class="org-ul">
+<li><a href="#login">~/.login</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org8fbc180"></a>At logout<br />
+<div class="outline-text-5" id="text-org8fbc180">
+<ul class="org-ul">
+<li><a href="#org8368587">~/.zlogout</a></li>
+<li><a href="file:///etc/zsh/logout">file:///etc/zsh/logout</a></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org8368587"></a>~/.zlogout<br />
+<div class="outline-text-5" id="text-org8368587">
+<ul class="org-ul">
+<li><a href="#logout">~/.logout</a></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org0b98f62" class="outline-4">
+<h4 id="org0b98f62">Common</h4>
+<div class="outline-text-4" id="text-org0b98f62">
+</div>
+<ul class="org-ul">
+<li><a id="orge188fc9"></a>/etc/profile<br />
+<div class="outline-text-5" id="text-orge188fc9">
+<ul class="org-ul">
+<li><a href="file:///etc/profile.d/">file:///etc/profile.d/</a>*.sh</li>
+</ul>
+</div>
+</li>
+
+<li><a id="profile"></a><a href="profile.html">~/.profile</a><br />
+<div class="outline-text-5" id="text-profile">
+<ul class="org-ul">
+<li><a href="file://~/.profile.d/">file://~/.profile.d/</a>*</li>
+</ul>
+</div>
+</li>
+
+<li><a id="shrc"></a><a href="shrc.html">~/.shrc</a><br />
+<div class="outline-text-5" id="text-shrc">
+<ul class="org-ul">
+<li><a href="file://~/.shrc.d/">file://~/.shrc.d/</a>*</li>
+</ul>
+</div>
+</li>
+<li><a id="login"></a><a href="login-out.html#orgf286327">~/.login.d</a><br />
+<div class="outline-text-5" id="text-login">
+<ul class="org-ul">
+<li><a href="file://~/.login.d">file://~/.login.d</a>/*</li>
+<li><a href="login-out.html#orgde2e7e2">DE/WM Launchers</a></li>
+<li><a href="file://~/.login.d/ui.d">file://~/.login.d/ui.d</a>/*</li>
+</ul>
+</div>
+</li>
+<li><a id="logout"></a><a href="login-out.html#org6bad7d2">~/.logout.d</a><br />
+<div class="outline-text-5" id="text-logout">
+<ul class="org-ul">
+<li><a href="file://~/.logout.d">file://~/.logout.d</a>/*</li>
+</ul>
 </div>
 </li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org6606f63" class="outline-3">
-<h3 id="org6606f63">Mathematical</h3>
-<div class="outline-text-3" id="text-org6606f63">
 </div>
-<div id="outline-container-org9a0afaa" class="outline-4">
-<h4 id="org9a0afaa">In-Line Calculator</h4>
-<div class="outline-text-4" id="text-org9a0afaa">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">quick cmoonad line calculator</span>
-<span class="org-function-name">mathcalc</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"$*"</span>| bc -lq
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
 </div>
-</div>
-</div>
-
-<div id="outline-container-orgca614de" class="outline-4">
-<h4 id="orgca614de">Computational</h4>
-<div class="outline-text-4" id="text-orgca614de">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">convert from decimal to hexadecimal and back</span>
-<span class="org-function-name">dec2hex</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"hex:"</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"obase=16; $*"</span>| bc
-    <span class="org-builtin">echo</span> <span class="org-string">"dec:"</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"ibase=16; $*"</span>| bc
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orga3d863b" class="outline-3">
-<h3 id="orga3d863b">Documents compilation</h3>
-<div class="outline-text-3" id="text-orga3d863b">
-</div>
-<div id="outline-container-org246841a" class="outline-4">
-<h4 id="org246841a">PDF from Latex</h4>
-<div class="outline-text-4" id="text-org246841a">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">compile pdf from given latex file using pdflatex</span>
-<span class="org-function-name">pdfcompile</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if ! </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"pdflatex"</span> 1&gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        printf <span class="org-string">"pdftex is not installed\n"</span>
-        <span class="org-keyword">return</span> 127
-    <span class="org-keyword">fi</span>
-
-    pdflatex <span class="org-string">"$1"</span>
-    <span class="org-keyword">for</span> ext<span class="org-keyword"> in</span> <span class="org-string">".toc"</span> <span class="org-string">".log"</span> <span class="org-string">".aux"</span>; <span class="org-keyword">do</span>
-        <span class="org-rainbow-delimiters-depth-2">[</span> -f <span class="org-string">"${1%.tex}${ext}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; rm <span class="org-string">"${1%.tex}${ext}"</span>
-    <span class="org-keyword">done</span>
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"pdflatex"</span> 1&gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        zathura <span class="org-string">"${1%.tex}.pdf"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgd1ff62e" class="outline-4">
-<h4 id="orgd1ff62e">Pandoc</h4>
-<div class="outline-text-4" id="text-orgd1ff62e">
-</div>
-<ul class="org-ul">
-<li><a id="org03b2848"></a>Org to Something<br />
-<div class="outline-text-5" id="text-org03b2848">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">export from org to 'other' using pandoc</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Usage: org2export [-f] &lt;infile&gt; &lt;othtype&gt;</span>
-<span class="org-function-name">org2export</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if ! </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"pandoc"</span> 1&gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        printf <span class="org-string">"pandoc is not installed\n"</span>
-        <span class="org-keyword">return</span> 127
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">proceed</span>=false
-    <span class="org-keyword">while</span> test $<span class="org-variable-name">#</span> -gt 1; <span class="org-keyword">do</span>
-        <span class="org-keyword">case</span> <span class="org-string">"$1"</span><span class="org-keyword"> in</span>
-            -f|--force)
-                <span class="org-variable-name">proceed</span>=true
-                <span class="org-builtin">shift</span> 1
-                ;;
-            -h|--help)
-                printf <span class="org-string">"Usage: org2export [-h|--help] [-f|--force] FILENAME.org OUTFMT\n\n"</span>
-                printf <span class="org-string">"Optional Arguments:\n"</span>
-                printf <span class="org-string">"%s\tshow this help message\n\n"</span> <span class="org-string">"-h|--help"</span>
-                printf <span class="org-string">"%s\tignore extension mismatch\n"</span> <span class="org-string">"-f|--force"</span>
-                printf <span class="org-string">"Positional Arguments:\n"</span>
-                printf <span class="org-string">"FILENAME.org\tpath to input filename\n"</span>
-                printf <span class="org-string">"OUTFMT\t\tformat of output [pdf, docs, ...]\n"</span>
-                <span class="org-keyword">return</span> 0
-                ;;
-            --)
-                <span class="org-builtin">shift</span> 1
-                ;;
-            *)
-                <span class="org-variable-name">infile</span>=<span class="org-string">"${1}"</span>;
-                <span class="org-variable-name">target</span>=<span class="org-string">"${2}"</span>;
-                <span class="org-keyword">break</span>
-                ;;
-        <span class="org-keyword">esac</span>
-    <span class="org-keyword">done</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${target}"</span> = <span class="org-string">"pdf"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">target</span>=<span class="org-string">"latex"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${infile%.org}"</span> = <span class="org-string">"${infile}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;infile&gt;</span>
-        printf <span class="org-string">"Input file should be an org file\n"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;infile&gt;.org</span>
-        <span class="org-variable-name">proceed</span>=true
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> $<span class="org-variable-name">proceed</span>; <span class="org-keyword">then</span>
-        pandoc -f org -t <span class="org-string">"${target}"</span> -o <span class="org-string">"${infile%.*}.${1}"</span> <span class="org-string">"$infile"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">unset</span> proceed target infile
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</li>
-
-<li><a id="org3c515a9"></a>Org to Docx<br />
-<div class="outline-text-5" id="text-org3c515a9">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">export from org to MS DOCX format using pandoc</span>
-<span class="org-function-name">org2doc</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    org2export <span class="org-string">"$@"</span> <span class="org-string">"docx"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</li>
-
-<li><a id="orgecc2cb7"></a>Org to PDF<br />
-<div class="outline-text-5" id="text-orgecc2cb7">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">export from org to pdf format using pandoc</span>
-<span class="org-function-name">org2pdf</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    org2export <span class="org-string">"$@"</span> <span class="org-string">"pdf"</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</li>
-
-<li><a id="org239ee06"></a>Docx to Org<br />
-<div class="outline-text-5" id="text-org239ee06">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">export from MS DOCX to org mode using pandoc</span>
-<span class="org-function-name">doc2org</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if ! </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"pandoc"</span> 1&gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        printf <span class="org-string">"pandoc is not installed\n"</span>
-        <span class="org-keyword">return</span> 127
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">case</span> <span class="org-string">"${1}"</span><span class="org-keyword"> in</span>
-        *.docx)
-            pandoc -f docx -t org -o <span class="org-string">"${1%.docx}.org"</span> <span class="org-string">"$1"</span>
-            ;;
-        *)
-            <span class="org-builtin">echo</span> <span class="org-string">"Input file must be a docx file"</span>
-            ;;
-    <span class="org-keyword">esac</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org8d159b4" class="outline-3">
-<h3 id="org8d159b4">Mount over ssh</h3>
-<div class="outline-text-3" id="text-org8d159b4">
-<p>
-ssh Cloud mounts
-</p>
-<ul class="org-ul">
-<li><p>
-see <a href="./cloud_mount.html">cloud_mount</a>
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">mount standard cloud locations using sshfs (read doc)</span>
-<span class="org-function-name">mount_cloud_sshfs</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">mount_script</span>=<span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -f <span class="org-string">"${mount_script}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">eval</span> <span class="org-string">"${mount_script}"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">unmount standard cloud locations using sshfs (read doc)</span>
-<span class="org-function-name">umount_cloud_sshfs</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">mount_script</span>=<span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/bin/cloud_mount.sh"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -f <span class="org-string">"${mount_script}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">eval</span> <span class="org-string">"${mount_script}"</span> <span class="org-string">"umount"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-</pre>
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org0749203" class="outline-3">
-<h3 id="org0749203">Launch GUI</h3>
-<div class="outline-text-3" id="text-org0749203">
-<p>
-Launch application and exit terminal window
-Acts like a launcher
-Un-interactive terminal commands may also be called
-Code is tangled in gui.org
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Launch command and kill current shell if command exists</span>
-<span class="org-function-name">gui</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-string">"${RUNCOM:-${HOME}/.runcom}/bin/gui.sh"</span> <span class="org-string">"$*"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">?</span> = 65 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">if bin/gui.sh returns 65, kill shell, else, maintain</span>
-        <span class="org-keyword">exit</span> 0
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9806d80" class="outline-3">
-<h3 id="org9806d80">Un-Compress by context</h3>
-<div class="outline-text-3" id="text-org9806d80">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">uncompress using appropriate protocol (guessed from extension)</span>
-<span class="org-function-name">deconvolute</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"pigz"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_gzip</span>=<span class="org-string">"pigz"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-variable-name">_gzip</span>=<span class="org-string">'gzip'</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -f <span class="org-string">"${1}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"${1}: no such file"</span>;
-    <span class="org-keyword">else</span>
-        <span class="org-keyword">case</span> <span class="org-string">"${1}"</span><span class="org-keyword"> in</span>
-            *.tar.bz2) tar -xjf <span class="org-string">"${1}"</span> ;;
-            *.tbz2) tar -xjf <span class="org-string">"${1}"</span> ;;
-            *.tar.gz) tar -x --use-compress-program=<span class="org-string">"${_gzip}"</span> -f <span class="org-string">"${1}"</span> ;;
-            *.tgz) tar -x --use-compress-program=<span class="org-string">"${_gzip}"</span> -f <span class="org-string">"${1}"</span> ;;
-            *.gz) unpigz <span class="org-string">"${1}"</span> || gunzip <span class="org-string">"${1}"</span> ;;
-            *.rar) unrar -x <span class="org-string">"${1}"</span> ;;
-            *.tar) tar -xf <span class="org-string">"${1}"</span> ;;
-            *.zip) unzip <span class="org-string">"${1}"</span> ;;
-            *.tar.xz) tar -xf <span class="org-string">"${1}"</span> ;;
-            *) <span class="org-builtin">echo</span> <span class="org-string">"Cannot extract ${1}, provide explicit command"</span>;;
-        <span class="org-keyword">esac</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">unset</span> _gzip
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org93ab6ea" class="outline-3">
-<h3 id="org93ab6ea">Navigate</h3>
-<div class="outline-text-3" id="text-org93ab6ea">
-<ul class="org-ul">
-<li><p>
-When no virtualenv is active, but one is available, switch to it
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">cd</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${1}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">builtin</span> cd <span class="org-string">"${HOME}"</span> || <span class="org-builtin">true</span>
-    <span class="org-keyword">else</span>
-        <span class="org-builtin">builtin</span> cd <span class="org-string">"${1}"</span>  || <span class="org-builtin">true</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${VIRTUAL_ENV}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        to_venv 2&gt;/dev/null
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li><p>
-Inspired by <a href="https://lukesmith.xyz/">https://lukesmith.xyz/</a>
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Navigate using 'lf' and cd to location</span>
-<span class="org-function-name">lfcd</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-negation-char">!</span> command -v <span class="org-string">'lf'</span> &gt;/dev/null 2&gt;/dev/null; <span class="org-keyword">then</span>
-        printf <span class="org-string">"lf is not installed\n"</span>
-        <span class="org-keyword">return</span> 127
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">tmp_file</span>=<span class="org-string">"$(mktemp)"</span>
-    lf -last-dir-path=<span class="org-string">"${tmp_file}"</span> <span class="org-string">"$@"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -f <span class="org-string">"${tmp_file}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">target_dir</span>=<span class="org-string">"$(cat "${tmp_file}")"</span>
-        rm -f <span class="org-string">"${tmp_file}"</span> &gt;/dev/null
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -d <span class="org-string">"${target_dir}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${target_dir}"</span> != <span class="org-string">"$(pwd)"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            <span class="org-builtin">cd</span> <span class="org-string">"${target_dir}"</span> || <span class="org-keyword">return</span>
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">unset</span> tmp_file target_dir
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Navigate using pattern 'fzf' and cd to location</span>
-<span class="org-function-name">fzfcd</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-negation-char">!</span> command -v <span class="org-string">'fzf'</span> &gt;/dev/null 2&gt;/dev/null; <span class="org-keyword">then</span>
-        printf <span class="org-string">"fzf is not installed\n"</span>
-        <span class="org-keyword">return</span> 127
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">cd</span> <span class="org-string">"$(dirname "$(fzf)")"</span> || <span class="org-builtin">true</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div></li>
-</ul></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgb61ed4d" class="outline-3">
-<h3 id="orgb61ed4d">zwc</h3>
-<div class="outline-text-3" id="text-orgb61ed4d">
-<ul class="org-ul">
-<li><p>
-Guess whether target is zipped;
-if zipped, unzip and count else classical wc
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">gunzip, word count</span>
-<span class="org-function-name">zwc</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"$*"</span>
-    <span class="org-variable-name">fname</span>=<span class="org-string">"${args##* }"</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"${args% ${fname}}"</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"${args%${fname}}"</span>
-
-    <span class="org-keyword">if</span> gzip -t <span class="org-string">"${fname}"</span> &gt; /dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${args}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            zcat -f <span class="org-string">"${fname}"</span> | wc
-        <span class="org-keyword">else</span>
-            <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
-            zcat -f <span class="org-string">"${fname}"</span> | wc $<span class="org-variable-name">args</span>
-        <span class="org-keyword">fi</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">else</span>
-        wc <span class="org-string">"$@"</span>
-        <span class="org-keyword">return</span>
-    <span class="org-keyword">fi</span>
-
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org139c4d9" class="outline-3">
-<h3 id="org139c4d9">disable auto-venv</h3>
-<div class="outline-text-3" id="text-org139c4d9">
-<ul class="org-ul">
-<li>To disable auto-switching virtualenv, hard-set VIRTUAL_ENV
-<ul class="org-ul">
-<li><p>
-Calling the function again reverts
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">When we wish NOT to use first encountered venv (default behaviour)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">we use this function. (function behaviour: toggle)</span>
-<span class="org-function-name">force_global_venv</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${VIRTUAL_ENV}"</span> = <span class="org-string">"Global_Env"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">unset</span> VIRTUAL_ENV
-        to_venv 2&gt;/dev/null
-    <span class="org-keyword">else</span>
-        deactivate 2&gt;/dev/null
-        <span class="org-variable-name">VIRTUAL_ENV</span>=<span class="org-string">"Global_Env"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div></li>
-</ul></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgca09949" class="outline-3">
-<h3 id="orgca09949">lszcat</h3>
-<div class="outline-text-3" id="text-orgca09949">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">gunzip and ls (if directory) or cat (if file)</span>
-<span class="org-function-name">lszcat</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"$*"</span>
-    <span class="org-variable-name">fname</span>=<span class="org-string">"${args##* }"</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"${args%% ${fname}}"</span>
-    <span class="org-variable-name">args</span>=<span class="org-string">"${args%%${fname}}"</span>
-
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v bat &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-variable-name">betcat</span>=<span class="org-string">"$(which bat)"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-variable-name">betcat</span>=<span class="org-string">"$(which cat)"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v exa &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-variable-name">betls</span>=<span class="org-string">"$(which exa)"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-variable-name">betls</span>=<span class="org-string">"$(which ls)"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${fname}"</span> <span class="org-rainbow-delimiters-depth-2">]</span> || <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> <span class="org-string">"${fname#-}"</span> = <span class="org-string">"${fname}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${args}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            <span class="org-variable-name">args</span>=<span class="org-string">"${fname}"</span>
-        <span class="org-keyword">else</span>
-            <span class="org-variable-name">args</span>=<span class="org-string">"${args} ${fname}"</span>
-        <span class="org-keyword">fi</span>
-        <span class="org-variable-name">fname</span>=<span class="org-string">"$(readlink -f ".")"</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"${fname}"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -d <span class="org-string">"${fname}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
-        <span class="org-string">"${betls}"</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">args</span><span class="org-rainbow-delimiters-depth-2">}</span> <span class="org-string">"${fname}"</span>
-    <span class="org-keyword">elif</span> gzip -t <span class="org-string">"${fname}"</span> &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
-        zcat -f $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">args</span><span class="org-rainbow-delimiters-depth-2">}</span> <span class="org-string">"${fname}"</span> | <span class="org-string">"${betcat}"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2086</span>
-        <span class="org-string">"${betcat}"</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">args</span><span class="org-rainbow-delimiters-depth-2">}</span> <span class="org-string">"${fname}"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgad2eb9f" class="outline-3">
-<h3 id="orgad2eb9f">Manual pages</h3>
-<div class="outline-text-3" id="text-orgad2eb9f">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">if manpage is available, display. else display tldr if it is available</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">else, assume '--help' argument and display output passing --help to command</span>
-<span class="org-function-name">_rc_man_help</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> man <span class="org-string">"$@"</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span> 0
-    <span class="org-keyword">elif</span> tldr <span class="org-string">"$@"</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">return</span> 0
-    <span class="org-keyword">elif </span><span class="org-builtin">builtin</span> command -v <span class="org-string">"$1"</span> &gt;/dev/null 2&gt;/dev/null; <span class="org-keyword">then</span>
-        printf <span class="org-string">"trying to display %s --help output\n"</span> <span class="org-string">"${1}"</span>
-        <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v <span class="org-string">'bat'</span> &gt;/dev/null 2&gt;/dev/null; <span class="org-keyword">then</span>
-            $<span class="org-variable-name">1</span> --help 2&gt;&amp;1 | bat
-        <span class="org-keyword">else</span>
-            $<span class="org-variable-name">1</span> --help 2&gt;&amp;1 | less -RF
-        <span class="org-keyword">fi</span>
-        <span class="org-keyword">return</span> 0
-    <span class="org-keyword">else</span>
-        <span class="org-keyword">return</span> 16
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9acaa36" class="outline-3">
-<h3 id="org9acaa36">Selection menu</h3>
-<div class="outline-text-3" id="text-org9acaa36">
-</div>
-<div id="outline-container-org50a0e21" class="outline-4">
-<h4 id="org50a0e21">Pure POSIX</h4>
-<div class="outline-text-4" id="text-org50a0e21">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">posix selection option by index in cli</span>
-<span class="org-function-name">_rc_posix_select</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">select implementation for POSIX</span>
-    <span class="org-variable-name">heading</span>=<span class="org-string">"${1}"</span>
-    <span class="org-builtin">shift</span>
-    <span class="org-variable-name">len_head</span>=<span class="org-string">"$(expr length "${heading}")"</span>
-    printf <span class="org-string">"\n--"</span>
-    <span class="org-keyword">for</span> _<span class="org-keyword"> in</span> <span class="org-rainbow-delimiters-depth-2">{</span>1..<span class="org-string">"${len_head}"</span><span class="org-rainbow-delimiters-depth-2">}</span>; <span class="org-keyword">do</span> printf <span class="org-string">"-"</span>; <span class="org-keyword">done</span>
-    printf <span class="org-string">"--\n"</span>
-
-    printf <span class="org-string">"| %s |: [%s]"</span> <span class="org-string">"${heading}"</span> <span class="org-string">"${1}"</span>
-
-    printf <span class="org-string">"\n--"</span>
-    <span class="org-keyword">for</span> _<span class="org-keyword"> in</span> <span class="org-rainbow-delimiters-depth-2">{</span>1..<span class="org-string">"${len_head}"</span><span class="org-rainbow-delimiters-depth-2">}</span>; <span class="org-keyword">do</span> printf <span class="org-string">"-"</span>; <span class="org-keyword">done</span>
-    printf <span class="org-string">"--\n"</span>
-    <span class="org-builtin">unset</span> len_head
-    <span class="org-variable-name">word_l</span>=<span class="org-string">""</span>
-    <span class="org-variable-name">count</span>=0
-    <span class="org-keyword">for</span> word<span class="org-keyword"> in</span> $<span class="org-variable-name">@</span>; <span class="org-keyword">do</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${word_l}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            <span class="org-variable-name">word_l</span>=<span class="org-string">"${word}"</span>
-        <span class="org-keyword">else</span>
-            <span class="org-variable-name">word_l</span>=<span class="org-string">"${word_l} ${word}"</span>
-        <span class="org-keyword">fi</span>
-        <span class="org-variable-name">count</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>count + 1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"${count}: ${word}"</span> &gt;&amp;2
-    <span class="org-keyword">done</span>
-    printf <span class="org-string">"Selection: "</span> &gt;&amp;2
-    <span class="org-builtin">read</span> -r s_num
-    <span class="org-builtin">echo</span> <span class="org-string">"${word_l}"</span> | cut -d<span class="org-string">' '</span> -f<span class="org-string">"${s_num}"</span> 2&gt;/dev/null
-    <span class="org-builtin">unset</span> word word_l count
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org22bce10" class="outline-4">
-<h4 id="org22bce10">NCURSES Dialog</h4>
-<div class="outline-text-4" id="text-org22bce10">
-<p>
-TODO: better temporary declaration of <code>DIALOGRC</code>
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">_rc_dialog_select</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">heading</span>=<span class="org-string">"${1}"</span>
-    <span class="org-builtin">shift</span>
-    <span class="org-variable-name">opt_list</span>=
-    <span class="org-variable-name">opt_num</span>=0
-    <span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-variable-name">#</span> -gt 0 <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">do</span>
-        <span class="org-variable-name">opt_num</span>=$<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span> opt_num + 1 <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-        <span class="org-variable-name">opt_list</span>=<span class="org-string">"${opt_list} $opt_num ${1}"</span>
-        <span class="org-builtin">shift</span>
-    <span class="org-keyword">done</span>
-    <span class="org-builtin">export</span> <span class="org-variable-name">DIALOGRC</span>=<span class="org-string">"${RUNCOMDIR}/env/dialogrc"</span>
-    <span class="org-variable-name">s_num</span>=<span class="org-string">"$(echo "${opt_list}" \</span>
-<span class="org-string">                  | xargs dialog --stdout \</span>
-<span class="org-string">                  --menu "${heading}" 0 0 0 2&gt;/dev/null)"</span>
-    <span class="org-builtin">export</span> <span class="org-variable-name">DIALOGRC</span>=
-    <span class="org-builtin">echo</span> <span class="org-string">"$opt_list"</span> | cut -d <span class="org-string">" "</span> -f $<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>s_num + s_num + 1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-builtin">unset</span> opt_list opt_num s_num
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf8875d2" class="outline-4">
-<h4 id="orgf8875d2">Appropriate</h4>
-<div class="outline-text-4" id="text-orgf8875d2">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-function-name">_rc_select</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${_RC_SHELL}"</span> = <span class="org-string">"zsh"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">mod_opt</span>=false
-        <span class="org-variable-name">now_setopts</span>=<span class="org-string">"$(setopt)"</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${now_setopts#*shwordsplit}"</span> = <span class="org-string">"${now_setopts}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-            <span class="org-builtin">setopt</span> shwordsplit
-            <span class="org-variable-name">mod_opt</span>=true
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v dialog &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_selected</span>=<span class="org-string">"$(_rc_dialog_select $@)"</span>
-    <span class="org-keyword">else</span>
-        <span class="org-variable-name">_selected</span>=<span class="org-string">"$(_rc_posix_select $@)"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${_RC_SHELL}"</span> = <span class="org-string">"zsh"</span> <span class="org-rainbow-delimiters-depth-2">]</span> &amp;&amp; $<span class="org-variable-name">mod_opt</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">unsetopt</span> shwordsplit
-    <span class="org-keyword">fi</span>
-
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${_selected}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">_selected</span>=<span class="org-string">"$(echo $@ | cut -d" " -f1)"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"${_selected}"</span>
-    <span class="org-builtin">unset</span> mod_opt now_setopts _selected
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0e4df57" class="outline-2">
-<h2 id="org0e4df57">Aliases</h2>
-<div class="outline-text-2" id="text-org0e4df57">
-</div>
-<div id="outline-container-orga759f52" class="outline-3">
-<h3 id="orga759f52">manual page help</h3>
-<div class="outline-text-3" id="text-orga759f52">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">man</span>=<span class="org-string">"_rc_man_help"</span>;
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org4fbce1b" class="outline-3">
-<h3 id="org4fbce1b">Network</h3>
-<div class="outline-text-3" id="text-org4fbce1b">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">nload</span>=<span class="org-string">'nload -u M -U G -t 10000 -a 3600 $(ip a | grep -m 1 " UP " | cut -d " " -f 2 | cut -d ":" -f 1)'</span>
-<span class="org-builtin">alias</span> <span class="org-variable-name">nethogs</span>=<span class="org-string">'sudo su -l -c "nethogs $(ip a | grep  "state UP" | cut -d " " -f 2 | cut -d ":" -f 1) -d 10"'</span>;
-<span class="org-builtin">alias</span> <span class="org-variable-name">ping</span>=<span class="org-string">"ping -c 4 "</span>;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org783aa21" class="outline-3">
-<h3 id="org783aa21">Monitor Job queues</h3>
-<div class="outline-text-3" id="text-org783aa21">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">watch</span>=<span class="org-string">"watch -n 10 --color"</span>;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org16650f3" class="outline-3">
-<h3 id="org16650f3">Lazy single-handed exit</h3>
-<div class="outline-text-3" id="text-org16650f3">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">qqqq</span>=<span class="org-string">"exit"</span>;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgf141917" class="outline-3">
-<h3 id="orgf141917">[z]wc</h3>
-<div class="outline-text-3" id="text-orgf141917">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-builtin">alias</span> <span class="org-variable-name">wc</span>=<span class="org-string">"zwc"</span>;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org062e1ad" class="outline-3">
-<h3 id="org062e1ad">Encrypted cURL</h3>
-<div class="outline-text-3" id="text-org062e1ad">
-<ul class="org-ul">
-<li>With look for <code>${HOME}/.netrc.gpg</code>.
-If it exists, decrypt it and use the contents.</li>
-</ul>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">does nothing</span>
-<span class="org-function-name">_rc_decrypt_netrc</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-builtin">true</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-<span class="org-builtin">alias</span> <span class="org-variable-name">curl</span>=<span class="org-string">"curl --netrc-file &lt;( gpg --batch -q -d ~/.netrc.gpg )"</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-org77fb127" class="outline-2">
-<h2 id="org77fb127">Networking</h2>
-<div class="outline-text-2" id="text-org77fb127">
-</div>
-<div id="outline-container-orgb8242bf" class="outline-3">
-<h3 id="orgb8242bf">State</h3>
-<div class="outline-text-3" id="text-orgb8242bf">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-string">"${RUNCOMDIR}/bin/timeout.sh"</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org65c887e" class="outline-3">
-<h3 id="org65c887e">SSH Agent</h3>
-<div class="outline-text-3" id="text-org65c887e">
-<p>
-Reuse ssh agent for all logins
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> <span class="org-negation-char">!</span> -S <span class="org-string">"${HOME}/.ssh/ssh_auth_sock"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-builtin">eval</span> <span class="org-string">"$(ssh-agent)"</span>
-    ln -sf <span class="org-string">"$SSH_AUTH_SOCK"</span> ~/.ssh/ssh_auth_sock
-<span class="org-keyword">fi</span>
-<span class="org-variable-name">SSH_AUTH_SOCK</span>=~/.ssh/ssh_auth_sock
-<span class="org-builtin">export</span> SSH_AUTH_SOCK
-ssh-add -l &gt; /dev/null || ssh-add
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org7fe7af3" class="outline-2">
-<h2 id="org7fe7af3">Window Manager settings</h2>
-<div class="outline-text-2" id="text-org7fe7af3">
-</div>
-<div id="outline-container-orge98954c" class="outline-3">
-<h3 id="orge98954c">Terminal</h3>
-<div class="outline-text-3" id="text-orge98954c">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-keyword">for</span> term<span class="org-keyword"> in</span> alacritty foot termite tilix urxvt xterm; <span class="org-keyword">do</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -n <span class="org-string">"$(command -v $term)"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">defterm</span>=<span class="org-string">"$term"</span>;
-        <span class="org-builtin">export</span> defterm
-        <span class="org-keyword">break</span>;
-    <span class="org-keyword">fi</span>;
-<span class="org-keyword">done</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org289ce2d" class="outline-3">
-<h3 id="org289ce2d">Sway exports</h3>
-<div class="outline-text-3" id="text-org289ce2d">
-<p>
-Don&rsquo;t really remember why these were made
-Not using currently. Preserved for future
-tangle to bash_login
-export WLR_BACKENDS=&ldquo;headless&rdquo;;
-export WLR_LIBINPUT_NO_DEVICES=1;
-</p>
-</div>
-</div>
-
-<div id="outline-container-org34decd6" class="outline-3">
-<h3 id="org34decd6">User Interface (GUI/CLI)</h3>
-<div class="outline-text-3" id="text-org34decd6">
-<p>
-If running from tty1 offer to launch a graphical session
-</p>
-</div>
-<div id="outline-container-org86c696e" class="outline-4">
-<h4 id="org86c696e">Graphical exports preparations</h4>
-<div class="outline-text-4" id="text-org86c696e">
-<p>
-Exports to be made according to selected graphical environment
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">exports common to both wayland and X11</span>
-<span class="org-function-name">_rc_common_exports</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$XDG_RUNTIME_DIR"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">XDG_RUNTIME_DIR</span>=<span class="org-string">"/run/user/$(id -u)"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">QT_PLUGIN_PATH</span>=<span class="org-string">"/usr/lib/kde4/plugins/"</span>
-    <span class="org-variable-name">QT_AUTO_SCREEN_SCALE_FACTOR</span>=0
-    <span class="org-variable-name">QT_QPA_PLATFORMTHEME</span>=<span class="org-string">"qt5ct"</span>
-    <span class="org-variable-name">_JAVA_AWT_WM_NONREPARENTING</span>=1
-
-    <span class="org-builtin">export</span> XDG_RUNTIME_DIR
-    <span class="org-builtin">export</span> QT_PLUGIN_PATH
-    <span class="org-builtin">export</span> QT_AUTO_SCREEN_SCALE_FACTOR
-    <span class="org-builtin">export</span> QT_QPA_PLATFORMTHEME
-    <span class="org-builtin">export</span> _JAVA_AWT_WM_NONREPARENTING
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">exports specific to wayland</span>
-<span class="org-function-name">_rc_exports_for_wayland</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">export DISPLAY=":0"</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">export WAYLAND_DISPLAY=wayland-0</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">export GDK_BACKEND=wayland,x11</span>
-    _rc_common_exports
-
-    <span class="org-variable-name">XDG_SESSION_TYPE</span>=<span class="org-string">"wayland"</span>
-    <span class="org-variable-name">SDL_VIDEODRIVER</span>=<span class="org-string">"wayland"</span>
-    <span class="org-variable-name">ECORE_EVAS_ENGINE</span>=<span class="org-string">"wayland_egl"</span>
-    <span class="org-variable-name">ELM_DISPLAY</span>=<span class="org-string">"wl"</span>
-    <span class="org-variable-name">ELM_ENGINE</span>=<span class="org-string">"wayland_egl"</span>
-    <span class="org-variable-name">ELM_ACCEL</span>=<span class="org-string">"opengl"</span>
-    <span class="org-variable-name">QT_QPA_PLATFORM</span>=<span class="org-string">"wayland-egl;xcb"</span>
-    <span class="org-variable-name">QT_WAYLAND_FORCE_DPI</span>=100
-    <span class="org-variable-name">QT_WAYLAND_DISABLE_WINDOWDECORATION</span>=1
-    <span class="org-variable-name">MOZ_ENABLE_WAYLAND</span>=1
-    <span class="org-variable-name">SWAYROOT</span>=<span class="org-string">"${XDG_CONFIG_HOME:-${HOME}/.config}/sway"</span>
-
-    <span class="org-builtin">export</span> XDG_SESSION_TYPE
-    <span class="org-builtin">export</span> SDL_VIDEODRIVER
-    <span class="org-builtin">export</span> ECORE_EVAS_ENGINE
-    <span class="org-builtin">export</span> ELM_DISPLAY
-    <span class="org-builtin">export</span> ELM_ENGINE
-    <span class="org-builtin">export</span> ELM_ACCEL
-    <span class="org-builtin">export</span> QT_QPA_PLATFORM
-    <span class="org-builtin">export</span> QT_WAYLAND_FORCE_DPI
-    <span class="org-builtin">export</span> QT_WAYLAND_DISABLE_WINDOWDECORATION
-    <span class="org-builtin">export</span> MOZ_ENABLE_WAYLAND
-    <span class="org-builtin">export</span> SWAYROOT
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">exports specific to x11</span>
-<span class="org-function-name">_rc_exports_for_x11</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    _rc_common_exports
-
-    <span class="org-variable-name">XDG_SESSION_TYPE</span>=<span class="org-string">"x11"</span>
-    <span class="org-variable-name">SDL_VIDEODRIVER</span>=<span class="org-string">"x11"</span>
-    <span class="org-variable-name">I3ROOT</span>=<span class="org-string">"${XDG_CONFIG_HOME:-${HOME}/.config}/i3"</span>
-
-    <span class="org-builtin">export</span> XDG_SESSION_TYPE
-    <span class="org-builtin">export</span> SDL_VIDEODRIVER
-    <span class="org-builtin">export</span> I3ROOT
-
-    <span class="org-builtin">unset</span> ECORE_EVAS_ENGINE
-    <span class="org-builtin">unset</span> ELM_DISPLAY
-    <span class="org-builtin">unset</span> ELM_ENGINE
-    <span class="org-builtin">unset</span> ELM_ACCEL
-    <span class="org-builtin">unset</span> QT_QPA_PLATFORM
-    <span class="org-builtin">unset</span> QT_WAYLAND_FORCE_DPI
-    <span class="org-builtin">unset</span> QT_WAYLAND_DISABLE_WINDOWDECORATION
-    <span class="org-builtin">unset</span> MOZ_ENABLE_WAYLAND
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">yes/no prompt using dialog</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Args:</span>
-<span class="org-comment-delimiter">#    </span><span class="org-comment">$1: Title</span>
-<span class="org-comment-delimiter">#    </span><span class="org-comment">$2: Prompt</span>
-<span class="org-comment-delimiter">#</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Returns: "yes" or "no"</span>
-<span class="org-function-name">_rc_dialog_yesno</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-variable-name">DIALOGRC</span>=<span class="org-string">"${RUNCOMDIR}/env/dialogrc"</span> dialog <span class="org-sh-escaped-newline">\</span>
-               --clear --defaultno --stdout --title <span class="org-string">"${1}"</span> <span class="org-sh-escaped-newline">\</span>
-               --yesno <span class="org-string">"${2}"</span> 0 0 &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-        printf <span class="org-string">"yes\n"</span>
-    <span class="org-keyword">else</span>
-        printf <span class="org-string">"no\n"</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">offer to export proxies to global environment before launching GUI</span>
-<span class="org-function-name">_rc_exports_for_proxies</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${export_proxies}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-keyword">if </span><span class="org-builtin">builtin</span> command -v dialog &gt;/dev/null 2&gt;&amp;1; <span class="org-keyword">then</span>
-            <span class="org-variable-name">export_proxies</span>=<span class="org-string">"$(_rc_dialog_yesno "Proxies" "Use proxies?")"</span>
-        <span class="org-keyword">else</span>
-            printf <span class="org-string">"\n|-------|\n"</span>
-            printf <span class="org-string">"|Proxies|\n"</span>
-            printf <span class="org-string">"|-------|\n"</span>
-            printf <span class="org-string">"Use proxies?[y/N]:\t"</span>
-            <span class="org-builtin">read</span> -r export_proxies
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-keyword">case</span> <span class="org-string">"${export_proxies}"</span><span class="org-keyword"> in</span>
-        <span class="org-rainbow-delimiters-depth-2">[</span>Yy<span class="org-rainbow-delimiters-depth-2">]</span>*)
-            <span class="org-variable-name">all_proxy</span>=<span class="org-string">"$("${RUNCOMDIR:-${HOME}/.runcom}"/bin/proxy_extract.sh)"</span>
-            <span class="org-variable-name">http_proxy</span>=<span class="org-string">"${all_proxy}"</span>
-            <span class="org-variable-name">https_proxy</span>=<span class="org-string">"${all_proxy}"</span>
-            <span class="org-variable-name">ftp_proxy</span>=<span class="org-string">"${all_proxy}"</span>
-            <span class="org-variable-name">ftps_proxy</span>=<span class="org-string">"${all_proxy}"</span>
-
-            <span class="org-builtin">export</span> all_proxy
-            <span class="org-builtin">export</span> http_proxy
-            <span class="org-builtin">export</span> https_proxy
-            <span class="org-builtin">export</span> ftp_proxy
-            <span class="org-builtin">export</span> ftps_proxy
-            ;;
-        *)
-            ;;
-    <span class="org-keyword">esac</span>
-
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org30a2c17" class="outline-4">
-<h4 id="org30a2c17">Graphical selections</h4>
-<div class="outline-text-4" id="text-org30a2c17">
-<p>
-Display protocol and session selection
-</p>
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">clear TTY, recolor</span>
-<span class="org-function-name">_rc_clean_up_tty</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    _rc_common_exports
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"$TERM"</span> = <span class="org-string">"linux"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        printf <span class="org-string">"\e]P0000000"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">black</span>
-        printf <span class="org-string">"\e]P83f3f3f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkgrey</span>
-        printf <span class="org-string">"\e]P19f3f3f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkred</span>
-        printf <span class="org-string">"\e]P9ff9f9f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">red</span>
-        printf <span class="org-string">"\e]P23f9f3f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkgreen</span>
-        printf <span class="org-string">"\e]PAbfefbf"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">green</span>
-        printf <span class="org-string">"\e]P3bf9f3f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">brown</span>
-        printf <span class="org-string">"\e]PB9fff9f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">yellow</span>
-        printf <span class="org-string">"\e]P45f5f9f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkblue</span>
-        printf <span class="org-string">"\e]PC9f9fff"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">blue</span>
-        printf <span class="org-string">"\e]P59f3f9f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkmagenta</span>
-        printf <span class="org-string">"\e]PDff9fff"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">magenta</span>
-        printf <span class="org-string">"\e]P63f9f9f"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">darkcyan</span>
-        printf <span class="org-string">"\e]PE9fffff"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">cyan</span>
-        printf <span class="org-string">"\e]P7afafaf"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">lightgrey</span>
-        printf <span class="org-string">"\e]PFffffff"</span> <span class="org-comment-delimiter">#</span><span class="org-comment">white</span>
-        clear <span class="org-comment-delimiter">#</span><span class="org-comment">for background artifacting</span>
-    <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Choice for wayland/X11</span>
-<span class="org-function-name">_rc_select_display_protocol</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    mkdir -p <span class="org-string">"${XDG_STATE_HOME:-${HOME}/.local/state}/runcom"</span>
-    <span class="org-variable-name">default_proto</span>=<span class="org-string">"$(cat "${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto")"</span> 2&gt;/dev/null
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${default_proto}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">default_proto</span>=<span class="org-string">"non-graphical"</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-variable-name">graph_avail</span>=<span class="org-string">"wayland x11 non-graphical"</span>
-    <span class="org-variable-name">graph_avail</span>=<span class="org-string">"${default_proto}${graph_avail#*"</span>$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">default_proto</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-string">"} ${graph_avail%%"</span>$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">default_proto</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-string">"*}"</span>
-    <span class="org-variable-name">graph_proto</span>=<span class="org-string">"$(_rc_select Display-Protocol "${graph_avail}")"</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"${graph_proto}"</span> &gt; <span class="org-string">"${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/graph_proto"</span>
-    <span class="org-builtin">unset</span> default_proto graph_avail
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Choice of window manager / desktop environment</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Args:</span>
-<span class="org-comment-delimiter">#     </span><span class="org-comment">$1: protocol name</span>
-<span class="org-function-name">_rc_select_proto_session</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">proto_name</span>=<span class="org-string">"${1}"</span>
-    <span class="org-variable-name">sessions_mem</span>=<span class="org-string">"${XDG_STATE_HOME:-${HOME}/.local/state}/runcom/${proto_name}_session"</span>
-
-    <span class="org-variable-name">protoinitrc</span>=<span class="org-string">".xinitrc"</span>
-    <span class="org-variable-name">sessions_dir</span>=<span class="org-string">"/usr/share/xsessions/"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${proto_name}"</span> = <span class="org-string">"wayland"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">protoinitrc</span>=<span class="org-string">".wayinitrc"</span>
-        <span class="org-variable-name">sessions_dir</span>=<span class="org-string">"/usr/share/wayland-sessions/"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-variable-name">default_session</span>=<span class="org-string">"$(cat "${sessions_mem}")"</span> 2&gt;/dev/null
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${default_session}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">default_session</span>=<span class="org-string">"${protoinitrc}"</span>
-    <span class="org-keyword">fi</span>
-
-    <span class="org-comment-delimiter"># </span><span class="org-comment">shellcheck disable=SC2046</span>
-    <span class="org-variable-name">sessions_avail</span>=<span class="org-string">"$(ls "${sessions_dir}")"</span>
-    <span class="org-variable-name">sessions_avail</span>=<span class="org-string">"${default_session}${sessions_avail#*"</span>$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">default_session</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-string">"} ${sessions_avail%%"</span>$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">default_session</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-string">"*}"</span>
-    <span class="org-variable-name">exec_session</span>=<span class="org-string">"$(_rc_select "${proto_name}"-sessions "${sessions_avail}")"</span>
-    <span class="org-builtin">echo</span> <span class="org-string">"${exec_session}"</span> &gt; <span class="org-string">"${sessions_mem}"</span>
-    <span class="org-builtin">unset</span> default_session sessions_avail
-    <span class="org-builtin">unset</span> protoinitc
-    <span class="org-builtin">unset</span> sessions_dir
-    <span class="org-builtin">unset</span> proto_name
-<span class="org-rainbow-delimiters-depth-1">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0b62500" class="outline-4">
-<h4 id="org0b62500">Interaction</h4>
-<div class="outline-text-4" id="text-org0b62500">
-<div class="org-src-container">
-<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">main UI choice routine</span>
-<span class="org-function-name">main</span> <span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-variable-name">nowtty</span>=<span class="org-string">"$(tty)"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> <span class="org-string">"${nowtty#/dev/tty}"</span> = <span class="org-string">"${nowtty}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        _rc_exports_for_proxies
-        <span class="org-keyword">if</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">RUNCOM_LAUNCH_UI</span><span class="org-rainbow-delimiters-depth-2">}</span>; <span class="org-keyword">then</span>
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"${RUNCOM_SESSION}"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                _rc_select_display_protocol
-                <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${graph_proto}"</span> = <span class="org-string">"x11"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                    _rc_exports_for_x11
-                    _rc_select_proto_session <span class="org-string">"${graph_proto}"</span>
-                    <span class="org-builtin">export</span> <span class="org-variable-name">RUNCOM_SESSION</span>=<span class="org-string">"${graph_proto}: ${exec_session}"</span>
-                    <span class="org-keyword">exec</span> <span class="org-string">"${RUNCOMDIR}/bin/x11start"</span> <span class="org-string">"${exec_session}"</span>
-                <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${graph_proto}"</span> = <span class="org-string">"wayland"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-                    _rc_exports_for_wayland
-                    _rc_select_proto_session <span class="org-string">"${graph_proto}"</span>
-                    <span class="org-builtin">export</span> <span class="org-variable-name">RUNCOM_SESSION</span>=<span class="org-string">"${graph_proto}: ${exec_session}"</span>
-                    <span class="org-keyword">exec</span> <span class="org-string">"${RUNCOMDIR}/bin/waystart"</span> <span class="org-string">"${exec_session}"</span>
-                <span class="org-keyword">fi</span>
-            <span class="org-keyword">fi</span>
-        <span class="org-keyword">fi</span>
-    <span class="org-keyword">fi</span>
-    <span class="org-builtin">unset</span> nowtty graph_proto exec_session RUNCOM_SESSION
-    _rc_clean_up_tty
-<span class="org-rainbow-delimiters-depth-1">}</span>
-
-main <span class="org-string">"$@"</span>
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgabadca6" class="outline-2">
-<h2 id="orgabadca6">Calls</h2>
-<div class="outline-text-2" id="text-orgabadca6">
-</div>
-<div id="outline-container-org2b57e88" class="outline-3">
-<h3 id="org2b57e88">bash</h3>
-<div class="outline-text-3" id="text-org2b57e88">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
-. <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9b85299" class="outline-3">
-<h3 id="org9b85299">zsh</h3>
-<div class="outline-text-3" id="text-org9b85299">
-<div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">netcheck source=.local/share/pspman/src/runcom/env/ui</span>
-. <span class="org-string">"${RUNCOMDIR:-${HOME}/.runcom}/env/ui"</span>
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pradyumna Paranjape</p>
+<p class="date">Created: Thu, 2024-07-18 10:40+0530</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
