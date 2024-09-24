@@ -29,8 +29,17 @@ set_vars() {
     google_dn="www.google.com"
 
     # our current IP
-    if ! ip_addr="$(hostname -I 2>/dev/null)"; then
-        ip_addr="$(hostname -i | awk '{print $(NF);}')"
+    if command -v ip >/dev/null 2>&1; then
+        ip_addr="$(ip addr \
+               | grep 'inet[^6]' \
+               | grep -v '127\(\.[[:digit:]]\+\)\{3\}' \
+               | grep -o '\([[:digit:]]\+\.\)\{3\}[[:digit:]]\+' \
+               | grep -v '255')"
+    fi
+    if [ -z "${ip_addr}" ]; then
+        if ! ip_addr="$(hostname -I 2>/dev/null)"; then
+            ip_addr="$(hostname -i | awk '{print $(NF);}')"
+        fi
     fi
 
     # Our current access point address

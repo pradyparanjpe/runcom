@@ -9,7 +9,7 @@
 # Key can be specified with modifiers, e.g "Ctrl+Alt+Shift+x"
 # Use the `xkbcli` tool to get key name: `xkbcli interactive-wayland`
 ################################################################################
-[keys]
+[keys.viewer]
 # Additional vim keybindings for navigation
 j = next_file
 k = prev_file

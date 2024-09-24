@@ -10,7 +10,9 @@
   <IP-ADDRESS>\t<AP-ADDRESS>\t<Net-State-Code>
   #+end_example
 ** IP-ADDRESS
-   Output of =hostname -I=
+   Output of =hostname -I=.
+   It that returns a localhost ip (127.x.x.x), extract from ~ip~ command.
+
 
 ** AP-ADDRESS
    Access-Point address. Default route to which packets are sent.
@@ -72,8 +74,17 @@
          google_dn="www.google.com"
 
          # our current IP
-         if ! ip_addr="$(hostname -I 2>/dev/null)"; then
-             ip_addr="$(hostname -i | awk '{print $(NF);}')"
+         if command -v ip >/dev/null 2>&1; then
+             ip_addr="$(ip addr \
+                    | grep 'inet[^6]' \
+                    | grep -v '127\(\.[[:digit:]]\+\)\{3\}' \
+                    | grep -o '\([[:digit:]]\+\.\)\{3\}[[:digit:]]\+' \
+                    | grep -v '255')"
+         fi
+         if [ -z "${ip_addr}" ]; then
+             if ! ip_addr="$(hostname -I 2>/dev/null)"; then
+                 ip_addr="$(hostname -i | awk '{print $(NF);}')"
+             fi
          fi
 
          # Our current access point address

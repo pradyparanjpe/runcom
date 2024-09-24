@@ -146,7 +146,7 @@ Following section tangles code.
 *** Guess and print net info
 The *OLDEST* part of prady_runcom...
 - ... although, amended many times
-- see [[file:netcheck.org]
+- see [[file:netcheck.org]]
 
 #+begin_src sh
   # Cpmmected omtermet info
