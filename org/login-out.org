@@ -90,7 +90,6 @@
   _rc_drop_in "${HOME}/.logout"
 #+end_src
 
-
 * DE/WM Launchers
 ** Selection menu
 *** Pure POSIX
@@ -119,7 +118,6 @@
 #+end_src
 
 *** NCURSES Dialog
-# TODO: a better temporary declaration of =DIALOGRC=
 #+begin_src sh :tangle ../env/ui
   _rc_dialog_select () {
       heading="${1}"
@@ -154,7 +152,12 @@
           fi
       fi
 
-      if builtin command -v dialog >/dev/null 2>&1; then
+      opts="${2# }"  # lstrip
+      opts="${2% }"  # rstrip
+
+      if [ -z "${3}" ] && [ "${opts##* }" = "${opts}" ]; then
+          _selected="${opts}"
+      elif builtin command -v dialog >/dev/null 2>&1; then
           # shellcheck disable=SC2068
           _selected="$(_rc_dialog_select $@)"
       else
@@ -165,10 +168,8 @@
       if [ "${_RC_SHELL}" = "zsh" ] && $mod_opt; then
           unsetopt shwordsplit
       fi
+      _selected="${_selected:-$(echo "$@" | cut -d" " -f1)}"
 
-      if [ -z "${_selected}" ]; then
-          _selected="$(echo "$@" | cut -d" " -f1)"
-      fi
       echo "${_selected}"
       unset mod_opt now_setopts _selected
   }
@@ -375,7 +376,13 @@ Display protocol and session selection.
       cache_file="${XDG_CACHE_HOME:-${HOME}/.cache}/runcom/graph_proto"
       default_proto="$(cat "${cache_file}")" 2>/dev/null
       default_proto="${default_proto:-non-graphical}"
-      graph_avail="wayland x11 non-graphical"
+      graph_avail="non-graphical"
+      if [ -n "$(ls -A /usr/share/xsessions 2>/dev/null)" ]; then
+          graph_avail="wayland ${graph_avail}";
+      fi
+      if [ -n "$(ls -A /usr/share/wayland-sessions 2>/dev/null)" ]; then
+          graph_avail="wayland ${graph_avail}";
+      fi
       graph_avail="${default_proto} ${graph_avail%%"${default_proto}"*} ${graph_avail#*"${default_proto}"}"
       graph_proto="$(_rc_select "Display-Protocol" "${graph_avail}")"
       mkdir -p "${XDG_CACHE_HOME:-${HOME}/.cache}/runcom"
