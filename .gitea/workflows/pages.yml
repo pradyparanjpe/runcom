@@ -1,0 +1,19 @@
+on:
+- push
+
+jobs:
+  pages:
+    runs-on: "ubuntu-latest"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: build-org
+      uses: http://repohost:3080/pradyumna/build_org@v1
+      with:
+        packages: yaml-mode
+        resources: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+        build-src: org/
+    - name: Push documentation to pages.
+      uses: http://repohost:3080/pradyumna/upload_docs@v1
+      with:
+        token: ${{ secrets.PAGES_PAT }}
