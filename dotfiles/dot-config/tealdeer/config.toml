@@ -1,0 +1,24 @@
+# -*- coding: utf-8; mode: toml; -*-
+
+[update]
+autoupdate = true
+
+[style.description]
+bold = true
+
+[style.command_name]
+foreground = "green"
+underline = true
+
+[style.example_text]
+foreground = "yellow"
+
+[style.example_code]
+foreground = "red"
+
+[style.example_variable]
+foreground = "magenta"
+
+[display]
+use_pager = true
+compact = true
