@@ -78,11 +78,13 @@ _rc_select () {
         fi
     fi
 
-    opts="${2# }"  # lstrip
-    opts="${2% }"  # rstrip
+    # lstrip, rstrip, space separated.
+    avail="$(echo "${2}" | tr "\n" " " | tr "\t" " ")"
+    avail="${avail# }"
+    avail="${avail% }"
 
-    if [ -z "${3}" ] && [ "${opts##* }" = "${opts}" ]; then
-        _selected="${opts}"
+    if [ -z "${3}" ] && [ "${avail##* }" = "${avail}" ]; then
+        _selected="${avail}"
     elif builtin command -v dialog >/dev/null 2>&1; then
         # shellcheck disable=SC2068
         _selected="$(_rc_dialog_select $@)"

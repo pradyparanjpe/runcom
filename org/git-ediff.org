@@ -1,5 +1,5 @@
 # -*- mode:org; coding: utf-8; -*-
-#+TITLE: Info about current IP
+#+TITLE: Use Emacs for Git Ediff
 #+SETUPFILE: header.org
 #+PROPERTY: header-args :tangle ../bin/ediff :mkdirp t :results no :eval no
 
