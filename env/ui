@@ -80,8 +80,8 @@ _rc_select () {
 
     # lstrip, rstrip, space separated.
     avail="$(echo "${2}" | tr "\n" " " | tr "\t" " ")"
-    avail="${avail# }"
-    avail="${avail% }"
+    avail="${avail#"${avail%%[![:space:]]*}"}"
+    avail="${avail%"${avail##*[![:space:]]}"}"
 
     if [ -z "${3}" ] && [ "${avail##* }" = "${avail}" ]; then
         _selected="${avail}"
