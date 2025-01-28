@@ -1126,7 +1126,7 @@ Inspired by [[https://lukesmith.xyz/]]
 #+end_src
 
 ** Encrypted cURL
-- With look for =${HOME}/.netrc.gpg=.
+- We look for =${HOME}/.netrc.gpg=.
   If it exists, decrypt it and use the contents.
 #+begin_src sh :tangle ../dotfiles/dot-shrc.d/alternatives
   # does nothing
@@ -1134,6 +1134,13 @@ Inspired by [[https://lukesmith.xyz/]]
       true
   }
   alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
+#+end_src
+
+** Userctl
+User-restricted systemctl
+#+begin_src sh :tangle ../dotfiles/dot-shrc.d/alternatives
+  alias userctl="systemctl --user"
+  alias userjournal="journalctl --user"
 #+end_src
 
 * Networking

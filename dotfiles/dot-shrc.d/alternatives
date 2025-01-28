@@ -105,3 +105,6 @@ _rc_decrypt_netrc () {
     true
 }
 alias curl="curl --netrc-file <( gpg --batch -q -d ~/.netrc.gpg )"
+
+alias userctl="systemctl --user"
+alias userjournal="journalctl --user"
