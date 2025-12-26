@@ -48,7 +48,7 @@ For Alpine Linux, [[/etc/apk/repositories][enable]] the [[https://<mirror-server
 *** Bootstrap installation of dependencies
 For automated installation of dependencies, run the [[./setup/dependencies.sh][dependencies script]] with elevated privileges.
 #+begin_src sh :tangle no
-  curl -sLf "https://pradyparanjpe.gitlab.io/runcom/setup/dependencies.sh" | sudo sh
+  curl -sLf "https://pradyparanjpe.github.io/runcom/setup/dependencies.sh" | sudo sh
 #+end_src
 
 #+begin_note
@@ -207,7 +207,7 @@ Preserve this backup, you will need this during undoing set-up.
 ** Bootstrap set-up using script
 Set-up may be bootstrapped by running the [[./setup/setup.sh][setup]] script.
 #+begin_src sh :tangle no
-  curl -sLf "https://pradyparanjpe.gitlab.io/runcom/setup/setup.sh" | sh
+  curl -sLf "https://pradyparanjpe.github.io/runcom/setup/setup.sh" | sh
 #+end_src
 
 #+begin_note
@@ -245,7 +245,7 @@ If you feel an urge to inspect it or if it fails, follow manual set-up instructi
 #+begin_src sh :tangle ../setup/setup.sh
   RUNCOMDIR="${HOME}/.runcom"
   git clone --recurse-submodules \
-      "https://gitlab.com/pradyparanjpe/runcom" \
+      "https://github.com/pradyparanjpe/runcom" \
       "${RUNCOMDIR}" || exit 1
 #+end_src
 
@@ -461,7 +461,7 @@ Do *NOT* use =sudo= during unset.
 ** Bootstrap unset using script
    - Unset may be bootstrapped by running the [[./setup/unset.sh][unset]] script.
 #+begin_src sh :tangle no
-  curl -sLf "https://pradyparanjpe.gitlab.io/runcom/setup/unset.sh" | sh
+  curl -sLf "https://pradyparanjpe.github.io/runcom/setup/unset.sh" | sh
 #+end_src
 
 #+begin_note

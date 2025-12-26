@@ -1,4 +1,4 @@
-;; publish.el --- Publish runcom on Gitlab Pages
+;; publish.el --- Publish runcom on Github Pages
 ;; Author: Pradyumna Paranjape
 
 ;;; Commentary:
