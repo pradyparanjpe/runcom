@@ -6,6 +6,7 @@
 #+OPTIONS: toc: nil mathjax:t TeX:t num:t ::t :todo:nil tags:nil *:t skip:t
 #+STARTUP: overview
 #+PROPERTY: header-args :tangle foot.ini
+#+auto_tangle: t
 
 * Global section
 ** Unset options
@@ -54,7 +55,7 @@ Black Red Green Yellow Blue Magenta Cyan White
 Bright (BOLD):
 Black Red Green Yellow Blue Magenta Cyan White
 #+BEGIN_SRC conf
-  [colors]
+  [colors-dark]
   alpha=1.0
   foreground=bfbfbf
   background=000000
