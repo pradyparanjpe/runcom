@@ -153,13 +153,77 @@ Silence debugging output for gtk+
 * SSH Agent
 Reuse ssh agent for all logins
 #+begin_src sh :tangle ../dotfiles/dot-profile.d/auth
-  if [ ! -S "${HOME}/.ssh/ssh_auth_sock" ]; then
-      eval "$(ssh-agent)"
-      ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-  fi
-  SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  # Shared SSH agent
+  umask 077
+
+  SSH_AUTH_SOCK="${HOME}/.ssh/ssh_auth_sock"
   export SSH_AUTH_SOCK
-  ssh-add -l > /dev/null || ssh-add
+
+  lock="${HOME}/.ssh/ssh-agent.lock"
+  wait_limit=10
+
+  # Check whether the agent is responding.
+  ssh-add -l >/dev/null 2>&1
+  agent_status=$?
+
+  if [ "$agent_status" -eq 2 ]; then
+      acquired=false
+
+      # Acquire the lock, recovering stale locks if necessary.
+      while [ "$wait_limit" -gt 0 ]; do
+          if mkdir "$lock" 2>/dev/null; then
+              printf '%s\n' "$$" > "$lock/pid"
+              acquired=true
+              break
+          fi
+
+          # Check whether the lock owner is still alive.
+          if [ -f "$lock/pid" ]; then
+              read -r owner < "$lock/pid"
+
+              case "$owner" in
+                  ''|*[!0-9]*)
+                      ;;
+                  ,*)
+                      if ! kill -0 "$owner" 2>/dev/null; then
+                          # Atomically move the stale lock out of the way.
+                          stale="${lock}.stale.$$"
+
+                          if [ ! -e "$stale" ]; then
+                              if mv "$lock" "$stale" 2>/dev/null; then
+                                  rm -rf "$stale"
+                                  continue
+                              fi
+                          fi
+                      fi
+                      ;;
+              esac
+          fi
+
+          sleep 1
+          wait_limit=$((wait_limit - 1))
+      done
+
+      if [ "$acquired" = true ]; then
+          # Another session may have started the agent while we waited.
+          ssh-add -l >/dev/null 2>&1
+          agent_status=$?
+
+          if [ "$agent_status" -eq 2 ]; then
+              rm -f "$SSH_AUTH_SOCK"
+              ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null 2>&1
+          fi
+
+          # Release the lock.
+          rm -rf "$lock"
+      else
+          # Do not start another agent without the lock.
+          echo "Warning: Could not acquire SSH agent lock." >&2
+      fi
+  fi
+
+  # Add identities if the agent is available but has none.
+  ssh-add -l >/dev/null 2>&1 || ssh-add
 #+end_src
 
 * Drop-in generic call
